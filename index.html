@@ -33,6 +33,8 @@ header{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.82);-webkit
 .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:600;font-size:16px}.brand:hover{text-decoration:none}
 .brand svg{width:26px;height:26px;border-radius:7px}
 .nav nav{display:flex;gap:22px;margin-left:auto}.nav nav a{color:var(--ink);opacity:.78}.nav nav a:hover{opacity:1;text-decoration:none}
+.nav nav a.all{color:var(--accent);opacity:1;font-weight:600}
+.more{margin-top:32px;font-size:17px}.more a{color:var(--accent);font-weight:600;text-decoration:none}.more a:hover{text-decoration:underline}
 @media (max-width:600px){.nav nav a.opt{display:none}.nav nav{gap:16px}}
 
 /* hero */
@@ -188,7 +190,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{color:var(--soft)}
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header><div class="wrap nav"><a class="brand" href="#top"><svg aria-hidden="true" focusable="false" viewBox="0 0 48 48"><rect width="48" height="48" rx="12" fill="#2E43A6"/><rect x="7.5" y="16.5" width="21" height="15" rx="7.5" fill="none" stroke="#FFFFFF" stroke-width="3.4"/><rect x="19.5" y="16.5" width="21" height="15" rx="7.5" fill="none" stroke="#F4B942" stroke-width="3.4"/><path d="M21.2 16.5h3.3a7.5 7.5 0 0 1 4 1.2" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round"/></svg>HV World</a>
-<nav aria-label="Main"><a href="#test">Know</a><a href="#reset">Plan</a><a href="#vault">Act</a><a class="opt" href="#products">Products</a></nav></div></header>
+<nav aria-label="Main"><a href="#test">Know</a><a href="#reset">Plan</a><a href="#vault">Act</a><a class="opt" href="#products">Products</a><a class="all" href="/overview/">All features</a></nav></div></header>
 <main id="main">
   <section id="top"><div class="wrap hero">
     <div class="rv">
@@ -212,6 +214,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{color:var(--soft)}
       <div class="pcard rv"><div class="h"><svg aria-hidden="true" focusable="false" width="44" height="44" viewBox="0 0 1024 1024"><defs><linearGradient id="hvrbg-12" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5B86D6"/><stop offset=".55" stop-color="#9C8BDA"/><stop offset="1" stop-color="#F2A77E"/></linearGradient><radialGradient id="hvrsun-12" cx=".5" cy=".42" r=".6"><stop offset="0" stop-color="#FFF6DA"/><stop offset=".6" stop-color="#FFD58F"/><stop offset="1" stop-color="#FFB066"/></radialGradient><radialGradient id="hvrglow-12" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFE9B8" stop-opacity=".75"/><stop offset="1" stop-color="#FFE9B8" stop-opacity="0"/></radialGradient></defs><rect width="1024" height="1024" rx="232" fill="url(#hvrbg-12)"/><circle cx="512" cy="530" r="300" fill="url(#hvrglow-12)"/><circle cx="512" cy="530" r="138" fill="url(#hvrsun-12)"/><path d="M704 318A292 292 0 1 1 452 244" fill="none" stroke="#fff" stroke-width="62" stroke-linecap="round"/><path d="M548 225L454 318L424 176Z" fill="#fff" stroke="#fff" stroke-width="30" stroke-linejoin="round"/></svg><b>HV Reset</b></div><p>Plan your day. One block, one task, and a day that bends instead of breaking.</p><a class="btn" href="https://harshvittori.github.io/harsh-reset/">Open HV Reset</a></div>
       <div class="pcard rv"><div class="h"><svg aria-hidden="true" focusable="false" width="44" height="44" viewBox="0 0 1024 1024" aria-hidden="true"><defs><linearGradient id="hvaimk-13" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1B3157"/><stop offset=".5" stop-color="#152647"/><stop offset="1" stop-color="#0C1830"/></linearGradient></defs><rect width="1024" height="1024" rx="230" fill="url(#hvaimk-13)"/><path d="M 608.00 360.68 A 179.2 179.2 0 1 1 416.00 360.68" fill="none" stroke="#DFC18A" stroke-width="96" stroke-linecap="round"/><path d="M 608.00 206.74 A 320 320 0 1 1 416.00 206.74" fill="none" stroke="#C9A45E" stroke-width="83.2" stroke-linecap="round"/><circle cx="512" cy="512" r="96" fill="#EAD9B0"/></svg><b>HV Vault</b></div><p>Act on every opportunity. One board, automatic follow-ups and HV AI.</p><a class="btn" href="https://harshvittori.github.io/hv-vault-web/">Open HV Vault</a></div>
     </div>
+    <p class="more rv"><a href="/overview/">See every feature, HV AI, privacy and FAQ →</a></p>
   </div></section>
   <section class="people"><div class="wrap">
     <h2 class="rv">Riya could be anyone.</h2>
@@ -228,7 +231,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{color:var(--soft)}
   <section class="builder"><div class="wrap rv"><p>Designed and built by</p><h2>Harsh Vittori</h2><a class="more" href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">Connect on LinkedIn</a></div></section>
 </main>
 <footer><div class="wrap row"><span>© <span id="yr">2026</span> Harsh Vittori · HV World</span>
-<nav aria-label="Footer"><a href="https://harshvittori.github.io/hv-tests/">HV Test</a><a href="https://harshvittori.github.io/harsh-reset/">HV Reset</a><a href="https://harshvittori.github.io/hv-vault-web/">HV Vault</a><a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/harshvittori" target="_blank" rel="noopener">GitHub</a></nav></div></footer>
+<nav aria-label="Footer"><a href="/overview/">All features</a><a href="https://harshvittori.github.io/hv-tests/">HV Test</a><a href="https://harshvittori.github.io/harsh-reset/">HV Reset</a><a href="https://harshvittori.github.io/hv-vault-web/">HV Vault</a><a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/harshvittori" target="_blank" rel="noopener">GitHub</a></nav></div></footer>
 <script>
 (function () {
   document.getElementById("yr").textContent = new Date().getFullYear();

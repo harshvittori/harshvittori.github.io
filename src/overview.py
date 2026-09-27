@@ -1,0 +1,398 @@
+"""HV World: the overview page (every app, its features, HV AI, privacy, free, FAQ).
+
+Builds overview/index.html from this file and the logos in src/.
+Run from the repo root:  python3 src/overview.py
+The story page (index.html) comes from src/story.py; this page is the full product tour."""
+import os, re
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.join(os.path.dirname(HERE), "overview")
+
+def read(n):
+    return open(os.path.join(HERE, n)).read().strip().replace('xmlns="http://www.w3.org/2000/svg" ', '')
+
+LOGOS = {"world": read("world-orbit.svg"), "test": read("logo-test.svg"), "reset": read("logo-reset.svg"), "vault": read("logo-vault.svg")}
+_n = [0]
+def logo(name, cls=""):
+    _n[0] += 1
+    s = LOGOS[name]
+    for i in re.findall(r'id="([^"]+)"', s):
+        s = s.replace('id="%s"' % i, 'id="%s-%d"' % (i, _n[0])).replace("url(#%s)" % i, "url(#%s-%d)" % (i, _n[0]))
+    return s.replace("<svg ", '<svg aria-hidden="true" focusable="false"%s ' % (' class="%s"' % cls if cls else ""), 1)
+
+def I(d):
+    return ('<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" '
+            'stroke-linecap="round" stroke-linejoin="round">%s</svg>' % d)
+CHECK = I('<path d="M5 12.5l4.2 4.2L19 7"/>')
+ARROW = I('<path d="M5 12h14M13 6l6 6-6 6"/>')
+SYNC = I('<path d="M21 12a9 9 0 0 1-15.5 6.2M3 12A9 9 0 0 1 18.5 5.8"/><path d="M18.5 2v4h-4M5.5 22v-4h4"/>')
+USER = I('<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>')
+SPARK = I('<path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/>')
+LOCK = I('<rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/>')
+
+URL = {"test": "https://harshvittori.github.io/hv-tests/", "reset": "https://harshvittori.github.io/harsh-reset/", "vault": "https://harshvittori.github.io/hv-vault-web/"}
+
+# ---------------------------------------------------------------- product previews (plain HTML, no screenshots)
+MOCK_TEST = '''<div class="mock q">
+  <div class="prog"><i></i></div>
+  <p class="meta">Maturity Assessment · 18 of 29</p>
+  <h5>A teammate takes credit for your idea in a meeting. What do you do?</h5>
+  <div class="opt"><i></i>Correct them right there</div>
+  <div class="opt on"><i></i>Talk to them privately after</div>
+  <div class="opt"><i></i>Let it go this time</div>
+  <div class="opt"><i></i>Tell your manager later</div>
+</div>'''
+
+MOCK_RESET = '''<div class="mock day">
+  <p class="meta">Now · until 12:30 PM</p>
+  <div class="now">01:14:52</div>
+  <p class="meta">Send applications</p>
+  <div class="blk cur"><span>11:00 AM</span>Send applications</div>
+  <div class="blk"><span>12:30 PM</span>Short break</div>
+  <div class="blk meal"><span>1:15 PM</span>Lunch</div>
+  <div class="blk"><span>2:00 PM</span>Outreach</div>
+</div>'''
+
+MOCK_VAULT = '''<div class="mock kan">
+  <div><h4>Saved</h4><div><b>GTM Associate</b><small>Razorpay</small></div><div><b>Growth Analyst</b><small>Meesho</small></div></div>
+  <div><h4>Applied</h4><div class="hot"><b>Founder's Office</b><small>Cred · follow-up in 5 days</small></div></div>
+  <div><h4>Interview</h4><div><b>Partnerships Lead</b><small>Zomato · Tue, 4:00 PM</small></div></div>
+</div>'''
+
+MOCK_AI = '''<div class="mock chat">
+  <p class="ai">Bolo, kya karna hai?</p>
+  <p class="me">Kal 4 baje Zomato ka interview hai</p>
+  <div class="card"><b>Interview</b>Zomato · Tue, 29 Sep · 4:00 PM<em>Confirm</em></div>
+  <p class="me">Cred wale ko applied mark karo aur 5 din baad follow-up laga do</p>
+  <div class="card"><b>2 changes</b>Founder's Office at Cred → Applied, follow-up on 4 Oct<em>Confirm all</em></div>
+</div>'''
+
+PRODUCTS = [
+    ("test", "HV Test", "Know yourself", "Honest, everyday situations that show how you really think, react and decide.", [
+        ("Maturity Assessment.", "28 to 30 real-life situations across 10 areas. About 10 minutes."),
+        ("A score out of 100.", "See where you're strong and where to grow."),
+        ("Two PDFs to keep.", "A full report and a personal 30-day plan."),
+        ("Private by design.", "No login. Your answers never leave your browser."),
+    ], MOCK_TEST, "Take a test"),
+    ("reset", "HV Reset", "Plan your day", "A day made of simple blocks: one block, one task. You always know what to do right now.", [
+        ("One block at a time.", "A big clock shows what's on now and what's next."),
+        ("Running late? Shift the day.", "One tap moves the rest of the plan."),
+        ("The basics never drop.", "Core tasks can shrink on a hard day. Meals are never skipped."),
+        ("Plans from one sentence.", "“Aaj 3 ghante apply, 1 ghanta prep, shaam 7 ke baad free.”"),
+    ], MOCK_RESET, "Open HV Reset"),
+    ("vault", "HV Vault", "Act on every opportunity", "Every job, company, follow-up and interview in one calm place, so nothing slips.", [
+        ("One board.", "Move jobs from Saved to Applied, Interview and Offer."),
+        ("Follow-ups that set themselves.", "Mark a job Applied and the first reminder is ready."),
+        ("Profile from your resume.", "Upload it once and your profile fills itself in."),
+        ("Calendar, templates, numbers.", "Interviews, ready-to-send messages and your weekly progress."),
+    ], MOCK_VAULT, "Open HV Vault"),
+]
+
+def product(key, name, tag, pitch, feats, mock, cta, flip):
+    lis = "".join('<li>%s<span><b>%s</b> %s</span></li>' % (CHECK, a, b) for a, b in feats)
+    return ('''<article class="product p-%s%s rv" id="%s">
+  <div class="left">
+    <div class="top">%s<div><h3>%s</h3><p class="tag">%s</p></div></div>
+    <p class="pitch">%s</p>
+    <ul>%s</ul>
+    <a class="btn" href="%s">%s %s</a>
+  </div>
+  <div class="right">%s</div>
+</article>''' % (key, " flip" if flip else "", key, logo(key), name, tag, pitch, lis, URL[key], cta, ARROW, mock))
+
+FAQ = [
+    ("Is it really free?", "Yes. HV Test, HV Reset and HV Vault are free to use, and so is HV AI. No card, no trial, no hidden plan."),
+    ("Do I need to install anything?", "No. Everything runs in the browser on your phone or laptop. On a phone you can add any app to your home screen from the browser's share menu."),
+    ("Do I need an account?", "HV Vault uses Google sign-in, so your data follows you across devices. HV Test needs no account at all."),
+    ("What languages does HV AI understand?", "Hindi, English and Hinglish, typed or spoken. It replies in the language you use."),
+    ("Can HV AI change things without asking?", "No. Every change is shown first as a card you confirm, edit or cancel. Deletes always ask again, and you can undo the last change."),
+    ("Are HV Test results a diagnosis?", "No. HV Test is a self-assessment for personal growth, not a clinical or psychological diagnosis."),
+]
+
+CSS = r"""
+:root{--ink:#1D1D1F;--soft:#6E6E73;--faint:#86868B;--line:#E5E5EA;--gray:#F5F5F7;--accent:#2E43A6;--accent-hover:#1D2B72;
+  --test:#127A4F;--reset:#4A72C8;--vault:#A87A22;--font:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;color-scheme:light}
+*{box-sizing:border-box}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:#FFFFFF;color:var(--ink);font:17px/1.5 var(--font);letter-spacing:-.018em;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,h4,h5,p{margin:0}a{color:inherit}
+.wrap{width:min(1120px,100% - 32px);margin:0 auto}
+.skip{position:absolute;left:-999px;top:8px;background:var(--ink);color:#fff;padding:8px 14px;border-radius:8px;z-index:99}.skip:focus{left:8px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:8px}
+/* header */
+header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.82);-webkit-backdrop-filter:saturate(180%) blur(18px);backdrop-filter:saturate(180%) blur(18px);border-bottom:1px solid rgba(0,0,0,.07)}
+.nav{height:52px;display:flex;align-items:center;gap:20px}
+.brand{display:flex;align-items:center;gap:9px;text-decoration:none;font-weight:600;font-size:17px}
+.brand svg{width:26px;height:26px;border-radius:7px}
+.nav nav{display:flex;gap:22px;margin-left:auto;font-size:14px}
+.nav nav a{text-decoration:none;color:var(--soft)}.nav nav a:hover{color:var(--ink)}
+.nav .story{color:var(--accent)!important;font-weight:600}
+@media (max-width:720px){.nav nav a.opt{display:none}.nav nav{gap:16px}}
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:11px 22px;border-radius:999px;background:var(--accent);color:#fff;text-decoration:none;font-weight:500;font-size:16px;transition:background .2s}
+.btn:hover{background:var(--accent-hover)}
+.btn svg{width:17px;height:17px}
+.btn.ghost{background:transparent;color:var(--accent);padding-left:6px;padding-right:6px}.btn.ghost:hover{background:transparent;text-decoration:underline}
+/* hero */
+.hero{padding:88px 0 56px;display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.eyebrow{font-size:15px;font-weight:600;color:var(--soft);margin-bottom:14px}
+.hero h1{font-size:clamp(42px,6vw,72px);font-weight:700;letter-spacing:-.045em;line-height:1.03}
+.hero h1 span{color:var(--accent)}
+.lead{font-size:clamp(18px,2vw,21px);color:var(--soft);margin:22px 0 30px;max-width:540px;line-height:1.45}
+.ctas{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
+.note{margin-top:18px;font-size:14px;color:var(--faint)}
+.orbit{position:relative;aspect-ratio:1;max-width:440px;margin:0 auto;width:100%}
+.orbit .ring{position:absolute;inset:8%;border-radius:50%;border:1.5px dashed #D2D2D7}
+.orbit .ring.r2{inset:25%}
+.orbit .core{position:absolute;inset:37%}
+.orbit .core svg{width:100%;height:100%;border-radius:26%;box-shadow:0 24px 50px -22px rgba(30,40,110,.55)}
+.planet{position:absolute;width:23%;text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:10px;transition:transform .35s cubic-bezier(.22,1,.36,1)}
+.planet svg{width:100%;aspect-ratio:1;border-radius:24%;box-shadow:0 16px 34px -18px rgba(20,30,70,.5)}
+.planet span{font-weight:600;font-size:13.5px;white-space:nowrap}
+.planet:hover{transform:translateY(-5px)}
+.planet.p1{left:38.5%;top:-3%}.planet.p2{left:-1%;top:56%}.planet.p3{right:-1%;top:56%}
+@media (prefers-reduced-motion:no-preference){.orbit .ring{animation:spin 90s linear infinite}.orbit .ring.r2{animation-duration:60s;animation-direction:reverse}.planet{animation:float 7s ease-in-out infinite}.planet.p2{animation-delay:-2.3s}.planet.p3{animation-delay:-4.6s}}
+@keyframes spin{to{transform:rotate(360deg)}}@keyframes float{50%{translate:0 -8px}}
+@media (max-width:880px){.hero{grid-template-columns:1fr;padding:48px 0 40px;gap:36px}.orbit{max-width:320px}}
+/* strip */
+.strip{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:96px}
+.strip div{padding:22px 20px;border-right:1px solid var(--line)}.strip div:last-child{border-right:0}
+.strip b{display:block;font-size:24px;font-weight:700;letter-spacing:-.03em}
+.strip span{font-size:14.5px;color:var(--soft)}
+@media (max-width:720px){.strip{grid-template-columns:1fr 1fr}.strip div:nth-child(2){border-right:0}.strip div:nth-child(-n+2){border-bottom:1px solid var(--line)}.strip div{padding:18px 14px}}
+/* section heads */
+section{scroll-margin-top:72px}
+.head{max-width:680px;margin:0 auto 44px;text-align:center}
+.label{font-size:15px;font-weight:600;color:var(--accent);margin-bottom:10px}
+.head h2,.sec-h{font-size:clamp(32px,4.4vw,52px);font-weight:700;letter-spacing:-.04em;line-height:1.06}
+.head p:not(.label){font-size:19px;color:var(--soft);margin-top:14px}
+/* products */
+.products{display:grid;gap:20px;margin-bottom:112px}
+.product{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:28px;overflow:hidden;background:#fff;scroll-margin-top:72px}
+.product .left{padding:44px;display:flex;flex-direction:column;gap:18px}
+.product .top{display:flex;align-items:center;gap:16px}
+.product .top svg{width:60px;height:60px;border-radius:16px;flex:none}
+.product h3{font-size:30px;font-weight:700;letter-spacing:-.035em;line-height:1.1}
+.product .tag{font-size:15px;font-weight:600;margin-top:3px}
+.p-test .tag,.p-test li svg{color:var(--test)}.p-reset .tag,.p-reset li svg{color:var(--reset)}.p-vault .tag,.p-vault li svg{color:var(--vault)}
+.product .pitch{font-size:18.5px;color:var(--soft);line-height:1.45}
+.product ul{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+.product li{display:flex;gap:12px;align-items:flex-start;font-size:16px;line-height:1.45}
+.product li svg{width:20px;height:20px;flex:none;margin-top:2px}
+.product li span{color:var(--soft)}.product li b{color:var(--ink);font-weight:600}
+.product .btn{align-self:flex-start;margin-top:6px}
+.product .right{background:var(--gray);padding:40px;display:flex;align-items:center;justify-content:center;min-height:380px}
+.product.flip .left{order:2}
+@media (max-width:880px){.product{grid-template-columns:1fr}.product.flip .left{order:0}.product .left{padding:28px 22px}.product .right{min-height:0;padding:28px 18px}}
+/* mock screens: white cards on gray */
+.mock{width:100%;max-width:400px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px;font-size:14px;box-shadow:0 24px 50px -32px rgba(20,30,60,.35)}
+.meta{font-size:12.5px;color:var(--faint)}
+.q .prog{height:5px;border-radius:9px;background:#E3F2EA;margin-bottom:12px;overflow:hidden}.q .prog i{display:block;height:100%;width:62%;background:var(--test)}
+.q h5{font-size:16px;font-weight:600;line-height:1.35;margin:6px 0 14px;letter-spacing:-.02em}
+.q .opt{display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:12px;border:1px solid var(--line);margin-bottom:7px}
+.q .opt i{width:14px;height:14px;border-radius:50%;border:2px solid #C7C7CC;flex:none}
+.q .opt.on{border-color:var(--test);background:#EEF7F2;font-weight:600}.q .opt.on i{border-color:var(--test);background:var(--test)}
+.day .now{font-size:40px;font-weight:300;letter-spacing:-.02em;line-height:1.1;margin:4px 0 2px;font-variant-numeric:tabular-nums}
+.day .meta:nth-of-type(2){margin-bottom:14px}
+.day .blk{display:flex;gap:12px;align-items:center;padding:10px 12px;border-radius:12px;margin-bottom:6px;background:var(--gray)}
+.day .blk span{font-size:12px;font-weight:600;width:62px;color:var(--faint)}
+.day .blk.cur{background:var(--ink);color:#fff}.day .blk.cur span{color:#C7C7CC}
+.day .blk.meal{background:#FBF4E4}
+.kan{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.kan>div{min-width:0}
+.kan h4{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin:0 0 8px}
+.kan div div{background:var(--gray);border-radius:10px;padding:9px 10px;margin-bottom:7px;line-height:1.3}
+.kan div div.hot{background:#FBF4E4}
+.kan b{display:block;font-size:12.5px;font-weight:600}.kan small{color:var(--soft);font-size:11px}
+.chat{display:grid;gap:8px}
+.chat p{padding:9px 12px;border-radius:16px;max-width:86%;line-height:1.35;font-size:13px}
+.chat .ai{background:var(--gray)}
+.chat .me{justify-self:end;background:var(--accent);color:#fff}
+.chat .card{border:1px solid var(--line);border-radius:14px;padding:10px 12px;font-size:12.5px;line-height:1.4}
+.chat .card b{display:block;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-bottom:2px}
+.chat .card em{font-style:normal;display:table;margin-top:8px;background:var(--accent);color:#fff;border-radius:999px;padding:4px 12px;font-weight:600;font-size:12px}
+/* together */
+.together{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:112px}
+.feat{background:var(--gray);border-radius:24px;padding:30px}
+.feat .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:#fff;color:var(--accent);margin-bottom:18px}
+.feat .ic svg{width:22px;height:22px}
+.feat h3{font-size:20px;font-weight:700;letter-spacing:-.025em;margin-bottom:8px}
+.feat p{color:var(--soft);font-size:16px}
+@media (max-width:880px){.together{grid-template-columns:1fr}}
+/* ai */
+.ai-sec{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:28px;overflow:hidden;margin-bottom:112px}
+.ai-sec .l{padding:48px;display:flex;flex-direction:column;justify-content:center}
+.ai-sec .l p:not(.label){font-size:18.5px;color:var(--soft);margin-top:14px}
+.ai-sec ul{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:10px}
+.ai-sec li{display:flex;gap:10px;font-size:16px;color:var(--soft)}.ai-sec li svg{width:20px;height:20px;flex:none;color:var(--accent);margin-top:2px}
+.ai-sec .r{background:var(--gray);padding:40px;display:flex;align-items:center;justify-content:center}
+@media (max-width:880px){.ai-sec{grid-template-columns:1fr}.ai-sec .l{padding:28px 22px}.ai-sec .r{padding:28px 18px}}
+/* privacy + free */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:112px}
+.two>div{background:var(--gray);border-radius:28px;padding:40px}
+.two h3{font-size:26px;font-weight:700;letter-spacing:-.03em;margin-bottom:10px}
+.two p:not(.label){color:var(--soft);font-size:17px}
+.big{font-size:clamp(64px,8vw,96px);font-weight:700;letter-spacing:-.05em;line-height:1;margin:4px 0 12px}
+@media (max-width:720px){.two{grid-template-columns:1fr}.two>div{padding:28px 22px}}
+/* faq */
+.faq{max-width:780px;margin:0 auto 112px;border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;list-style:none;padding:22px 4px;font-size:18px;font-weight:600;letter-spacing:-.02em;display:flex;justify-content:space-between;gap:16px;align-items:center}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-size:26px;font-weight:300;color:var(--accent);transition:transform .25s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{padding:0 4px 22px;color:var(--soft)}
+/* final + footer */
+.final{text-align:center;padding:88px 16px;background:var(--gray)}
+.final .sec-h{margin-bottom:14px}
+.final p{font-size:19px;color:var(--soft)}
+.picks{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:30px}
+.pick{display:inline-flex;align-items:center;gap:10px;padding:10px 18px 10px 10px;border-radius:999px;background:#fff;border:1px solid var(--line);text-decoration:none;font-weight:600;transition:border-color .2s}
+.pick:hover{border-color:var(--accent)}
+.pick svg{width:30px;height:30px;border-radius:8px}
+.builder{margin-top:44px;font-size:15px;color:var(--soft)}.builder a{color:var(--accent);font-weight:600;text-decoration:none}.builder a:hover{text-decoration:underline}
+footer{padding:26px 0 40px;color:var(--faint);font-size:14px;border-top:1px solid var(--line)}
+footer .row{display:flex;flex-wrap:wrap;gap:12px 26px;align-items:center;justify-content:space-between}
+footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:none}footer a:hover{color:var(--ink)}
+/* reveal */
+@media (prefers-reduced-motion:no-preference){.rv{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s cubic-bezier(.22,1,.36,1)}.rv.in{opacity:1;transform:none}}
+"""
+
+PAGE = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HV World | All three apps: HV Test, HV Reset, HV Vault</title>
+<meta name="description" content="Everything in HV World: HV Test to know yourself, HV Reset to plan your day, HV Vault to act on every opportunity, and HV AI in Hindi, English or Hinglish. Free, by Harsh Vittori.">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="canonical" href="https://harshvittori.github.io/overview/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HV World">
+<meta property="og:title" content="HV World: your work, your day, your growth">
+<meta property="og:description" content="Three simple apps that work together, plus HV AI. Free for everyone.">
+<meta property="og:url" content="https://harshvittori.github.io/overview/">
+<meta property="og:image" content="https://harshvittori.github.io/overview/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<style>__CSS__</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header><div class="wrap nav"><a class="brand" href="#top">__LOGO_WORLD__HV World</a>
+<nav aria-label="Main"><a class="opt" href="#apps">Apps</a><a class="opt" href="#together">Together</a><a class="opt" href="#ai">HV AI</a><a href="#faq">FAQ</a><a class="story" href="/">Riya's story</a></nav></div></header>
+<main id="main">
+  <section id="top" class="wrap hero">
+    <div class="rv">
+      <p class="eyebrow">By Harsh Vittori · Free for everyone</p>
+      <h1>Your work, your day, your growth. <span>One calm world.</span></h1>
+      <p class="lead">Three simple apps that work together. Know yourself with HV Test, plan your day with HV Reset, and keep every opportunity in HV Vault. Just tell HV AI what you need.</p>
+      <div class="ctas"><a class="btn" href="#apps">Explore the apps</a><a class="btn ghost" href="/">Watch Riya's story __ARROW__</a></div>
+      <p class="note">No card, no trial, no ads. Everything runs in your browser.</p>
+    </div>
+    <div class="orbit rv" aria-hidden="true">
+      <div class="ring"></div><div class="ring r2"></div>
+      <div class="core">__LOGO_WORLD__</div>
+      <a class="planet p1" href="#test" tabindex="-1">__LOGO_TEST__<span>HV Test</span></a>
+      <a class="planet p2" href="#reset" tabindex="-1">__LOGO_RESET__<span>HV Reset</span></a>
+      <a class="planet p3" href="#vault" tabindex="-1">__LOGO_VAULT__<span>HV Vault</span></a>
+    </div>
+  </section>
+
+  <div class="wrap strip rv">
+    <div><b>3 apps</b><span>One world, one sign-in</span></div>
+    <div><b>₹0</b><span>Everything, for everyone</span></div>
+    <div><b>HV AI</b><span>Type or talk, your language</span></div>
+    <div><b>Any device</b><span>Phone and laptop</span></div>
+  </div>
+
+  <section id="apps" class="wrap">
+    <div class="head rv"><p class="label">The apps</p><h2>Three apps. Each does one job well.</h2><p>Open any of them in your browser. Nothing to install.</p></div>
+    <div class="products">__PRODUCTS__</div>
+  </section>
+
+  <section id="together" class="wrap">
+    <div class="head rv"><p class="label">Better together</p><h2>Use one. Or let them work as a team.</h2><p>Each app stands on its own. Together, your plan and your progress stay in step.</p></div>
+    <div class="together">
+      <div class="feat rv"><div class="ic">__SYNC__</div><h3>Reset and Vault in sync</h3><p>Log an application in HV Reset and it lands in HV Vault as Applied, with its first follow-up. Your day counter counts it too.</p></div>
+      <div class="feat rv"><div class="ic">__USER__</div><h3>One Google sign-in</h3><p>Sign in to HV Vault once and HV Reset on the same browser is connected. Your phone and laptop show the same data.</p></div>
+      <div class="feat rv"><div class="ic">__SPARK__</div><h3>HV AI in each app</h3><p>In HV Vault it handles jobs, follow-ups and interviews. In HV Reset it builds and adjusts your day. Each one changes only its own app.</p></div>
+    </div>
+  </section>
+
+  <section id="ai" class="wrap">
+    <div class="ai-sec rv">
+      <div class="l">
+        <p class="label">HV AI</p>
+        <h2 class="sec-h">Just say it. HV AI does the work.</h2>
+        <p>Type, or hold the mic and talk the way you normally do. HV AI turns it into clear changes you check before anything is saved.</p>
+        <ul>
+          <li>__CHECK__Hindi, English or Hinglish, typed or spoken</li>
+          <li>__CHECK__Every change is a card: Confirm, Edit or Cancel</li>
+          <li>__CHECK__Deletes always ask first. Unclear names get a question, not a guess</li>
+          <li>__CHECK__Undo the last change any time</li>
+          <li>__CHECK__Built in and free: no key, no setup</li>
+        </ul>
+      </div>
+      <div class="r">__MOCK_AI__</div>
+    </div>
+  </section>
+
+  <section id="free" class="wrap two">
+    <div class="rv"><p class="label">Privacy</p><h3>Your data is yours.</h3><p>HV Vault saves everything to your own private space, linked to your Google account. Only you can read it. HV Test never stores your answers: everything happens in your browser.</p></div>
+    <div class="rv"><p class="label">Price</p><div class="big">₹0</div><p>All three apps are free for everyone, including HV AI. No card, no trial, no ads.</p></div>
+  </section>
+
+  <section id="faq" class="wrap">
+    <div class="head rv"><p class="label">FAQ</p><h2>Questions, answered.</h2></div>
+    <div class="faq rv">__FAQ__</div>
+  </section>
+
+  <section class="final">
+    <div class="wrap rv">
+      <h2 class="sec-h">Pick one. It takes a minute.</h2>
+      <p>Start with the app you need most. The others are one click away.</p>
+      <div class="picks">
+        <a class="pick" href="__U_TEST__">__LOGO_TEST_P__HV Test</a>
+        <a class="pick" href="__U_RESET__">__LOGO_RESET_P__HV Reset</a>
+        <a class="pick" href="__U_VAULT__">__LOGO_VAULT_P__HV Vault</a>
+      </div>
+      <p class="builder">Designed and built by Harsh Vittori · <a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">Connect on LinkedIn</a></p>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap row"><span>© <span id="yr">2026</span> Harsh Vittori · HV World</span>
+<nav aria-label="Footer"><a href="/">Riya's story</a><a href="__U_TEST__">HV Test</a><a href="__U_RESET__">HV Reset</a><a href="__U_VAULT__">HV Vault</a><a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/harshvittori" target="_blank" rel="noopener">GitHub</a></nav></div></footer>
+<script>
+(function () {
+  document.getElementById("yr").textContent = new Date().getFullYear();
+  var els = document.querySelectorAll(".rv");
+  if (!("IntersectionObserver" in window)) { els.forEach(function (e) { e.classList.add("in"); }); return; }
+  var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }); }, { rootMargin: "0px 0px -8% 0px" });
+  els.forEach(function (e) { io.observe(e); });
+})();
+</script>
+</body>
+</html>
+"""
+
+def build():
+    page = PAGE.replace("__CSS__", CSS)
+    page = page.replace("__PRODUCTS__", "\n".join(product(*p, flip=(i == 1)) for i, p in enumerate(PRODUCTS)))
+    page = page.replace("__FAQ__", "".join('<details><summary>%s</summary><p>%s</p></details>' % qa for qa in FAQ))
+    page = page.replace("__MOCK_AI__", MOCK_AI)
+    for k, v in {"ARROW": ARROW, "CHECK": CHECK, "SYNC": SYNC, "USER": USER, "SPARK": SPARK}.items():
+        page = page.replace("__%s__" % k, v)
+    for k in ("TEST", "RESET", "VAULT"):
+        page = page.replace("__U_%s__" % k, URL[k.lower()])
+    page = re.sub(r"__LOGO_(WORLD|TEST|RESET|VAULT)(_P)?__", lambda m: logo(m.group(1).lower()), page)
+    left = re.findall(r"__[A-Z_]+__", page)
+    assert not left, left
+    os.makedirs(OUT, exist_ok=True)
+    open(os.path.join(OUT, "index.html"), "w").write(page)
+    print("ok", len(page), "bytes")
+
+if __name__ == "__main__":
+    build()

@@ -261,6 +261,8 @@ header{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.82);-webkit
 .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:600;font-size:16px}.brand:hover{text-decoration:none}
 .brand svg{width:26px;height:26px;border-radius:7px}
 .nav nav{display:flex;gap:22px;margin-left:auto}.nav nav a{color:var(--ink);opacity:.78}.nav nav a:hover{opacity:1;text-decoration:none}
+.nav nav a.all{color:var(--accent);opacity:1;font-weight:600}
+.more{margin-top:32px;font-size:17px}.more a{color:var(--accent);font-weight:600;text-decoration:none}.more a:hover{text-decoration:underline}
 @media (max-width:600px){.nav nav a.opt{display:none}.nav nav{gap:16px}}
 
 /* hero */
@@ -452,7 +454,7 @@ PAGE = """<!DOCTYPE html>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header><div class="wrap nav"><a class="brand" href="#top">__LOGO_NAV__HV World</a>
-<nav aria-label="Main"><a href="#test">Know</a><a href="#reset">Plan</a><a href="#vault">Act</a><a class="opt" href="#products">Products</a></nav></div></header>
+<nav aria-label="Main"><a href="#test">Know</a><a href="#reset">Plan</a><a href="#vault">Act</a><a class="opt" href="#products">Products</a><a class="all" href="/overview/">All features</a></nav></div></header>
 <main id="main">
   <section id="top"><div class="wrap hero">
     <div class="rv">
@@ -474,6 +476,7 @@ PAGE = """<!DOCTYPE html>
       <div class="pcard rv"><div class="h">__L_RESET__<b>HV Reset</b></div><p>Plan your day. One block, one task, and a day that bends instead of breaking.</p><a class="btn" href="https://harshvittori.github.io/harsh-reset/">Open HV Reset</a></div>
       <div class="pcard rv"><div class="h">__L_VAULT__<b>HV Vault</b></div><p>Act on every opportunity. One board, automatic follow-ups and HV AI.</p><a class="btn" href="https://harshvittori.github.io/hv-vault-web/">Open HV Vault</a></div>
     </div>
+    <p class="more rv"><a href="/overview/">See every feature, HV AI, privacy and FAQ →</a></p>
   </div></section>
   <section class="people"><div class="wrap">
     <h2 class="rv">Riya could be anyone.</h2>
@@ -490,7 +493,7 @@ PAGE = """<!DOCTYPE html>
   <section class="builder"><div class="wrap rv"><p>Designed and built by</p><h2>Harsh Vittori</h2><a class="more" href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">Connect on LinkedIn</a></div></section>
 </main>
 <footer><div class="wrap row"><span>© <span id="yr">2026</span> Harsh Vittori · HV World</span>
-<nav aria-label="Footer"><a href="https://harshvittori.github.io/hv-tests/">HV Test</a><a href="https://harshvittori.github.io/harsh-reset/">HV Reset</a><a href="https://harshvittori.github.io/hv-vault-web/">HV Vault</a><a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/harshvittori" target="_blank" rel="noopener">GitHub</a></nav></div></footer>
+<nav aria-label="Footer"><a href="/overview/">All features</a><a href="https://harshvittori.github.io/hv-tests/">HV Test</a><a href="https://harshvittori.github.io/harsh-reset/">HV Reset</a><a href="https://harshvittori.github.io/hv-vault-web/">HV Vault</a><a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/harshvittori" target="_blank" rel="noopener">GitHub</a></nav></div></footer>
 <script>__JS__</script>
 </body>
 </html>

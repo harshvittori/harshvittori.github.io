@@ -27,4 +27,11 @@ As you scroll, each caption changes the picture beside it (on phones, the pictur
 - Everything is in `src/story.py`: the characters and scenes (SVG), the captions, the CSS animations and the page text. The logos are the SVG files in `src/`.
 - Rebuild from the repo root with `python3 src/story.py`. This writes `index.html` and `favicon.svg`.
 
+## The overview page
+
+**https://harshvittori.github.io/overview/** is the full product tour: every app with its features and a preview, how they work together, HV AI, privacy, price (₹0) and an FAQ. It uses the original orbit logo (`src/world-orbit.svg`).
+
+- Everything is in `src/overview.py`. Rebuild with `python3 src/overview.py`. This writes `overview/index.html`.
+- The two pages link to each other ("All features" and "Riya's story").
+
 GitHub Pages serves this repo from `main` at the site root. Keep `.nojekyll`.
