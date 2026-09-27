@@ -1,10 +1,10 @@
 # HV World
 
-The home page for Harsh Vittori's free tools: **https://harshvittori.github.io/**
+HV World: the showcase of products built by Harsh Vittori: **https://harshvittori.github.io/**
 
 | App | What it does | Link |
 |---|---|---|
-| HV Vault | Job-hunt command center with the HV AI assistant | https://harshvittori.github.io/hv-vault-web/ |
+| HV Vault | Applications and opportunities, organised, with the HV AI assistant | https://harshvittori.github.io/hv-vault-web/ |
 | HV Reset | A calm daily plan: one block, one task | https://harshvittori.github.io/harsh-reset/ |
 | HV Test | Free self-assessment tests | https://harshvittori.github.io/hv-tests/ |
 
