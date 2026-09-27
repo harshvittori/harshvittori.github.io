@@ -18,7 +18,8 @@ def unique(svg):                      # every inline copy gets its own gradient 
 def sub_logo(m):
     name, sm = m.group(1), m.group(2)
     s = unique(logos[name])
-    if sm: s = s.replace('<svg ', '<svg class="sm" style="width:24px;height:24px;border-radius:7px;flex:none" ', 1)
+    if sm == '_SM': s = s.replace('<svg ', '<svg class="sm" style="width:24px;height:24px;border-radius:7px;flex:none" ', 1)
+    elif sm == '_BIG': s = s.replace('<svg ', '<svg class="logo" ', 1)
     return s
 P = [
  ("students","Students","Internships, placements and exam weeks, without the chaos.",
@@ -54,7 +55,7 @@ for k, nm, intro, ex in P:
     cards = "".join('<div class="card ucard"><div class="h">{{LOGO_%s_SM}}<h4>%s</h4></div><p>%s</p></div>' % (L, N, t) for (L, N, _), t in zip(names, ex))
     panels += '<div class="upanel" id="use-%s" data-upanel="%s" role="tabpanel" aria-labelledby="utab-%s"><p class="uintro"><b>%s.</b> %s</p><div class="ugrid">%s</div></div>' % (k, k, k, FULL.get(k, nm), intro, cards)
 page = page.replace("{{PERSONAS}}", '<div class="tabs rv" role="tablist" aria-label="Choose who you are">' + tabs + '</div><div class="uses rv">' + panels + '</div>')
-page = re.sub(r'\{\{LOGO_(WORLD|VAULT|RESET|TEST)(_SM)?\}\}', sub_logo, page)
+page = re.sub(r'\{\{LOGO_(WORLD|VAULT|RESET|TEST)(_SM|_BIG)?\}\}', sub_logo, page)
 I = lambda d: '<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">' + d + '</svg>'
 icons = {
  'CHECK': I('<circle cx="12" cy="12" r="10" stroke-width="2"/><path d="M8 12.5l2.6 2.6L16.5 9"/>'),
@@ -84,6 +85,11 @@ icons = {
  'HEART': I('<path d="M20.8 5.6a5 5 0 0 0-7.1 0L12 7.3l-1.7-1.7a5 5 0 1 0-7.1 7.1L12 21.5l8.8-8.8a5 5 0 0 0 0-7.1z"/>'),
  'PLUS': I('<circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>'),
  'LINKEDIN': '<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.1c.5-1 1.8-2 3.7-2 4 0 4.7 2.6 4.7 6V21h-4v-5.3c0-1.3 0-2.9-1.8-2.9s-2 1.4-2 2.8V21H9z"/></svg>',
+ 'CHAINC': '<svg aria-hidden="true" focusable="false" viewBox="0 0 120 44" fill="none" stroke="#B9C1DE" stroke-width="5"><rect x="6" y="11" width="62" height="22" rx="11"/><rect x="52" y="11" width="62" height="22" rx="11"/></svg>',
+ 'CHAINTR': '<svg aria-hidden="true" focusable="false" viewBox="0 0 120 44" fill="none" stroke-width="5"><rect x="6" y="11" width="62" height="22" rx="11" stroke="#127A4F"/><rect x="52" y="11" width="62" height="22" rx="11" stroke="#4A72C8"/><path d="M52 22v-0a11 11 0 0 1 11-11h5" stroke="#127A4F" stroke-linecap="round"/></svg>',
+ 'CHAINRV': '<svg aria-hidden="true" focusable="false" viewBox="0 0 120 44" fill="none" stroke-width="5"><rect x="6" y="11" width="62" height="22" rx="11" stroke="#4A72C8"/><rect x="52" y="11" width="62" height="22" rx="11" stroke="#A87A22"/><path d="M52 22v-0a11 11 0 0 1 11-11h5" stroke="#4A72C8" stroke-linecap="round"/></svg>',
+ 'BROKEN': '<svg aria-hidden="true" focusable="false" viewBox="0 0 180 84" fill="none"><rect x="10" y="10" width="160" height="64" rx="32" stroke="#C7C7CC" stroke-width="10" stroke-linecap="round" stroke-dasharray="330 60" stroke-dashoffset="-115"/></svg>',
+ 'CRACK': '<svg aria-hidden="true" focusable="false" viewBox="0 0 28 28" fill="none" stroke="#C7C7CC" stroke-width="3" stroke-linecap="round"><path d="M9 4l5 8-5 4 6 8"/><path d="M19 4l-3 5"/></svg>',
  'JOINT': '<svg aria-hidden="true" focusable="false" viewBox="0 0 26 30" fill="none" stroke="currentColor" stroke-width="2.6"><rect x="7" y="1.5" width="12" height="16" rx="6"/><rect x="7" y="12.5" width="12" height="16" rx="6"/></svg>',
  'CHAINLINK': '<svg aria-hidden="true" focusable="false" viewBox="0 0 70 36" fill="none" stroke="currentColor" stroke-width="3"><rect x="3" y="9" width="38" height="18" rx="9"/><rect x="29" y="9" width="38" height="18" rx="9"/></svg>',
  'LOOP': I('<path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/>'),
