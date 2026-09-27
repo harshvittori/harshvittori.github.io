@@ -18,8 +18,42 @@ def unique(svg):                      # every inline copy gets its own gradient 
 def sub_logo(m):
     name, sm = m.group(1), m.group(2)
     s = unique(logos[name])
-    if sm: s = s.replace('<svg ', '<svg style="width:22px;height:22px;border-radius:7px" ', 1)
+    if sm: s = s.replace('<svg ', '<svg class="sm" style="width:24px;height:24px;border-radius:7px;flex:none" ', 1)
     return s
+P = [
+ ("students","Students","Internships, placements and exam weeks, without the chaos.",
+  ["Learn how you handle pressure, conflict and decisions, and get a 30-day plan to grow before placements.",
+   "Plan study days in blocks: focused sessions under 90 minutes, breaks and meals built in, and a minimum version for exam-week bad days.",
+   "Track every internship and placement application: where you applied, which resume you sent, and when to follow up."]),
+ ("jobseekers","Job seekers","A real system for the search, not a messy spreadsheet.",
+  ["Know your real strengths before interviews, so answers like &ldquo;tell me about a conflict&rdquo; come easily.",
+   "A routine that gets done: time for applying, interview prep and outreach, with applications counted for you.",
+   "A pipeline for every role, AI that fills in job posts for you, and follow-ups that schedule themselves."]),
+ ("pros","Professionals","Stay ready for the next move while doing great work now.",
+  ["See how you react under pressure and in disagreements: useful when you lead people or manage stakeholders.",
+   "Protect deep-work blocks, shift the day when meetings run late, and end with tomorrow's first step.",
+   "Keep a quiet list of roles you would move for, recruiter chats and referrals, ready when the right one appears."]),
+ ("freelancers","Freelancers","Keep leads warm and days balanced.",
+  ["Check your patience, accountability and long-term thinking: the habits that keep clients coming back.",
+   "Split the day into client work, outreach and content blocks, and count the messages you send.",
+   "Treat each pitch like an application: company, contact, status and a follow-up date, so no lead goes cold."]),
+ ("switchers","Career switchers","Move into a new field with a plan.",
+  ["Get a clear picture of your strengths to talk about confidently in a new industry.",
+   "Build a steady routine for learning and applying that survives low-energy days.",
+   "Research companies in the new field, save roles that fit, and use the 2-minute apply rule to focus on real matches."]),
+ ("mentors","Mentors","Give the people you guide a simple structure.",
+  ["Suggest a private self-assessment. They keep their answers, and can choose to share the report with you.",
+   "Share a proven daily structure: one block, one task, with rest and reflection built in.",
+   "Walk a mentee or student through a clean way to run their applications, step by step."]),
+]
+FULL = {"pros": "Working professionals", "freelancers": "Freelancers and creators", "mentors": "Mentors and teachers"}
+tabs = "".join('<button class="tab" role="tab" id="utab-%s" data-utab="%s" aria-controls="use-%s">%s</button>' % (k, k, k, nm) for k, nm, _, _ in P)
+names = [("TEST", "HV Test", "Know"), ("RESET", "HV Reset", "Plan"), ("VAULT", "HV Vault", "Act")]
+panels = ""
+for k, nm, intro, ex in P:
+    cards = "".join('<div class="card ucard"><div class="h">{{LOGO_%s_SM}}<h4>%s</h4></div><p>%s</p></div>' % (L, N, t) for (L, N, _), t in zip(names, ex))
+    panels += '<div class="upanel" id="use-%s" data-upanel="%s" role="tabpanel" aria-labelledby="utab-%s"><p class="uintro"><b>%s.</b> %s</p><div class="ugrid">%s</div></div>' % (k, k, k, FULL.get(k, nm), intro, cards)
+page = page.replace("{{PERSONAS}}", '<div class="tabs rv" role="tablist" aria-label="Choose who you are">' + tabs + '</div><div class="uses rv">' + panels + '</div>')
 page = re.sub(r'\{\{LOGO_(WORLD|VAULT|RESET|TEST)(_SM)?\}\}', sub_logo, page)
 I = lambda d: '<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">' + d + '</svg>'
 icons = {
@@ -50,6 +84,10 @@ icons = {
  'HEART': I('<path d="M20.8 5.6a5 5 0 0 0-7.1 0L12 7.3l-1.7-1.7a5 5 0 1 0-7.1 7.1L12 21.5l8.8-8.8a5 5 0 0 0 0-7.1z"/>'),
  'PLUS': I('<circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>'),
  'LINKEDIN': '<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.1c.5-1 1.8-2 3.7-2 4 0 4.7 2.6 4.7 6V21h-4v-5.3c0-1.3 0-2.9-1.8-2.9s-2 1.4-2 2.8V21H9z"/></svg>',
+ 'JOINT': '<svg aria-hidden="true" focusable="false" viewBox="0 0 26 30" fill="none" stroke="currentColor" stroke-width="2.6"><rect x="7" y="1.5" width="12" height="16" rx="6"/><rect x="7" y="12.5" width="12" height="16" rx="6"/></svg>',
+ 'CHAINLINK': '<svg aria-hidden="true" focusable="false" viewBox="0 0 70 36" fill="none" stroke="currentColor" stroke-width="3"><rect x="3" y="9" width="38" height="18" rx="9"/><rect x="29" y="9" width="38" height="18" rx="9"/></svg>',
+ 'LOOP': I('<path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/>'),
+ 'LINK': I('<path d="M10 14a4 4 0 0 0 5.7 0l3.6-3.6a4 4 0 0 0-5.7-5.7l-1.1 1.1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3.6 3.6a4 4 0 0 0 5.7 5.7l1.1-1.1"/>'),
  'SPARK': I('<path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 17l.7 1.8 1.8.7-1.8.7L19 22l-.7-1.8-1.8-.7 1.8-.7z"/>'),
 }
 page = re.sub(r'\{\{I_([A-Z]+)\}\}', lambda m: icons[m.group(1)], page)

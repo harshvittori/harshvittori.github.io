@@ -1,17 +1,20 @@
 # HV World
 
-HV World: the showcase of products built by Harsh Vittori: **https://harshvittori.github.io/**
+**https://harshvittori.github.io/** tells the story of three products built by Harsh Vittori.
 
-| App | What it does | Link |
-|---|---|---|
-| HV Vault | Applications and opportunities, organised, with the HV AI assistant | https://harshvittori.github.io/hv-vault-web/ |
-| HV Reset | A calm daily plan: one block, one task | https://harshvittori.github.io/harsh-reset/ |
-| HV Test | Free self-assessment tests | https://harshvittori.github.io/hv-tests/ |
+Growth breaks at three links. HV World fixes each one and joins them into a chain: **Know → Plan → Act → Grow**.
+
+| Link | Product | The problem it solves | Link |
+|---|---|---|---|
+| 1 · Know | HV Test | Guessing your own strengths | https://harshvittori.github.io/hv-tests/ |
+| 2 · Plan | HV Reset | Days that drift | https://harshvittori.github.io/harsh-reset/ |
+| 3 · Act | HV Vault | Opportunities that slip | https://harshvittori.github.io/hv-vault-web/ |
 
 ## Edit the page
 
-- The page source is `src/page.html`. Logos are the SVG files in `src/`.
-- Rebuild with `python3 src/build.py .`. This writes `index.html` and `favicon.svg` and gives every logo copy its own ids.
-- LinkedIn: set `LINKEDIN_URL` near the bottom of `src/page.html`, then rebuild. The footer link appears only when it's set.
+- The page source is `src/page.html`. The logos are the SVG files in `src/`. The "Who it helps" examples are in `src/build.py`.
+- Rebuild with `python3 src/build.py .`. This writes `index.html` and `favicon.svg`.
 
-GitHub Pages serves this repo from the `main` branch at the site root. Keep `.nojekyll`.
+Design: light, simple and professional, in the spirit of HV Test (paper background, white cards, serif headings, one accent colour). HV World's own colours are ink `#141A26`, indigo `#2E43A6` and a little amber `#E3A23B` for the grow loop.
+
+GitHub Pages serves this repo from `main` at the site root. Keep `.nojekyll`.
