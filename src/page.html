@@ -159,6 +159,35 @@ section,.product{scroll-margin-top:96px}
 .q .opt.on{background:#FFC54D;color:#17231C;border-color:transparent;font-weight:700}.q .opt.on i{background:#17231C;border-color:#17231C}
 .q .prog{height:6px;border-radius:9px;background:rgba(255,255,255,.2);margin-bottom:12px;overflow:hidden}.q .prog i{display:block;height:100%;width:62%;background:#FFC54D}
 
+/* feature tour */
+.tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:0 auto 22px;padding:6px;border-radius:999px;width:max-content;max-width:100%;background:var(--card);border:1px solid var(--line)}
+.tab{display:inline-flex;align-items:center;gap:9px;border:0;background:transparent;color:var(--muted);font:700 15.5px/1 var(--body);padding:11px 18px;border-radius:999px;cursor:pointer;min-height:44px}
+.tab[aria-selected="true"]{background:var(--card-2);color:var(--ink);box-shadow:0 8px 20px -12px rgba(30,40,90,.5),inset 0 0 0 1px var(--line)}
+.tour{margin-bottom:110px}
+.panel{display:grid;grid-template-columns:330px 1fr;gap:18px;align-items:start}
+.panel+.panel{margin-top:26px}
+.js-tabs .panel+.panel{margin-top:0}
+.js-tabs .panel[hidden]{display:none}
+.tour-side{padding:26px;position:sticky;top:96px;display:flex;flex-direction:column;gap:8px}
+.tour-side .top{display:flex;align-items:center;gap:12px}
+.tour-side .top svg{width:48px;height:48px;border-radius:14px}
+.tour-side h3{font-size:24px;font-weight:600}
+.steps{list-style:none;padding:0;margin:4px 0 14px;display:grid;gap:10px}
+.steps li{display:flex;gap:12px;align-items:flex-start}
+.steps b{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font:700 13px/1 var(--display);color:#fff;background:var(--grad)}
+.tour-side .btn{align-self:flex-start;margin-top:4px}
+.fgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.fcard{display:flex;gap:14px;align-items:flex-start;padding:18px 18px 18px 16px;border-radius:20px;background:var(--card);border:1px solid var(--line);box-shadow:inset 0 1px 0 var(--hi)}
+.fcard>svg{flex:none;width:40px;height:40px;padding:9px;border-radius:12px}
+.t-vault .fcard>svg{background:rgba(217,169,74,.16);color:#B07A12}
+.t-reset .fcard>svg{background:rgba(91,134,214,.16);color:#3F68BF}
+.t-test .fcard>svg{background:rgba(18,122,79,.14);color:#127A4F}
+@media (prefers-color-scheme:dark){.t-vault .fcard>svg{color:#F2C063}.t-reset .fcard>svg{color:#9DB8F2}.t-test .fcard>svg{color:#5FD39C}}
+.fcard h4{margin:1px 0 4px;font:600 16.5px/1.3 var(--display)}
+.fcard p{font-size:15px;color:var(--muted);line-height:1.5}
+@media (max-width:980px){.panel{grid-template-columns:1fr}.tour-side{position:static}}
+@media (max-width:620px){.fgrid{grid-template-columns:1fr}.tabs{width:100%;justify-content:space-between;border-radius:22px}.tab{flex:1;justify-content:center;padding:10px 8px;font-size:14px}.tab svg{display:none}}
+
 /* together */
 .together{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:110px}
 .feat{padding:28px}
@@ -214,9 +243,9 @@ footer a{text-decoration:none}footer a:hover{color:var(--ink)}
     <div class="nav glass">
       <a class="brand" href="#top" aria-label="HV World home">{{LOGO_WORLD}}<span>HV World</span></a>
       <nav aria-label="Main">
-        <a href="#apps">Apps</a><a href="#together">Together</a><a href="#ai">HV AI</a><a href="#faq">FAQ</a>
+        <a href="#apps">Apps</a><a href="#features">Features</a><a href="#together">Together</a><a href="#ai">HV AI</a><a href="#faq">FAQ</a>
       </nav>
-      <a class="btn primary" href="#apps">Explore apps</a>
+      <a class="btn primary" href="#features">See features</a>
     </div>
   </div>
 </header>
@@ -269,7 +298,7 @@ footer a{text-decoration:none}footer a:hover{color:var(--ink)}
               <li>{{I_CHECK}}<span><b>Calendar, templates and analytics.</b> Interviews, ready-to-send messages and your weekly numbers.</span></li>
               <li>{{I_CHECK}}<span><b>HV AI built in.</b> "Cred ko applied mark karo aur 5 din baad follow-up laga do." Done.</span></li>
             </ul>
-            <div class="acts"><a class="btn primary" href="https://harshvittori.github.io/hv-vault-web/">Open HV Vault {{I_ARROW}}</a></div>
+            <div class="acts"><a class="btn primary" href="https://harshvittori.github.io/hv-vault-web/">Open HV Vault {{I_ARROW}}</a><a class="btn" href="#tour-vault" data-open="vault">See all 14 features</a></div>
           </div>
           <div class="right">
             <div class="mock" aria-hidden="true">
@@ -294,7 +323,7 @@ footer a{text-decoration:none}footer a:hover{color:var(--ink)}
               <li>{{I_CHECK}}<span><b>Linked to HV Vault.</b> See today's applications and follow-ups due, and log them from here.</span></li>
               <li>{{I_CHECK}}<span><b>Plans made by HV AI.</b> "Aaj 3 ghante apply, 1 ghanta prep, shaam 7 ke baad free."</span></li>
             </ul>
-            <div class="acts"><a class="btn primary" href="https://harshvittori.github.io/harsh-reset/">Open HV Reset {{I_ARROW}}</a></div>
+            <div class="acts"><a class="btn primary" href="https://harshvittori.github.io/harsh-reset/">Open HV Reset {{I_ARROW}}</a><a class="btn" href="#tour-reset" data-open="reset">See all 11 features</a></div>
           </div>
           <div class="right">
             <div class="mock day" aria-hidden="true">
@@ -314,13 +343,13 @@ footer a{text-decoration:none}footer a:hover{color:var(--ink)}
             <div class="top">{{LOGO_TEST}}<div><h3>HV Test</h3><p class="tag">Free self-assessment tests</p></div></div>
             <p class="pitch">Honest, everyday scenarios that show how you really think, react and decide.</p>
             <ul>
-              <li>{{I_CHECK}}<span><b>Maturity Assessment.</b> 28 to 30 real-life scenarios across 10 areas, about 10 minutes.</span></li>
+              <li>{{I_CHECK}}<span><b>Maturity Assessment, the first HV Test.</b> 28 to 30 real-life scenarios across 10 areas, about 10 minutes.</span></li>
               <li>{{I_CHECK}}<span><b>A clear score out of 100.</b> Plus where you're strong and where to grow.</span></li>
               <li>{{I_CHECK}}<span><b>Two PDFs to keep.</b> A full report and a personal 30-day plan.</span></li>
               <li>{{I_CHECK}}<span><b>Completely private.</b> No login. Your answers never leave your browser.</span></li>
               <li>{{I_CHECK}}<span><b>More tests coming.</b> One home for every HV Test.</span></li>
             </ul>
-            <div class="acts"><a class="btn primary" href="https://harshvittori.github.io/hv-tests/">Take a test {{I_ARROW}}</a></div>
+            <div class="acts"><a class="btn primary" href="https://harshvittori.github.io/hv-tests/">Take a test {{I_ARROW}}</a><a class="btn" href="#tour-test" data-open="test">See all features</a></div>
           </div>
           <div class="right">
             <div class="mock q" aria-hidden="true">
@@ -334,6 +363,104 @@ footer a{text-decoration:none}footer a:hover{color:var(--ink)}
             </div>
           </div>
         </article>
+      </div>
+    </section>
+
+    <section id="features" aria-labelledby="ft-h">
+      <div class="head rv">
+        <p class="eyebrow">Feature tour</p>
+        <h2 id="ft-h">Everything each app does, explained simply.</h2>
+        <p class="muted">Pick an app to see who it's for, how it works, and every feature.</p>
+      </div>
+      <div class="tabs rv" role="tablist" aria-label="Choose an app">
+        <button class="tab" role="tab" id="tab-vault" data-tab="vault" aria-controls="tour-vault">{{LOGO_VAULT_SM}}HV Vault</button>
+        <button class="tab" role="tab" id="tab-reset" data-tab="reset" aria-controls="tour-reset">{{LOGO_RESET_SM}}HV Reset</button>
+        <button class="tab" role="tab" id="tab-test" data-tab="test" aria-controls="tour-test">{{LOGO_TEST_SM}}HV Test</button>
+      </div>
+      <div class="tour">
+      <div class="panel t-vault" id="tour-vault" data-panel="vault" role="tabpanel" aria-labelledby="tab-vault">
+        <aside class="tour-side glass">
+          <div class="top">{{LOGO_VAULT}}<h3>HV Vault</h3></div>
+          <p class="eyebrow" style="margin-top:6px">Who it's for</p>
+          <p class="muted">Anyone applying for jobs who is tired of spreadsheets, lost links and forgotten follow-ups.</p>
+          <p class="eyebrow" style="margin-top:18px">How it works</p>
+          <ol class="steps">
+            <li><b>1</b><span>Sign in with Google and upload your resume. Your profile fills itself in.</span></li>
+            <li><b>2</b><span>Save jobs as you find them. Paste a job post and HV AI fills in the details.</span></li>
+            <li><b>3</b><span>Move each job along your pipeline. Follow-ups, interviews and your weekly numbers take care of themselves.</span></li>
+          </ol>
+          <a class="btn primary" href="https://harshvittori.github.io/hv-vault-web/">Open HV Vault {{I_ARROW}}</a>
+        </aside>
+        <div class="fgrid">
+          <div class="fcard">{{I_GRID}}<div><h4>Dashboard</h4><p>Your day at a glance: what's due, upcoming interviews and this week's numbers.</p></div></div>
+          <div class="fcard">{{I_BOARD}}<div><h4>Pipeline board</h4><p>Every job is a card. Drag it from Saved to Applied, Interview and Offer, on laptop or phone.</p></div></div>
+          <div class="fcard">{{I_BRIEF}}<div><h4>Jobs and companies</h4><p>Links, salary, location, notes and contacts for every role and company, in one place.</p></div></div>
+          <div class="fcard">{{I_BELL}}<div><h4>Automatic follow-ups</h4><p>Mark a job Applied and the first follow-up is scheduled. See what's due or overdue at a glance.</p></div></div>
+          <div class="fcard">{{I_CAL}}<div><h4>Calendar</h4><p>Interviews, calls and deadlines in a month view and a list, so you're never double-booked.</p></div></div>
+          <div class="fcard">{{I_WAND}}<div><h4>AI auto-fill</h4><p>Paste a job post, upload a PDF or add a screenshot. The job or company fills itself in for you to check.</p></div></div>
+          <div class="fcard">{{I_USER}}<div><h4>Profile from your resume</h4><p>Upload it once. Name, role, skills, experience and education are filled in for you.</p></div></div>
+          <div class="fcard">{{I_FILE}}<div><h4>Resume Vault</h4><p>Keep every version of your resume together and know which one you sent where.</p></div></div>
+          <div class="fcard">{{I_MSG}}<div><h4>Message templates</h4><p>Ready messages for referrals, follow-ups and thank-yous, filled in with your name and links.</p></div></div>
+          <div class="fcard">{{I_LIST}}<div><h4>Pending Work and guides</h4><p>A weekly to-do list, like refreshing your Naukri profile, plus step-by-step job-hunt guides.</p></div></div>
+          <div class="fcard">{{I_TARGET}}<div><h4>2-minute apply rule</h4><p>A quick check on each job: right role, right experience, right city? Apply with confidence or skip.</p></div></div>
+          <div class="fcard">{{I_CHART}}<div><h4>Analytics</h4><p>Applications per week, response rate and how your pipeline is moving over time.</p></div></div>
+          <div class="fcard">{{I_SPARK}}<div><h4>HV AI assistant</h4><p>Type or talk in Hindi, English or Hinglish. Every change shows as a card to confirm, and you can undo.</p></div></div>
+          <div class="fcard">{{I_CLOUD}}<div><h4>Sync and backup</h4><p>The same data on phone and laptop. Export to Excel or download a full backup any time.</p></div></div>
+        </div>
+      </div>
+      <div class="panel t-reset" id="tour-reset" data-panel="reset" role="tabpanel" aria-labelledby="tab-reset">
+        <aside class="tour-side glass">
+          <div class="top">{{LOGO_RESET}}<h3>HV Reset</h3></div>
+          <p class="eyebrow" style="margin-top:6px">Who it's for</p>
+          <p class="muted">Anyone who wants a structured day without a complicated planner: job seekers, students, anyone restarting a routine.</p>
+          <p class="eyebrow" style="margin-top:18px">How it works</p>
+          <ol class="steps">
+            <li><b>1</b><span>Open HV Reset. Today's plan is ready, block by block.</span></li>
+            <li><b>2</b><span>Tap Start. The big clock shows what's on now and how much time is left.</span></li>
+            <li><b>3</b><span>Tick blocks off as you go. If the day slips, shift it or do the minimum version.</span></li>
+          </ol>
+          <a class="btn primary" href="https://harshvittori.github.io/harsh-reset/">Open HV Reset {{I_ARROW}}</a>
+        </aside>
+        <div class="fgrid">
+          <div class="fcard">{{I_TARGET}}<div><h4>One block, one task</h4><p>Each block has one clear job, why it matters, and what "done" looks like.</p></div></div>
+          <div class="fcard">{{I_CLOCK}}<div><h4>Big focus clock</h4><p>A calm countdown for the block you're in, and a focus room that hides everything else.</p></div></div>
+          <div class="fcard">{{I_LIST}}<div><h4>Full-day timeline</h4><p>See the whole day: what's done, what's now and what's next.</p></div></div>
+          <div class="fcard">{{I_ROUTE}}<div><h4>Running late? Shift the day</h4><p>One tap moves the rest of your plan later. Nothing gets lost.</p></div></div>
+          <div class="fcard">{{I_PAUSE}}<div><h4>Minimum version</h4><p>On a hard day, do the smallest useful version of a block instead of skipping it.</p></div></div>
+          <div class="fcard">{{I_SYNC}}<div><h4>Move to tomorrow or reset</h4><p>Push today to tomorrow, or start the day fresh, without losing your plan.</p></div></div>
+          <div class="fcard">{{I_CUP}}<div><h4>Meals and breaks built in</h4><p>Lunch and dinner are never skipped, and work blocks stay at 90 minutes or less.</p></div></div>
+          <div class="fcard">{{I_CHART}}<div><h4>Linked to HV Vault</h4><p>Applications and messages are counted for you. See follow-ups due and your week's review.</p></div></div>
+          <div class="fcard">{{I_NOTE}}<div><h4>Evening reflection</h4><p>Write one good thing from today and tomorrow's first step, so mornings start easy.</p></div></div>
+          <div class="fcard">{{I_SUN}}<div><h4>A sky that follows your day</h4><p>Morning, afternoon, evening and night themes, with optional gentle sounds.</p></div></div>
+          <div class="fcard">{{I_SPARK}}<div><h4>HV AI plans your day</h4><p>"Kal subah 10 se 12 apply, 2 se 3 outreach." It builds the plan and keeps your exact times.</p></div></div>
+        </div>
+      </div>
+      <div class="panel t-test" id="tour-test" data-panel="test" role="tabpanel" aria-labelledby="tab-test">
+        <aside class="tour-side glass">
+          <div class="top">{{LOGO_TEST}}<h3>HV Test</h3></div>
+          <p class="eyebrow" style="margin-top:6px">Who it's for</p>
+          <p class="muted">Anyone curious about how they handle real situations, and who wants a practical plan to grow.</p>
+          <p class="eyebrow" style="margin-top:18px">How it works</p>
+          <ol class="steps">
+            <li><b>1</b><span>Pick a test. Start with the Maturity Assessment, and add your name, age and focus.</span></li>
+            <li><b>2</b><span>Answer 28 to 30 everyday scenarios. There are no right answers: pick what you'd really do.</span></li>
+            <li><b>3</b><span>Get your score, your strengths and growth areas, and two PDFs to keep.</span></li>
+          </ol>
+          <a class="btn primary" href="https://harshvittori.github.io/hv-tests/">Take a test {{I_ARROW}}</a>
+        </aside>
+        <div class="fgrid">
+          <div class="fcard">{{I_CHECK}}<div><h4>Maturity Assessment</h4><p>The first test in HV Test: how you actually think, react and decide in real-life situations. About 10 minutes.</p></div></div>
+          <div class="fcard">{{I_SHUFFLE}}<div><h4>Real-life scenarios</h4><p>A bank of 104 scenarios. Each attempt picks 28 to 30 of them, covering all 10 areas.</p></div></div>
+          <div class="fcard">{{I_GRID}}<div><h4>10 areas</h4><p>Emotional control, accountability, self-awareness, handling conflict, relationships, decision-making, patience, empathy, responsibility and long-term thinking.</p></div></div>
+          <div class="fcard">{{I_TARGET}}<div><h4>Score out of 100</h4><p>Your overall score and a level: Developing, Emerging, Grounded or Highly Consistent.</p></div></div>
+          <div class="fcard">{{I_FILE}}<div><h4>Full report PDF</h4><p>About 12 pages on each area: where you're strong and where to grow.</p></div></div>
+          <div class="fcard">{{I_ROUTE}}<div><h4>30-day Plan of Action PDF</h4><p>About 10 pages of small daily steps. Download both PDFs together in one tap.</p></div></div>
+          <div class="fcard">{{I_SYNC}}<div><h4>Fresh every time</h4><p>Questions and options are shuffled, and a retake avoids the questions you saw last time.</p></div></div>
+          <div class="fcard">{{I_SHIELD}}<div><h4>Private by design</h4><p>No login and no server. Your answers never leave your device.</p></div></div>
+          <div class="fcard">{{I_HEART}}<div><h4>Honest, not a quiz</h4><p>Four believable options with real trade-offs and no "correct answer" hints. It's for growth, not a diagnosis.</p></div></div>
+          <div class="fcard">{{I_PLUS}}<div><h4>More tests coming</h4><p>HV Test is the home for every test. New ones appear on the same page.</p></div></div>
+        </div>
+      </div>
       </div>
     </section>
 
@@ -407,7 +534,7 @@ footer a{text-decoration:none}footer a:hover{color:var(--ink)}
     <div class="final glass rv">
       <p class="eyebrow">Start today</p>
       <h2>Pick one. It takes a minute.</h2>
-      <p class="muted">Start with the app you need most. The others are one click away.</p>
+      <p class="muted">Start with the app you need most. The others are one click away. Questions or ideas? <a id="linkedin2" href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">Talk to me on LinkedIn</a>.</p>
       <div class="ctas">
         <a class="btn primary" href="https://harshvittori.github.io/hv-vault-web/">{{LOGO_VAULT_SM}}HV Vault</a>
         <a class="btn" href="https://harshvittori.github.io/harsh-reset/">{{LOGO_RESET_SM}}HV Reset</a>
@@ -433,11 +560,25 @@ footer a{text-decoration:none}footer a:hover{color:var(--ink)}
 
 <script>
 /* Your LinkedIn profile link. Paste it between the quotes and the LinkedIn link appears in the footer. */
-const LINKEDIN_URL = "";
+const LINKEDIN_URL = "https://www.linkedin.com/in/harshvittori";
 (function () {
   const li = document.getElementById("linkedin");
   if (LINKEDIN_URL && /^https:\/\/(www\.)?linkedin\.com\//.test(LINKEDIN_URL)) { li.href = LINKEDIN_URL; li.hidden = false; }
   document.getElementById("yr").textContent = new Date().getFullYear();
+  // feature tour: tabs (without JS every panel simply shows, one after another)
+  const tour = document.querySelector(".tour"), tabs = [...document.querySelectorAll(".tab")], panels = [...document.querySelectorAll(".panel")];
+  const show = (key, focus) => { tabs.forEach((t) => { const on = t.dataset.tab === key; t.setAttribute("aria-selected", on); t.tabIndex = on ? 0 : -1; if (on && focus) t.focus(); }); panels.forEach((p) => { p.hidden = p.dataset.panel !== key; }); };
+  if (tour) {
+    tour.classList.add("js-tabs");
+    const fromHash = (location.hash.match(/^#tour-(vault|reset|test)$/) || [])[1];
+    show(fromHash || "vault");
+    tabs.forEach((t, i) => {
+      t.addEventListener("click", () => show(t.dataset.tab));
+      t.addEventListener("keydown", (e) => { const d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0; if (d) { e.preventDefault(); show(tabs[(i + d + tabs.length) % tabs.length].dataset.tab, true); } });
+    });
+    document.querySelectorAll("[data-open]").forEach((a) => a.addEventListener("click", (e) => { e.preventDefault(); show(a.dataset.open); document.getElementById("features").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); history.replaceState(null, "", "#tour-" + a.dataset.open); }));
+    if (fromHash) setTimeout(() => document.getElementById("features").scrollIntoView(), 0);
+  }
   const els = document.querySelectorAll(".rv");
   if (!("IntersectionObserver" in window)) { els.forEach((e) => e.classList.add("in")); return; }
   const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px", threshold: .08 });
