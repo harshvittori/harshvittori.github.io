@@ -10,11 +10,21 @@ Growth breaks at three links. HV World fixes each one and joins them into a chai
 | 2 · Plan | HV Reset | Days that drift | https://harshvittori.github.io/harsh-reset/ |
 | 3 · Act | HV Vault | Opportunities that slip | https://harshvittori.github.io/hv-vault-web/ |
 
+## The story
+
+The page follows one person, Riya, as a scroll-driven cartoon:
+
+1. **Prologue**: Riya at her desk late at night, stuck on three questions.
+2. **Chapter 1, HV Test**: she freezes in an interview, takes the test, sees her score, and answers the next interview with confidence.
+3. **Chapter 2, HV Reset**: her day slips away, HV Reset turns it into blocks, a late start shifts the plan, and everything is ticked by evening.
+4. **Chapter 3, HV Vault**: opportunities float away, HV Vault puts them on one board, HV AI reminds her, and the offer arrives.
+5. **Finale**: the three products joined as a chain, Know, Plan, Act, then grow and go again.
+
+As you scroll, each caption changes the picture beside it (on phones, the picture stays at the top and the captions scroll under it).
+
 ## Edit the page
 
-- The page source is `src/page.html`. The logos are the SVG files in `src/`. The chain graphics are the CHAIN*, BROKEN icons in `src/build.py`.
-- Rebuild with `python3 src/build.py .`. This writes `index.html` and `favicon.svg`.
-
-Design: minimal, in the spirit of apple.com. Big type, lots of white space, very little text, and the graphics tell the story (a broken chain, then the same chain joined). The system font, alternating white and #F5F5F7 sections, ink #1D1D1F and an indigo #2E43A6 accent.
+- Everything is in `src/story.py`: the characters and scenes (SVG), the captions, the CSS animations and the page text. The logos are the SVG files in `src/`.
+- Rebuild from the repo root with `python3 src/story.py`. This writes `index.html` and `favicon.svg`.
 
 GitHub Pages serves this repo from `main` at the site root. Keep `.nojekyll`.
