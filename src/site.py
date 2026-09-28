@@ -751,7 +751,7 @@ def build():
     write("/", fill(shell("/", "Stop guessing. Start growing. | HV World",
           "3 free apps that show your strengths, plan your day and chase your follow-ups for you. Just talk to the AI. See it in 45 seconds.",
           "https://harshvittori.github.io/og.jpg", OVERVIEW_MAIN, "overview")))
-    film = fill(shell("/film/", "HV World: the 45-second film", "See HV Test, HV Reset and HV Vault in action: real screens, with sound. Three free apps by Harsh Vittori.",
+    film = fill(shell("/film/", "3 apps. 1 AI. Zero chaos. (45-sec film) | HV World", "Watch HV Test, HV Reset and HV Vault in action: real screens, with sound. Three free apps by Harsh Vittori.",
                       "https://harshvittori.github.io/film/og.jpg", FILM_MAIN, "film"))
     film = film.replace('<meta property="og:type" content="website">', '<meta property="og:type" content="video.other">'
         '<meta property="og:video" content="https://harshvittori.github.io/media/hv-world-film.mp4">'

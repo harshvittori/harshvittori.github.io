@@ -152,6 +152,22 @@ h1{margin-top:12px;font-weight:700;font-size:64px;line-height:1.02;letter-spacin
 .fplay i{position:absolute;left:58px;top:44px;border-left:50px solid #2E43A6;border-top:31px solid transparent;border-bottom:31px solid transparent}
 .fdur{position:absolute;right:32px;bottom:30px;font-weight:600;font-size:24px;color:#fff;background:rgba(0,0,0,.8);padding:6px 14px;border-radius:8px}
 .fcap{position:absolute;left:40px;bottom:30px;font-weight:700;font-size:34px;color:#fff}
+.card.yt{background:#0B0F2A}
+.ytbg{position:absolute;inset:0;background:radial-gradient(70% 90% at 78% 50%,#4B3BD6 0%,#2A2380 38%,#0B0F2A 75%)}
+.rays{position:absolute;right:-160px;top:-260px;width:1100px;height:1100px;background:repeating-conic-gradient(from 0deg,rgba(255,255,255,.07) 0 8deg,transparent 8deg 22deg);border-radius:50%;-webkit-mask:radial-gradient(circle,#000 20%,transparent 62%)}
+.ytl{position:absolute;left:56px;top:50%;transform:translateY(-50%);z-index:5}
+.ytk{display:flex;align-items:center;gap:12px;font-weight:700;font-size:24px;letter-spacing:.12em;color:#C9CFFF;margin-bottom:18px}
+.yth{font-weight:700;font-size:104px;line-height:.95;letter-spacing:-.02em;color:#fff;text-shadow:0 6px 0 #1A1655,0 14px 40px rgba(0,0,0,.6)}
+.yth span{display:inline-block;margin-top:14px;font-size:96px;color:#16122F;background:#FFD84D;padding:6px 22px 10px;border-radius:14px;transform:rotate(-3deg);text-shadow:none;box-shadow:0 12px 0 #C89A12,0 24px 50px rgba(0,0,0,.5)}
+.ytr{position:absolute;right:40px;top:50%;width:540px;height:540px;transform:translateY(-50%)}
+.rwin{position:absolute;inset:0;width:100%;height:100%;filter:drop-shadow(0 30px 50px rgba(0,0,0,.5))}
+.ic{position:absolute;filter:drop-shadow(0 20px 30px rgba(0,0,0,.5))}.ic svg{box-shadow:none!important;border:5px solid #fff}
+.i1{left:0;top:30px}.i2{right:-10px;top:40px}.i3{right:-4px;bottom:40px}
+.arrow{position:absolute;left:470px;top:380px;width:150px;z-index:6;transform:rotate(-22deg)}
+.ytw{display:flex;align-items:center;gap:16px;margin-top:34px;font-weight:700;font-size:28px;color:#fff}
+.ytplay{position:relative;width:64px;height:64px;border-radius:50%;background:#FF3B5C;box-shadow:0 12px 30px -6px rgba(255,59,92,.8);flex:none}
+.ytplay i{position:absolute;left:25px;top:18px;border-left:23px solid #fff;border-top:14px solid transparent;border-bottom:14px solid transparent}
+.ytdur{position:absolute;right:28px;bottom:26px;font-weight:700;font-size:26px;color:#fff;background:rgba(0,0,0,.85);padding:6px 14px;border-radius:8px;z-index:6}
 .riya{position:absolute;left:40px;top:50%;width:560px;transform:translateY(-50%) rotate(2deg);border-radius:26px;overflow:hidden;box-shadow:0 40px 80px -30px rgba(20,30,60,.55)}
 .riya svg{display:block;width:100%;height:auto}
 """
@@ -160,10 +176,17 @@ for out, lg, word, acc, dark, tint, circ, eye, h1, sub, cta, art in CARDS:
     html += ('<div class="card" data-out="%s" style="--accent:%s;--dark:%s;--tint:%s;--circle:%s"><div class="c1"></div><div class="c2"></div>'
              '<div class="left"><div class="brand">%sHV <b>%s</b></div><p class="eye">%s</p><h1>%s</h1><div class="rule"></div><p class="sub">%s</p>'
              '<div class="cta">%s</div></div>%s</div>') % (out, acc, dark, tint, circ, svg(lg, 48, 0, False), word, eye, h1, sub, cta, art)
-# the film: a YouTube-style thumbnail (frame + play button + duration)
-html += ('<div class="card film" data-out="film/og.jpg"><div class="fr"></div><div class="shade"></div>'
-         '<div class="ftop">%s<div><b>HV World</b><span>The 45-second film</span></div></div>'
-         '<div class="fplay"><i></i></div><div class="fdur">0:46</div>'
-         '<div class="fcap">See all 3 apps in action</div></div>') % svg("world-orbit", 56, 0, False)
+# the film: a YouTube-style thumbnail -- huge text, cheering Riya, app icons, arrow, play + duration
+RIYA_WIN = ('<svg class="rwin" viewBox="0 0 600 600"><defs><clipPath id="rclip"><circle cx="300" cy="310" r="235"/></clipPath></defs>'
+            '<circle cx="300" cy="310" r="235" fill="#FFD84D"/><g clip-path="url(#rclip)">' +
+            story.riya(300, 520, 1.75, faces={"h": ""}, arms={"up": ""}) + '</g>'
+            '<circle cx="300" cy="310" r="235" fill="none" stroke="#fff" stroke-width="12"/></svg>')
+html += ('<div class="card yt" data-out="film/og.jpg"><div class="ytbg"></div><div class="rays"></div>'
+         '<div class="ytl"><div class="ytk">%s HV WORLD · 45 SEC</div>'
+         '<div class="yth">3 APPS.<br>1 AI.<br><span>ZERO CHAOS.</span></div><div class="ytw"><div class="ytplay"><i></i></div>Watch the film</div></div>'
+         '<div class="ytr">%s<span class="ic i1">%s</span><span class="ic i2">%s</span><span class="ic i3">%s</span></div>'
+         ''
+         '<div class="ytdur">0:46</div></div>') % (
+    svg("world-orbit", 38, 0, False), RIYA_WIN, svg("logo-test", 120, -12), svg("logo-reset", 120, 10), svg("logo-vault", 120, -6))
 open(os.path.join(HERE, "og-cards.html"), "w").write(html + "</body></html>")
 print("ok", len(CARDS), "cards")
