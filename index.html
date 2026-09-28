@@ -286,7 +286,45 @@ html{overflow-x:clip}
 @media (max-width:880px){.band{padding:64px 0}}
 /* reveal */
 @media (prefers-reduced-motion:no-preference){.rv{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s cubic-bezier(.22,1,.36,1)}.rv.in{opacity:1;transform:none}}
+
+@view-transition{navigation:auto}
+header{view-transition-name:site-header}
+main{view-transition-name:page}
+::view-transition-group(site-header){animation:none}
+::view-transition-old(site-header){display:none}
+::view-transition-new(site-header){animation:none}
+::view-transition-old(page){animation:vt-fade-out .2s cubic-bezier(.4,0,1,1) both}
+::view-transition-new(page){animation:vt-rise-in .42s cubic-bezier(.2,.8,.2,1) both}
+html:active-view-transition-type(forward)::view-transition-old(page){animation:vt-out-left .28s cubic-bezier(.4,0,.2,1) both}
+html:active-view-transition-type(forward)::view-transition-new(page){animation:vt-in-right .42s cubic-bezier(.2,.8,.2,1) both}
+html:active-view-transition-type(back)::view-transition-old(page){animation:vt-out-right .28s cubic-bezier(.4,0,.2,1) both}
+html:active-view-transition-type(back)::view-transition-new(page){animation:vt-in-left .42s cubic-bezier(.2,.8,.2,1) both}
+@keyframes vt-fade-out{to{opacity:0}}
+@keyframes vt-rise-in{from{opacity:0;transform:translateY(16px)}}
+@keyframes vt-out-left{to{opacity:0;transform:translateX(-48px)}}
+@keyframes vt-in-right{from{opacity:0;transform:translateX(64px)}}
+@keyframes vt-out-right{to{opacity:0;transform:translateX(48px)}}
+@keyframes vt-in-left{from{opacity:0;transform:translateX(-64px)}}
+@media (prefers-reduced-motion:reduce){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}}
 </style>
+<script type="speculationrules">{"prerender":[{"urls":["/", "/test/", "/reset/", "/vault/", "/watch/", "/story/"],"eagerness":"moderate"}]}</script>
+<script>
+(function () {
+  var ORDER = ["/", "/test/", "/reset/", "/vault/", "/watch/", "/story/"];
+  function idx(u) { try { var p = new URL(u, location.href).pathname; return ORDER.indexOf(p); } catch (e) { return -1; } }
+  // tell the transition which way to slide: along the menu order, like switching tabs
+  window.addEventListener("pageswap", function (e) {
+    if (!e.viewTransition || !e.activation || !e.activation.entry) return;
+    var a = idx(location.href), b = idx(e.activation.entry.url);
+    if (a > -1 && b > -1 && a !== b) e.viewTransition.types.add(b > a ? "forward" : "back");
+  });
+  window.addEventListener("pagereveal", function (e) {
+    if (!e.viewTransition || !navigation || !navigation.activation || !navigation.activation.from) return;
+    var a = idx(navigation.activation.from.url), b = idx(location.href);
+    if (a > -1 && b > -1 && a !== b) e.viewTransition.types.add(b > a ? "forward" : "back");
+  });
+})();
+</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -295,7 +333,7 @@ html{overflow-x:clip}
 <main id="main">
   <section id="top" class="wrap hero">
     <div class="rv">
-      <p class="eyebrow">By Harsh Vittori · Free for everyone</p>
+      <p class="eyebrow">Free for everyone</p>
       <h1>Your work, your day, your growth. <span>One calm world.</span></h1>
       <p class="lead">Three simple apps that work together. Know yourself with HV Test, plan your day with HV Reset, and keep every opportunity in HV Vault. Just tell HV AI what you need.</p>
       <div class="ctas"><a class="btn" href="#apps">Explore the apps</a><a class="btn ghost" href="/story/">Watch Riya's story <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
@@ -428,7 +466,7 @@ html{overflow-x:clip}
         <a class="pick" href="https://harshvittori.github.io/harsh-reset/"><svg aria-hidden="true" focusable="false" viewBox="0 0 1024 1024"><defs><linearGradient id="hvrbg-10" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5B86D6"/><stop offset=".55" stop-color="#9C8BDA"/><stop offset="1" stop-color="#F2A77E"/></linearGradient><radialGradient id="hvrsun-10" cx=".5" cy=".42" r=".6"><stop offset="0" stop-color="#FFF6DA"/><stop offset=".6" stop-color="#FFD58F"/><stop offset="1" stop-color="#FFB066"/></radialGradient><radialGradient id="hvrglow-10" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFE9B8" stop-opacity=".75"/><stop offset="1" stop-color="#FFE9B8" stop-opacity="0"/></radialGradient></defs><rect width="1024" height="1024" rx="232" fill="url(#hvrbg-10)"/><circle cx="512" cy="530" r="300" fill="url(#hvrglow-10)"/><circle cx="512" cy="530" r="138" fill="url(#hvrsun-10)"/><path d="M704 318A292 292 0 1 1 452 244" fill="none" stroke="#fff" stroke-width="62" stroke-linecap="round"/><path d="M548 225L454 318L424 176Z" fill="#fff" stroke="#fff" stroke-width="30" stroke-linejoin="round"/></svg>HV Reset</a>
         <a class="pick" href="https://harshvittori.github.io/hv-vault-web/"><svg aria-hidden="true" focusable="false" viewBox="0 0 1024 1024" aria-hidden="true"><defs><linearGradient id="hvaimk-11" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1B3157"/><stop offset=".5" stop-color="#152647"/><stop offset="1" stop-color="#0C1830"/></linearGradient></defs><rect width="1024" height="1024" rx="230" fill="url(#hvaimk-11)"/><path d="M 608.00 360.68 A 179.2 179.2 0 1 1 416.00 360.68" fill="none" stroke="#DFC18A" stroke-width="96" stroke-linecap="round"/><path d="M 608.00 206.74 A 320 320 0 1 1 416.00 206.74" fill="none" stroke="#C9A45E" stroke-width="83.2" stroke-linecap="round"/><circle cx="512" cy="512" r="96" fill="#EAD9B0"/></svg>HV Vault</a>
       </div>
-      <p class="builder">Designed and built by Harsh Vittori · <a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">Connect on LinkedIn</a></p>
+      <p class="builder">Designed and built by Harsh Goyal · <a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">Connect on LinkedIn</a></p>
     </div>
   </section>
   <dialog id="filmDlg" class="filmdlg" aria-label="HV World in action">
@@ -436,7 +474,7 @@ html{overflow-x:clip}
     <video id="filmVid" controls playsinline preload="none" poster="/media/hv-world-poster.jpg"><source src="/media/hv-world-film.mp4" type="video/mp4"><source src="/media/hv-world-film.webm" type="video/webm"></video>
   </dialog>
 </main>
-<footer><div class="wrap row"><span>© <span id="yr">2026</span> Harsh Vittori · HV World</span>
+<footer><div class="wrap row"><span>© <span id="yr">2026</span> HV World · Built by Harsh Goyal</span>
 <nav aria-label="Footer"><a href="/">Home</a><a href="/watch/">Watch</a><a href="/story/">Riya's story</a><a href="/test/">HV Test</a><a href="/reset/">HV Reset</a><a href="/vault/">HV Vault</a><a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/harshvittori" target="_blank" rel="noopener">GitHub</a></nav></div></footer>
 <script>
 (function () {
@@ -448,6 +486,7 @@ html{overflow-x:clip}
     var unmute = function () { fv.muted = false; fv.volume = 1; ub.hidden = true; fv.play().catch(function () {}); off(); };
     var onTap = function (e) { if (fv.muted) unmute(); };
     var off = function () { document.removeEventListener("pointerdown", onTap, true); document.removeEventListener("keydown", onTap, true); };
+    var start = function () {
     fv.muted = false;
     fv.play().catch(function () {
       fv.muted = true;
@@ -456,6 +495,8 @@ html{overflow-x:clip}
       document.addEventListener("pointerdown", onTap, true);
       document.addEventListener("keydown", onTap, true);
     });
+    };
+    if (document.prerendering) document.addEventListener("prerenderingchange", start, { once: true }); else start();
     ub.addEventListener("click", function (e) { e.stopPropagation(); unmute(); });
     fv.addEventListener("volumechange", function () { if (!fv.muted) { ub.hidden = true; off(); } });
   }

@@ -286,7 +286,45 @@ html{overflow-x:clip}
 @media (max-width:880px){.band{padding:64px 0}}
 /* reveal */
 @media (prefers-reduced-motion:no-preference){.rv{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s cubic-bezier(.22,1,.36,1)}.rv.in{opacity:1;transform:none}}
+
+@view-transition{navigation:auto}
+header{view-transition-name:site-header}
+main{view-transition-name:page}
+::view-transition-group(site-header){animation:none}
+::view-transition-old(site-header){display:none}
+::view-transition-new(site-header){animation:none}
+::view-transition-old(page){animation:vt-fade-out .2s cubic-bezier(.4,0,1,1) both}
+::view-transition-new(page){animation:vt-rise-in .42s cubic-bezier(.2,.8,.2,1) both}
+html:active-view-transition-type(forward)::view-transition-old(page){animation:vt-out-left .28s cubic-bezier(.4,0,.2,1) both}
+html:active-view-transition-type(forward)::view-transition-new(page){animation:vt-in-right .42s cubic-bezier(.2,.8,.2,1) both}
+html:active-view-transition-type(back)::view-transition-old(page){animation:vt-out-right .28s cubic-bezier(.4,0,.2,1) both}
+html:active-view-transition-type(back)::view-transition-new(page){animation:vt-in-left .42s cubic-bezier(.2,.8,.2,1) both}
+@keyframes vt-fade-out{to{opacity:0}}
+@keyframes vt-rise-in{from{opacity:0;transform:translateY(16px)}}
+@keyframes vt-out-left{to{opacity:0;transform:translateX(-48px)}}
+@keyframes vt-in-right{from{opacity:0;transform:translateX(64px)}}
+@keyframes vt-out-right{to{opacity:0;transform:translateX(48px)}}
+@keyframes vt-in-left{from{opacity:0;transform:translateX(-64px)}}
+@media (prefers-reduced-motion:reduce){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}}
 </style>
+<script type="speculationrules">{"prerender":[{"urls":["/", "/test/", "/reset/", "/vault/", "/watch/", "/story/"],"eagerness":"moderate"}]}</script>
+<script>
+(function () {
+  var ORDER = ["/", "/test/", "/reset/", "/vault/", "/watch/", "/story/"];
+  function idx(u) { try { var p = new URL(u, location.href).pathname; return ORDER.indexOf(p); } catch (e) { return -1; } }
+  // tell the transition which way to slide: along the menu order, like switching tabs
+  window.addEventListener("pageswap", function (e) {
+    if (!e.viewTransition || !e.activation || !e.activation.entry) return;
+    var a = idx(location.href), b = idx(e.activation.entry.url);
+    if (a > -1 && b > -1 && a !== b) e.viewTransition.types.add(b > a ? "forward" : "back");
+  });
+  window.addEventListener("pagereveal", function (e) {
+    if (!e.viewTransition || !navigation || !navigation.activation || !navigation.activation.from) return;
+    var a = idx(navigation.activation.from.url), b = idx(location.href);
+    if (a > -1 && b > -1 && a !== b) e.viewTransition.types.add(b > a ? "forward" : "back");
+  });
+})();
+</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -340,7 +378,7 @@ html{overflow-x:clip}
     <p class="back"><a href="/">See all three apps together <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
   </div></section>
 </main>
-<footer><div class="wrap row"><span>© <span id="yr">2026</span> Harsh Vittori · HV World</span>
+<footer><div class="wrap row"><span>© <span id="yr">2026</span> HV World · Built by Harsh Goyal</span>
 <nav aria-label="Footer"><a href="/">Home</a><a href="/watch/">Watch</a><a href="/story/">Riya's story</a><a href="/test/">HV Test</a><a href="/reset/">HV Reset</a><a href="/vault/">HV Vault</a><a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/harshvittori" target="_blank" rel="noopener">GitHub</a></nav></div></footer>
 <script>
 (function () {
@@ -352,6 +390,7 @@ html{overflow-x:clip}
     var unmute = function () { fv.muted = false; fv.volume = 1; ub.hidden = true; fv.play().catch(function () {}); off(); };
     var onTap = function (e) { if (fv.muted) unmute(); };
     var off = function () { document.removeEventListener("pointerdown", onTap, true); document.removeEventListener("keydown", onTap, true); };
+    var start = function () {
     fv.muted = false;
     fv.play().catch(function () {
       fv.muted = true;
@@ -360,6 +399,8 @@ html{overflow-x:clip}
       document.addEventListener("pointerdown", onTap, true);
       document.addEventListener("keydown", onTap, true);
     });
+    };
+    if (document.prerendering) document.addEventListener("prerenderingchange", start, { once: true }); else start();
     ub.addEventListener("click", function (e) { e.stopPropagation(); unmute(); });
     fv.addEventListener("volumechange", function () { if (!fv.muted) { ub.hidden = true; off(); } });
   }

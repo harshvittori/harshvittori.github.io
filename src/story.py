@@ -3,7 +3,9 @@
 Run from the repo root:  python3 src/story.py
 Every picture is hand-drawn inline SVG. Scroll steps switch a scene's data-step (1-4) and CSS shows,
 hides and animates the parts marked v1..v4. No libraries."""
-import os, re
+import os, re, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import transitions
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.dirname(HERE)
@@ -449,7 +451,7 @@ PAGE = """<!DOCTYPE html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Hard work, zero progress? Meet Riya | HV World</title>
-<meta name="description" content="Follow Riya through the three problems that hold people back, and see how HV Test, HV Reset and HV Vault fix each one. HV World, designed and built by Harsh Vittori.">
+<meta name="description" content="Follow Riya through the three problems that hold people back, and see how HV Test, HV Reset and HV Vault fix each one. From HV World.">
 <link rel="canonical" href="https://harshvittori.github.io/story/">
 <meta name="theme-color" content="#FFFFFF">
 <meta property="og:type" content="website"><meta property="og:site_name" content="HV World">
@@ -463,7 +465,7 @@ PAGE = """<!DOCTYPE html>
 <meta name="twitter:description" content="A 1-minute illustrated story about the 3 things that quietly hold you back, and how to fix them.">
 <meta name="twitter:image" content="https://harshvittori.github.io/story/og.jpg">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"HV World","url":"https://harshvittori.github.io/","founder":{"@type":"Person","name":"Harsh Vittori","sameAs":["https://www.linkedin.com/in/harshvittori"]}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"HV World","url":"https://harshvittori.github.io/"}</script>
 <style>__CSS__</style>
 </head>
 <body>
@@ -505,9 +507,8 @@ PAGE = """<!DOCTYPE html>
       <div class="tile"><b>Mentors</b><span>A clear structure to share.</span></div>
     </div>
   </div></section>
-  <section class="builder"><div class="wrap rv"><p>Designed and built by</p><h2>Harsh Vittori</h2><a class="more" href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">Connect on LinkedIn</a></div></section>
 </main>
-<footer><div class="wrap row"><span>© <span id="yr">2026</span> Harsh Vittori · HV World</span>
+<footer><div class="wrap row"><span>© <span id="yr">2026</span> HV World · Built by Harsh Goyal</span>
 <nav aria-label="Footer"><a href="/">All features</a><a href="/watch/">Watch</a><a href="/test/">About HV Test</a><a href="/reset/">About HV Reset</a><a href="/vault/">About HV Vault</a><a href="https://harshvittori.github.io/hv-tests/">HV Test</a><a href="https://harshvittori.github.io/harsh-reset/">HV Reset</a><a href="https://harshvittori.github.io/hv-vault-web/">HV Vault</a><a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/harshvittori" target="_blank" rel="noopener">GitHub</a></nav></div></footer>
 <script>__JS__</script>
 </body>
@@ -520,6 +521,7 @@ def build():
             .replace("__FINALE__", finale()).replace("__L_TEST__", logo("test", size=44)).replace("__L_RESET__", logo("reset", size=44)).replace("__L_VAULT__", logo("vault", size=44)))
     assert "__" not in re.sub(r"<script>.*?</script>", "", html, flags=re.S).replace("__proto__", ""), "unfilled placeholder"
     os.makedirs(os.path.join(OUT, "story"), exist_ok=True)
+    html = html.replace("</style>", transitions.CSS + "</style>", 1).replace("</head>", transitions.HEAD + "\n</head>", 1)
     open(os.path.join(OUT, "story", "index.html"), "w").write(html)
     open(os.path.join(OUT, "favicon.svg"), "w").write(read("world.svg") + "\n")
     print("ok", len(html), "bytes")

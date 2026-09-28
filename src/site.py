@@ -3,7 +3,9 @@ and one page per app: /test/, /reset/, /vault/. Logos come from src/.
 
 Run from the repo root:  python3 src/site.py
 The story page (index.html) comes from src/story.py."""
-import os, re
+import os, re, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import transitions
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -380,7 +382,7 @@ html{overflow-x:clip}
 OVERVIEW_MAIN = """<main id="main">
   <section id="top" class="wrap hero">
     <div class="rv">
-      <p class="eyebrow">By Harsh Vittori · Free for everyone</p>
+      <p class="eyebrow">Free for everyone</p>
       <h1>Your work, your day, your growth. <span>One calm world.</span></h1>
       <p class="lead">Three simple apps that work together. Know yourself with HV Test, plan your day with HV Reset, and keep every opportunity in HV Vault. Just tell HV AI what you need.</p>
       <div class="ctas"><a class="btn" href="#apps">Explore the apps</a><a class="btn ghost" href="/story/">Watch Riya's story __ARROW__</a></div>
@@ -461,7 +463,7 @@ OVERVIEW_MAIN = """<main id="main">
         <a class="pick" href="__U_RESET__">__LOGO_RESET_P__HV Reset</a>
         <a class="pick" href="__U_VAULT__">__LOGO_VAULT_P__HV Vault</a>
       </div>
-      <p class="builder">Designed and built by Harsh Vittori · <a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">Connect on LinkedIn</a></p>
+      <p class="builder">Designed and built by Harsh Goyal · <a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">Connect on LinkedIn</a></p>
     </div>
   </section>
   <dialog id="filmDlg" class="filmdlg" aria-label="HV World in action">
@@ -715,7 +717,7 @@ def shell(path, title, desc, og, body, active):
 <header><div class="wrap nav"><a class="brand" href="/">%sHV World</a>
 <nav aria-label="Main">%s<a class="ic" aria-label="Riya's story" href="/story/"><svg class="ni" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5C10 5 7 4.5 3.5 5v13c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5z"/><path d="M12 6.5v13"/></svg><span class="nt"><span class="d">Riya's </span>Story</span></a></nav></div></header>
 %s
-<footer><div class="wrap row"><span>© <span id="yr">2026</span> Harsh Vittori · HV World</span>
+<footer><div class="wrap row"><span>© <span id="yr">2026</span> HV World · Built by Harsh Goyal</span>
 <nav aria-label="Footer"><a href="/">Home</a><a href="/watch/">Watch</a><a href="/story/">Riya's story</a><a href="/test/">HV Test</a><a href="/reset/">HV Reset</a><a href="/vault/">HV Vault</a><a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/harshvittori" target="_blank" rel="noopener">GitHub</a></nav></div></footer>
 <script>
 (function () {
@@ -727,6 +729,7 @@ def shell(path, title, desc, og, body, active):
     var unmute = function () { fv.muted = false; fv.volume = 1; ub.hidden = true; fv.play().catch(function () {}); off(); };
     var onTap = function (e) { if (fv.muted) unmute(); };
     var off = function () { document.removeEventListener("pointerdown", onTap, true); document.removeEventListener("keydown", onTap, true); };
+    var start = function () {
     fv.muted = false;
     fv.play().catch(function () {
       fv.muted = true;
@@ -735,6 +738,8 @@ def shell(path, title, desc, og, body, active):
       document.addEventListener("pointerdown", onTap, true);
       document.addEventListener("keydown", onTap, true);
     });
+    };
+    if (document.prerendering) document.addEventListener("prerenderingchange", start, { once: true }); else start();
     ub.addEventListener("click", function (e) { e.stopPropagation(); unmute(); });
     fv.addEventListener("volumechange", function () { if (!fv.muted) { ub.hidden = true; off(); } });
   }
@@ -781,6 +786,7 @@ def fill(page):
 def write(path, page):
     d = os.path.join(ROOT, path.strip("/"))
     os.makedirs(d, exist_ok=True)
+    page = page.replace("</style>", transitions.CSS + "</style>", 1).replace("</head>", transitions.HEAD + "\n</head>", 1)
     open(os.path.join(d, "index.html"), "w").write(page)
     print("ok", path, len(page), "bytes")
 
@@ -788,7 +794,7 @@ def build():
     write("/", fill(shell("/", "Stop guessing. Start growing. | HV World",
           "3 free apps that show your strengths, plan your day and chase your follow-ups for you. Just talk to the AI.",
           "https://harshvittori.github.io/og.jpg", OVERVIEW_MAIN, "overview")))
-    film = fill(shell("/watch/", "3 apps. 1 AI. Zero chaos. | HV World", "See HV Test, HV Reset and HV Vault in action. Three free apps by Harsh Vittori.",
+    film = fill(shell("/watch/", "3 apps. 1 AI. Zero chaos. | HV World", "See HV Test, HV Reset and HV Vault in action. Three free apps, one AI.",
                       "https://harshvittori.github.io/watch/og.jpg", FILM_MAIN, "watch"))
     film = film.replace('<meta property="og:type" content="website">', '<meta property="og:type" content="video.other">'
         '<meta property="og:video" content="https://harshvittori.github.io/media/hv-world-film.mp4">'

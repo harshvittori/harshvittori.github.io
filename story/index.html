@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Hard work, zero progress? Meet Riya | HV World</title>
-<meta name="description" content="Follow Riya through the three problems that hold people back, and see how HV Test, HV Reset and HV Vault fix each one. HV World, designed and built by Harsh Vittori.">
+<meta name="description" content="Follow Riya through the three problems that hold people back, and see how HV Test, HV Reset and HV Vault fix each one. From HV World.">
 <link rel="canonical" href="https://harshvittori.github.io/story/">
 <meta name="theme-color" content="#FFFFFF">
 <meta property="og:type" content="website"><meta property="og:site_name" content="HV World">
@@ -18,7 +18,7 @@
 <meta name="twitter:description" content="A 1-minute illustrated story about the 3 things that quietly hold you back, and how to fix them.">
 <meta name="twitter:image" content="https://harshvittori.github.io/story/og.jpg">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"HV World","url":"https://harshvittori.github.io/","founder":{"@type":"Person","name":"Harsh Vittori","sameAs":["https://www.linkedin.com/in/harshvittori"]}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"HV World","url":"https://harshvittori.github.io/"}</script>
 <style>
 :root{--ink:#1D1D1F;--soft:#6E6E73;--faint:#86868B;--line:#D2D2D7;--gray:#F5F5F7;--accent:#2E43A6;--accent-hover:#1D2B72;
   --test:#127A4F;--reset:#4A72C8;--vault:#A87A22;--font:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;color-scheme:light}
@@ -200,7 +200,45 @@ footer{background:var(--gray);border-top:1px solid var(--line);color:var(--faint
 footer .row{display:flex;flex-wrap:wrap;gap:10px 20px;justify-content:space-between}
 footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{color:var(--soft)}
 @media (prefers-reduced-motion:no-preference){.rv{opacity:0;transform:translateY(24px);transition:opacity .9s cubic-bezier(.2,.8,.2,1),transform .9s cubic-bezier(.2,.8,.2,1)}.rv.in{opacity:1;transform:none}}
+
+@view-transition{navigation:auto}
+header{view-transition-name:site-header}
+main{view-transition-name:page}
+::view-transition-group(site-header){animation:none}
+::view-transition-old(site-header){display:none}
+::view-transition-new(site-header){animation:none}
+::view-transition-old(page){animation:vt-fade-out .2s cubic-bezier(.4,0,1,1) both}
+::view-transition-new(page){animation:vt-rise-in .42s cubic-bezier(.2,.8,.2,1) both}
+html:active-view-transition-type(forward)::view-transition-old(page){animation:vt-out-left .28s cubic-bezier(.4,0,.2,1) both}
+html:active-view-transition-type(forward)::view-transition-new(page){animation:vt-in-right .42s cubic-bezier(.2,.8,.2,1) both}
+html:active-view-transition-type(back)::view-transition-old(page){animation:vt-out-right .28s cubic-bezier(.4,0,.2,1) both}
+html:active-view-transition-type(back)::view-transition-new(page){animation:vt-in-left .42s cubic-bezier(.2,.8,.2,1) both}
+@keyframes vt-fade-out{to{opacity:0}}
+@keyframes vt-rise-in{from{opacity:0;transform:translateY(16px)}}
+@keyframes vt-out-left{to{opacity:0;transform:translateX(-48px)}}
+@keyframes vt-in-right{from{opacity:0;transform:translateX(64px)}}
+@keyframes vt-out-right{to{opacity:0;transform:translateX(48px)}}
+@keyframes vt-in-left{from{opacity:0;transform:translateX(-64px)}}
+@media (prefers-reduced-motion:reduce){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}}
 </style>
+<script type="speculationrules">{"prerender":[{"urls":["/", "/test/", "/reset/", "/vault/", "/watch/", "/story/"],"eagerness":"moderate"}]}</script>
+<script>
+(function () {
+  var ORDER = ["/", "/test/", "/reset/", "/vault/", "/watch/", "/story/"];
+  function idx(u) { try { var p = new URL(u, location.href).pathname; return ORDER.indexOf(p); } catch (e) { return -1; } }
+  // tell the transition which way to slide: along the menu order, like switching tabs
+  window.addEventListener("pageswap", function (e) {
+    if (!e.viewTransition || !e.activation || !e.activation.entry) return;
+    var a = idx(location.href), b = idx(e.activation.entry.url);
+    if (a > -1 && b > -1 && a !== b) e.viewTransition.types.add(b > a ? "forward" : "back");
+  });
+  window.addEventListener("pagereveal", function (e) {
+    if (!e.viewTransition || !navigation || !navigation.activation || !navigation.activation.from) return;
+    var a = idx(navigation.activation.from.url), b = idx(location.href);
+    if (a > -1 && b > -1 && a !== b) e.viewTransition.types.add(b > a ? "forward" : "back");
+  });
+})();
+</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -243,9 +281,8 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{color:var(--soft)}
       <div class="tile"><b>Mentors</b><span>A clear structure to share.</span></div>
     </div>
   </div></section>
-  <section class="builder"><div class="wrap rv"><p>Designed and built by</p><h2>Harsh Vittori</h2><a class="more" href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">Connect on LinkedIn</a></div></section>
 </main>
-<footer><div class="wrap row"><span>© <span id="yr">2026</span> Harsh Vittori · HV World</span>
+<footer><div class="wrap row"><span>© <span id="yr">2026</span> HV World · Built by Harsh Goyal</span>
 <nav aria-label="Footer"><a href="/">All features</a><a href="/watch/">Watch</a><a href="/test/">About HV Test</a><a href="/reset/">About HV Reset</a><a href="/vault/">About HV Vault</a><a href="https://harshvittori.github.io/hv-tests/">HV Test</a><a href="https://harshvittori.github.io/harsh-reset/">HV Reset</a><a href="https://harshvittori.github.io/hv-vault-web/">HV Vault</a><a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/harshvittori" target="_blank" rel="noopener">GitHub</a></nav></div></footer>
 <script>
 (function () {
