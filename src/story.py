@@ -10,6 +10,11 @@ import transitions
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.dirname(HERE)
 
+# Links into the apps (HV Test, HV Reset, HV Vault) open in a new tab, so HV World stays open behind them.
+def app_links_new_tab(html):
+    return re.sub(r'<a\b([^>]*\bhref="https://harshvittori\.github\.io/(?:hv-reset|hv-vault-web|hv-tests)/[^"]*"[^>]*)>',
+                  lambda m: m.group(0) if "target=" in m.group(1) else '<a' + m.group(1) + ' target="_blank" rel="noopener">', html)
+
 def read(n):
     return open(os.path.join(HERE, n)).read().strip()
 
@@ -529,7 +534,7 @@ def build():
     assert "__" not in re.sub(r"<script>.*?</script>", "", html, flags=re.S).replace("__proto__", ""), "unfilled placeholder"
     os.makedirs(os.path.join(OUT, "story"), exist_ok=True)
     html = html.replace("</style>", transitions.CSS + "</style>", 1).replace("</head>", transitions.HEAD + "\n</head>", 1)
-    open(os.path.join(OUT, "story", "index.html"), "w").write(html)
+    open(os.path.join(OUT, "story", "index.html"), "w").write(app_links_new_tab(html))
     open(os.path.join(OUT, "favicon.svg"), "w").write(read("world.svg") + "\n")
     print("ok", len(html), "bytes")
 
