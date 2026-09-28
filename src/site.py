@@ -636,6 +636,30 @@ def app_page(key):
 </main>''' % dict(a, logo=logo(key), url=URL[key], arrow=ARROW, facts=facts, steps=steps, feats=feats, who=who, faq=faq, nxt=nxt,
                   p1=a["problem"][0], p2=a["problem"][1], f1=a["fix"][0], f2=a["fix"][1])
 
+
+FILM_MAIN = """<main id="main" class="filmpage">
+  <section class="wrap fp">
+    <p class="label">The HV World film · 0:46</p>
+    <h1>See all 3 apps in action.</h1>
+    <div class="fpv"><video id="fpVid" controls playsinline preload="metadata" poster="/film/poster.jpg"><source src="/media/hv-world-film.mp4" type="video/mp4"><source src="/media/hv-world-film.webm" type="video/webm"></video></div>
+    <p class="fpsub">HV Test, HV Reset and HV Vault, real screens, with sound.</p>
+    <div class="ctas"><a class="btn" href="/">Explore HV World __ARROW__</a><a class="btn ghost" href="/story/">Read Riya's story</a></div>
+    <div class="fpapps"><a href="__U_TEST__">__LOGO_TEST__HV Test</a><a href="__U_RESET__">__LOGO_RESET__HV Reset</a><a href="__U_VAULT__">__LOGO_VAULT__HV Vault</a></div>
+  </section>
+</main>"""
+FILM_CSS = """
+.filmpage{background:#070B18;color:#fff;border-bottom:1px solid #1B2138}
+.fp{padding:56px 0 72px;text-align:center}
+.fp .label{color:#9AA7FF}
+.fp h1{font-size:clamp(34px,5vw,60px);font-weight:700;letter-spacing:-.045em;line-height:1.05;margin:6px 0 30px}
+.fpv{max-width:1040px;margin:0 auto;border-radius:22px;overflow:hidden;border:1px solid #232A45;box-shadow:0 50px 100px -40px rgba(0,0,0,.9)}
+.fpv video{display:block;width:100%;aspect-ratio:16/9;background:#000}
+.fpsub{color:#AEB6D6;font-size:18px;margin:22px 0 22px}
+.fp .ctas{justify-content:center}.fp .btn.ghost{color:#B9C3FF}
+.fpapps{display:flex;flex-wrap:wrap;gap:10px 22px;justify-content:center;margin-top:30px}
+.fpapps a{display:inline-flex;align-items:center;gap:9px;color:#DDE2F5;text-decoration:none;font-weight:600;font-size:15px}.fpapps svg{width:26px;height:26px;border-radius:7px}
+@media (max-width:880px){.fp{padding:32px 0 48px}.fpv{border-radius:14px}}
+"""
 # ---------------------------------------------------------------- shared page shell
 def shell(path, title, desc, og, body, active):
     nav = [("overview", "/", "Home", "opt"), ("test", "/test/", '<span class="d">HV </span>Test', ""),
@@ -727,6 +751,14 @@ def build():
     write("/", fill(shell("/", "Stop guessing. Start growing. | HV World",
           "3 free apps that show your strengths, plan your day and chase your follow-ups for you. Just talk to the AI. See it in 45 seconds.",
           "https://harshvittori.github.io/og.jpg", OVERVIEW_MAIN, "overview")))
+    film = fill(shell("/film/", "HV World: the 45-second film", "See HV Test, HV Reset and HV Vault in action: real screens, with sound. Three free apps by Harsh Vittori.",
+                      "https://harshvittori.github.io/film/og.jpg", FILM_MAIN, "film"))
+    film = film.replace('<meta property="og:type" content="website">', '<meta property="og:type" content="video.other">'
+        '<meta property="og:video" content="https://harshvittori.github.io/media/hv-world-film.mp4">'
+        '<meta property="og:video:secure_url" content="https://harshvittori.github.io/media/hv-world-film.mp4">'
+        '<meta property="og:video:type" content="video/mp4"><meta property="og:video:width" content="1920"><meta property="og:video:height" content="1080">'
+        '<meta property="video:duration" content="46">', 1).replace("</style>", FILM_CSS + "</style>", 1)
+    write("/film/", film)
     for k in ORDER:
         a = APPS[k]
         write("/%s/" % k, fill(shell("/%s/" % k, a["title"], a["desc"], "https://harshvittori.github.io/%s/og.jpg" % k, app_page(k), k)))

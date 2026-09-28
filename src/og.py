@@ -144,6 +144,14 @@ h1{margin-top:12px;font-weight:700;font-size:64px;line-height:1.02;letter-spacin
 .vmini{position:absolute;width:300px;background:#fff;border-radius:22px;padding:16px;box-shadow:0 30px 60px -24px rgba(20,30,60,.5);z-index:3}
 .tag-app{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:600;color:#6B7390;margin-bottom:10px}
 .pchip{position:absolute;z-index:4;display:flex;align-items:center;gap:12px;font-weight:600;font-size:22px;color:var(--c);background:#fff;border:2px solid var(--b);padding:9px 20px 9px 9px;border-radius:999px;box-shadow:0 20px 40px -16px rgba(20,30,60,.45);white-space:nowrap}
+.card.film{background:#060913}
+.film .fr{position:absolute;inset:0;background:url(og-assets/film-frame.jpg) center/cover}
+.film .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,9,19,.7) 0%,rgba(6,9,19,.05) 30%,rgba(6,9,19,.0) 72%,rgba(6,9,19,.7) 100%)}
+.ftop{position:absolute;left:40px;top:34px;display:flex;align-items:center;gap:16px;color:#fff}.ftop b{display:block;font-size:30px;font-weight:700}.ftop span{font-size:20px;color:#C9CFEA;font-weight:500}
+.fplay{position:absolute;left:50%;top:50%;width:150px;height:150px;margin:-75px 0 0 -75px;border-radius:50%;background:rgba(255,255,255,.95);box-shadow:0 0 0 14px rgba(255,255,255,.22),0 30px 60px -10px rgba(0,0,0,.6)}
+.fplay i{position:absolute;left:58px;top:44px;border-left:50px solid #2E43A6;border-top:31px solid transparent;border-bottom:31px solid transparent}
+.fdur{position:absolute;right:32px;bottom:30px;font-weight:600;font-size:24px;color:#fff;background:rgba(0,0,0,.8);padding:6px 14px;border-radius:8px}
+.fcap{position:absolute;left:40px;bottom:30px;font-weight:700;font-size:34px;color:#fff}
 .riya{position:absolute;left:40px;top:50%;width:560px;transform:translateY(-50%) rotate(2deg);border-radius:26px;overflow:hidden;box-shadow:0 40px 80px -30px rgba(20,30,60,.55)}
 .riya svg{display:block;width:100%;height:auto}
 """
@@ -152,5 +160,10 @@ for out, lg, word, acc, dark, tint, circ, eye, h1, sub, cta, art in CARDS:
     html += ('<div class="card" data-out="%s" style="--accent:%s;--dark:%s;--tint:%s;--circle:%s"><div class="c1"></div><div class="c2"></div>'
              '<div class="left"><div class="brand">%sHV <b>%s</b></div><p class="eye">%s</p><h1>%s</h1><div class="rule"></div><p class="sub">%s</p>'
              '<div class="cta">%s</div></div>%s</div>') % (out, acc, dark, tint, circ, svg(lg, 48, 0, False), word, eye, h1, sub, cta, art)
+# the film: a YouTube-style thumbnail (frame + play button + duration)
+html += ('<div class="card film" data-out="film/og.jpg"><div class="fr"></div><div class="shade"></div>'
+         '<div class="ftop">%s<div><b>HV World</b><span>The 45-second film</span></div></div>'
+         '<div class="fplay"><i></i></div><div class="fdur">0:46</div>'
+         '<div class="fcap">See all 3 apps in action</div></div>') % svg("world-orbit", 56, 0, False)
 open(os.path.join(HERE, "og-cards.html"), "w").write(html + "</body></html>")
 print("ok", len(CARDS), "cards")
