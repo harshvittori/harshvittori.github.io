@@ -659,8 +659,12 @@ def shell(path, title, desc, og, body, active):
 <meta property="og:description" content="%s">
 <meta property="og:url" content="%s">
 <meta property="og:image" content="%s">
-<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="%s">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="%s">
+<meta name="twitter:description" content="%s">
+<meta name="twitter:image" content="%s">
 <style>%s</style>
 </head>
 <body>
@@ -698,7 +702,7 @@ def shell(path, title, desc, og, body, active):
 </script>
 </body>
 </html>
-''' % (title, desc, url, title.replace(" | ", ": "), desc, url, og, CSS, logo("world"), links, body)
+''' % (title, desc, url, title.replace(" | ", ": "), desc, url, og, title.replace(" | ", ": "), title.replace(" | ", ": "), desc, og, CSS, logo("world"), links, body)
 
 def fill(page):
     page = page.replace("__PRODUCTS__", "\n".join(product(*p, flip=(i == 1)) for i, p in enumerate(PRODUCTS)))

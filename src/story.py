@@ -447,7 +447,12 @@ PAGE = """<!DOCTYPE html>
 <meta property="og:title" content="HV World: Riya's story. Know. Plan. Act.">
 <meta property="og:description" content="Three problems hold people back. Three products fix them. Designed and built by Harsh Vittori.">
 <meta property="og:url" content="https://harshvittori.github.io/story/"><meta property="og:image" content="https://harshvittori.github.io/story/og.png">
-<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">
+<meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="HV World: This is Riya. An illustrated story in three apps.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="HV World: Riya's story. Know. Plan. Act.">
+<meta name="twitter:description" content="Three problems hold people back. Three products fix them. Designed and built by Harsh Vittori.">
+<meta name="twitter:image" content="https://harshvittori.github.io/story/og.png">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"HV World","url":"https://harshvittori.github.io/","founder":{"@type":"Person","name":"Harsh Vittori","sameAs":["https://www.linkedin.com/in/harshvittori"]}}</script>
 <style>__CSS__</style>
