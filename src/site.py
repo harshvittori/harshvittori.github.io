@@ -1,4 +1,4 @@
-"""HV World: the home page (all three apps, HV AI, privacy, price, FAQ)
+"""HV World: the home page (all three apps, HV AI, privacy, access, FAQ)
 and one page per app: /test/, /reset/, /vault/. Logos come from src/.
 
 Run from the repo root:  python3 src/site.py
@@ -104,7 +104,7 @@ def product(key, name, tag, pitch, feats, mock, cta, flip):
 </article>''' % (key, " flip" if flip else "", key, logo(key), name, tag, pitch, lis, URL[key], cta, ARROW, key, mock))
 
 FAQ = [
-    ("Is it really free?", "Yes. HV Test, HV Reset and HV Vault are free to use, and so is HV AI. No card, no trial, no hidden plan."),
+    ("Who can use HV World?", "Everyone. HV Test, HV Reset and HV Vault are free for everyone, and so is HV AI. Open them in any browser, on your phone or laptop."),
     ("Do I need to install anything?", "No. Everything runs in the browser on your phone or laptop. On a phone you can add any app to your home screen from the browser's share menu."),
     ("Do I need an account?", "HV Vault uses Google sign-in, so your data follows you across devices. HV Test needs no account at all."),
     ("What languages does HV AI understand?", "Hindi, English and Hinglish, typed or spoken. It replies in the language you use."),
@@ -240,12 +240,11 @@ section{scroll-margin-top:72px}
 .ai-sec li{display:flex;gap:10px;font-size:16px;color:var(--soft)}.ai-sec li svg{width:20px;height:20px;flex:none;color:var(--accent);margin-top:2px}
 .ai-sec .r{background:#EEF0FA;border-left:1px solid #DCE0F2;padding:40px;display:flex;align-items:center;justify-content:center}
 @media (max-width:880px){.ai-sec{grid-template-columns:1fr}.ai-sec .l{padding:28px 22px}.ai-sec .r{padding:28px 18px}}
-/* privacy + free */
+/* privacy + access */
 .two{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:112px}
 .two>div{background:#fff;border:1px solid var(--line);border-radius:28px;padding:40px}
 .two h3{font-size:26px;font-weight:700;letter-spacing:-.03em;margin-bottom:10px}
 .two p:not(.label){color:var(--soft);font-size:17px}
-.big{font-size:clamp(64px,8vw,96px);font-weight:700;letter-spacing:-.05em;line-height:1;margin:4px 0 12px}
 @media (max-width:720px){.two{grid-template-columns:1fr}.two>div{padding:28px 22px}}
 /* faq */
 .faq{max-width:780px;margin:0 auto 112px;border-top:1px solid var(--line)}
@@ -349,7 +348,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
   .feat .ic{grid-row:span 2;width:40px;height:40px;margin:0}.feat h3{font-size:17px;margin-bottom:4px}.feat p{font-size:15px}
   .ai-sec,.two{margin-bottom:72px}.ai-sec .r{order:-1;border-left:0;border-bottom:1px solid #DCE0F2;padding:20px 16px}
   .sep{margin-bottom:64px}.faq{margin-bottom:72px}.faq summary{font-size:16.5px;padding:18px 2px}
-  .big{font-size:64px}.final{padding:60px 16px}
+  .final{padding:60px 16px}
   .phero .wrap{padding:28px 0 36px;gap:24px}.pname svg{width:60px;height:60px;border-radius:16px}.pname{gap:14px}
   .pp .lead{margin:18px 0 22px;font-size:17px}.crumb{margin-bottom:18px}
   .facts{margin-top:20px}.facts b{font-size:19px}.facts span{font-size:13px}
@@ -395,7 +394,7 @@ OVERVIEW_MAIN = """<main id="main">
       <h1>Your work, your day, your growth. <span>One calm world.</span></h1>
       <p class="lead">Three simple apps that work together. Know yourself with HV Test, plan your day with HV Reset, and keep every opportunity in HV Vault. Just tell HV AI what you need.</p>
       <div class="ctas"><a class="btn" href="#apps">Explore the apps</a><a class="btn ghost" href="/story/">Watch Riya's story __ARROW__</a></div>
-      <p class="note">No card, no trial, no ads. Everything runs in your browser.</p>
+      <p class="note">Nothing to install. Works on your phone and laptop.</p>
     </div>
     <div class="orbit rv" aria-hidden="true">
       <div class="ring"></div><div class="ring r2"></div>
@@ -408,7 +407,7 @@ OVERVIEW_MAIN = """<main id="main">
 
   <div class="wrap strip rv">
     <div><b>3 apps</b><span>One world, one sign-in</span></div>
-    <div><b>₹0</b><span>Everything, for everyone</span></div>
+    <div><b>For everyone</b><span>Free to use, HV AI included</span></div>
     <div><b>HV AI</b><span>Type or talk, your language</span></div>
     <div><b>Any device</b><span>Phone and laptop</span></div>
   </div>
@@ -446,16 +445,16 @@ OVERVIEW_MAIN = """<main id="main">
           <li>__CHECK__Every change is a card: Confirm, Edit or Cancel</li>
           <li>__CHECK__Deletes always ask first. Unclear names get a question, not a guess</li>
           <li>__CHECK__Undo the last change any time</li>
-          <li>__CHECK__Built in and free: no key, no setup</li>
+          <li>__CHECK__Built in: no key, no setup</li>
         </ul>
       </div>
       <div class="r">__MOCK_AI__</div>
     </div>
   </section>
 
-  <section id="free" class="wrap band band-w"><div class="two">
+  <section id="access" class="wrap band band-w"><div class="two">
     <div class="rv"><p class="label">Privacy</p><h3>Your data is yours.</h3><p>HV Vault saves everything to your own private space, linked to your Google account. Only you can read it. HV Test never stores your answers: everything happens in your browser.</p></div>
-    <div class="rv"><p class="label">Price</p><div class="big">₹0</div><p>All three apps are free for everyone, including HV AI. No card, no trial, no ads.</p></div>
+    <div class="rv"><p class="label">Open to all</p><h3>Made for everyone.</h3><p>All three apps and HV AI are free for everyone. Open them in any browser, with nothing to install and no ads in your way.</p></div>
   </div></section>
 
   <section id="faq" class="wrap band band-g">
@@ -546,10 +545,10 @@ APPS = {
         ("Is HV Test a diagnosis?", "No. It's a self-assessment for personal growth, not a clinical or psychological diagnosis."),
         ("Do I need an account?", "No. There's no login, and your answers never leave your browser."),
         ("Can I take it again?", "Yes. Questions and options are shuffled, and a retake avoids the questions you saw last time."),
-        ("Is it free?", "Yes. The Maturity Assessment is completely free, both PDFs included.")]),
+        ("Who can take it?", "Anyone. The Maturity Assessment is free for everyone, both PDFs included.")]),
  "reset": dict(name="HV Reset", verb="Plan your day", color="#4A72C8", tint="#EEF2FB", pline="#D6E0F4", mock=MOCK_RESET, cta="Open HV Reset", story="/#reset",
    title="Late start? Fix your whole day in one tap | HV Reset",
-   desc="One block, one task, zero guilt. Your plan moves with you, and meals and breaks stay protected. Free, right in your browser.",
+   desc="One block, one task, no guilt. Your plan moves with you, and meals and breaks stay protected. Right in your browser.",
    lead="A day made of simple blocks: one block, one task. You always know what to do right now, and the day bends instead of breaking.",
    facts=[("1 task", "per block"), ("90 min", "longest work block"), ("1 tap", "to shift a late day"), ("HV AI", "plans from one sentence")],
    problem=("“Where did my day go?”", "Notifications, coffee and a to-do list that never shrinks. The clock spins and the important work waits."),
@@ -575,10 +574,10 @@ APPS = {
    faq=[("Do I have to plan every block myself?", "No. Today's plan is ready when you open it, and HV AI can build or change it from one sentence."),
         ("What happens if I fall behind?", "Tap to shift the rest of the day later, move it to tomorrow, or do the minimum version of a block."),
         ("Does it work with HV Vault?", "Yes. Log an application in HV Reset and it lands in HV Vault as Applied, with its first follow-up."),
-        ("Is it free?", "Yes, including HV AI.")]),
+        ("Who can use it?", "Everyone. It's free for everyone, HV AI included, and runs right in your browser.")]),
  "vault": dict(name="HV Vault", verb="Act on every opportunity", color="#A87A22", tint="#F8F3E8", pline="#EADDC2", mock=MOCK_VAULT, cta="Open HV Vault", story="/#vault",
    title="Stop losing job leads in WhatsApp chats | HV Vault",
-   desc="Every job, recruiter and interview on one board. Follow-ups set themselves. Just tell the AI what happened. Free.",
+   desc="Every job, recruiter and interview on one board. Follow-ups set themselves. Just tell the AI what happened.",
    lead="Every job, company, follow-up and interview in one calm place, so nothing slips. Just tell HV AI what happened.",
    facts=[("1 board", "Saved to Offer"), ("Auto", "follow-ups"), ("AI", "fills in job posts"), ("Any device", "same data everywhere")],
    problem=("“Did I ever follow up?”", "Links in chats, five versions of a resume, sticky notes everywhere. The good opportunities go quiet."),
@@ -606,8 +605,8 @@ APPS = {
         ("Mentors", "A clear structure to share with the people you guide.")],
    faq=[("Do I need an account?", "Yes, a Google sign-in, so your data is private to you and follows you across devices."),
         ("Can I get my data out?", "Yes. Export to Excel or download a full backup any time."),
-        ("Does HV AI cost anything?", "No. It's built in and free: no key, no setup. Every change shows as a card you confirm."),
-        ("Is it free?", "Yes. No card, no trial, no ads.")]),
+        ("Do I need to set up HV AI?", "No. It's built in: no key, no setup. Every change shows as a card you confirm."),
+        ("Who can use it?", "Everyone with a Google account. It's free for everyone.")]),
 }
 ORDER = ["test", "reset", "vault"]
 
@@ -815,7 +814,7 @@ def build():
     write("/", fill(shell("/", "Stop guessing. Start growing. | HV World",
           "3 free apps that show your strengths, plan your day and chase your follow-ups for you. Just talk to the AI.",
           "https://harshvittori.github.io/og.jpg", OVERVIEW_MAIN, "overview")))
-    film = fill(shell("/watch/", "3 apps. 1 AI. Zero chaos. | HV World", "See HV Test, HV Reset and HV Vault in action. Three free apps, one AI.",
+    film = fill(shell("/watch/", "3 apps. 1 AI. One calm day. | HV World", "See HV Test, HV Reset and HV Vault in action. Three free apps, one AI.",
                       "https://harshvittori.github.io/watch/og.jpg", FILM_MAIN, "watch"))
     film = film.replace('<meta property="og:type" content="website">', '<meta property="og:type" content="video.other">'
         '<meta property="og:video" content="https://harshvittori.github.io/media/hv-world-film.mp4">'

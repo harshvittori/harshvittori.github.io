@@ -84,12 +84,12 @@ CARDS = [  # out, brand logo, brand word, accent, dark, tint, circle, eyebrow, h
     ("og.jpg", "world", "WORLD", "#2E43A6", "#233489", "#F4F5FB", "#E2E7F8", "3 free apps · 1 AI",
      "Stop guessing.<br>Start growing.", "Know your strengths. Run a calm day.<br>Never miss a follow-up.", "Explore HV World &nbsp;→", HOME_ART2),
     ("story/og.jpg", "world", "WORLD", "#2E43A6", "#233489", "#F4F5FB", "#E2E7F8", "A 1-minute illustrated story",
-     "Hard work. Zero progress. Sound familiar?", "Meet Riya. A 1-minute story about the 3 things quietly holding her back.", "Read her story &nbsp;→", RIYA),
+     "Hard work. No progress. Sound familiar?", "Meet Riya. A 1-minute story about the 3 things quietly holding her back.", "Read her story &nbsp;→", RIYA),
     ("test/og.jpg", "logo-test", "TEST", "#127A4F", "#0D5E3C", "#F4F8F5", "#DDEFE4", "Tests for how you think and grow",
      "You think you know yourself. Prove it.", "Traits, thinking, skills and growth. Start with the free Maturity Assessment.", "Take a test &nbsp;→",
      TEST_ART),
     ("reset/og.jpg", "logo-reset", "RESET", "#3F66BE", "#2C4E99", "#F3F6FC", "#DCE6F8", "Plan your day",
-     "Late start?<br>Fix your whole day<br>in one tap.", "One block, one task, zero guilt. Meals and breaks stay protected.", "Plan my day &nbsp;→",
+     "Late start?<br>Fix your whole day<br>in one tap.", "One block, one task, no guilt. Meals and breaks stay protected.", "Plan my day &nbsp;→",
      RESET_ART),
     ("vault/og.jpg", "logo-vault", "VAULT", "#A0721C", "#7C5712", "#FAF7F0", "#F1E6CF", "For your job hunt",
      "Stop losing job leads in WhatsApp chats.", "Every job, recruiter and interview on one board, with follow-ups that set themselves.", "Organise my job hunt &nbsp;→",
@@ -202,7 +202,7 @@ html += ('<div class="card tr" data-out="watch/og.jpg"><div class="trbg"></div><
          + gwin("v-pipe-b", (270, 40, 1170, 620), 480, "#E0A83E", "left:700px;top:300px;transform:perspective(1200px) rotateY(-14deg) rotate(3deg);z-index:3")
          + gwin("r-intro-0", (220, 60, 1000, 640), 380, "#5B8CFF", "left:860px;top:110px;transform:perspective(1200px) rotateY(-16deg) rotate(2deg);z-index:2")
          + '<div class="trl"><div class="trk">%s HV WORLD</div>'
-         '<div class="trh">3 apps.<br>1 AI.<br><span>Zero chaos.</span></div>'
+         '<div class="trh">3 apps.<br>1 AI.<br><span>One calm day.</span></div>'
          '<div class="trapps">%s%s%s<em>Test · Reset · Vault</em></div></div>'
          '<div class="trplay"><i></i></div><div class="trdur">0:46</div></div>') % (
     svg("world", 36, 0, False), svg("logo-test", 44, 0, False), svg("logo-reset", 44, 0, False), svg("logo-vault", 44, 0, False))

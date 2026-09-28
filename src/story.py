@@ -450,18 +450,18 @@ PAGE = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Hard work, zero progress? Meet Riya | HV World</title>
+<title>Hard work, no progress? Meet Riya | HV World</title>
 <meta name="description" content="Follow Riya through the three problems that hold people back, and see how HV Test, HV Reset and HV Vault fix each one. From HV World.">
 <link rel="canonical" href="https://harshvittori.github.io/story/">
 <meta name="theme-color" content="#FFFFFF">
 <meta property="og:type" content="website"><meta property="og:site_name" content="HV World">
-<meta property="og:title" content="Hard work, zero progress? Meet Riya | HV World">
+<meta property="og:title" content="Hard work, no progress? Meet Riya | HV World">
 <meta property="og:description" content="A 1-minute illustrated story about the 3 things that quietly hold you back, and how to fix them.">
 <meta property="og:url" content="https://harshvittori.github.io/story/"><meta property="og:image" content="https://harshvittori.github.io/story/og.jpg">
 <meta property="og:image:type" content="image/jpeg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Hard work, zero progress? Meet Riya: a 1-minute illustrated story from HV World.">
+<meta property="og:image:alt" content="Hard work, no progress? Meet Riya: a 1-minute illustrated story from HV World.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Hard work, zero progress? Meet Riya | HV World">
+<meta name="twitter:title" content="Hard work, no progress? Meet Riya | HV World">
 <meta name="twitter:description" content="A 1-minute illustrated story about the 3 things that quietly hold you back, and how to fix them.">
 <meta name="twitter:image" content="https://harshvittori.github.io/story/og.jpg">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
