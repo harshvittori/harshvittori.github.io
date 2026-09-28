@@ -282,6 +282,14 @@ html{overflow-x:clip}
 .band-w .feat,.band-w .two>div{background:#F7F8FA}
 .final{background:#FFFFFF}
 .factband{background:#F2F3F7;display:flow-root}
+.lib{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.lc{position:relative;background:#fff;border:1.5px solid var(--pc);border-radius:20px;padding:24px 22px;box-shadow:0 18px 40px -28px rgba(20,30,60,.35)}
+.lc.soon{border:1px dashed #C9CDD8;box-shadow:none;background:rgba(255,255,255,.6)}
+.lc .lb{display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.04em;padding:4px 11px;border-radius:999px;color:#fff;background:var(--pc);margin-bottom:14px}
+.lc.soon .lb{color:var(--soft);background:#EDEFF4}
+.lc h3{font-size:19px;font-weight:700;letter-spacing:-.02em;margin-bottom:6px}.lc p{color:var(--soft);font-size:15.5px;line-height:1.45}
+.lc.soon h3{color:#3A3F4B}
+@media (max-width:980px){.lib{grid-template-columns:1fr 1fr}}@media (max-width:560px){.lib{grid-template-columns:1fr}}
 .pp-sec{background:#F2F3F7}.pp-sec:nth-of-type(odd){background:#FFFFFF}
 .pp-sec:nth-of-type(even) .steps3,.pp-sec:nth-of-type(even) .fgrid{background:#fff}
 @media (max-width:880px){.band{padding:64px 0}}
@@ -360,6 +368,7 @@ html:active-view-transition-type(back)::view-transition-new(page){animation:vt-i
     <div class="head rv"><p class="label">How it works</p><h2>Three steps. That's it.</h2></div>
     <div class="steps3"><div class="st rv"><span class="n">1</span><h3>Open your day</h3><p>Today's plan is ready, block by block. Or tell HV AI how your day looks.</p></div><div class="st rv"><span class="n">2</span><h3>Tap Start</h3><p>The big clock shows what's on now and how much time is left.</p></div><div class="st rv"><span class="n">3</span><h3>Tick and adjust</h3><p>Tick blocks off as you go. If the day slips, shift it or do the minimum version.</p></div></div>
   </div></section>
+
 
   <section class="pp-sec" id="features"><div class="wrap">
     <div class="head rv"><p class="label">Every feature</p><h2>Everything HV Reset does.</h2></div>

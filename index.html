@@ -282,6 +282,14 @@ html{overflow-x:clip}
 .band-w .feat,.band-w .two>div{background:#F7F8FA}
 .final{background:#FFFFFF}
 .factband{background:#F2F3F7;display:flow-root}
+.lib{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.lc{position:relative;background:#fff;border:1.5px solid var(--pc);border-radius:20px;padding:24px 22px;box-shadow:0 18px 40px -28px rgba(20,30,60,.35)}
+.lc.soon{border:1px dashed #C9CDD8;box-shadow:none;background:rgba(255,255,255,.6)}
+.lc .lb{display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.04em;padding:4px 11px;border-radius:999px;color:#fff;background:var(--pc);margin-bottom:14px}
+.lc.soon .lb{color:var(--soft);background:#EDEFF4}
+.lc h3{font-size:19px;font-weight:700;letter-spacing:-.02em;margin-bottom:6px}.lc p{color:var(--soft);font-size:15.5px;line-height:1.45}
+.lc.soon h3{color:#3A3F4B}
+@media (max-width:980px){.lib{grid-template-columns:1fr 1fr}}@media (max-width:560px){.lib{grid-template-columns:1fr}}
 .pp-sec{background:#F2F3F7}.pp-sec:nth-of-type(odd){background:#FFFFFF}
 .pp-sec:nth-of-type(even) .steps3,.pp-sec:nth-of-type(even) .fgrid{background:#fff}
 @media (max-width:880px){.band{padding:64px 0}}
@@ -369,8 +377,8 @@ html:active-view-transition-type(back)::view-transition-new(page){animation:vt-i
     <div class="products"><article class="product p-test rv" id="test">
   <div class="left">
     <div class="top"><svg aria-hidden="true" focusable="false" viewBox="0 0 48 48"><rect width="48" height="48" rx="12" fill="#127A4F"/><circle cx="16.5" cy="16.5" r="5.5" stroke="#FFFFFF" stroke-width="3" fill="none"/><circle cx="31.5" cy="16.5" r="5.5" stroke="#FFFFFF" stroke-width="3" fill="none"/><circle cx="16.5" cy="31.5" r="5.5" stroke="#FFFFFF" stroke-width="3" fill="none"/><circle cx="31.5" cy="31.5" r="7.5" fill="#FFC54D"/><path d="M28 31.6l2.5 2.5 4.8-5" stroke="#17231C" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div><h3>HV Test</h3><p class="tag">Know yourself</p></div></div>
-    <p class="pitch">Honest, everyday situations that show how you really think, react and decide.</p>
-    <ul><li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span><b>Maturity Assessment.</b> 28 to 30 real-life situations across 10 areas. About 10 minutes.</span></li><li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span><b>A score out of 100.</b> See where you're strong and where to grow.</span></li><li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span><b>Two PDFs to keep.</b> A full report and a personal 30-day plan.</span></li><li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span><b>Private by design.</b> No login. Your answers never leave your browser.</span></li></ul>
+    <p class="pitch">Tests that show how you think, learn, act and grow, so you know where you stand and what to work on next.</p>
+    <ul><li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span><b>A growing library of tests.</b> Traits, thinking, skills and personal growth. The Maturity Assessment is live now.</span></li><li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span><b>An honest score.</b> See where you're strong and where to grow, not just a number.</span></li><li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span><b>Two PDFs to keep.</b> A full report and a personal 30-day plan.</span></li><li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span><b>Private by design.</b> No login. Your answers never leave your browser.</span></li></ul>
     <div class="acts"><a class="btn" href="https://harshvittori.github.io/hv-tests/">Take a test <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn ghost" href="/test/">Learn more</a></div>
   </div>
   <div class="right"><div class="mock q">

@@ -71,9 +71,9 @@ MOCK_AI = '''<div class="mock chat">
 </div>'''
 
 PRODUCTS = [
-    ("test", "HV Test", "Know yourself", "Honest, everyday situations that show how you really think, react and decide.", [
-        ("Maturity Assessment.", "28 to 30 real-life situations across 10 areas. About 10 minutes."),
-        ("A score out of 100.", "See where you're strong and where to grow."),
+    ("test", "HV Test", "Know yourself", "Tests that show how you think, learn, act and grow, so you know where you stand and what to work on next.", [
+        ("A growing library of tests.", "Traits, thinking, skills and personal growth. The Maturity Assessment is live now."),
+        ("An honest score.", "See where you're strong and where to grow, not just a number."),
         ("Two PDFs to keep.", "A full report and a personal 30-day plan."),
         ("Private by design.", "No login. Your answers never leave your browser."),
     ], MOCK_TEST, "Take a test"),
@@ -373,6 +373,14 @@ html{overflow-x:clip}
 .band-w .feat,.band-w .two>div{background:#F7F8FA}
 .final{background:#FFFFFF}
 .factband{background:#F2F3F7;display:flow-root}
+.lib{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.lc{position:relative;background:#fff;border:1.5px solid var(--pc);border-radius:20px;padding:24px 22px;box-shadow:0 18px 40px -28px rgba(20,30,60,.35)}
+.lc.soon{border:1px dashed #C9CDD8;box-shadow:none;background:rgba(255,255,255,.6)}
+.lc .lb{display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.04em;padding:4px 11px;border-radius:999px;color:#fff;background:var(--pc);margin-bottom:14px}
+.lc.soon .lb{color:var(--soft);background:#EDEFF4}
+.lc h3{font-size:19px;font-weight:700;letter-spacing:-.02em;margin-bottom:6px}.lc p{color:var(--soft);font-size:15.5px;line-height:1.45}
+.lc.soon h3{color:#3A3F4B}
+@media (max-width:980px){.lib{grid-template-columns:1fr 1fr}}@media (max-width:560px){.lib{grid-template-columns:1fr}}
 .pp-sec{background:#F2F3F7}.pp-sec:nth-of-type(odd){background:#FFFFFF}
 .pp-sec:nth-of-type(even) .steps3,.pp-sec:nth-of-type(even) .fgrid{background:#fff}
 @media (max-width:880px){.band{padding:64px 0}}
@@ -505,16 +513,20 @@ ICONS = {
 # ---------------------------------------------------------------- one page per app
 APPS = {
  "test": dict(name="HV Test", verb="Know yourself", color="#127A4F", tint="#EEF6F1", pline="#D3E7DA", mock=MOCK_TEST, cta="Take a test", story="/#test",
-   title="You think you know yourself? Prove it in 10 minutes | HV Test",
-   desc="Real-life situations, an honest score out of 100, a full report and a 30-day plan to grow. Free, no login, nothing stored.",
-   lead="Honest, everyday situations that show how you really think, react and decide. Then a clear score and a plan to grow.",
-   facts=[("10 min", "to finish"), ("10", "areas measured"), ("2 PDFs", "report and 30-day plan"), ("No login", "answers stay on your device")],
-   problem=("“So, what are your strengths?”", "Most of us have never really measured ourselves. So in an interview, a review or a big decision, we guess."),
-   fix=("A clear picture, in 10 minutes.", "HV Test puts you in real situations and scores how you actually respond, so you know where you're strong and where to grow."),
-   steps=[("Pick a test", "Start with the Maturity Assessment, and add your name, age and focus."),
-          ("Answer honestly", "28 to 30 everyday situations. There are no right answers: pick what you'd really do."),
-          ("Get your plan", "Your score, strengths and growth areas, and two PDFs to keep.")],
-   feats=[("CHECKC", "Maturity Assessment", "The first HV Test: how you think, react and decide in real life. About 10 minutes."),
+   title="How well do you really know yourself? | HV Test",
+   desc="Tests for how you think, learn, act and grow. Start with the free Maturity Assessment: an honest score, a full report and a 30-day plan. No login.",
+   lead="One place to understand yourself: your traits, how you think and learn, the skills you have, and how you handle life. Take a test, see where you stand, and keep growing.",
+   facts=[("4 kinds", "of tests: traits, thinking, skills, growth"), ("Live now", "the Maturity Assessment"), ("2 PDFs", "report and 30-day plan"), ("No login", "answers stay on your device")],
+   problem=("“So, what are your strengths?”", "Most of us have never measured how we think, learn or react. So in an interview, a review or a big decision, we guess."),
+   fix=("See yourself clearly. Then grow.", "HV Test measures your traits, abilities and habits with honest, carefully designed tests. You see where you stand, what to improve, and how you change over time."),
+   steps=[("Pick a test", "Choose what you want to understand. Start with the Maturity Assessment: about 10 minutes."),
+          ("Answer honestly", "Real situations and questions, with no right answers to game. Pick what you'd really do."),
+          ("See where you stand, then grow", "Your score, strengths and growth areas, a report and a plan. Retake later to see how you've grown.")],
+   library=[("Maturity Assessment", "Live now", "How you decide, handle emotions and act in real-life situations. 10 areas, a score out of 100, a full report and a 30-day plan."),
+            ("Personality and traits", "Coming soon", "How you're wired: the patterns behind how you work, react and connect with people."),
+            ("Thinking and learning", "Coming soon", "How you reason, solve problems and pick up new things, a bit like an IQ test, but made to help you improve."),
+            ("Skills", "Coming soon", "How good you are at the skills that matter for your studies and work, and which to build next.")],
+   feats=[("CHECKC", "Maturity Assessment, live now", "The first test on HV Test: how you think, react and decide in real life. About 10 minutes."),
           ("SHUFFLE", "Real-life situations", "A bank of 104 situations. Each attempt picks 28 to 30, covering all 10 areas."),
           ("GRID", "10 areas", "Emotional control, accountability, self-awareness, conflict, relationships, decisions, patience, empathy, responsibility, long-term thinking."),
           ("TARGET", "Score out of 100", "Your overall score and a level: Developing, Emerging, Grounded or Highly Consistent."),
@@ -529,10 +541,12 @@ APPS = {
         ("Team leads", "Understand your own patterns before you guide others."),
         ("Career switchers", "Check what you bring to a new field, beyond your old job title."),
         ("Anyone curious", "A calm look at yourself, and small steps to grow.")],
-   faq=[("Is HV Test a diagnosis?", "No. It's a self-assessment for personal growth, not a clinical or psychological diagnosis."),
+   faq=[("What tests are on HV Test?", "The Maturity Assessment is live now. Tests for personality and traits, thinking and learning, and skills are coming next."),
+        ("Is it like an IQ test?", "Partly. Upcoming tests measure thinking and learning, as an IQ test does. But HV Test also looks at your traits, skills and maturity, and helps you improve, not just get a number."),
+        ("Is HV Test a diagnosis?", "No. It's a self-assessment for personal growth, not a clinical or psychological diagnosis."),
         ("Do I need an account?", "No. There's no login, and your answers never leave your browser."),
         ("Can I take it again?", "Yes. Questions and options are shuffled, and a retake avoids the questions you saw last time."),
-        ("Is it free?", "Yes, completely. Both PDFs included.")]),
+        ("Is it free?", "Yes. The Maturity Assessment is completely free, both PDFs included.")]),
  "reset": dict(name="HV Reset", verb="Plan your day", color="#4A72C8", tint="#EEF2FB", pline="#D6E0F4", mock=MOCK_RESET, cta="Open HV Reset", story="/#reset",
    title="Late start? Fix your whole day in one tap | HV Reset",
    desc="One block, one task, zero guilt. Your plan moves with you, and meals and breaks stay protected. Free, right in your browser.",
@@ -607,6 +621,11 @@ def app_page(key):
     feats = "".join('<div class="ft"><div class="fic">%s</div><h3>%s</h3><p>%s</p></div>' % (icon(k), h, p) for k, h, p in a["feats"])
     who = "".join('<div class="wt"><b>%s</b><span>%s</span></div>' % w for w in a["who"])
     faq = "".join('<details><summary>%s</summary><p>%s</p></details>' % qa for qa in a["faq"])
+    lib = ""
+    if a.get("library"):
+        cards = "".join('<div class="lc%s"><span class="lb">%s</span><h3>%s</h3><p>%s</p></div>' % ("" if st == "Live now" else " soon", st, t, d) for t, st, d in a["library"])
+        lib = ('<section class="pp-sec" id="tests"><div class="wrap"><div class="head rv"><p class="label">The tests</p><h2>Four ways to understand yourself.</h2>'
+               '<p>Each test looks at a different side of you. Start with the one that\'s live, and more are on the way.</p></div><div class="lib rv">%s</div></div></section>') % cards
     nxt = "".join('<a class="nx rv" href="/%s/" style="--pc:%s;--tint:%s;--pline:%s">%s<span><b>%s</b><small>%s</small></span>%s</a>' % (
         k, APPS[k]["color"], APPS[k]["tint"], APPS[k]["pline"], logo(k), APPS[k]["name"], APPS[k]["verb"], ARROW) for k in ORDER if k != key)
     return '''<main id="main" class="pp" style="--pc:%(color)s;--tint:%(tint)s;--pline:%(pline)s">
@@ -631,6 +650,7 @@ def app_page(key):
     <div class="steps3">%(steps)s</div>
   </div></section>
 
+%(lib)s
   <section class="pp-sec" id="features"><div class="wrap">
     <div class="head rv"><p class="label">Every feature</p><h2>Everything %(name)s does.</h2></div>
     <div class="fgrid rv">%(feats)s</div>
@@ -652,7 +672,7 @@ def app_page(key):
     <div class="nxs">%(nxt)s</div>
     <p class="back"><a href="/">See all three apps together %(arrow)s</a></p>
   </div></section>
-</main>''' % dict(a, logo=logo(key), url=URL[key], arrow=ARROW, facts=facts, steps=steps, feats=feats, who=who, faq=faq, nxt=nxt,
+</main>''' % dict(a, logo=logo(key), url=URL[key], arrow=ARROW, facts=facts, steps=steps, feats=feats, lib=lib, who=who, faq=faq, nxt=nxt,
                   p1=a["problem"][0], p2=a["problem"][1], f1=a["fix"][0], f2=a["fix"][1])
 
 

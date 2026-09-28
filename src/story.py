@@ -489,7 +489,7 @@ PAGE = """<!DOCTYPE html>
     <p class="sub rv">Three problems. Three products. One chain that keeps Riya growing.</p>
     <div class="art-box rv">__FINALE__</div>
     <div class="cards">
-      <div class="pcard rv"><div class="h">__L_TEST__<b>HV Test</b></div><p>Know yourself. Real-life scenarios, a score, a report and a 30-day plan.</p><div class="pacts"><a class="btn" href="https://harshvittori.github.io/hv-tests/">Open HV Test</a><a class="lm" href="/test/">Learn more</a></div></div>
+      <div class="pcard rv"><div class="h">__L_TEST__<b>HV Test</b></div><p>Know yourself. Tests for your traits, thinking, skills and growth, starting with the Maturity Assessment.</p><div class="pacts"><a class="btn" href="https://harshvittori.github.io/hv-tests/">Open HV Test</a><a class="lm" href="/test/">Learn more</a></div></div>
       <div class="pcard rv"><div class="h">__L_RESET__<b>HV Reset</b></div><p>Plan your day. One block, one task, and a day that bends instead of breaking.</p><div class="pacts"><a class="btn" href="https://harshvittori.github.io/harsh-reset/">Open HV Reset</a><a class="lm" href="/reset/">Learn more</a></div></div>
       <div class="pcard rv"><div class="h">__L_VAULT__<b>HV Vault</b></div><p>Act on every opportunity. One board, automatic follow-ups and HV AI.</p><div class="pacts"><a class="btn" href="https://harshvittori.github.io/hv-vault-web/">Open HV Vault</a><a class="lm" href="/vault/">Learn more</a></div></div>
     </div>
