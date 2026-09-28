@@ -168,6 +168,21 @@ h1{margin-top:12px;font-weight:700;font-size:64px;line-height:1.02;letter-spacin
 .ytplay{position:relative;width:64px;height:64px;border-radius:50%;background:#FF3B5C;box-shadow:0 12px 30px -6px rgba(255,59,92,.8);flex:none}
 .ytplay i{position:absolute;left:25px;top:18px;border-left:23px solid #fff;border-top:14px solid transparent;border-bottom:14px solid transparent}
 .ytdur{position:absolute;right:28px;bottom:26px;font-weight:700;font-size:26px;color:#fff;background:rgba(0,0,0,.85);padding:6px 14px;border-radius:8px;z-index:6}
+.card.tr{background:#05070F}
+.trbg{position:absolute;inset:0;background:radial-gradient(90% 100% at 75% 50%,#1A2150 0%,#0A0E24 55%,#05070F 100%)}
+.trg{position:absolute;width:520px;height:520px;border-radius:50%;filter:blur(60px);opacity:.55}
+.g1{background:#1FA971;left:560px;top:-160px}.g2{background:#5B8CFF;left:860px;top:-40px}.g3{background:#E0A83E;left:680px;top:300px}
+.gw{position:absolute;border-radius:14px;overflow:hidden;background:#fff;border:1.5px solid rgba(255,255,255,.35);box-shadow:0 40px 80px -20px rgba(0,0,0,.8),0 0 70px -10px var(--g)}
+.gbar{height:22px;background:#151A2E;display:flex;gap:6px;align-items:center;padding:0 10px}.gbar i{width:8px;height:8px;border-radius:50%;background:#FF5F57}.gbar i:nth-child(2){background:#FEBC2E}.gbar i:nth-child(3){background:#28C840}
+.gscr{background-repeat:no-repeat}
+.trl{position:absolute;left:60px;top:50%;transform:translateY(-50%);z-index:6}
+.trk{display:flex;align-items:center;gap:12px;font-weight:600;font-size:21px;letter-spacing:.16em;color:#AEB6E6;margin-bottom:22px}
+.trh{font-weight:700;font-size:108px;line-height:.98;letter-spacing:-.03em;color:#fff;text-shadow:0 10px 40px rgba(0,0,0,.6)}
+.trh span{background:linear-gradient(90deg,#5FE3A8,#7FA8FF 50%,#FFC96B);-webkit-background-clip:text;background-clip:text;color:transparent}
+.trapps{display:flex;align-items:center;gap:10px;margin-top:30px}.trapps svg{box-shadow:none!important}.trapps em{font-style:normal;font-weight:600;font-size:22px;color:#C9CFEA;margin-left:8px}
+.trplay{position:absolute;left:830px;top:50%;width:132px;height:132px;margin-top:-66px;border-radius:50%;background:rgba(255,255,255,.96);z-index:7;box-shadow:0 0 0 14px rgba(255,255,255,.2),0 0 80px rgba(120,140,255,.8),0 30px 60px -10px rgba(0,0,0,.7)}
+.trplay i{position:absolute;left:52px;top:38px;border-left:44px solid #1B2350;border-top:28px solid transparent;border-bottom:28px solid transparent}
+.trdur{position:absolute;right:28px;bottom:26px;font-weight:700;font-size:26px;color:#fff;background:rgba(0,0,0,.85);padding:6px 14px;border-radius:8px;z-index:7}
 .riya{position:absolute;left:40px;top:50%;width:560px;transform:translateY(-50%) rotate(2deg);border-radius:26px;overflow:hidden;box-shadow:0 40px 80px -30px rgba(20,30,60,.55)}
 .riya svg{display:block;width:100%;height:auto}
 """
@@ -177,16 +192,20 @@ for out, lg, word, acc, dark, tint, circ, eye, h1, sub, cta, art in CARDS:
              '<div class="left"><div class="brand">%sHV <b>%s</b></div><p class="eye">%s</p><h1>%s</h1><div class="rule"></div><p class="sub">%s</p>'
              '<div class="cta">%s</div></div>%s</div>') % (out, acc, dark, tint, circ, svg(lg, 48, 0, False), word, eye, h1, sub, cta, art)
 # the film: a YouTube-style thumbnail -- huge text, cheering Riya, app icons, arrow, play + duration
-RIYA_WIN = ('<svg class="rwin" viewBox="0 0 600 600"><defs><clipPath id="rclip"><circle cx="300" cy="310" r="235"/></clipPath></defs>'
-            '<circle cx="300" cy="310" r="235" fill="#FFD84D"/><g clip-path="url(#rclip)">' +
-            story.riya(300, 520, 1.75, faces={"h": ""}, arms={"up": ""}) + '</g>'
-            '<circle cx="300" cy="310" r="235" fill="none" stroke="#fff" stroke-width="12"/></svg>')
-html += ('<div class="card yt" data-out="film/og.jpg"><div class="ytbg"></div><div class="rays"></div>'
-         '<div class="ytl"><div class="ytk">%s HV WORLD · 45 SEC</div>'
-         '<div class="yth">3 APPS.<br>1 AI.<br><span>ZERO CHAOS.</span></div><div class="ytw"><div class="ytplay"><i></i></div>Watch the film</div></div>'
-         '<div class="ytr">%s<span class="ic i1">%s</span><span class="ic i2">%s</span><span class="ic i3">%s</span></div>'
-         ''
-         '<div class="ytdur">0:46</div></div>') % (
-    svg("world-orbit", 38, 0, False), RIYA_WIN, svg("logo-test", 120, -12), svg("logo-reset", 120, 10), svg("logo-vault", 120, -6))
+# the film: a product-trailer thumbnail -- real app screens glowing in 3D, bold title, play + duration
+def gwin(img, crop, width, glow, style):
+    x, y, w, h = crop; k = width / w
+    return ('<div class="gw" style="width:%dpx;--g:%s;%s"><div class="gbar"><i></i><i></i><i></i></div>'
+            '<div class="gscr" style="height:%dpx;background-image:url(og-assets/%s.jpg);background-size:%.1fpx auto;background-position:-%.1fpx -%.1fpx"></div></div>') % (
+        width, glow, style, h * k, img, 1440 * k, x * k, y * k)
+html += ('<div class="card tr" data-out="film/og.jpg"><div class="trbg"></div><div class="trg g1"></div><div class="trg g2"></div><div class="trg g3"></div>'
+         + gwin("t-result", (380, 205, 700, 330), 380, "#1FA971", "left:630px;top:70px;transform:perspective(1200px) rotateY(-18deg) rotate(-4deg)")
+         + gwin("v-pipe-b", (270, 40, 1170, 620), 480, "#E0A83E", "left:700px;top:300px;transform:perspective(1200px) rotateY(-14deg) rotate(3deg);z-index:3")
+         + gwin("r-intro-0", (220, 60, 1000, 640), 380, "#5B8CFF", "left:860px;top:110px;transform:perspective(1200px) rotateY(-16deg) rotate(2deg);z-index:2")
+         + '<div class="trl"><div class="trk">%s HV WORLD · PRODUCT FILM</div>'
+         '<div class="trh">3 apps.<br>1 AI.<br><span>Zero chaos.</span></div>'
+         '<div class="trapps">%s%s%s<em>Test · Reset · Vault</em></div></div>'
+         '<div class="trplay"><i></i></div><div class="trdur">0:46</div></div>') % (
+    svg("world-orbit", 36, 0, False), svg("logo-test", 44, 0, False), svg("logo-reset", 44, 0, False), svg("logo-vault", 44, 0, False))
 open(os.path.join(HERE, "og-cards.html"), "w").write(html + "</body></html>")
 print("ok", len(CARDS), "cards")
