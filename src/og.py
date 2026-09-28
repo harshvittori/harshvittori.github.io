@@ -37,17 +37,17 @@ RIYA = '<div class="riya">%s</div>' % story.prologue()
 
 CARDS = [  # out, brand logo, brand word, accent, dark, tint, circle, eyebrow, headline, sub, cta, art
     ("og.jpg", "world-orbit", "WORLD", "#2E43A6", "#233489", "#F4F5FB", "#E2E7F8", "3 free apps · by Harsh Vittori",
-     "Know yourself.<br>Plan your day.<br>Act on time.", "Three apps that work together, with an AI you can just talk to.", "▶&nbsp; Watch the 45s film", HOME_ART),
+     "Stop guessing.<br>Start growing.", "Know your strengths. Run a calm day.<br>Never miss a follow-up.", "▶&nbsp; Watch the 45s film", HOME_ART),
     ("story/og.jpg", "world", "WORLD", "#2E43A6", "#233489", "#F4F5FB", "#E2E7F8", "A 1-minute illustrated story",
-     "Why does Riya feel stuck?", "She works hard and applies everywhere. Then three small things change.", "Read her story &nbsp;→", RIYA),
+     "Hard work. Zero progress. Sound familiar?", "Meet Riya. A 1-minute story about the 3 things quietly holding her back.", "Read her story &nbsp;→", RIYA),
     ("test/og.jpg", "logo-test", "TEST", "#127A4F", "#0D5E3C", "#F4F8F5", "#DDEFE4", "10 minutes · Free · No login",
-     "How mature are you, really?", "Real-life situations. An honest score out of 100, and a 30-day plan.", "Take the test &nbsp;→",
+     "You think you know yourself. Prove it.", "Real-life situations. An honest score out of 100, and a 30-day plan to grow.", "Take the test &nbsp;→",
      window("t-result", (380, 40, 700, 460), 560, "harshvittori.github.io/hv-tests", "right:-40px;top:120px;transform:perspective(1400px) rotateY(-12deg) rotateX(3deg)")),
     ("reset/og.jpg", "logo-reset", "RESET", "#3F66BE", "#2C4E99", "#F3F6FC", "#DCE6F8", "Plan your day",
-     "Running late? Your day adjusts.", "One block, one task. One tap moves the whole plan, and meals never get skipped.", "Plan my day &nbsp;→",
+     "Late start?<br>Fix your whole day<br>in one tap.", "One block, one task, zero guilt. Meals and breaks stay protected.", "Plan my day &nbsp;→",
      window("r-late", (330, 40, 780, 470), 560, "harshvittori.github.io/harsh-reset", "right:-40px;top:120px;transform:perspective(1400px) rotateY(-12deg) rotateX(3deg)")),
     ("vault/og.jpg", "logo-vault", "VAULT", "#A0721C", "#7C5712", "#FAF7F0", "#F1E6CF", "For your job hunt",
-     "Never miss a follow-up again.", "Every job, recruiter and interview on one calm board, with reminders that set themselves.", "Open my board &nbsp;→",
+     "Stop losing job leads in WhatsApp chats.", "Every job, recruiter and interview on one board, with follow-ups that set themselves.", "Organise my job hunt &nbsp;→",
      window("v-pipe-b", (575, 225, 865, 420), 560, "harshvittori.github.io/hv-vault-web", "right:-40px;top:120px;transform:perspective(1400px) rotateY(-12deg) rotateX(3deg)")),
 ]
 
@@ -62,7 +62,7 @@ CSS = font(500) + font(600) + font(700) + """
 .eye{margin-top:44px;font-weight:600;font-size:18px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
 h1{margin-top:12px;font-weight:700;font-size:64px;line-height:1.02;letter-spacing:-.015em}
 .rule{width:56px;height:6px;border-radius:4px;background:#F2A33A;margin:24px 0 20px}
-.sub{font-weight:500;font-size:24px;line-height:1.35;color:#3D4A55}
+.sub{font-weight:500;font-size:24px;line-height:1.35;color:#3D4A55;max-width:540px}
 .cta{display:inline-flex;align-items:center;margin-top:28px;font-weight:600;font-size:23px;color:#fff;background:var(--accent);padding:14px 28px;border-radius:999px;box-shadow:0 14px 30px -12px var(--accent)}
 .win{position:absolute;border-radius:16px;overflow:hidden;background:#fff;border:1px solid rgba(20,30,60,.12);box-shadow:0 40px 80px -30px rgba(20,30,60,.55)}
 .bar{height:28px;background:#EEF0F5;display:flex;align-items:center;gap:7px;padding:0 12px;border-bottom:1px solid rgba(20,30,60,.08)}
