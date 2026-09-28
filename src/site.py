@@ -372,6 +372,7 @@ html{overflow-x:clip}
 .band-g .feat,.band-g .two>div{background:#fff}
 .band-w .feat,.band-w .two>div{background:#F7F8FA}
 .final{background:#FFFFFF}
+.factband{background:#F2F3F7;display:flow-root}
 .pp-sec{background:#F2F3F7}.pp-sec:nth-of-type(odd){background:#FFFFFF}
 .pp-sec:nth-of-type(even) .steps3,.pp-sec:nth-of-type(even) .fgrid{background:#fff}
 @media (max-width:880px){.band{padding:64px 0}}
@@ -618,7 +619,7 @@ def app_page(key):
     </div>
     <div class="pmock rv">%(mock)s</div>
   </div></section>
-  <div class="wrap facts rv">%(facts)s</div>
+  <div class="factband"><div class="wrap facts rv">%(facts)s</div></div>
 
   <section class="pp-sec"><div class="wrap pf">
     <div class="rv"><p class="label">The problem</p><h2>%(p1)s</h2><p>%(p2)s</p></div>
