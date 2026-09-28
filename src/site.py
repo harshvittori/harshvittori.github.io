@@ -11,7 +11,7 @@ ROOT = os.path.dirname(HERE)
 def read(n):
     return open(os.path.join(HERE, n)).read().strip().replace('xmlns="http://www.w3.org/2000/svg" ', '')
 
-LOGOS = {"world": read("world-orbit.svg"), "test": read("logo-test.svg"), "reset": read("logo-reset.svg"), "vault": read("logo-vault.svg")}
+LOGOS = {"world": read("world.svg"), "test": read("logo-test.svg"), "reset": read("logo-reset.svg"), "vault": read("logo-vault.svg")}
 _n = [0]
 def logo(name, cls=""):
     _n[0] += 1
@@ -25,6 +25,7 @@ def I(d):
             'stroke-linecap="round" stroke-linejoin="round">%s</svg>' % d)
 CHECK = I('<path d="M5 12.5l4.2 4.2L19 7"/>')
 ARROW = I('<path d="M5 12h14M13 6l6 6-6 6"/>')
+CHAIN = I('<rect x="2.5" y="8" width="11" height="8" rx="4"/><rect x="10.5" y="8" width="11" height="8" rx="4"/>')
 SYNC = I('<path d="M21 12a9 9 0 0 1-15.5 6.2M3 12A9 9 0 0 1 18.5 5.8"/><path d="M18.5 2v4h-4M5.5 22v-4h4"/>')
 USER = I('<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>')
 SPARK = I('<path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/>')
@@ -399,7 +400,7 @@ OVERVIEW_MAIN = """<main id="main">
   <section id="together" class="wrap">
     <div class="head rv"><p class="label">Better together</p><h2>Use one. Or let them work as a team.</h2><p>Each app stands on its own. Together, your plan and your progress stay in step.</p></div>
     <div class="together">
-      <div class="feat rv"><div class="ic">__SYNC__</div><h3>Reset and Vault in sync</h3><p>Log an application in HV Reset and it lands in HV Vault as Applied, with its first follow-up. Your day counter counts it too.</p></div>
+      <div class="feat rv"><div class="ic">__CHAIN__</div><h3>Reset and Vault in sync</h3><p>Log an application in HV Reset and it lands in HV Vault as Applied, with its first follow-up. Your day counter counts it too.</p></div>
       <div class="feat rv"><div class="ic">__USER__</div><h3>One Google sign-in</h3><p>Sign in to HV Vault once and HV Reset on the same browser is connected. Your phone and laptop show the same data.</p></div>
       <div class="feat rv"><div class="ic">__SPARK__</div><h3>HV AI in each app</h3><p>In HV Vault it handles jobs, follow-ups and interviews. In HV Reset it builds and adjusts your day. Each one changes only its own app.</p></div>
     </div>
@@ -732,7 +733,7 @@ def fill(page):
     page = page.replace("__PRODUCTS__", "\n".join(product(*p, flip=(i == 1)) for i, p in enumerate(PRODUCTS)))
     page = page.replace("__FAQ__", "".join('<details><summary>%s</summary><p>%s</p></details>' % qa for qa in FAQ))
     page = page.replace("__MOCK_AI__", MOCK_AI)
-    for k, v in {"ARROW": ARROW, "CHECK": CHECK, "SYNC": SYNC, "USER": USER, "SPARK": SPARK}.items():
+    for k, v in {"ARROW": ARROW, "CHECK": CHECK, "SYNC": SYNC, "CHAIN": CHAIN, "USER": USER, "SPARK": SPARK}.items():
         page = page.replace("__%s__" % k, v)
     for k in ("TEST", "RESET", "VAULT"):
         page = page.replace("__U_%s__" % k, URL[k.lower()])

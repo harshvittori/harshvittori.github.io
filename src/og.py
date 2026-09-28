@@ -81,7 +81,7 @@ RIYA = ('<div class="bleed"><div class="riya">%s</div>'
         story.prologue(), svg("logo-test", 34, 0, False), svg("logo-reset", 34, 0, False), svg("logo-vault", 34, 0, False))
 
 CARDS = [  # out, brand logo, brand word, accent, dark, tint, circle, eyebrow, headline, sub, cta, art
-    ("og.jpg", "world-orbit", "WORLD", "#2E43A6", "#233489", "#F4F5FB", "#E2E7F8", "3 free apps · by Harsh Vittori",
+    ("og.jpg", "world", "WORLD", "#2E43A6", "#233489", "#F4F5FB", "#E2E7F8", "3 free apps · by Harsh Vittori",
      "Stop guessing.<br>Start growing.", "Know your strengths. Run a calm day.<br>Never miss a follow-up.", "Explore HV World &nbsp;→", HOME_ART2),
     ("story/og.jpg", "world", "WORLD", "#2E43A6", "#233489", "#F4F5FB", "#E2E7F8", "A 1-minute illustrated story",
      "Hard work. Zero progress. Sound familiar?", "Meet Riya. A 1-minute story about the 3 things quietly holding her back.", "Read her story &nbsp;→", RIYA),
@@ -205,6 +205,6 @@ html += ('<div class="card tr" data-out="watch/og.jpg"><div class="trbg"></div><
          '<div class="trh">3 apps.<br>1 AI.<br><span>Zero chaos.</span></div>'
          '<div class="trapps">%s%s%s<em>Test · Reset · Vault</em></div></div>'
          '<div class="trplay"><i></i></div><div class="trdur">0:46</div></div>') % (
-    svg("world-orbit", 36, 0, False), svg("logo-test", 44, 0, False), svg("logo-reset", 44, 0, False), svg("logo-vault", 44, 0, False))
+    svg("world", 36, 0, False), svg("logo-test", 44, 0, False), svg("logo-reset", 44, 0, False), svg("logo-vault", 44, 0, False))
 open(os.path.join(HERE, "og-cards.html"), "w").write(html + "</body></html>")
 print("ok", len(CARDS), "cards")
