@@ -272,8 +272,11 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
 .fp{padding:56px 0 72px;text-align:center}
 .fp .label{color:#9AA7FF}
 .fp h1{font-size:clamp(34px,5vw,60px);font-weight:700;letter-spacing:-.045em;line-height:1.05;margin:6px 0 30px}
-.fpv{max-width:1040px;margin:0 auto;border-radius:22px;overflow:hidden;border:1px solid #232A45;box-shadow:0 50px 100px -40px rgba(0,0,0,.9)}
+.fpv{position:relative;max-width:1040px;margin:0 auto;border-radius:22px;overflow:hidden;border:1px solid #232A45;box-shadow:0 50px 100px -40px rgba(0,0,0,.9)}
 .fpv video{display:block;width:100%;aspect-ratio:16/9;background:#000}
+.unmute{position:absolute;left:50%;top:18px;transform:translateX(-50%);z-index:3;border:0;cursor:pointer;font:600 17px/1 inherit;color:#1D1D1F;background:#fff;padding:13px 22px;border-radius:999px;box-shadow:0 14px 34px -10px rgba(0,0,0,.7);animation:unpulse 1.6s ease-in-out infinite}
+@keyframes unpulse{50%{transform:translateX(-50%) scale(1.06)}}
+@media (prefers-reduced-motion:reduce){.unmute{animation:none}}
 .fpsub{color:#AEB6D6;font-size:18px;margin:22px 0 22px}
 .fp .ctas{justify-content:center}.fp .btn.ghost{color:#B9C3FF}
 .fpapps{display:flex;flex-wrap:wrap;gap:10px 22px;justify-content:center;margin-top:30px}
@@ -289,7 +292,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
   <section class="wrap fp">
     <p class="label">HV World in action</p>
     <h1>See all 3 apps in action.</h1>
-    <div class="fpv"><video id="fpVid" controls playsinline preload="metadata" poster="/watch/poster.jpg"><source src="/media/hv-world-film.mp4" type="video/mp4"><source src="/media/hv-world-film.webm" type="video/webm"></video></div>
+    <div class="fpv"><button type="button" class="unmute" id="fpUnmute" hidden>🔊&nbsp; Tap for sound</button><video id="fpVid" controls playsinline autoplay preload="auto" poster="/watch/poster.jpg"><source src="/media/hv-world-film.mp4" type="video/mp4"><source src="/media/hv-world-film.webm" type="video/webm"></video></div>
     <p class="fpsub">Real screens from HV Test, HV Reset and HV Vault.</p>
     <div class="ctas"><a class="btn" href="/">Explore HV World <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn ghost" href="/story/">Read Riya's story</a></div>
     <div class="fpapps"><a href="https://harshvittori.github.io/hv-tests/"><svg aria-hidden="true" focusable="false" viewBox="0 0 48 48"><rect width="48" height="48" rx="12" fill="#127A4F"/><circle cx="16.5" cy="16.5" r="5.5" stroke="#FFFFFF" stroke-width="3" fill="none"/><circle cx="31.5" cy="16.5" r="5.5" stroke="#FFFFFF" stroke-width="3" fill="none"/><circle cx="16.5" cy="31.5" r="5.5" stroke="#FFFFFF" stroke-width="3" fill="none"/><circle cx="31.5" cy="31.5" r="7.5" fill="#FFC54D"/><path d="M28 31.6l2.5 2.5 4.8-5" stroke="#17231C" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>HV Test</a><a href="https://harshvittori.github.io/harsh-reset/"><svg aria-hidden="true" focusable="false" viewBox="0 0 1024 1024"><defs><linearGradient id="hvrbg-17" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5B86D6"/><stop offset=".55" stop-color="#9C8BDA"/><stop offset="1" stop-color="#F2A77E"/></linearGradient><radialGradient id="hvrsun-17" cx=".5" cy=".42" r=".6"><stop offset="0" stop-color="#FFF6DA"/><stop offset=".6" stop-color="#FFD58F"/><stop offset="1" stop-color="#FFB066"/></radialGradient><radialGradient id="hvrglow-17" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFE9B8" stop-opacity=".75"/><stop offset="1" stop-color="#FFE9B8" stop-opacity="0"/></radialGradient></defs><rect width="1024" height="1024" rx="232" fill="url(#hvrbg-17)"/><circle cx="512" cy="530" r="300" fill="url(#hvrglow-17)"/><circle cx="512" cy="530" r="138" fill="url(#hvrsun-17)"/><path d="M704 318A292 292 0 1 1 452 244" fill="none" stroke="#fff" stroke-width="62" stroke-linecap="round"/><path d="M548 225L454 318L424 176Z" fill="#fff" stroke="#fff" stroke-width="30" stroke-linejoin="round"/></svg>HV Reset</a><a href="https://harshvittori.github.io/hv-vault-web/"><svg aria-hidden="true" focusable="false" viewBox="0 0 1024 1024" aria-hidden="true"><defs><linearGradient id="hvaimk-18" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1B3157"/><stop offset=".5" stop-color="#152647"/><stop offset="1" stop-color="#0C1830"/></linearGradient></defs><rect width="1024" height="1024" rx="230" fill="url(#hvaimk-18)"/><path d="M 608.00 360.68 A 179.2 179.2 0 1 1 416.00 360.68" fill="none" stroke="#DFC18A" stroke-width="96" stroke-linecap="round"/><path d="M 608.00 206.74 A 320 320 0 1 1 416.00 206.74" fill="none" stroke="#C9A45E" stroke-width="83.2" stroke-linecap="round"/><circle cx="512" cy="512" r="96" fill="#EAD9B0"/></svg>HV Vault</a></div>
@@ -300,6 +303,24 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
 <script>
 (function () {
   document.getElementById("yr").textContent = new Date().getFullYear();
+  var fv = document.getElementById("fpVid");
+  if (fv) {
+    // start playing with sound; if the browser blocks sound, play muted and offer one tap to unmute
+    var ub = document.getElementById("fpUnmute");
+    var unmute = function () { fv.muted = false; fv.volume = 1; ub.hidden = true; fv.play().catch(function () {}); off(); };
+    var onTap = function (e) { if (fv.muted) unmute(); };
+    var off = function () { document.removeEventListener("pointerdown", onTap, true); document.removeEventListener("keydown", onTap, true); };
+    fv.muted = false;
+    fv.play().catch(function () {
+      fv.muted = true;
+      fv.play().catch(function () {});
+      ub.hidden = false;
+      document.addEventListener("pointerdown", onTap, true);
+      document.addEventListener("keydown", onTap, true);
+    });
+    ub.addEventListener("click", function (e) { e.stopPropagation(); unmute(); });
+    fv.addEventListener("volumechange", function () { if (!fv.muted) { ub.hidden = true; off(); } });
+  }
   var fo = document.getElementById("filmOpen");
   if (fo) {
     var dlg = document.getElementById("filmDlg"), film = document.getElementById("filmVid"), loopv = document.getElementById("loopVid");

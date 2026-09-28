@@ -642,7 +642,7 @@ FILM_MAIN = """<main id="main" class="filmpage">
   <section class="wrap fp">
     <p class="label">HV World in action</p>
     <h1>See all 3 apps in action.</h1>
-    <div class="fpv"><video id="fpVid" controls playsinline preload="metadata" poster="/watch/poster.jpg"><source src="/media/hv-world-film.mp4" type="video/mp4"><source src="/media/hv-world-film.webm" type="video/webm"></video></div>
+    <div class="fpv"><button type="button" class="unmute" id="fpUnmute" hidden>🔊&nbsp; Tap for sound</button><video id="fpVid" controls playsinline autoplay preload="auto" poster="/watch/poster.jpg"><source src="/media/hv-world-film.mp4" type="video/mp4"><source src="/media/hv-world-film.webm" type="video/webm"></video></div>
     <p class="fpsub">Real screens from HV Test, HV Reset and HV Vault.</p>
     <div class="ctas"><a class="btn" href="/">Explore HV World __ARROW__</a><a class="btn ghost" href="/story/">Read Riya's story</a></div>
     <div class="fpapps"><a href="__U_TEST__">__LOGO_TEST__HV Test</a><a href="__U_RESET__">__LOGO_RESET__HV Reset</a><a href="__U_VAULT__">__LOGO_VAULT__HV Vault</a></div>
@@ -653,8 +653,11 @@ FILM_CSS = """
 .fp{padding:56px 0 72px;text-align:center}
 .fp .label{color:#9AA7FF}
 .fp h1{font-size:clamp(34px,5vw,60px);font-weight:700;letter-spacing:-.045em;line-height:1.05;margin:6px 0 30px}
-.fpv{max-width:1040px;margin:0 auto;border-radius:22px;overflow:hidden;border:1px solid #232A45;box-shadow:0 50px 100px -40px rgba(0,0,0,.9)}
+.fpv{position:relative;max-width:1040px;margin:0 auto;border-radius:22px;overflow:hidden;border:1px solid #232A45;box-shadow:0 50px 100px -40px rgba(0,0,0,.9)}
 .fpv video{display:block;width:100%;aspect-ratio:16/9;background:#000}
+.unmute{position:absolute;left:50%;top:18px;transform:translateX(-50%);z-index:3;border:0;cursor:pointer;font:600 17px/1 inherit;color:#1D1D1F;background:#fff;padding:13px 22px;border-radius:999px;box-shadow:0 14px 34px -10px rgba(0,0,0,.7);animation:unpulse 1.6s ease-in-out infinite}
+@keyframes unpulse{50%{transform:translateX(-50%) scale(1.06)}}
+@media (prefers-reduced-motion:reduce){.unmute{animation:none}}
 .fpsub{color:#AEB6D6;font-size:18px;margin:22px 0 22px}
 .fp .ctas{justify-content:center}.fp .btn.ghost{color:#B9C3FF}
 .fpapps{display:flex;flex-wrap:wrap;gap:10px 22px;justify-content:center;margin-top:30px}
@@ -702,6 +705,24 @@ def shell(path, title, desc, og, body, active):
 <script>
 (function () {
   document.getElementById("yr").textContent = new Date().getFullYear();
+  var fv = document.getElementById("fpVid");
+  if (fv) {
+    // start playing with sound; if the browser blocks sound, play muted and offer one tap to unmute
+    var ub = document.getElementById("fpUnmute");
+    var unmute = function () { fv.muted = false; fv.volume = 1; ub.hidden = true; fv.play().catch(function () {}); off(); };
+    var onTap = function (e) { if (fv.muted) unmute(); };
+    var off = function () { document.removeEventListener("pointerdown", onTap, true); document.removeEventListener("keydown", onTap, true); };
+    fv.muted = false;
+    fv.play().catch(function () {
+      fv.muted = true;
+      fv.play().catch(function () {});
+      ub.hidden = false;
+      document.addEventListener("pointerdown", onTap, true);
+      document.addEventListener("keydown", onTap, true);
+    });
+    ub.addEventListener("click", function (e) { e.stopPropagation(); unmute(); });
+    fv.addEventListener("volumechange", function () { if (!fv.muted) { ub.hidden = true; off(); } });
+  }
   var fo = document.getElementById("filmOpen");
   if (fo) {
     var dlg = document.getElementById("filmDlg"), film = document.getElementById("filmVid"), loopv = document.getElementById("loopVid");

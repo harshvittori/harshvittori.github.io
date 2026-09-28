@@ -326,6 +326,24 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
 <script>
 (function () {
   document.getElementById("yr").textContent = new Date().getFullYear();
+  var fv = document.getElementById("fpVid");
+  if (fv) {
+    // start playing with sound; if the browser blocks sound, play muted and offer one tap to unmute
+    var ub = document.getElementById("fpUnmute");
+    var unmute = function () { fv.muted = false; fv.volume = 1; ub.hidden = true; fv.play().catch(function () {}); off(); };
+    var onTap = function (e) { if (fv.muted) unmute(); };
+    var off = function () { document.removeEventListener("pointerdown", onTap, true); document.removeEventListener("keydown", onTap, true); };
+    fv.muted = false;
+    fv.play().catch(function () {
+      fv.muted = true;
+      fv.play().catch(function () {});
+      ub.hidden = false;
+      document.addEventListener("pointerdown", onTap, true);
+      document.addEventListener("keydown", onTap, true);
+    });
+    ub.addEventListener("click", function (e) { e.stopPropagation(); unmute(); });
+    fv.addEventListener("volumechange", function () { if (!fv.muted) { ub.hidden = true; off(); } });
+  }
   var fo = document.getElementById("filmOpen");
   if (fo) {
     var dlg = document.getElementById("filmDlg"), film = document.getElementById("filmVid"), loopv = document.getElementById("loopVid");
