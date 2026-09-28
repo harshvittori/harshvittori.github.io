@@ -383,10 +383,10 @@ OVERVIEW_MAIN = """<main id="main">
   </div>
 
   <section id="film" class="wrap film">
-    <div class="head rv"><p class="label">See it in action</p><h2>HV World in 45 seconds.</h2><p>Real screens from all three apps. Tap to watch with sound.</p></div>
-    <button type="button" class="filmbox rv" id="filmOpen" aria-label="Watch the HV World film, 46 seconds, with sound">
+    <div class="head rv"><p class="label">See it in action</p><h2>See HV World in action.</h2><p>Real screens from all three apps. Tap to watch with sound.</p></div>
+    <button type="button" class="filmbox rv" id="filmOpen" aria-label="Watch HV World in action, with sound">
       <video id="loopVid" poster="/media/hv-world-loop-poster.jpg" muted loop playsinline autoplay preload="auto" aria-hidden="true" tabindex="-1"><source src="/media/hv-world-loop.mp4" type="video/mp4"><source src="/media/hv-world-loop.webm" type="video/webm"></video>
-      <span class="play"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg></i>Watch the film · 46s</span>
+      <span class="play"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg></i>Watch with sound</span>
     </button>
   </section>
 
@@ -448,8 +448,8 @@ OVERVIEW_MAIN = """<main id="main">
       <p class="builder">Designed and built by Harsh Vittori · <a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">Connect on LinkedIn</a></p>
     </div>
   </section>
-  <dialog id="filmDlg" class="filmdlg" aria-label="HV World film">
-    <button type="button" class="x" id="filmClose" aria-label="Close the film">×</button>
+  <dialog id="filmDlg" class="filmdlg" aria-label="HV World in action">
+    <button type="button" class="x" id="filmClose" aria-label="Close the video">×</button>
     <video id="filmVid" controls playsinline preload="none" poster="/media/hv-world-poster.jpg"><source src="/media/hv-world-film.mp4" type="video/mp4"><source src="/media/hv-world-film.webm" type="video/webm"></video>
   </dialog>
 </main>"""
@@ -639,9 +639,9 @@ def app_page(key):
 
 FILM_MAIN = """<main id="main" class="filmpage">
   <section class="wrap fp">
-    <p class="label">The HV World film · 0:46</p>
+    <p class="label">HV World in action</p>
     <h1>See all 3 apps in action.</h1>
-    <div class="fpv"><video id="fpVid" controls playsinline preload="metadata" poster="/film/poster.jpg"><source src="/media/hv-world-film.mp4" type="video/mp4"><source src="/media/hv-world-film.webm" type="video/webm"></video></div>
+    <div class="fpv"><video id="fpVid" controls playsinline preload="metadata" poster="/watch/poster.jpg"><source src="/media/hv-world-film.mp4" type="video/mp4"><source src="/media/hv-world-film.webm" type="video/webm"></video></div>
     <p class="fpsub">HV Test, HV Reset and HV Vault, real screens, with sound.</p>
     <div class="ctas"><a class="btn" href="/">Explore HV World __ARROW__</a><a class="btn ghost" href="/story/">Read Riya's story</a></div>
     <div class="fpapps"><a href="__U_TEST__">__LOGO_TEST__HV Test</a><a href="__U_RESET__">__LOGO_RESET__HV Reset</a><a href="__U_VAULT__">__LOGO_VAULT__HV Vault</a></div>
@@ -749,16 +749,16 @@ def write(path, page):
 
 def build():
     write("/", fill(shell("/", "Stop guessing. Start growing. | HV World",
-          "3 free apps that show your strengths, plan your day and chase your follow-ups for you. Just talk to the AI. See it in 45 seconds.",
+          "3 free apps that show your strengths, plan your day and chase your follow-ups for you. Just talk to the AI.",
           "https://harshvittori.github.io/og.jpg", OVERVIEW_MAIN, "overview")))
-    film = fill(shell("/film/", "3 apps. 1 AI. Zero chaos. (45-sec film) | HV World", "Watch HV Test, HV Reset and HV Vault in action: real screens, with sound. Three free apps by Harsh Vittori.",
-                      "https://harshvittori.github.io/film/og.jpg", FILM_MAIN, "film"))
+    film = fill(shell("/watch/", "3 apps. 1 AI. Zero chaos. | HV World", "Watch HV Test, HV Reset and HV Vault in action: real screens, with sound. Three free apps by Harsh Vittori.",
+                      "https://harshvittori.github.io/watch/og.jpg", FILM_MAIN, "film"))
     film = film.replace('<meta property="og:type" content="website">', '<meta property="og:type" content="video.other">'
         '<meta property="og:video" content="https://harshvittori.github.io/media/hv-world-film.mp4">'
         '<meta property="og:video:secure_url" content="https://harshvittori.github.io/media/hv-world-film.mp4">'
         '<meta property="og:video:type" content="video/mp4"><meta property="og:video:width" content="1920"><meta property="og:video:height" content="1080">'
         '<meta property="video:duration" content="46">', 1).replace("</style>", FILM_CSS + "</style>", 1)
-    write("/film/", film)
+    write("/watch/", film)
     for k in ORDER:
         a = APPS[k]
         write("/%s/" % k, fill(shell("/%s/" % k, a["title"], a["desc"], "https://harshvittori.github.io/%s/og.jpg" % k, app_page(k), k)))

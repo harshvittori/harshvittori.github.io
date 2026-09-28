@@ -82,7 +82,7 @@ RIYA = ('<div class="bleed"><div class="riya">%s</div>'
 
 CARDS = [  # out, brand logo, brand word, accent, dark, tint, circle, eyebrow, headline, sub, cta, art
     ("og.jpg", "world-orbit", "WORLD", "#2E43A6", "#233489", "#F4F5FB", "#E2E7F8", "3 free apps · by Harsh Vittori",
-     "Stop guessing.<br>Start growing.", "Know your strengths. Run a calm day.<br>Never miss a follow-up.", "▶&nbsp; Watch the 45s film", HOME_ART2),
+     "Stop guessing.<br>Start growing.", "Know your strengths. Run a calm day.<br>Never miss a follow-up.", "Explore HV World &nbsp;→", HOME_ART2),
     ("story/og.jpg", "world", "WORLD", "#2E43A6", "#233489", "#F4F5FB", "#E2E7F8", "A 1-minute illustrated story",
      "Hard work. Zero progress. Sound familiar?", "Meet Riya. A 1-minute story about the 3 things quietly holding her back.", "Read her story &nbsp;→", RIYA),
     ("test/og.jpg", "logo-test", "TEST", "#127A4F", "#0D5E3C", "#F4F8F5", "#DDEFE4", "10 minutes · Free · No login",
@@ -191,18 +191,17 @@ for out, lg, word, acc, dark, tint, circ, eye, h1, sub, cta, art in CARDS:
     html += ('<div class="card" data-out="%s" style="--accent:%s;--dark:%s;--tint:%s;--circle:%s"><div class="c1"></div><div class="c2"></div>'
              '<div class="left"><div class="brand">%sHV <b>%s</b></div><p class="eye">%s</p><h1>%s</h1><div class="rule"></div><p class="sub">%s</p>'
              '<div class="cta">%s</div></div>%s</div>') % (out, acc, dark, tint, circ, svg(lg, 48, 0, False), word, eye, h1, sub, cta, art)
-# the film: a YouTube-style thumbnail -- huge text, cheering Riya, app icons, arrow, play + duration
-# the film: a product-trailer thumbnail -- real app screens glowing in 3D, bold title, play + duration
+# the video page: a product-trailer thumbnail -- real app screens glowing in 3D, bold title, play + duration
 def gwin(img, crop, width, glow, style):
     x, y, w, h = crop; k = width / w
     return ('<div class="gw" style="width:%dpx;--g:%s;%s"><div class="gbar"><i></i><i></i><i></i></div>'
             '<div class="gscr" style="height:%dpx;background-image:url(og-assets/%s.jpg);background-size:%.1fpx auto;background-position:-%.1fpx -%.1fpx"></div></div>') % (
         width, glow, style, h * k, img, 1440 * k, x * k, y * k)
-html += ('<div class="card tr" data-out="film/og.jpg"><div class="trbg"></div><div class="trg g1"></div><div class="trg g2"></div><div class="trg g3"></div>'
+html += ('<div class="card tr" data-out="watch/og.jpg"><div class="trbg"></div><div class="trg g1"></div><div class="trg g2"></div><div class="trg g3"></div>'
          + gwin("t-result", (380, 205, 700, 330), 380, "#1FA971", "left:630px;top:70px;transform:perspective(1200px) rotateY(-18deg) rotate(-4deg)")
          + gwin("v-pipe-b", (270, 40, 1170, 620), 480, "#E0A83E", "left:700px;top:300px;transform:perspective(1200px) rotateY(-14deg) rotate(3deg);z-index:3")
          + gwin("r-intro-0", (220, 60, 1000, 640), 380, "#5B8CFF", "left:860px;top:110px;transform:perspective(1200px) rotateY(-16deg) rotate(2deg);z-index:2")
-         + '<div class="trl"><div class="trk">%s HV WORLD · PRODUCT FILM</div>'
+         + '<div class="trl"><div class="trk">%s HV WORLD</div>'
          '<div class="trh">3 apps.<br>1 AI.<br><span>Zero chaos.</span></div>'
          '<div class="trapps">%s%s%s<em>Test · Reset · Vault</em></div></div>'
          '<div class="trplay"><i></i></div><div class="trdur">0:46</div></div>') % (
