@@ -664,7 +664,7 @@ FILM_CSS = """
 # ---------------------------------------------------------------- shared page shell
 def shell(path, title, desc, og, body, active):
     nav = [("overview", "/", "Home", "opt"), ("test", "/test/", '<span class="d">HV </span>Test', ""),
-           ("reset", "/reset/", '<span class="d">HV </span>Reset', ""), ("vault", "/vault/", '<span class="d">HV </span>Vault', "")]
+           ("reset", "/reset/", '<span class="d">HV </span>Reset', ""), ("vault", "/vault/", '<span class="d">HV </span>Vault', ""), ("watch", "/watch/", "Watch", "")]
     links = "".join('<a class="%s"%s href="%s">%s</a>' % (c, ' aria-current="page"' if k == active else "", h, t) for k, h, t, c in nav)
     url = "https://harshvittori.github.io" + path
     return '''<!DOCTYPE html>
@@ -698,7 +698,7 @@ def shell(path, title, desc, og, body, active):
 <nav aria-label="Main">%s<a class="story" href="/story/"><span class="d">Riya's </span>Story</a></nav></div></header>
 %s
 <footer><div class="wrap row"><span>© <span id="yr">2026</span> Harsh Vittori · HV World</span>
-<nav aria-label="Footer"><a href="/">Home</a><a href="/story/">Riya's story</a><a href="/test/">HV Test</a><a href="/reset/">HV Reset</a><a href="/vault/">HV Vault</a><a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/harshvittori" target="_blank" rel="noopener">GitHub</a></nav></div></footer>
+<nav aria-label="Footer"><a href="/">Home</a><a href="/watch/">Watch</a><a href="/story/">Riya's story</a><a href="/test/">HV Test</a><a href="/reset/">HV Reset</a><a href="/vault/">HV Vault</a><a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/harshvittori" target="_blank" rel="noopener">GitHub</a></nav></div></footer>
 <script>
 (function () {
   document.getElementById("yr").textContent = new Date().getFullYear();
@@ -753,7 +753,7 @@ def build():
           "3 free apps that show your strengths, plan your day and chase your follow-ups for you. Just talk to the AI.",
           "https://harshvittori.github.io/og.jpg", OVERVIEW_MAIN, "overview")))
     film = fill(shell("/watch/", "3 apps. 1 AI. Zero chaos. | HV World", "See HV Test, HV Reset and HV Vault in action. Three free apps by Harsh Vittori.",
-                      "https://harshvittori.github.io/watch/og.jpg", FILM_MAIN, "film"))
+                      "https://harshvittori.github.io/watch/og.jpg", FILM_MAIN, "watch"))
     film = film.replace('<meta property="og:type" content="website">', '<meta property="og:type" content="video.other">'
         '<meta property="og:video" content="https://harshvittori.github.io/media/hv-world-film.mp4">'
         '<meta property="og:video:secure_url" content="https://harshvittori.github.io/media/hv-world-film.mp4">'

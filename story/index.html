@@ -37,11 +37,13 @@ header{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.82);-webkit
 .nav{display:flex;align-items:center;height:52px;gap:22px;font-size:14px}
 .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:600;font-size:16px}.brand:hover{text-decoration:none}
 .brand svg{width:26px;height:26px;border-radius:7px}
-.nav nav{display:flex;gap:22px;margin-left:auto}.nav nav a{color:var(--ink);opacity:.78}.nav nav a:hover{opacity:1;text-decoration:none}
+.nav nav{display:flex;gap:22px;margin-left:auto}.nav nav a{color:var(--soft);text-decoration:none}.nav nav a:hover{color:var(--ink);text-decoration:none}
+.nav .story{color:var(--accent)!important;font-weight:600}
 .nav nav a.all{color:var(--accent);opacity:1;font-weight:600}
 .pacts{display:flex;align-items:center;flex-wrap:wrap;gap:8px 18px;margin-top:18px}.pacts .btn{margin:0}.pcard .lm{color:var(--accent);font-weight:500;font-size:15px}
 .more{margin-top:32px;font-size:17px}.more a{color:var(--accent);font-weight:600;text-decoration:none}.more a:hover{text-decoration:underline}
-@media (max-width:600px){.nav nav a.opt{display:none}.nav nav{gap:16px}}
+@media (max-width:720px){.nav nav a.opt,.nav .d{display:none}.nav nav{gap:16px}}
+@media (max-width:360px){.brand{font-size:0;gap:0}.nav nav{gap:14px}}
 
 /* hero */
 .hero{display:grid;grid-template-columns:.9fr 1.1fr;gap:48px;align-items:center;padding:72px 0 84px}
@@ -195,8 +197,8 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{color:var(--soft)}
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header><div class="wrap nav"><a class="brand" href="#top"><svg aria-hidden="true" focusable="false" viewBox="0 0 48 48"><defs><linearGradient id="hvw-7" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1C2A6B"/><stop offset=".6" stop-color="#4A46C9"/><stop offset="1" stop-color="#7C5CE0"/></linearGradient><radialGradient id="hvwc-7" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#C9D3FF"/></radialGradient></defs><rect width="48" height="48" rx="12" fill="url(#hvw-7)"/><ellipse cx="24" cy="24" rx="16.5" ry="7.5" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.8" transform="rotate(-24 24 24)"/><circle cx="24" cy="24" r="6.2" fill="url(#hvwc-7)"/><circle cx="37.6" cy="17.9" r="3.3" fill="#F2C063"/><circle cx="10.4" cy="30.1" r="3.3" fill="#34C77B"/><circle cx="17.4" cy="14.6" r="2.6" fill="#F2A77E"/></svg>HV World</a>
-<nav aria-label="Main"><a href="#test">Know</a><a href="#reset">Plan</a><a href="#vault">Act</a><a class="opt" href="#products">Products</a><a class="all" href="/">All features</a></nav></div></header>
+<header><div class="wrap nav"><a class="brand" href="/"><svg aria-hidden="true" focusable="false" viewBox="0 0 48 48"><defs><linearGradient id="hvw-7" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1C2A6B"/><stop offset=".6" stop-color="#4A46C9"/><stop offset="1" stop-color="#7C5CE0"/></linearGradient><radialGradient id="hvwc-7" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#C9D3FF"/></radialGradient></defs><rect width="48" height="48" rx="12" fill="url(#hvw-7)"/><ellipse cx="24" cy="24" rx="16.5" ry="7.5" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.8" transform="rotate(-24 24 24)"/><circle cx="24" cy="24" r="6.2" fill="url(#hvwc-7)"/><circle cx="37.6" cy="17.9" r="3.3" fill="#F2C063"/><circle cx="10.4" cy="30.1" r="3.3" fill="#34C77B"/><circle cx="17.4" cy="14.6" r="2.6" fill="#F2A77E"/></svg>HV World</a>
+<nav aria-label="Main"><a class="opt" href="/">Home</a><a href="/test/"><span class="d">HV </span>Test</a><a href="/reset/"><span class="d">HV </span>Reset</a><a href="/vault/"><span class="d">HV </span>Vault</a><a href="/watch/">Watch</a><a class="story" aria-current="page" href="/story/"><span class="d">Riya's </span>Story</a></nav></div></header>
 <main id="main">
   <section id="top"><div class="wrap hero">
     <div class="rv">
@@ -237,7 +239,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{color:var(--soft)}
   <section class="builder"><div class="wrap rv"><p>Designed and built by</p><h2>Harsh Vittori</h2><a class="more" href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">Connect on LinkedIn</a></div></section>
 </main>
 <footer><div class="wrap row"><span>© <span id="yr">2026</span> Harsh Vittori · HV World</span>
-<nav aria-label="Footer"><a href="/">All features</a><a href="/test/">About HV Test</a><a href="/reset/">About HV Reset</a><a href="/vault/">About HV Vault</a><a href="https://harshvittori.github.io/hv-tests/">HV Test</a><a href="https://harshvittori.github.io/harsh-reset/">HV Reset</a><a href="https://harshvittori.github.io/hv-vault-web/">HV Vault</a><a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/harshvittori" target="_blank" rel="noopener">GitHub</a></nav></div></footer>
+<nav aria-label="Footer"><a href="/">All features</a><a href="/watch/">Watch</a><a href="/test/">About HV Test</a><a href="/reset/">About HV Reset</a><a href="/vault/">About HV Vault</a><a href="https://harshvittori.github.io/hv-tests/">HV Test</a><a href="https://harshvittori.github.io/harsh-reset/">HV Reset</a><a href="https://harshvittori.github.io/hv-vault-web/">HV Vault</a><a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/harshvittori" target="_blank" rel="noopener">GitHub</a></nav></div></footer>
 <script>
 (function () {
   document.getElementById("yr").textContent = new Date().getFullYear();
