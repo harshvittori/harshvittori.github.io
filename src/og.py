@@ -74,7 +74,11 @@ HOME_ART2 = ('<div class="bleed">'
     + kcard("Growth Associate", "Swiggy", "#FC8019", "Applied ✓", "position:relative;box-shadow:none;border:1px solid #EEF0F5") +
     '</div><div class="toast" style="left:250px;bottom:40px;z-index:5">✓&nbsp; Follow-up reminder set</div></div>') % (
     svg("logo-test", 26, 0, False), svg("logo-reset", 26, 0, False), svg("logo-vault", 26, 0, False))
-RIYA = '<div class="riya">%s</div>' % story.prologue()
+RIYA = ('<div class="bleed"><div class="riya">%s</div>'
+        '<div class="pchip" style="left:-6px;top:70px;transform:rotate(-4deg);--c:#127A4F;--b:#E3F4EA">%s<span>Who am I, really?</span></div>'
+        '<div class="pchip" style="right:70px;top:452px;transform:rotate(3deg);--c:#3F66BE;--b:#E6EDFB">%s<span>Where did my day go?</span></div>'
+        '<div class="pchip" style="left:-10px;bottom:34px;transform:rotate(-2deg);--c:#A0721C;--b:#FBF1DC">%s<span>Did I ever follow up?</span></div></div>') % (
+        story.prologue(), svg("logo-test", 34, 0, False), svg("logo-reset", 34, 0, False), svg("logo-vault", 34, 0, False))
 
 CARDS = [  # out, brand logo, brand word, accent, dark, tint, circle, eyebrow, headline, sub, cta, art
     ("og.jpg", "world-orbit", "WORLD", "#2E43A6", "#233489", "#F4F5FB", "#E2E7F8", "3 free apps · by Harsh Vittori",
@@ -139,7 +143,8 @@ h1{margin-top:12px;font-weight:700;font-size:64px;line-height:1.02;letter-spacin
 .score.mini{width:300px;padding:18px 22px}
 .vmini{position:absolute;width:300px;background:#fff;border-radius:22px;padding:16px;box-shadow:0 30px 60px -24px rgba(20,30,60,.5);z-index:3}
 .tag-app{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:600;color:#6B7390;margin-bottom:10px}
-.riya{position:absolute;right:48px;top:50%;width:520px;transform:translateY(-50%) rotate(2deg);border-radius:26px;overflow:hidden;box-shadow:0 40px 80px -30px rgba(20,30,60,.55)}
+.pchip{position:absolute;z-index:4;display:flex;align-items:center;gap:12px;font-weight:600;font-size:22px;color:var(--c);background:#fff;border:2px solid var(--b);padding:9px 20px 9px 9px;border-radius:999px;box-shadow:0 20px 40px -16px rgba(20,30,60,.45);white-space:nowrap}
+.riya{position:absolute;left:40px;top:50%;width:560px;transform:translateY(-50%) rotate(2deg);border-radius:26px;overflow:hidden;box-shadow:0 40px 80px -30px rgba(20,30,60,.55)}
 .riya svg{display:block;width:100%;height:auto}
 """
 html = "<!DOCTYPE html><html><head><meta charset='utf-8'><style>%s</style></head><body>" % CSS
