@@ -234,7 +234,7 @@ CH = [
         ("The problem", "Every day slips away.", "Notifications, coffee, a to-do list that never shrinks. The clock just spins."),
         ("HV Reset", "Her day becomes blocks.", "One block, one task, with a calm focus clock that shows what to do right now."),
         ("Running late?", "The day bends. It doesn't break.", "One tap shifts the rest of the plan. Lunch stays. Nothing is lost."),
-        ("The change", "Evening, and it's all done.", "Every block ticked. Tea, and tomorrow's first step already written.")], "https://harshvittori.github.io/harsh-reset/", "Open HV Reset"),
+        ("The change", "Evening, and it's all done.", "Every block ticked. Tea, and tomorrow's first step already written.")], "https://harshvittori.github.io/hv-reset/", "Open HV Reset"),
     chapter("vault", 3, "Act", "HV Vault", "Did I ever follow up?", ch_vault(), [
         ("The problem", "Opportunities float away.", "Links in chats, five versions of her resume, sticky notes. The good ones go quiet."),
         ("HV Vault", "Everything, in one place.", "Every job and company on one board: saved, applied, interview."),
@@ -490,7 +490,7 @@ PAGE = """<!DOCTYPE html>
     <div class="art-box rv">__FINALE__</div>
     <div class="cards">
       <div class="pcard rv"><div class="h">__L_TEST__<b>HV Test</b></div><p>Know yourself. Tests for your traits, thinking, skills and growth, starting with the Maturity Assessment.</p><div class="pacts"><a class="btn" href="https://harshvittori.github.io/hv-tests/">Open HV Test</a><a class="lm" href="/test/">Learn more</a></div></div>
-      <div class="pcard rv"><div class="h">__L_RESET__<b>HV Reset</b></div><p>Plan your day. One block, one task, and a day that bends instead of breaking.</p><div class="pacts"><a class="btn" href="https://harshvittori.github.io/harsh-reset/">Open HV Reset</a><a class="lm" href="/reset/">Learn more</a></div></div>
+      <div class="pcard rv"><div class="h">__L_RESET__<b>HV Reset</b></div><p>Plan your day. One block, one task, and a day that bends instead of breaking.</p><div class="pacts"><a class="btn" href="https://harshvittori.github.io/hv-reset/">Open HV Reset</a><a class="lm" href="/reset/">Learn more</a></div></div>
       <div class="pcard rv"><div class="h">__L_VAULT__<b>HV Vault</b></div><p>Act on every opportunity. One board, automatic follow-ups and HV AI.</p><div class="pacts"><a class="btn" href="https://harshvittori.github.io/hv-vault-web/">Open HV Vault</a><a class="lm" href="/vault/">Learn more</a></div></div>
     </div>
     <p class="more rv"><a href="/">See every feature, HV AI, privacy and FAQ →</a></p>
@@ -509,7 +509,7 @@ PAGE = """<!DOCTYPE html>
   </div></section>
 </main>
 <footer><div class="wrap row"><span>© <span id="yr">2026</span> HV World · Built by Harsh Goyal</span>
-<nav aria-label="Footer"><a href="/">All features</a><a href="/watch/">Watch</a><a href="/test/">About HV Test</a><a href="/reset/">About HV Reset</a><a href="/vault/">About HV Vault</a><a href="https://harshvittori.github.io/hv-tests/">HV Test</a><a href="https://harshvittori.github.io/harsh-reset/">HV Reset</a><a href="https://harshvittori.github.io/hv-vault-web/">HV Vault</a><a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/harshvittori" target="_blank" rel="noopener">GitHub</a></nav></div></footer>
+<nav aria-label="Footer"><a href="/">All features</a><a href="/watch/">Watch</a><a href="/test/">About HV Test</a><a href="/reset/">About HV Reset</a><a href="/vault/">About HV Vault</a><a href="https://harshvittori.github.io/hv-tests/">HV Test</a><a href="https://harshvittori.github.io/hv-reset/">HV Reset</a><a href="https://harshvittori.github.io/hv-vault-web/">HV Vault</a><a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/harshvittori" target="_blank" rel="noopener">GitHub</a></nav></div></footer>
 <script>__JS__</script>
 </body>
 </html>

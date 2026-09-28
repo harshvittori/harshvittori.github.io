@@ -30,7 +30,7 @@ def window(img, crop, width, url, style=""):
         width, style, url, h * k, img, 1440 * k, x * k, y * k)
 
 RESET_ART = ('<div class="bleed">' +
-    window("r-intro-0", (320, 175, 800, 470), 565, "harshvittori.github.io/harsh-reset", "left:8px;top:50%;transform:translateY(-50%) rotate(-2deg)") +
+    window("r-intro-0", (320, 175, 800, 470), 565, "harshvittori.github.io/hv-reset", "left:8px;top:50%;transform:translateY(-50%) rotate(-2deg)") +
     '<div class="fchip amber" style="left:10px;top:78px;transform:rotate(-4deg)">⏰&nbsp; Running 30 min late</div>'
     '<div class="plan" style="left:-24px;bottom:58px;transform:rotate(2deg)">'
     '<div class="row now"><b>3:00 PM</b><span>Send applications</span><em>+30m</em></div>'

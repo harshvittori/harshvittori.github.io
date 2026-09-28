@@ -7,7 +7,7 @@ Growth breaks at three links. HV World fixes each one and joins them into a chai
 | Link | Product | The problem it solves | Link |
 |---|---|---|---|
 | 1 · Know | HV Test | Guessing your own strengths | https://harshvittori.github.io/hv-tests/ |
-| 2 · Plan | HV Reset | Days that drift | https://harshvittori.github.io/harsh-reset/ |
+| 2 · Plan | HV Reset | Days that drift | https://harshvittori.github.io/hv-reset/ |
 | 3 · Act | HV Vault | Opportunities that slip | https://harshvittori.github.io/hv-vault-web/ |
 
 ## The story

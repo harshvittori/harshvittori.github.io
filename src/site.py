@@ -33,7 +33,7 @@ USER = I('<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>')
 SPARK = I('<path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/>')
 LOCK = I('<rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/>')
 
-URL = {"test": "https://harshvittori.github.io/hv-tests/", "reset": "https://harshvittori.github.io/harsh-reset/", "vault": "https://harshvittori.github.io/hv-vault-web/"}
+URL = {"test": "https://harshvittori.github.io/hv-tests/", "reset": "https://harshvittori.github.io/hv-reset/", "vault": "https://harshvittori.github.io/hv-vault-web/"}
 
 # ---------------------------------------------------------------- product previews (plain HTML, no screenshots)
 MOCK_TEST = '''<div class="mock q">
