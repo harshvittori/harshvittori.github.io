@@ -439,20 +439,20 @@ PAGE = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>HV World | Riya's story: Know. Plan. Act.</title>
+<title>Why does Riya feel stuck? | HV World</title>
 <meta name="description" content="Follow Riya through the three problems that hold people back, and see how HV Test, HV Reset and HV Vault fix each one. HV World, designed and built by Harsh Vittori.">
 <link rel="canonical" href="https://harshvittori.github.io/story/">
 <meta name="theme-color" content="#FFFFFF">
 <meta property="og:type" content="website"><meta property="og:site_name" content="HV World">
-<meta property="og:title" content="HV World: Riya's story. Know. Plan. Act.">
-<meta property="og:description" content="Three problems hold people back. Three products fix them. Designed and built by Harsh Vittori.">
-<meta property="og:url" content="https://harshvittori.github.io/story/"><meta property="og:image" content="https://harshvittori.github.io/story/og.png">
-<meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="HV World: This is Riya. An illustrated story in three apps.">
+<meta property="og:title" content="Why does Riya feel stuck? | HV World">
+<meta property="og:description" content="A 1-minute illustrated story: three everyday problems, and three simple apps that fix them. By Harsh Vittori.">
+<meta property="og:url" content="https://harshvittori.github.io/story/"><meta property="og:image" content="https://harshvittori.github.io/story/og.jpg">
+<meta property="og:image:type" content="image/jpeg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Why does Riya feel stuck? A 1-minute illustrated story from HV World.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="HV World: Riya's story. Know. Plan. Act.">
-<meta name="twitter:description" content="Three problems hold people back. Three products fix them. Designed and built by Harsh Vittori.">
-<meta name="twitter:image" content="https://harshvittori.github.io/story/og.png">
+<meta name="twitter:title" content="Why does Riya feel stuck? | HV World">
+<meta name="twitter:description" content="A 1-minute illustrated story: three everyday problems, and three simple apps that fix them. By Harsh Vittori.">
+<meta name="twitter:image" content="https://harshvittori.github.io/story/og.jpg">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"HV World","url":"https://harshvittori.github.io/","founder":{"@type":"Person","name":"Harsh Vittori","sameAs":["https://www.linkedin.com/in/harshvittori"]}}</script>
 <style>__CSS__</style>

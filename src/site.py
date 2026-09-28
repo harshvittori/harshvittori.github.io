@@ -486,8 +486,8 @@ ICONS = {
 # ---------------------------------------------------------------- one page per app
 APPS = {
  "test": dict(name="HV Test", verb="Know yourself", color="#127A4F", tint="#EEF6F1", pline="#D3E7DA", mock=MOCK_TEST, cta="Take a test", story="/#test",
-   title="HV Test | Know yourself with real-life situations",
-   desc="HV Test shows how you really think, react and decide. The Maturity Assessment: 10 areas, a score out of 100, a full report and a 30-day plan. Free, no login.",
+   title="How mature are you, really? | HV Test",
+   desc="10 minutes of real-life situations. An honest score out of 100, a full report and a 30-day plan. Free, no login.",
    lead="Honest, everyday situations that show how you really think, react and decide. Then a clear score and a plan to grow.",
    facts=[("10 min", "to finish"), ("10", "areas measured"), ("2 PDFs", "report and 30-day plan"), ("No login", "answers stay on your device")],
    problem=("“So, what are your strengths?”", "Most of us have never really measured ourselves. So in an interview, a review or a big decision, we guess."),
@@ -515,8 +515,8 @@ APPS = {
         ("Can I take it again?", "Yes. Questions and options are shuffled, and a retake avoids the questions you saw last time."),
         ("Is it free?", "Yes, completely. Both PDFs included.")]),
  "reset": dict(name="HV Reset", verb="Plan your day", color="#4A72C8", tint="#EEF2FB", pline="#D6E0F4", mock=MOCK_RESET, cta="Open HV Reset", story="/#reset",
-   title="HV Reset | A calm day, one block at a time",
-   desc="HV Reset turns your day into simple blocks: one block, one task. Shift the day when you're late, never skip meals, and let HV AI plan it from one sentence. Free.",
+   title="Running late? Your day adjusts. | HV Reset",
+   desc="One block, one task. One tap moves your whole plan when you fall behind, and meals never get skipped. Free, in your browser.",
    lead="A day made of simple blocks: one block, one task. You always know what to do right now, and the day bends instead of breaking.",
    facts=[("1 task", "per block"), ("90 min", "longest work block"), ("1 tap", "to shift a late day"), ("HV AI", "plans from one sentence")],
    problem=("“Where did my day go?”", "Notifications, coffee and a to-do list that never shrinks. The clock spins and the important work waits."),
@@ -544,8 +544,8 @@ APPS = {
         ("Does it work with HV Vault?", "Yes. Log an application in HV Reset and it lands in HV Vault as Applied, with its first follow-up."),
         ("Is it free?", "Yes, including HV AI.")]),
  "vault": dict(name="HV Vault", verb="Act on every opportunity", color="#A87A22", tint="#F8F3E8", pline="#EADDC2", mock=MOCK_VAULT, cta="Open HV Vault", story="/#vault",
-   title="HV Vault | Every opportunity in one calm place",
-   desc="HV Vault keeps every job, company, follow-up and interview in one place. Automatic follow-ups, AI auto-fill, a profile from your resume and HV AI in Hindi, English or Hinglish. Free.",
+   title="Never miss a follow-up again | HV Vault",
+   desc="Every job, recruiter and interview on one calm board, with reminders that set themselves and an AI you can just talk to. Free.",
    lead="Every job, company, follow-up and interview in one calm place, so nothing slips. Just tell HV AI what happened.",
    facts=[("1 board", "Saved to Offer"), ("Auto", "follow-ups"), ("AI", "fills in job posts"), ("Any device", "same data everywhere")],
    problem=("“Did I ever follow up?”", "Links in chats, five versions of a resume, sticky notes everywhere. The good opportunities go quiet."),
@@ -659,7 +659,7 @@ def shell(path, title, desc, og, body, active):
 <meta property="og:description" content="%s">
 <meta property="og:url" content="%s">
 <meta property="og:image" content="%s">
-<meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/jpeg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="%s">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="%s">
@@ -702,7 +702,7 @@ def shell(path, title, desc, og, body, active):
 </script>
 </body>
 </html>
-''' % (title, desc, url, title.replace(" | ", ": "), desc, url, og, title.replace(" | ", ": "), title.replace(" | ", ": "), desc, og, CSS, logo("world"), links, body)
+''' % (title, desc, url, title, desc, url, og, title, title, desc, og, CSS, logo("world"), links, body)
 
 def fill(page):
     page = page.replace("__PRODUCTS__", "\n".join(product(*p, flip=(i == 1)) for i, p in enumerate(PRODUCTS)))
@@ -724,12 +724,12 @@ def write(path, page):
     print("ok", path, len(page), "bytes")
 
 def build():
-    write("/", fill(shell("/", "HV World | Your work, your day, your growth",
-          "Everything in HV World: HV Test to know yourself, HV Reset to plan your day, HV Vault to act on every opportunity, and HV AI in Hindi, English or Hinglish. Free, by Harsh Vittori.",
-          "https://harshvittori.github.io/og.png", OVERVIEW_MAIN, "overview")))
+    write("/", fill(shell("/", "Know yourself. Plan your day. Act on time. | HV World",
+          "Three free apps that work together, with an AI you can just talk to. Watch the 45-second film. By Harsh Vittori.",
+          "https://harshvittori.github.io/og.jpg", OVERVIEW_MAIN, "overview")))
     for k in ORDER:
         a = APPS[k]
-        write("/%s/" % k, fill(shell("/%s/" % k, a["title"], a["desc"], "https://harshvittori.github.io/%s/og.png" % k, app_page(k), k)))
+        write("/%s/" % k, fill(shell("/%s/" % k, a["title"], a["desc"], "https://harshvittori.github.io/%s/og.jpg" % k, app_page(k), k)))
 
 if __name__ == "__main__":
     build()
