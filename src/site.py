@@ -261,14 +261,14 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
 .film{margin-bottom:112px}
 .filmbox{display:block;position:relative;width:100%;max-width:1040px;margin:0 auto;padding:0;border:1px solid var(--line);border-radius:28px;overflow:hidden;background:#0A0F24;cursor:pointer;aspect-ratio:16/9;box-shadow:0 40px 80px -40px rgba(20,30,60,.45);font:inherit}
 .filmbox video{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
-.play{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);display:inline-flex;align-items:center;gap:12px;padding:10px 22px 10px 10px;border-radius:999px;background:rgba(255,255,255,.95);color:var(--ink);font-weight:600;font-size:17px;white-space:nowrap;box-shadow:0 14px 34px -12px rgba(0,0,0,.55);transition:transform .25s}
-.play i{width:36px;height:36px;border-radius:50%;background:var(--accent);display:grid;place-items:center}.play svg{width:15px;height:15px;fill:#fff;margin-left:2px}
-.filmbox:hover .play{transform:translateX(-50%) scale(1.04)}
+.play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:92px;height:92px;border-radius:50%;background:rgba(255,255,255,.95);box-shadow:0 0 0 10px rgba(255,255,255,.18),0 20px 44px -12px rgba(0,0,0,.6);transition:transform .25s}
+.play i{display:grid;place-items:center}.play svg{width:34px;height:34px;fill:var(--accent);margin-left:5px}
+.filmbox:hover .play{transform:translate(-50%,-50%) scale(1.06)}
 .filmdlg{padding:0;border:0;background:transparent;width:min(1200px,94vw);max-width:none;overflow:visible}
 .filmdlg::backdrop{background:rgba(6,9,19,.9)}
 .filmdlg video{width:100%;display:block;border-radius:18px;background:#000;aspect-ratio:16/9}
 .filmdlg .x{position:absolute;top:-54px;right:0;width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.16);color:#fff;font-size:28px;line-height:1;cursor:pointer}
-@media (max-width:880px){.film{margin-bottom:72px}.filmbox{border-radius:18px}.play{bottom:14px;font-size:15px;padding:8px 16px 8px 8px}.play i{width:30px;height:30px}}
+@media (max-width:880px){.film{margin-bottom:72px}.filmbox{border-radius:18px}.play{width:68px;height:68px}.play svg{width:26px;height:26px}}
 .sep{border:0;height:1px;background:var(--line);width:min(1120px,100% - 32px);margin:0 auto 96px}
 .faq details p{max-width:none}
 /* app pages */
@@ -383,10 +383,10 @@ OVERVIEW_MAIN = """<main id="main">
   </div>
 
   <section id="film" class="wrap film">
-    <div class="head rv"><p class="label">See it in action</p><h2>See HV World in action.</h2><p>Real screens from all three apps. Tap to watch with sound.</p></div>
-    <button type="button" class="filmbox rv" id="filmOpen" aria-label="Watch HV World in action, with sound">
+    <div class="head rv"><p class="label">The product</p><h2>See HV World in action.</h2><p>Real screens from all three apps.</p></div>
+    <button type="button" class="filmbox rv" id="filmOpen" aria-label="Play the HV World video">
       <video id="loopVid" poster="/media/hv-world-loop-poster.jpg" muted loop playsinline autoplay preload="auto" aria-hidden="true" tabindex="-1"><source src="/media/hv-world-loop.mp4" type="video/mp4"><source src="/media/hv-world-loop.webm" type="video/webm"></video>
-      <span class="play"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg></i>Watch with sound</span>
+      <span class="play"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg></i></span>
     </button>
   </section>
 
@@ -642,7 +642,7 @@ FILM_MAIN = """<main id="main" class="filmpage">
     <p class="label">HV World in action</p>
     <h1>See all 3 apps in action.</h1>
     <div class="fpv"><video id="fpVid" controls playsinline preload="metadata" poster="/watch/poster.jpg"><source src="/media/hv-world-film.mp4" type="video/mp4"><source src="/media/hv-world-film.webm" type="video/webm"></video></div>
-    <p class="fpsub">HV Test, HV Reset and HV Vault, real screens, with sound.</p>
+    <p class="fpsub">Real screens from HV Test, HV Reset and HV Vault.</p>
     <div class="ctas"><a class="btn" href="/">Explore HV World __ARROW__</a><a class="btn ghost" href="/story/">Read Riya's story</a></div>
     <div class="fpapps"><a href="__U_TEST__">__LOGO_TEST__HV Test</a><a href="__U_RESET__">__LOGO_RESET__HV Reset</a><a href="__U_VAULT__">__LOGO_VAULT__HV Vault</a></div>
   </section>
@@ -751,7 +751,7 @@ def build():
     write("/", fill(shell("/", "Stop guessing. Start growing. | HV World",
           "3 free apps that show your strengths, plan your day and chase your follow-ups for you. Just talk to the AI.",
           "https://harshvittori.github.io/og.jpg", OVERVIEW_MAIN, "overview")))
-    film = fill(shell("/watch/", "3 apps. 1 AI. Zero chaos. | HV World", "Watch HV Test, HV Reset and HV Vault in action: real screens, with sound. Three free apps by Harsh Vittori.",
+    film = fill(shell("/watch/", "3 apps. 1 AI. Zero chaos. | HV World", "See HV Test, HV Reset and HV Vault in action. Three free apps by Harsh Vittori.",
                       "https://harshvittori.github.io/watch/og.jpg", FILM_MAIN, "film"))
     film = film.replace('<meta property="og:type" content="website">', '<meta property="og:type" content="video.other">'
         '<meta property="og:video" content="https://harshvittori.github.io/media/hv-world-film.mp4">'
