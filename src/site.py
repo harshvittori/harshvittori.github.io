@@ -304,6 +304,23 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
 .pp .lead{margin:24px 0 28px}
 .aoff,.aoff *{animation-play-state:paused!important}   /* animations only run while their section is on screen */
 .phero{overflow:clip}
+.showcase .head{max-width:760px}
+.sc-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:40px;align-items:center;margin-top:28px}
+.sc-shot{margin:0;border-radius:18px;overflow:hidden;border:1px solid var(--pline);background:#fff;box-shadow:0 40px 80px -40px rgba(20,30,60,.45)}
+.sc-bar{display:flex;align-items:center;gap:6px;padding:10px 14px;background:#F3F4F7;border-bottom:1px solid var(--line)}
+.sc-bar i{width:10px;height:10px;border-radius:50%;background:#E0E1E6}.sc-bar i:nth-child(1){background:#FF6159}.sc-bar i:nth-child(2){background:#FFBD2E}.sc-bar i:nth-child(3){background:#28C941}
+.sc-bar span{margin-left:10px;font-size:12px;color:var(--faint);background:#fff;border-radius:6px;padding:3px 10px}
+.sc-img{position:relative}.sc-img img{display:block;width:100%;height:auto}
+.mk{position:absolute;transform:translate(-50%,-50%);width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;color:#fff;background:var(--pc);box-shadow:0 0 0 3px #fff,0 6px 14px -4px rgba(20,30,60,.5);transition:transform .25s cubic-bezier(.22,1,.36,1)}
+.mk.on{transform:translate(-50%,-50%) scale(1.35)}
+.sc-pts{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.sc-pts li{display:flex;gap:12px;align-items:flex-start;padding:10px 12px;border-radius:14px;cursor:default;transition:background .2s}
+.sc-pts li:hover,.sc-pts li:focus,.sc-pts li.on{background:var(--tint);outline:none}
+.sc-pts .pn{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;color:#fff;background:var(--pc)}
+.sc-pts b{display:block;font-size:16px;margin-bottom:2px}.sc-pts li>span:last-child{color:var(--muted);font-size:14.5px;line-height:1.45}
+.sc-more{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:26px}
+.sc-more b{font-size:14px;margin-right:4px}.sc-more span{font-size:13.5px;padding:6px 12px;border-radius:999px;background:var(--tint);border:1px solid var(--pline);color:var(--ink)}
+@media (max-width:880px){.sc-grid{grid-template-columns:1fr;gap:22px}.mk{width:20px;height:20px;font-size:11px;box-shadow:0 0 0 2px #fff}}
 .stage{position:relative;display:flex;justify-content:center;width:100%;max-width:420px;--px:0;--py:0}
 .stage .mock{position:relative;z-index:1;transform:translate(calc(var(--px)*-6px),calc(var(--py)*-5px));transition:transform .5s cubic-bezier(.22,1,.36,1)}
 .chip{position:absolute;z-index:2;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;font-size:13px;font-weight:600;padding:8px 13px;border-radius:999px;background:#fff;color:var(--ink);border:1px solid var(--pline,var(--line));box-shadow:0 14px 30px -14px rgba(20,30,60,.35);transform:translate(calc(var(--px)*14px),calc(var(--py)*10px));transition:transform .5s cubic-bezier(.22,1,.36,1)}
@@ -571,6 +588,16 @@ APPS = {
         ("Can I take it again?", "Yes. Questions and options are shuffled, and a retake avoids the questions you saw last time."),
         ("Who can take it?", "Anyone. The Maturity Assessment is free for everyone, both PDFs included.")]),
  "reset": dict(name="HV Reset", verb="Plan your day. See your progress.", color="#4A72C8", tint="#EEF2FB", pline="#D6E0F4", mock=MOCK_RESET, cta="Open HV Reset", story="/#reset",
+   showcase=dict(img="/reset/dashboard.jpg", w=1440, h=1002,
+     title="Your personal dashboard", lead="See what you planned, what you really did, and whether you're getting better. Every number comes from what you actually do. Nothing is made up.",
+     points=[(17.9, 14.4, "Today at a glance", "Tasks done, time worked and what's next, with one tap back to your day."),
+             (17.9, 25.6, "Three honest answers", "What am I doing with my time? Am I completing what I plan? Am I improving?"),
+             (17.9, 39.1, "Four numbers that matter", "Tasks completed, time worked, started on time and your streak, each compared with last time."),
+             (17.9, 59.4, "A fair productivity score", "One score from six parts you can see and adjust. Longer hours never count as better."),
+             (60.9, 59.4, "Your last 14 days", "A simple trend of how much of your plan you finished each day."),
+             (17.9, 85.3, "Worth a look", "One timely alert and one tip from your own patterns, never judgement."),
+             (8.5, 80.0, "15 deeper views", "Time, focus, punctuality, calendar, goals, reports and more, one tap away.")],
+     more=["Time tracking", "Focus", "Punctuality & delays", "Day timeline", "Trends", "Calendar heatmap", "Workload", "Goals & habits", "Daily, weekly, monthly reports", "Timer history"]),
    title="Plan your day and see where your time goes | HV Reset",
    desc="One task at a time, a day that moves when you're late, and a personal dashboard for your time, focus, streaks and progress. Free, in your browser.",
    lead="Plan your day, do one task at a time, and see what you really did. Your own dashboard shows where your time goes and whether you're getting better.",
@@ -654,6 +681,16 @@ def app_page(key):
         cards = "".join('<div class="lc%s"><span class="lb">%s</span><h3>%s</h3><p>%s</p></div>' % ("" if st == "Live now" else " soon", st, t, d) for t, st, d in a["library"])
         lib = ('<section class="pp-sec" id="tests"><div class="wrap"><div class="head rv"><p class="label">The tests</p><h2>Four ways to understand yourself.</h2>'
                '<p>Each test looks at a different side of you. Start with the one that\'s live, and more are on the way.</p></div><div class="lib rv">%s</div></div></section>') % cards
+    show = ""
+    if a.get("showcase"):
+        sc = a["showcase"]
+        marks = "".join('<span class="mk" data-n="%d" style="left:%s%%;top:%s%%">%d</span>' % (i + 1, x, y, i + 1) for i, (x, y, t, d) in enumerate(sc["points"]))
+        pts = "".join('<li data-n="%d" tabindex="0"><span class="pn">%d</span><span><b>%s</b>%s</span></li>' % (i + 1, i + 1, t, d) for i, (x, y, t, d) in enumerate(sc["points"]))
+        chips = "".join('<span>%s</span>' % m for m in sc["more"])
+        show = ('<section class="pp-sec showcase" id="dashboard"><div class="wrap"><div class="head rv"><p class="label pc">The dashboard</p><h2>%s</h2><p>%s</p></div>'
+                '<div class="sc-grid rv"><figure class="sc-shot"><div class="sc-bar"><i></i><i></i><i></i><span>harshvittori.github.io/hv-reset</span></div>'
+                '<div class="sc-img"><img src="%s" width="%d" height="%d" loading="lazy" decoding="async" alt="The HV Reset dashboard: today at a glance, three questions answered, key numbers, productivity score, a 14-day trend and tips">%s</div></figure>'
+                '<ol class="sc-pts">%s</ol></div><div class="sc-more rv"><b>Also inside</b>%s</div></div></section>') % (sc["title"], sc["lead"], sc["img"], sc["w"], sc["h"], marks, pts, chips)
     nxt = "".join('<a class="nx rv" href="/%s/" style="--pc:%s;--tint:%s;--pline:%s">%s<span><b>%s</b><small>%s</small></span>%s</a>' % (
         k, APPS[k]["color"], APPS[k]["tint"], APPS[k]["pline"], logo(k), APPS[k]["name"], APPS[k]["verb"], ARROW) for k in ORDER if k != key)
     return '''<main id="main" class="pp" style="--pc:%(color)s;--tint:%(tint)s;--pline:%(pline)s">
@@ -672,6 +709,7 @@ def app_page(key):
     <div class="rv"><p class="label">The problem</p><h2>%(p1)s</h2><p>%(p2)s</p></div>
     <div class="rv"><p class="label pc">What %(name)s does</p><h2>%(f1)s</h2><p>%(f2)s</p><a class="more" href="%(story)s">See it in Riya's story %(arrow)s</a></div>
   </div></section>
+%(show)s
 
   <section class="pp-sec"><div class="wrap">
     <div class="head rv"><p class="label">How it works</p><h2>Three steps. That's it.</h2></div>
@@ -700,7 +738,7 @@ def app_page(key):
     <div class="nxs">%(nxt)s</div>
     <p class="back"><a href="/">See all three apps together %(arrow)s</a></p>
   </div></section>
-</main>''' % dict(a, stagehtml=stage(key, a["mock"]), logo=logo(key), url=URL[key], arrow=ARROW, facts=facts, steps=steps, feats=feats, lib=lib, who=who, faq=faq, nxt=nxt,
+</main>''' % dict(a, show=show, stagehtml=stage(key, a["mock"]), logo=logo(key), url=URL[key], arrow=ARROW, facts=facts, steps=steps, feats=feats, lib=lib, who=who, faq=faq, nxt=nxt,
                   p1=a["problem"][0], p2=a["problem"][1], f1=a["fix"][0], f2=a["fix"][1])
 
 
@@ -771,6 +809,13 @@ def shell(path, title, desc, og, body, active):
 <script>
 (function () {
   document.getElementById("yr").textContent = new Date().getFullYear();
+  // dashboard showcase: pointing at a highlight enlarges its number on the picture
+  document.querySelectorAll(".sc-pts li").forEach(function (li) {
+    var mk = document.querySelector('.mk[data-n="' + li.dataset.n + '"]');
+    var on = function (v) { if (mk) mk.classList.toggle("on", v); li.classList.toggle("on", v); };
+    ["mouseenter", "focus"].forEach(function (ev) { li.addEventListener(ev, function () { on(true); }); });
+    ["mouseleave", "blur"].forEach(function (ev) { li.addEventListener(ev, function () { on(false); }); });
+  });
   // smooth scrolling: a section's animations run only while it's on screen
   if ("IntersectionObserver" in window) {
     var ao = new IntersectionObserver(function (es) { es.forEach(function (e) { e.target.classList.toggle("aoff", !e.isIntersecting); }); }, { rootMargin: "150px 0px" });

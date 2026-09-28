@@ -203,6 +203,23 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
 .pp .lead{margin:24px 0 28px}
 .aoff,.aoff *{animation-play-state:paused!important}   /* animations only run while their section is on screen */
 .phero{overflow:clip}
+.showcase .head{max-width:760px}
+.sc-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:40px;align-items:center;margin-top:28px}
+.sc-shot{margin:0;border-radius:18px;overflow:hidden;border:1px solid var(--pline);background:#fff;box-shadow:0 40px 80px -40px rgba(20,30,60,.45)}
+.sc-bar{display:flex;align-items:center;gap:6px;padding:10px 14px;background:#F3F4F7;border-bottom:1px solid var(--line)}
+.sc-bar i{width:10px;height:10px;border-radius:50%;background:#E0E1E6}.sc-bar i:nth-child(1){background:#FF6159}.sc-bar i:nth-child(2){background:#FFBD2E}.sc-bar i:nth-child(3){background:#28C941}
+.sc-bar span{margin-left:10px;font-size:12px;color:var(--faint);background:#fff;border-radius:6px;padding:3px 10px}
+.sc-img{position:relative}.sc-img img{display:block;width:100%;height:auto}
+.mk{position:absolute;transform:translate(-50%,-50%);width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;color:#fff;background:var(--pc);box-shadow:0 0 0 3px #fff,0 6px 14px -4px rgba(20,30,60,.5);transition:transform .25s cubic-bezier(.22,1,.36,1)}
+.mk.on{transform:translate(-50%,-50%) scale(1.35)}
+.sc-pts{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.sc-pts li{display:flex;gap:12px;align-items:flex-start;padding:10px 12px;border-radius:14px;cursor:default;transition:background .2s}
+.sc-pts li:hover,.sc-pts li:focus,.sc-pts li.on{background:var(--tint);outline:none}
+.sc-pts .pn{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;color:#fff;background:var(--pc)}
+.sc-pts b{display:block;font-size:16px;margin-bottom:2px}.sc-pts li>span:last-child{color:var(--muted);font-size:14.5px;line-height:1.45}
+.sc-more{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:26px}
+.sc-more b{font-size:14px;margin-right:4px}.sc-more span{font-size:13.5px;padding:6px 12px;border-radius:999px;background:var(--tint);border:1px solid var(--pline);color:var(--ink)}
+@media (max-width:880px){.sc-grid{grid-template-columns:1fr;gap:22px}.mk{width:20px;height:20px;font-size:11px;box-shadow:0 0 0 2px #fff}}
 .stage{position:relative;display:flex;justify-content:center;width:100%;max-width:420px;--px:0;--py:0}
 .stage .mock{position:relative;z-index:1;transform:translate(calc(var(--px)*-6px),calc(var(--py)*-5px));transition:transform .5s cubic-bezier(.22,1,.36,1)}
 .chip{position:absolute;z-index:2;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;font-size:13px;font-weight:600;padding:8px 13px;border-radius:999px;background:#fff;color:var(--ink);border:1px solid var(--pline,var(--line));box-shadow:0 14px 30px -14px rgba(20,30,60,.35);transform:translate(calc(var(--px)*14px),calc(var(--py)*10px));transition:transform .5s cubic-bezier(.22,1,.36,1)}
@@ -375,6 +392,7 @@ html:active-view-transition-type(back)::view-transition-new(page){animation:vt-i
     <div class="rv"><p class="label pc">What HV Test does</p><h2>See yourself clearly. Then grow.</h2><p>HV Test measures your traits, abilities and habits with honest, carefully designed tests. You see where you stand, what to improve, and how you change over time.</p><a class="more" href="/#test">See it in Riya's story <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
   </div></section>
 
+
   <section class="pp-sec"><div class="wrap">
     <div class="head rv"><p class="label">How it works</p><h2>Three steps. That's it.</h2></div>
     <div class="steps3"><div class="st rv"><span class="n">1</span><h3>Pick a test</h3><p>Choose what you want to understand. Start with the Maturity Assessment: about 10 minutes.</p></div><div class="st rv"><span class="n">2</span><h3>Answer honestly</h3><p>Real situations and questions, with no right answers to game. Pick what you'd really do.</p></div><div class="st rv"><span class="n">3</span><h3>See where you stand, then grow</h3><p>Your score, strengths and growth areas, a report and a plan. Retake later to see how you've grown.</p></div></div>
@@ -408,6 +426,13 @@ html:active-view-transition-type(back)::view-transition-new(page){animation:vt-i
 <script>
 (function () {
   document.getElementById("yr").textContent = new Date().getFullYear();
+  // dashboard showcase: pointing at a highlight enlarges its number on the picture
+  document.querySelectorAll(".sc-pts li").forEach(function (li) {
+    var mk = document.querySelector('.mk[data-n="' + li.dataset.n + '"]');
+    var on = function (v) { if (mk) mk.classList.toggle("on", v); li.classList.toggle("on", v); };
+    ["mouseenter", "focus"].forEach(function (ev) { li.addEventListener(ev, function () { on(true); }); });
+    ["mouseleave", "blur"].forEach(function (ev) { li.addEventListener(ev, function () { on(false); }); });
+  });
   // smooth scrolling: a section's animations run only while it's on screen
   if ("IntersectionObserver" in window) {
     var ao = new IntersectionObserver(function (es) { es.forEach(function (e) { e.target.classList.toggle("aoff", !e.isIntersecting); }); }, { rootMargin: "150px 0px" });
