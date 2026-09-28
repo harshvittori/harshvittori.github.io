@@ -36,12 +36,16 @@ header{position:sticky;top:0;z-index:50;background:rgba(249,249,251,.85);-webkit
 .nav{height:52px;display:flex;align-items:center;gap:20px}
 .brand{display:flex;align-items:center;gap:9px;text-decoration:none;font-weight:600;font-size:17px}
 .brand svg{width:26px;height:26px;border-radius:7px}
-.nav nav{display:flex;gap:22px;margin-left:auto;font-size:14px}
-.nav nav a{text-decoration:none;color:var(--soft)}.nav nav a:hover{color:var(--ink)}
-.nav .story{color:var(--accent)!important;font-weight:600}
-.nav nav a[aria-current]{color:var(--ink);font-weight:600}
-@media (max-width:720px){.nav nav a.opt,.nav .d{display:none}.nav nav{gap:16px}}
-@media (max-width:360px){.brand{font-size:0;gap:0}.nav nav{gap:14px}}
+.nav nav{display:flex;align-items:center;gap:4px;margin-left:auto;font-size:14px}
+.nav nav a{position:relative;display:inline-block;white-space:nowrap;line-height:32px;height:32px;padding:0 13px;border-radius:999px;text-decoration:none;color:var(--soft);font-weight:500;transition:color .2s ease,background-color .2s ease,box-shadow .2s ease}
+.nav nav a:hover{color:var(--accent);background:rgba(46,67,166,.07);text-decoration:none}
+.nav nav a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.nav nav a[aria-current]{color:var(--accent);font-weight:600;background:#E8ECFB;box-shadow:inset 0 0 0 1px rgba(46,67,166,.14)}
+.nav nav a[aria-current]:hover{background:#E1E6FA}
+.brand{white-space:nowrap}
+@media (max-width:720px){.nav nav a.opt,.nav .d{display:none}.nav nav{gap:2px}.nav nav a{height:30px;line-height:30px;padding:0 10px}}
+@media (max-width:470px){.brand{font-size:0;gap:0}.nav nav a{padding:0 9px}}
+@media (max-width:360px){.nav nav a{padding:0 7px;font-size:13.5px}}
 /* buttons */
 .btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:11px 22px;border-radius:999px;background:var(--accent);color:#fff;text-decoration:none;font-weight:500;font-size:16px;transition:background .2s}
 .btn:hover{background:var(--accent-hover)}
@@ -69,7 +73,7 @@ header{position:sticky;top:0;z-index:50;background:rgba(249,249,251,.85);-webkit
 @keyframes spin{to{transform:rotate(360deg)}}@keyframes float{50%{translate:0 -8px}}
 @media (max-width:880px){.hero{grid-template-columns:1fr;padding:48px 0 40px;gap:36px}.orbit{max-width:320px}}
 /* strip */
-.strip{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:96px}
+.strip{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:72px}
 .strip div{padding:22px 20px;border-right:1px solid var(--line)}.strip div:last-child{border-right:0}
 .strip b{display:block;font-size:24px;font-weight:700;letter-spacing:-.03em}
 .strip span{font-size:14.5px;color:var(--soft)}
@@ -265,6 +269,19 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
   .wt b{font-size:18px}.wt span{font-size:15.5px}
   .nx>svg:first-child{width:44px;height:44px}.nx b{font-size:17px}
 }
+/* section bands: every section gets its own full-width background, alternating, with a hairline edge */
+.band{position:relative;padding:96px 0}
+.band-w{background:#FFFFFF;box-shadow:0 0 0 100vmax #FFFFFF;clip-path:inset(0 -100vmax)}
+.band-g{background:#F2F3F7;box-shadow:0 0 0 100vmax #F2F3F7;clip-path:inset(0 -100vmax)}
+.band::before{content:"";position:absolute;top:0;left:50%;width:100vw;margin-left:-50vw;height:1px;background:var(--line)}
+html{overflow-x:clip}
+.band .products,.band .together,.band .ai-sec,.band .two,.band .faq,.band.film{margin-bottom:0}
+.band-g .feat,.band-g .two>div{background:#fff}
+.band-w .feat,.band-w .two>div{background:#F7F8FA}
+.final{background:#FFFFFF}
+.pp-sec{background:#F2F3F7}.pp-sec:nth-of-type(odd){background:#FFFFFF}
+.pp-sec:nth-of-type(even) .steps3,.pp-sec:nth-of-type(even) .fgrid{background:#fff}
+@media (max-width:880px){.band{padding:64px 0}}
 /* reveal */
 @media (prefers-reduced-motion:no-preference){.rv{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s cubic-bezier(.22,1,.36,1)}.rv.in{opacity:1;transform:none}}
 </style>
@@ -272,7 +289,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header><div class="wrap nav"><a class="brand" href="/"><svg aria-hidden="true" focusable="false" viewBox="0 0 48 48"><defs><linearGradient id="hvw-1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1C2A6B"/><stop offset=".6" stop-color="#4A46C9"/><stop offset="1" stop-color="#7C5CE0"/></linearGradient><radialGradient id="hvwc-1" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#C9D3FF"/></radialGradient></defs><rect width="48" height="48" rx="12" fill="url(#hvw-1)"/><ellipse cx="24" cy="24" rx="16.5" ry="7.5" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.8" transform="rotate(-24 24 24)"/><circle cx="24" cy="24" r="6.2" fill="url(#hvwc-1)"/><circle cx="37.6" cy="17.9" r="3.3" fill="#F2C063"/><circle cx="10.4" cy="30.1" r="3.3" fill="#34C77B"/><circle cx="17.4" cy="14.6" r="2.6" fill="#F2A77E"/></svg>HV World</a>
-<nav aria-label="Main"><a class="opt" aria-current="page" href="/">Home</a><a class="" href="/test/"><span class="d">HV </span>Test</a><a class="" href="/reset/"><span class="d">HV </span>Reset</a><a class="" href="/vault/"><span class="d">HV </span>Vault</a><a class="" href="/watch/">Watch</a><a class="story" href="/story/"><span class="d">Riya's </span>Story</a></nav></div></header>
+<nav aria-label="Main"><a class="opt" aria-current="page" href="/">Home</a><a class="" href="/test/"><span class="d">HV </span>Test</a><a class="" href="/reset/"><span class="d">HV </span>Reset</a><a class="" href="/vault/"><span class="d">HV </span>Vault</a><a class="" href="/watch/">Watch</a><a href="/story/"><span class="d">Riya's </span>Story</a></nav></div></header>
 <main id="main">
   <section id="top" class="wrap hero">
     <div class="rv">
@@ -298,7 +315,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
     <div><b>Any device</b><span>Phone and laptop</span></div>
   </div>
 
-  <section id="film" class="wrap film">
+  <section id="film" class="wrap film band band-w">
     <div class="head rv"><p class="label">The product</p><h2>See HV World in action.</h2><p>Real screens from all three apps.</p></div>
     <button type="button" class="filmbox rv" id="filmOpen" aria-label="Play the HV World video">
       <video id="loopVid" poster="/media/hv-world-loop-poster.jpg" muted loop playsinline autoplay preload="auto" aria-hidden="true" tabindex="-1"><source src="/media/hv-world-loop.mp4" type="video/mp4"><source src="/media/hv-world-loop.webm" type="video/webm"></video>
@@ -306,7 +323,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
     </button>
   </section>
 
-  <section id="apps" class="wrap">
+  <section id="apps" class="wrap band band-g">
     <div class="head rv"><p class="label">The apps</p><h2>Three apps. Each does one job well.</h2><p>Open any of them in your browser. Nothing to install.</p></div>
     <div class="products"><article class="product p-test rv" id="test">
   <div class="left">
@@ -357,8 +374,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
 </article></div>
   </section>
 
-  <hr class="sep">
-  <section id="together" class="wrap">
+  <section id="together" class="wrap band band-w">
     <div class="head rv"><p class="label">Better together</p><h2>Use one. Or let them work as a team.</h2><p>Each app stands on its own. Together, your plan and your progress stay in step.</p></div>
     <div class="together">
       <div class="feat rv"><div class="ic"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="8" width="11" height="8" rx="4"/><rect x="10.5" y="8" width="11" height="8" rx="4"/></svg></div><h3>Reset and Vault in sync</h3><p>Log an application in HV Reset and it lands in HV Vault as Applied, with its first follow-up. Your day counter counts it too.</p></div>
@@ -367,8 +383,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
     </div>
   </section>
 
-  <hr class="sep">
-  <section id="ai" class="wrap">
+  <section id="ai" class="wrap band band-g">
     <div class="ai-sec rv">
       <div class="l">
         <p class="label">HV AI</p>
@@ -392,14 +407,12 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
     </div>
   </section>
 
-  <hr class="sep">
-  <section id="free" class="wrap two">
+  <section id="free" class="wrap band band-w"><div class="two">
     <div class="rv"><p class="label">Privacy</p><h3>Your data is yours.</h3><p>HV Vault saves everything to your own private space, linked to your Google account. Only you can read it. HV Test never stores your answers: everything happens in your browser.</p></div>
     <div class="rv"><p class="label">Price</p><div class="big">₹0</div><p>All three apps are free for everyone, including HV AI. No card, no trial, no ads.</p></div>
-  </section>
+  </div></section>
 
-  <hr class="sep">
-  <section id="faq" class="wrap">
+  <section id="faq" class="wrap band band-g">
     <div class="head rv"><p class="label">FAQ</p><h2>Questions, answered.</h2></div>
     <div class="faq rv"><details><summary>Is it really free?</summary><p>Yes. HV Test, HV Reset and HV Vault are free to use, and so is HV AI. No card, no trial, no hidden plan.</p></details><details><summary>Do I need to install anything?</summary><p>No. Everything runs in the browser on your phone or laptop. On a phone you can add any app to your home screen from the browser's share menu.</p></details><details><summary>Do I need an account?</summary><p>HV Vault uses Google sign-in, so your data follows you across devices. HV Test needs no account at all.</p></details><details><summary>What languages does HV AI understand?</summary><p>Hindi, English and Hinglish, typed or spoken. It replies in the language you use.</p></details><details><summary>Can HV AI change things without asking?</summary><p>No. Every change is shown first as a card you confirm, edit or cancel. Deletes always ask again, and you can undo the last change.</p></details><details><summary>Are HV Test results a diagnosis?</summary><p>No. HV Test is a self-assessment for personal growth, not a clinical or psychological diagnosis.</p></details></div>
   </section>
