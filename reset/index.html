@@ -201,6 +201,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
 .pname h1{font-size:clamp(40px,5.4vw,64px);font-weight:700;letter-spacing:-.045em;line-height:1}
 .verb{font-size:clamp(18px,2vw,22px);font-weight:600;color:var(--pc);margin-top:6px}
 .pp .lead{margin:24px 0 28px}
+.aoff,.aoff *{animation-play-state:paused!important}   /* animations only run while their section is on screen */
 .phero{overflow:clip}
 .stage{position:relative;display:flex;justify-content:center;width:100%;max-width:420px;--px:0;--py:0}
 .stage .mock{position:relative;z-index:1;transform:translate(calc(var(--px)*-6px),calc(var(--py)*-5px));transition:transform .5s cubic-bezier(.22,1,.36,1)}
@@ -407,6 +408,11 @@ html:active-view-transition-type(back)::view-transition-new(page){animation:vt-i
 <script>
 (function () {
   document.getElementById("yr").textContent = new Date().getFullYear();
+  // smooth scrolling: a section's animations run only while it's on screen
+  if ("IntersectionObserver" in window) {
+    var ao = new IntersectionObserver(function (es) { es.forEach(function (e) { e.target.classList.toggle("aoff", !e.isIntersecting); }); }, { rootMargin: "150px 0px" });
+    document.querySelectorAll("main > section, main article").forEach(function (s) { ao.observe(s); });
+  }
   // product pictures lean a little toward the mouse (computers only, and not when motion is reduced)
   if (matchMedia("(hover:hover) and (prefers-reduced-motion:no-preference)").matches) {
     document.querySelectorAll(".stage").forEach(function (st) {

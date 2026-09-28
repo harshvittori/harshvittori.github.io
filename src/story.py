@@ -386,6 +386,8 @@ __TOGGLES__
 @keyframes lap{50%{opacity:.25}}
 @keyframes linkin{from{transform:scale(.4);opacity:0}to{transform:none;opacity:1}}
 @keyframes dash{to{stroke-dashoffset:-56}}
+.aoff,.aoff *{animation-play-state:paused!important}   /* animations only run while their section is on screen */
+@supports (content-visibility:auto){main>section:not(:first-child){content-visibility:auto;contain-intrinsic-size:auto 900px}}
 @keyframes bob{50%{transform:translateY(4px)}}
 .art .link,.art .pop{transform-box:fill-box;transform-origin:center}
 @media (prefers-reduced-motion:reduce){.art *,.art .t{animation:none!important;transition:none!important}.art .ring{stroke-dashoffset:55}.art .bar{transform:none}}
@@ -422,6 +424,11 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{color:var(--soft)}
 JS = r"""
 (function () {
   document.getElementById("yr").textContent = new Date().getFullYear();
+  // smooth scrolling: a section's animations run only while it's on screen
+  if ("IntersectionObserver" in window) {
+    var ao = new IntersectionObserver(function (es) { es.forEach(function (e) { e.target.classList.toggle("aoff", !e.isIntersecting); }); }, { rootMargin: "150px 0px" });
+    document.querySelectorAll("main > section, main article").forEach(function (s) { ao.observe(s); });
+  }
   // scrollytelling: the step crossing the middle of the screen drives its chapter's scene
   document.querySelectorAll(".scrolly").forEach(function (sc) {
     var stage = sc.querySelector(".stage"), steps = sc.querySelectorAll(".step");
