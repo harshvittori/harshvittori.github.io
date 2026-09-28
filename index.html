@@ -43,6 +43,8 @@ header{position:sticky;top:0;z-index:50;background:rgba(249,249,251,.85);-webkit
 .nav nav a[aria-current]{color:var(--accent);font-weight:600;background:#E8ECFB;box-shadow:inset 0 0 0 1px rgba(46,67,166,.14)}
 .nav nav a[aria-current]:hover{background:#E1E6FA}
 .brand{white-space:nowrap}
+.ni{display:none;width:20px;height:20px;vertical-align:middle}
+@media (max-width:720px){.nav nav a.ic{padding:0 8px}.nav nav a.ic .nt{display:none}.nav nav a.ic .ni{display:inline-block;margin-top:-3px}}
 @media (max-width:720px){.nav nav a.opt,.nav .d{display:none}.nav nav{gap:2px}.nav nav a{height:30px;line-height:30px;padding:0 10px}}
 @media (max-width:470px){.brand{font-size:0;gap:0}.nav nav a{padding:0 9px}}
 @media (max-width:360px){.nav nav a{padding:0 7px;font-size:13.5px}}
@@ -289,7 +291,7 @@ html{overflow-x:clip}
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header><div class="wrap nav"><a class="brand" href="/"><svg aria-hidden="true" focusable="false" viewBox="0 0 48 48"><defs><linearGradient id="hvw-1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1C2A6B"/><stop offset=".6" stop-color="#4A46C9"/><stop offset="1" stop-color="#7C5CE0"/></linearGradient><radialGradient id="hvwc-1" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#C9D3FF"/></radialGradient></defs><rect width="48" height="48" rx="12" fill="url(#hvw-1)"/><ellipse cx="24" cy="24" rx="16.5" ry="7.5" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.8" transform="rotate(-24 24 24)"/><circle cx="24" cy="24" r="6.2" fill="url(#hvwc-1)"/><circle cx="37.6" cy="17.9" r="3.3" fill="#F2C063"/><circle cx="10.4" cy="30.1" r="3.3" fill="#34C77B"/><circle cx="17.4" cy="14.6" r="2.6" fill="#F2A77E"/></svg>HV World</a>
-<nav aria-label="Main"><a class="opt" aria-current="page" href="/">Home</a><a class="" href="/test/"><span class="d">HV </span>Test</a><a class="" href="/reset/"><span class="d">HV </span>Reset</a><a class="" href="/vault/"><span class="d">HV </span>Vault</a><a class="" href="/watch/">Watch</a><a href="/story/"><span class="d">Riya's </span>Story</a></nav></div></header>
+<nav aria-label="Main"><a class="opt" aria-current="page" href="/">Home</a><a class="" href="/test/"><span class="d">HV </span>Test</a><a class="" href="/reset/"><span class="d">HV </span>Reset</a><a class="" href="/vault/"><span class="d">HV </span>Vault</a><a class="ic" aria-label="Watch" href="/watch/"><svg class="ni" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 8.3v7.4l6-3.7z" fill="currentColor"/></svg><span class="nt">Watch</span></a><a class="ic" aria-label="Riya's story" href="/story/"><svg class="ni" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5C10 5 7 4.5 3.5 5v13c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5z"/><path d="M12 6.5v13"/></svg><span class="nt"><span class="d">Riya's </span>Story</span></a></nav></div></header>
 <main id="main">
   <section id="top" class="wrap hero">
     <div class="rv">

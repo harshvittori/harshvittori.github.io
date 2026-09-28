@@ -132,6 +132,8 @@ header{position:sticky;top:0;z-index:50;background:rgba(249,249,251,.85);-webkit
 .nav nav a[aria-current]{color:var(--accent);font-weight:600;background:#E8ECFB;box-shadow:inset 0 0 0 1px rgba(46,67,166,.14)}
 .nav nav a[aria-current]:hover{background:#E1E6FA}
 .brand{white-space:nowrap}
+.ni{display:none;width:20px;height:20px;vertical-align:middle}
+@media (max-width:720px){.nav nav a.ic{padding:0 8px}.nav nav a.ic .nt{display:none}.nav nav a.ic .ni{display:inline-block;margin-top:-3px}}
 @media (max-width:720px){.nav nav a.opt,.nav .d{display:none}.nav nav{gap:2px}.nav nav a{height:30px;line-height:30px;padding:0 10px}}
 @media (max-width:470px){.brand{font-size:0;gap:0}.nav nav a{padding:0 9px}}
 @media (max-width:360px){.nav nav a{padding:0 7px;font-size:13.5px}}
@@ -680,8 +682,8 @@ FILM_CSS = """
 # ---------------------------------------------------------------- shared page shell
 def shell(path, title, desc, og, body, active):
     nav = [("overview", "/", "Home", "opt"), ("test", "/test/", '<span class="d">HV </span>Test', ""),
-           ("reset", "/reset/", '<span class="d">HV </span>Reset', ""), ("vault", "/vault/", '<span class="d">HV </span>Vault', ""), ("watch", "/watch/", "Watch", "")]
-    links = "".join('<a class="%s"%s href="%s">%s</a>' % (c, ' aria-current="page"' if k == active else "", h, t) for k, h, t, c in nav)
+           ("reset", "/reset/", '<span class="d">HV </span>Reset', ""), ("vault", "/vault/", '<span class="d">HV </span>Vault', ""), ("watch", "/watch/", '<svg class="ni" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 8.3v7.4l6-3.7z" fill="currentColor"/></svg><span class="nt">Watch</span>', "ic")]
+    links = "".join('<a class="%s"%s%s href="%s">%s</a>' % (c, ' aria-current="page"' if k == active else "", ' aria-label="Watch"' if k == "watch" else "", h, t) for k, h, t, c in nav)
     url = "https://harshvittori.github.io" + path
     return '''<!DOCTYPE html>
 <html lang="en">
@@ -711,7 +713,7 @@ def shell(path, title, desc, og, body, active):
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header><div class="wrap nav"><a class="brand" href="/">%sHV World</a>
-<nav aria-label="Main">%s<a href="/story/"><span class="d">Riya's </span>Story</a></nav></div></header>
+<nav aria-label="Main">%s<a class="ic" aria-label="Riya's story" href="/story/"><svg class="ni" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5C10 5 7 4.5 3.5 5v13c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5z"/><path d="M12 6.5v13"/></svg><span class="nt"><span class="d">Riya's </span>Story</span></a></nav></div></header>
 %s
 <footer><div class="wrap row"><span>© <span id="yr">2026</span> Harsh Vittori · HV World</span>
 <nav aria-label="Footer"><a href="/">Home</a><a href="/watch/">Watch</a><a href="/story/">Riya's story</a><a href="/test/">HV Test</a><a href="/reset/">HV Reset</a><a href="/vault/">HV Vault</a><a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/harshvittori" target="_blank" rel="noopener">GitHub</a></nav></div></footer>

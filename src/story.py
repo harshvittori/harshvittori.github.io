@@ -269,6 +269,8 @@ header{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.82);-webkit
 .pacts{display:flex;align-items:center;flex-wrap:wrap;gap:8px 18px;margin-top:18px}.pacts .btn{margin:0}.pcard .lm{color:var(--accent);font-weight:500;font-size:15px}
 .more{margin-top:32px;font-size:17px}.more a{color:var(--accent);font-weight:600;text-decoration:none}.more a:hover{text-decoration:underline}
 .brand{white-space:nowrap}
+.ni{display:none;width:20px;height:20px;vertical-align:middle}
+@media (max-width:720px){.nav nav a.ic{padding:0 8px}.nav nav a.ic .nt{display:none}.nav nav a.ic .ni{display:inline-block;margin-top:-3px}}
 @media (max-width:720px){.nav nav a.opt,.nav .d{display:none}.nav nav{gap:2px}.nav nav a{height:30px;line-height:30px;padding:0 10px}}
 @media (max-width:470px){.brand{font-size:0;gap:0}.nav nav a{padding:0 9px}}
 @media (max-width:360px){.nav nav a{padding:0 7px;font-size:13.5px}}
@@ -467,7 +469,7 @@ PAGE = """<!DOCTYPE html>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header><div class="wrap nav"><a class="brand" href="/">__LOGO_NAV__HV World</a>
-<nav aria-label="Main"><a class="opt" href="/">Home</a><a href="/test/"><span class="d">HV </span>Test</a><a href="/reset/"><span class="d">HV </span>Reset</a><a href="/vault/"><span class="d">HV </span>Vault</a><a href="/watch/">Watch</a><a aria-current="page" href="/story/"><span class="d">Riya's </span>Story</a></nav></div></header>
+<nav aria-label="Main"><a class="opt" href="/">Home</a><a href="/test/"><span class="d">HV </span>Test</a><a href="/reset/"><span class="d">HV </span>Reset</a><a href="/vault/"><span class="d">HV </span>Vault</a><a class="ic" aria-label="Watch" href="/watch/"><svg class="ni" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 8.3v7.4l6-3.7z" fill="currentColor"/></svg><span class="nt">Watch</span></a><a class="ic" aria-current="page" aria-label="Riya's story" href="/story/"><svg class="ni" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5C10 5 7 4.5 3.5 5v13c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5z"/><path d="M12 6.5v13"/></svg><span class="nt"><span class="d">Riya's </span>Story</span></a></nav></div></header>
 <main id="main">
   <section id="top"><div class="wrap hero">
     <div class="rv">
