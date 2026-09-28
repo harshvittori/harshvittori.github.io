@@ -53,7 +53,7 @@ MOCK_RESET = '''<div class="mock day">
   <div class="blk cur"><span>11:00 AM</span>Send applications</div>
   <div class="blk"><span>12:30 PM</span>Short break</div>
   <div class="blk meal"><span>1:15 PM</span>Lunch</div>
-  <div class="blk"><span>2:00 PM</span>Outreach</div>
+  <div class="stats"><div><b>4/5</b><small>done today</small></div><div><b>2h 40m</b><small>focused</small></div><div><b>6 days</b><small>streak</small></div></div>
 </div>'''
 
 MOCK_VAULT = '''<div class="mock kan">
@@ -77,11 +77,11 @@ PRODUCTS = [
         ("Two PDFs to keep.", "A full report and a personal 30-day plan."),
         ("Private by design.", "No login. Your answers never leave your browser."),
     ], MOCK_TEST, "Take a test"),
-    ("reset", "HV Reset", "Plan your day", "A day made of simple blocks: one block, one task. You always know what to do right now.", [
-        ("One block at a time.", "A big clock shows what's on now and what's next."),
-        ("Running late? Shift the day.", "One tap moves the rest of the plan."),
-        ("The basics never drop.", "Core tasks can shrink on a hard day. Meals are never skipped."),
-        ("Plans from one sentence.", "“Aaj 3 ghante apply, 1 ghanta prep, shaam 7 ke baad free.”"),
+    ("reset", "HV Reset", "Plan your day. See your progress.", "Plan your day, do one task at a time, and see what you really did. Your own dashboard shows where your time goes and whether you're getting better.", [
+        ("One task at a time.", "A big clock shows what's on now, what's next and how long is left. Pause when you step away."),
+        ("Your own dashboard.", "Time spent, real focus, what started on time, streaks and a score that shows if you're improving."),
+        ("Running late? Shift the day.", "One tap moves the rest of the plan. Nothing is lost."),
+        ("Plans from one sentence.", "Tell HV AI “Aaj 9 se 1 padhai, 6 baje gym” and your day is ready."),
     ], MOCK_RESET, "Open HV Reset"),
     ("vault", "HV Vault", "Act on every opportunity", "Every job, company, follow-up and interview in one calm place, so nothing slips.", [
         ("One board.", "Move jobs from Saved to Applied, Interview and Offer."),
@@ -211,6 +211,8 @@ section{scroll-margin-top:72px}
 .day .blk span{font-size:12px;font-weight:600;width:62px;color:var(--faint)}
 .day .blk.cur{background:var(--ink);color:#fff}.day .blk.cur span{color:#C7C7CC}
 .day .blk.meal{background:#FBF4E4}
+.day .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px;padding-top:10px;border-top:1px solid var(--gray)}
+.day .stats div{background:#EEF2FB;border-radius:12px;padding:8px 10px}.day .stats b{display:block;font-size:17px;font-weight:600;color:var(--reset)}.day .stats small{font-size:11.5px;color:var(--faint)}
 .kan{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .kan>div{min-width:0}
 .kan h4{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin:0 0 8px}
@@ -430,7 +432,7 @@ OVERVIEW_MAIN = """<main id="main">
     <div class="together">
       <div class="feat rv"><div class="ic">__CHAIN__</div><h3>Reset and Vault in sync</h3><p>Log an application in HV Reset and it lands in HV Vault as Applied, with its first follow-up. Your day counter counts it too.</p></div>
       <div class="feat rv"><div class="ic">__USER__</div><h3>One Google sign-in</h3><p>Sign in to HV Vault once and HV Reset on the same browser is connected. Your phone and laptop show the same data.</p></div>
-      <div class="feat rv"><div class="ic">__SPARK__</div><h3>HV AI in each app</h3><p>In HV Vault it handles jobs, follow-ups and interviews. In HV Reset it builds and adjusts your day. Each one changes only its own app.</p></div>
+      <div class="feat rv"><div class="ic">__SPARK__</div><h3>HV AI in each app</h3><p>In HV Vault it handles jobs, follow-ups and interviews. In HV Reset it builds and adjusts your day, and your dashboard shows how it went. Each one changes only its own app.</p></div>
     </div>
   </section>
 
@@ -506,6 +508,8 @@ ICONS = {
  'HEART': '<path d="M20.8 5.6a5 5 0 0 0-7.1 0L12 7.3l-1.7-1.7a5 5 0 1 0-7.1 7.1L12 21.5l8.8-8.8a5 5 0 0 0 0-7.1z"/>',
  'SPARK': '<path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/>',
  'SYNC': '<path d="M21 12a9 9 0 0 1-15.5 6.2M3 12A9 9 0 0 1 18.5 5.8"/><path d="M18.5 2v4h-4M5.5 22v-4h4"/>',
+ 'FLAME': '<path d="M12 3c1 3.5 5 5.5 5 10a5 5 0 0 1-10 0c0-2.4 1.3-3.8 2.5-5 .3 2 1.3 3 2.5 3.4C11.4 9 11 6.2 12 3z"/>',
+ 'BULB': '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/>',
  'CHECKC': '<circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.6 2.6L16.5 9"/>',
 }
 
@@ -546,34 +550,39 @@ APPS = {
         ("Do I need an account?", "No. There's no login, and your answers never leave your browser."),
         ("Can I take it again?", "Yes. Questions and options are shuffled, and a retake avoids the questions you saw last time."),
         ("Who can take it?", "Anyone. The Maturity Assessment is free for everyone, both PDFs included.")]),
- "reset": dict(name="HV Reset", verb="Plan your day", color="#4A72C8", tint="#EEF2FB", pline="#D6E0F4", mock=MOCK_RESET, cta="Open HV Reset", story="/#reset",
-   title="Late start? Fix your whole day in one tap | HV Reset",
-   desc="One block, one task, no guilt. Your plan moves with you, and meals and breaks stay protected. Right in your browser.",
-   lead="A day made of simple blocks: one block, one task. You always know what to do right now, and the day bends instead of breaking.",
-   facts=[("1 task", "per block"), ("90 min", "longest work block"), ("1 tap", "to shift a late day"), ("HV AI", "plans from one sentence")],
-   problem=("“Where did my day go?”", "Notifications, coffee and a to-do list that never shrinks. The clock spins and the important work waits."),
-   fix=("One block at a time.", "HV Reset shows only what matters now. If you fall behind, one tap moves the rest of the day, and nothing is lost."),
-   steps=[("Open your day", "Today's plan is ready, block by block. Or tell HV AI how your day looks."),
-          ("Tap Start", "The big clock shows what's on now and how much time is left."),
-          ("Tick and adjust", "Tick blocks off as you go. If the day slips, shift it or do the minimum version.")],
-   feats=[("TARGET", "One block, one task", "Each block has one clear job, why it matters, and what “done” looks like."),
-          ("CLOCK", "Big focus clock", "A calm countdown for the block you're in, and a focus room that hides everything else."),
-          ("LIST", "Full-day timeline", "See the whole day: what's done, what's now and what's next."),
-          ("ROUTE", "Running late? Shift the day", "One tap moves the rest of your plan later. Nothing gets lost."),
-          ("PAUSE", "Minimum version", "On a hard day, do the smallest useful version of a block instead of skipping it."),
-          ("CUP", "Meals and breaks built in", "Lunch and dinner are never skipped, and work blocks stay at 90 minutes or less."),
-          ("CHART", "Linked to HV Vault", "Applications and messages are counted for you. See follow-ups due and your week's review."),
-          ("NOTE", "Evening reflection", "One good thing from today and tomorrow's first step, so mornings start easy."),
-          ("SPARK", "HV AI plans your day", "“Kal subah 10 se 12 apply, 2 se 3 outreach.” It builds the plan and keeps your exact times.")],
-   who=[("Students", "Study blocks, real breaks and exam days that don't fall apart."),
+ "reset": dict(name="HV Reset", verb="Plan your day. See your progress.", color="#4A72C8", tint="#EEF2FB", pline="#D6E0F4", mock=MOCK_RESET, cta="Open HV Reset", story="/#reset",
+   title="Plan your day and see where your time goes | HV Reset",
+   desc="One task at a time, a day that moves when you're late, and a personal dashboard for your time, focus, streaks and progress. Free, in your browser.",
+   lead="Plan your day, do one task at a time, and see what you really did. Your own dashboard shows where your time goes and whether you're getting better.",
+   facts=[("1 task", "at a time"), ("1 tap", "to shift a late day"), ("6-part", "productivity score"), ("HV AI", "plans from one sentence")],
+   problem=("“Where did my day go?”", "Busy all day, but you can't say what got done. Plans slip, and you never really know if you're improving."),
+   fix=("Plan it. Do it. See it.", "HV Reset shows one task at a time and moves your day when you're late. Then your dashboard shows the real picture: time spent, focus, what started on time, and your progress week after week."),
+   steps=[("Make your plan", "Add tasks with a time, pick a ready plan, or just tell HV AI how your day looks."),
+          ("Press Start", "The clock shows what's on now. Pause when you step away. Running late? One tap moves the rest of the day."),
+          ("See your progress", "Your dashboard shows your time, focus, streaks and score, with tips from your own patterns.")],
+   feats=[("TARGET", "One task at a time", "Only the task in front of you, with the time left and what's up next."),
+          ("CLOCK", "Focus clock with pause", "A calm countdown for each task. Pause when you step away, and the time waits for you."),
+          ("ROUTE", "Running late? Shift the day", "Start late or early and one tap moves the rest of your day. Nothing gets lost."),
+          ("GRID", "Your personal dashboard", "Time worked, focus, punctuality and streaks at a glance. Tap any number to see the tasks behind it."),
+          ("CHART", "A score that's fair", "One productivity score built from six parts you can see and adjust. Longer hours don't count as better."),
+          ("LIST", "Where your time really goes", "Planned vs actual time for every task, a 24-hour timeline, and which tasks always take longer."),
+          ("FLAME", "Streaks, goals and habits", "Set your own goals, track habits and beat your personal records."),
+          ("BULB", "Tips from your own patterns", "“You finish most tasks between 9 and 12.” Plain insights and gentle alerts, never judgement."),
+          ("NOTE", "Daily, weekly and monthly reports", "What you did, what's left and what needs attention, ready to copy and share."),
+          ("SUN", "Music that follows the day", "Soft ambient sound for morning, day focus, evening and night, based on the time of day."),
+          ("SPARK", "HV AI plans your day", "“Kal subah 10 se 12 apply, 2 se 3 outreach.” It builds the plan and keeps your exact times."),
+          ("SYNC", "Linked to HV Vault", "One Google sign-in for both apps. Applications you log in HV Reset land in HV Vault.")],
+   who=[("Students", "Study blocks, real breaks, and a clear view of how much you really studied."),
         ("Job seekers", "Apply, outreach and prep blocks, counted into HV Vault."),
-        ("Professionals", "Protect deep work between meetings."),
+        ("Professionals", "Protect deep work between meetings and see where the hours go."),
         ("Freelancers", "Client work, admin and rest, balanced in one day."),
         ("Creators", "Make, edit and post in focused sessions."),
-        ("Anyone restarting", "A gentle routine after a break, one block at a time.")],
-   faq=[("Do I have to plan every block myself?", "No. Today's plan is ready when you open it, and HV AI can build or change it from one sentence."),
-        ("What happens if I fall behind?", "Tap to shift the rest of the day later, move it to tomorrow, or do the minimum version of a block."),
-        ("Does it work with HV Vault?", "Yes. Log an application in HV Reset and it lands in HV Vault as Applied, with its first follow-up."),
+        ("Anyone restarting", "Missed your plan? Lost your routine? Hit reset and start fresh today.")],
+   faq=[("Do I have to plan every task myself?", "No. Pick a ready plan and change it, or tell HV AI your day in one sentence and it builds the plan."),
+        ("What happens if I fall behind?", "Tap to shift the rest of the day, pause the task, move it to tomorrow, or do a shorter version."),
+        ("What does the dashboard show?", "Your time, focus, punctuality, streaks, a productivity score, trends, a calendar heatmap, goals and habits, and daily, weekly and monthly reports. Every number comes from what you really did, and nothing is made up."),
+        ("Do I need an account?", "No. Try it freely. Sign in with Google to save your plan, keep your dashboard history, and use it on phone and laptop."),
+        ("Does it work with HV Vault?", "Yes. It's the same Google account, and applications you log in HV Reset land in HV Vault as Applied."),
         ("Who can use it?", "Everyone. It's free for everyone, HV AI included, and runs right in your browser.")]),
  "vault": dict(name="HV Vault", verb="Act on every opportunity", color="#A87A22", tint="#F8F3E8", pline="#EADDC2", mock=MOCK_VAULT, cta="Open HV Vault", story="/#vault",
    title="Stop losing job leads in WhatsApp chats | HV Vault",
