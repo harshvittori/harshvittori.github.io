@@ -42,13 +42,13 @@ CARDS = [  # out, brand logo, brand word, accent, dark, tint, circle, eyebrow, h
      "Hard work. Zero progress. Sound familiar?", "Meet Riya. A 1-minute story about the 3 things quietly holding her back.", "Read her story &nbsp;→", RIYA),
     ("test/og.jpg", "logo-test", "TEST", "#127A4F", "#0D5E3C", "#F4F8F5", "#DDEFE4", "10 minutes · Free · No login",
      "You think you know yourself. Prove it.", "Real-life situations. An honest score out of 100, and a 30-day plan to grow.", "Take the test &nbsp;→",
-     window("t-result", (380, 40, 700, 460), 560, "harshvittori.github.io/hv-tests", "right:-40px;top:120px;transform:perspective(1400px) rotateY(-12deg) rotateX(3deg)")),
+     window("t-result", (380, 40, 700, 460), 560, "harshvittori.github.io/hv-tests", "right:-40px;top:50%;transform:translateY(-50%) perspective(1400px) rotateY(-12deg) rotateX(3deg)")),
     ("reset/og.jpg", "logo-reset", "RESET", "#3F66BE", "#2C4E99", "#F3F6FC", "#DCE6F8", "Plan your day",
      "Late start?<br>Fix your whole day<br>in one tap.", "One block, one task, zero guilt. Meals and breaks stay protected.", "Plan my day &nbsp;→",
-     window("r-late", (330, 40, 780, 470), 560, "harshvittori.github.io/harsh-reset", "right:-40px;top:120px;transform:perspective(1400px) rotateY(-12deg) rotateX(3deg)")),
+     window("r-late", (330, 40, 780, 470), 560, "harshvittori.github.io/harsh-reset", "right:-40px;top:50%;transform:translateY(-50%) perspective(1400px) rotateY(-12deg) rotateX(3deg)")),
     ("vault/og.jpg", "logo-vault", "VAULT", "#A0721C", "#7C5712", "#FAF7F0", "#F1E6CF", "For your job hunt",
      "Stop losing job leads in WhatsApp chats.", "Every job, recruiter and interview on one board, with follow-ups that set themselves.", "Organise my job hunt &nbsp;→",
-     window("v-pipe-b", (575, 225, 865, 420), 560, "harshvittori.github.io/hv-vault-web", "right:-40px;top:120px;transform:perspective(1400px) rotateY(-12deg) rotateX(3deg)")),
+     window("v-pipe-b", (575, 225, 865, 420), 560, "harshvittori.github.io/hv-vault-web", "right:-40px;top:50%;transform:translateY(-50%) perspective(1400px) rotateY(-12deg) rotateX(3deg)")),
 ]
 
 CSS = font(500) + font(600) + font(700) + """
@@ -56,10 +56,10 @@ CSS = font(500) + font(600) + font(700) + """
 .card{position:relative;width:1200px;height:630px;overflow:hidden;font-family:Outfit,sans-serif;color:#16212B;background:var(--tint);margin-bottom:20px}
 .c1{position:absolute;width:720px;height:720px;border-radius:50%;background:var(--circle);right:-170px;top:-120px}
 .c2{position:absolute;width:280px;height:280px;border-radius:50%;background:var(--circle);opacity:.6;left:430px;bottom:-200px}
-.left{position:absolute;left:64px;top:52px;width:560px;z-index:5}
+.left{position:absolute;left:64px;top:0;bottom:0;width:560px;z-index:5;display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
 .brand{display:flex;align-items:center;gap:14px;font-weight:700;font-size:32px;letter-spacing:.02em}
 .brand svg{box-shadow:none!important}.brand b{color:var(--accent);font-weight:700}
-.eye{margin-top:44px;font-weight:600;font-size:18px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.eye{margin-top:38px;font-weight:600;font-size:18px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
 h1{margin-top:12px;font-weight:700;font-size:64px;line-height:1.02;letter-spacing:-.015em}
 .rule{width:56px;height:6px;border-radius:4px;background:#F2A33A;margin:24px 0 20px}
 .sub{font-weight:500;font-size:24px;line-height:1.35;color:#3D4A55;max-width:540px}
@@ -69,8 +69,8 @@ h1{margin-top:12px;font-weight:700;font-size:64px;line-height:1.02;letter-spacin
 .bar i{width:10px;height:10px;border-radius:50%;background:#FF5F57}.bar i:nth-child(2){background:#FEBC2E}.bar i:nth-child(3){background:#28C840}
 .bar span{margin-left:14px;font-size:13px;color:#6B7390;background:#fff;padding:3px 14px;border-radius:6px;white-space:nowrap;overflow:hidden}
 .scr{background-repeat:no-repeat}
-.fan{position:absolute;left:600px;top:40px;width:640px;height:560px}
-.riya{position:absolute;right:48px;top:96px;width:520px;transform:rotate(2deg);border-radius:26px;overflow:hidden;box-shadow:0 40px 80px -30px rgba(20,30,60,.55)}
+.fan{position:absolute;left:600px;top:50%;transform:translateY(-50%);width:640px;height:560px}
+.riya{position:absolute;right:48px;top:50%;width:520px;transform:translateY(-50%) rotate(2deg);border-radius:26px;overflow:hidden;box-shadow:0 40px 80px -30px rgba(20,30,60,.55)}
 .riya svg{display:block;width:100%;height:auto}
 """
 html = "<!DOCTYPE html><html><head><meta charset='utf-8'><style>%s</style></head><body>" % CSS
