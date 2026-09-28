@@ -441,21 +441,21 @@ PAGE = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>HV World | Riya's story: Know. Plan. Act.</title>
 <meta name="description" content="Follow Riya through the three problems that hold people back, and see how HV Test, HV Reset and HV Vault fix each one. HV World, designed and built by Harsh Vittori.">
-<link rel="canonical" href="https://harshvittori.github.io/">
+<link rel="canonical" href="https://harshvittori.github.io/story/">
 <meta name="theme-color" content="#FFFFFF">
 <meta property="og:type" content="website"><meta property="og:site_name" content="HV World">
 <meta property="og:title" content="HV World: Riya's story. Know. Plan. Act.">
 <meta property="og:description" content="Three problems hold people back. Three products fix them. Designed and built by Harsh Vittori.">
-<meta property="og:url" content="https://harshvittori.github.io/"><meta property="og:image" content="https://harshvittori.github.io/og.png">
+<meta property="og:url" content="https://harshvittori.github.io/story/"><meta property="og:image" content="https://harshvittori.github.io/story/og.png">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"HV World","url":"https://harshvittori.github.io/","founder":{"@type":"Person","name":"Harsh Vittori","sameAs":["https://www.linkedin.com/in/harshvittori"]}}</script>
 <style>__CSS__</style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header><div class="wrap nav"><a class="brand" href="#top">__LOGO_NAV__HV World</a>
-<nav aria-label="Main"><a href="#test">Know</a><a href="#reset">Plan</a><a href="#vault">Act</a><a class="opt" href="#products">Products</a><a class="all" href="/overview/">All features</a></nav></div></header>
+<nav aria-label="Main"><a href="#test">Know</a><a href="#reset">Plan</a><a href="#vault">Act</a><a class="opt" href="#products">Products</a><a class="all" href="/">All features</a></nav></div></header>
 <main id="main">
   <section id="top"><div class="wrap hero">
     <div class="rv">
@@ -477,7 +477,7 @@ PAGE = """<!DOCTYPE html>
       <div class="pcard rv"><div class="h">__L_RESET__<b>HV Reset</b></div><p>Plan your day. One block, one task, and a day that bends instead of breaking.</p><div class="pacts"><a class="btn" href="https://harshvittori.github.io/harsh-reset/">Open HV Reset</a><a class="lm" href="/reset/">Learn more</a></div></div>
       <div class="pcard rv"><div class="h">__L_VAULT__<b>HV Vault</b></div><p>Act on every opportunity. One board, automatic follow-ups and HV AI.</p><div class="pacts"><a class="btn" href="https://harshvittori.github.io/hv-vault-web/">Open HV Vault</a><a class="lm" href="/vault/">Learn more</a></div></div>
     </div>
-    <p class="more rv"><a href="/overview/">See every feature, HV AI, privacy and FAQ →</a></p>
+    <p class="more rv"><a href="/">See every feature, HV AI, privacy and FAQ →</a></p>
   </div></section>
   <section class="people"><div class="wrap">
     <h2 class="rv">Riya could be anyone.</h2>
@@ -494,7 +494,7 @@ PAGE = """<!DOCTYPE html>
   <section class="builder"><div class="wrap rv"><p>Designed and built by</p><h2>Harsh Vittori</h2><a class="more" href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">Connect on LinkedIn</a></div></section>
 </main>
 <footer><div class="wrap row"><span>© <span id="yr">2026</span> Harsh Vittori · HV World</span>
-<nav aria-label="Footer"><a href="/overview/">All features</a><a href="/test/">About HV Test</a><a href="/reset/">About HV Reset</a><a href="/vault/">About HV Vault</a><a href="https://harshvittori.github.io/hv-tests/">HV Test</a><a href="https://harshvittori.github.io/harsh-reset/">HV Reset</a><a href="https://harshvittori.github.io/hv-vault-web/">HV Vault</a><a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/harshvittori" target="_blank" rel="noopener">GitHub</a></nav></div></footer>
+<nav aria-label="Footer"><a href="/">All features</a><a href="/test/">About HV Test</a><a href="/reset/">About HV Reset</a><a href="/vault/">About HV Vault</a><a href="https://harshvittori.github.io/hv-tests/">HV Test</a><a href="https://harshvittori.github.io/harsh-reset/">HV Reset</a><a href="https://harshvittori.github.io/hv-vault-web/">HV Vault</a><a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/harshvittori" target="_blank" rel="noopener">GitHub</a></nav></div></footer>
 <script>__JS__</script>
 </body>
 </html>
@@ -505,7 +505,8 @@ def build():
             .replace("__LOGO_NAV__", logo("world")).replace("__PROLOGUE__", prologue()).replace("__CHAPTERS__", "\n".join(CH))
             .replace("__FINALE__", finale()).replace("__L_TEST__", logo("test", size=44)).replace("__L_RESET__", logo("reset", size=44)).replace("__L_VAULT__", logo("vault", size=44)))
     assert "__" not in re.sub(r"<script>.*?</script>", "", html, flags=re.S).replace("__proto__", ""), "unfilled placeholder"
-    open(os.path.join(OUT, "index.html"), "w").write(html)
+    os.makedirs(os.path.join(OUT, "story"), exist_ok=True)
+    open(os.path.join(OUT, "story", "index.html"), "w").write(html)
     open(os.path.join(OUT, "favicon.svg"), "w").write(read("world.svg") + "\n")
     print("ok", len(html), "bytes")
 

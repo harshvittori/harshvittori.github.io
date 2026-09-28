@@ -1,4 +1,4 @@
-"""HV World: the product pages. Builds /overview/ (all three apps, HV AI, privacy, price, FAQ)
+"""HV World: the home page (all three apps, HV AI, privacy, price, FAQ)
 and one page per app: /test/, /reset/, /vault/. Logos come from src/.
 
 Run from the repo root:  python3 src/site.py
@@ -352,7 +352,7 @@ OVERVIEW_MAIN = """<main id="main">
       <p class="eyebrow">By Harsh Vittori · Free for everyone</p>
       <h1>Your work, your day, your growth. <span>One calm world.</span></h1>
       <p class="lead">Three simple apps that work together. Know yourself with HV Test, plan your day with HV Reset, and keep every opportunity in HV Vault. Just tell HV AI what you need.</p>
-      <div class="ctas"><a class="btn" href="#apps">Explore the apps</a><a class="btn ghost" href="/">Watch Riya's story __ARROW__</a></div>
+      <div class="ctas"><a class="btn" href="#apps">Explore the apps</a><a class="btn ghost" href="/story/">Watch Riya's story __ARROW__</a></div>
       <p class="note">No card, no trial, no ads. Everything runs in your browser.</p>
     </div>
     <div class="orbit rv" aria-hidden="true">
@@ -570,7 +570,7 @@ def app_page(key):
     return '''<main id="main" class="pp" style="--pc:%(color)s;--tint:%(tint)s;--pline:%(pline)s">
   <section class="phero" id="top"><div class="wrap">
     <div class="rv">
-      <p class="crumb"><a href="/overview/">HV World</a> <span>/</span> %(name)s</p>
+      <p class="crumb"><a href="/">HV World</a> <span>/</span> %(name)s</p>
       <div class="pname">%(logo)s<div><h1>%(name)s</h1><p class="verb">%(verb)s</p></div></div>
       <p class="lead">%(lead)s</p>
       <div class="ctas"><a class="btn" href="%(url)s">%(cta)s %(arrow)s</a><a class="btn ghost" href="#features">See every feature</a></div>
@@ -608,14 +608,14 @@ def app_page(key):
   <section class="pp-sec next"><div class="wrap">
     <p class="label">The rest of HV World</p>
     <div class="nxs">%(nxt)s</div>
-    <p class="back"><a href="/overview/">See all three apps together %(arrow)s</a></p>
+    <p class="back"><a href="/">See all three apps together %(arrow)s</a></p>
   </div></section>
 </main>''' % dict(a, logo=logo(key), url=URL[key], arrow=ARROW, facts=facts, steps=steps, feats=feats, who=who, faq=faq, nxt=nxt,
                   p1=a["problem"][0], p2=a["problem"][1], f1=a["fix"][0], f2=a["fix"][1])
 
 # ---------------------------------------------------------------- shared page shell
 def shell(path, title, desc, og, body, active):
-    nav = [("overview", "/overview/", "Overview", "opt"), ("test", "/test/", '<span class="d">HV </span>Test', ""),
+    nav = [("overview", "/", "Home", "opt"), ("test", "/test/", '<span class="d">HV </span>Test', ""),
            ("reset", "/reset/", '<span class="d">HV </span>Reset', ""), ("vault", "/vault/", '<span class="d">HV </span>Vault', "")]
     links = "".join('<a class="%s"%s href="%s">%s</a>' % (c, ' aria-current="page"' if k == active else "", h, t) for k, h, t, c in nav)
     url = "https://harshvittori.github.io" + path
@@ -642,11 +642,11 @@ def shell(path, title, desc, og, body, active):
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header><div class="wrap nav"><a class="brand" href="/overview/">%sHV World</a>
-<nav aria-label="Main">%s<a class="story" href="/"><span class="d">Riya's </span>Story</a></nav></div></header>
+<header><div class="wrap nav"><a class="brand" href="/">%sHV World</a>
+<nav aria-label="Main">%s<a class="story" href="/story/"><span class="d">Riya's </span>Story</a></nav></div></header>
 %s
 <footer><div class="wrap row"><span>© <span id="yr">2026</span> Harsh Vittori · HV World</span>
-<nav aria-label="Footer"><a href="/">Riya's story</a><a href="/overview/">Overview</a><a href="/test/">HV Test</a><a href="/reset/">HV Reset</a><a href="/vault/">HV Vault</a><a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/harshvittori" target="_blank" rel="noopener">GitHub</a></nav></div></footer>
+<nav aria-label="Footer"><a href="/">Home</a><a href="/story/">Riya's story</a><a href="/test/">HV Test</a><a href="/reset/">HV Reset</a><a href="/vault/">HV Vault</a><a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/harshvittori" target="_blank" rel="noopener">GitHub</a></nav></div></footer>
 <script>
 (function () {
   document.getElementById("yr").textContent = new Date().getFullYear();
@@ -680,9 +680,9 @@ def write(path, page):
     print("ok", path, len(page), "bytes")
 
 def build():
-    write("/overview/", fill(shell("/overview/", "HV World | All three apps: HV Test, HV Reset, HV Vault",
+    write("/", fill(shell("/", "HV World | Your work, your day, your growth",
           "Everything in HV World: HV Test to know yourself, HV Reset to plan your day, HV Vault to act on every opportunity, and HV AI in Hindi, English or Hinglish. Free, by Harsh Vittori.",
-          "https://harshvittori.github.io/overview/og.png", OVERVIEW_MAIN, "overview")))
+          "https://harshvittori.github.io/og.png", OVERVIEW_MAIN, "overview")))
     for k in ORDER:
         a = APPS[k]
         write("/%s/" % k, fill(shell("/%s/" % k, a["title"], a["desc"], "https://harshvittori.github.io/%s/og.png" % k, app_page(k), k)))
