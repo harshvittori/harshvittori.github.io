@@ -91,6 +91,16 @@ PRODUCTS = [
     ], MOCK_VAULT, "Open HV Vault"),
 ]
 
+# small "live" badges that float around each product picture (home cards and product page heroes)
+CHIPS = {
+    "test": [("&#10003; Score 72 of 100", "good"), ("&#128196; 2 PDFs ready", ""), ("&#127793; Your 30-day plan", "")],
+    "reset": [("&#9200; Running 30 min late", "warn"), ("&#10003; Whole day shifted", "good"), ("&#128293; 6-day streak", "")],
+    "vault": [("&#128276; Follow-up due today", "warn"), ("&#128197; Interview Tue, 4 PM", ""), ("&#10003; Moved to Applied", "good")],
+}
+def stage(key, mock):
+    chips = "".join('<span class="chip c%d %s" aria-hidden="true">%s</span>' % (i, cls, t) for i, (t, cls) in enumerate(CHIPS.get(key, [])))
+    return '<div class="stage">%s%s</div>' % (mock, chips)
+
 def product(key, name, tag, pitch, feats, mock, cta, flip):
     lis = "".join('<li>%s<span><b>%s</b> %s</span></li>' % (CHECK, a, b) for a, b in feats)
     return ('''<article class="product p-%s%s rv" id="%s">
@@ -101,7 +111,7 @@ def product(key, name, tag, pitch, feats, mock, cta, flip):
     <div class="acts"><a class="btn" href="%s">%s %s</a><a class="btn ghost" href="/%s/">Learn more</a></div>
   </div>
   <div class="right">%s</div>
-</article>''' % (key, " flip" if flip else "", key, logo(key), name, tag, pitch, lis, URL[key], cta, ARROW, key, mock))
+</article>''' % (key, " flip" if flip else "", key, logo(key), name, tag, pitch, lis, URL[key], cta, ARROW, key, stage(key, mock)))
 
 FAQ = [
     ("Who can use HV World?", "Everyone. HV Test, HV Reset and HV Vault are free for everyone, and so is HV AI. Open them in any browser, on your phone or laptop."),
@@ -292,6 +302,14 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
 .pname h1{font-size:clamp(40px,5.4vw,64px);font-weight:700;letter-spacing:-.045em;line-height:1}
 .verb{font-size:clamp(18px,2vw,22px);font-weight:600;color:var(--pc);margin-top:6px}
 .pp .lead{margin:24px 0 28px}
+.phero{overflow:clip}
+.stage{position:relative;display:flex;justify-content:center;width:100%;max-width:420px;--px:0;--py:0}
+.stage .mock{position:relative;z-index:1;transform:translate(calc(var(--px)*-6px),calc(var(--py)*-5px));transition:transform .5s cubic-bezier(.22,1,.36,1)}
+.chip{position:absolute;z-index:2;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;font-size:13px;font-weight:600;padding:8px 13px;border-radius:999px;background:#fff;color:var(--ink);border:1px solid var(--pline,var(--line));box-shadow:0 14px 30px -14px rgba(20,30,60,.35);transform:translate(calc(var(--px)*14px),calc(var(--py)*10px));transition:transform .5s cubic-bezier(.22,1,.36,1)}
+.chip.good{background:#EAF7EF;color:#0F6B3A;border-color:#CFE9DA}.chip.warn{background:#FFF4DE;color:#8A5A00;border-color:#F3DFB4}
+.chip.c0{top:-16px;left:-22px}.chip.c1{top:42%;right:-30px}.chip.c2{bottom:-16px;left:14%}
+@media (prefers-reduced-motion:no-preference){.stage .mock{animation:bob 8s ease-in-out infinite}.chip{animation:bob 6s ease-in-out infinite}.chip.c1{animation-duration:7s;animation-delay:-2.4s}.chip.c2{animation-duration:6.6s;animation-delay:-4.2s}}
+@keyframes bob{50%{translate:0 -9px}}
 .pmock{display:flex;justify-content:center}.pmock .mock{border-color:var(--pline);box-shadow:0 30px 60px -36px rgba(20,30,60,.4)}
 .facts{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border:1px solid var(--line);border-radius:20px;margin-top:-34px;position:relative}
 .facts div{padding:20px 22px;border-right:1px solid var(--line)}.facts div:last-child{border-right:0}
@@ -341,6 +359,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
   .product .top svg{width:48px;height:48px;border-radius:13px}.product h3{font-size:24px}
   .product .pitch{font-size:16.5px}.product li{font-size:15px}.product ul{gap:9px}
   .mock{max-width:340px;padding:14px;border-radius:16px;font-size:13px}
+  .chip{font-size:11.5px;padding:6px 10px}.chip.c0{left:-6px;top:-14px}.chip.c1{top:auto;bottom:-14px;right:-6px}.chip.c2{display:none}
   .q h5{font-size:14.5px;margin:4px 0 10px}.q .opt{padding:7px 10px;margin-bottom:5px;font-size:13px}
   .day .now{font-size:30px}.day .meta:nth-of-type(2){margin-bottom:10px}.day .blk{padding:7px 10px;margin-bottom:5px;font-size:13px}
   .kan b{font-size:11.5px}.kan small{font-size:10px}.kan div div{padding:7px 8px}
@@ -644,7 +663,7 @@ def app_page(key):
       <p class="lead">%(lead)s</p>
       <div class="ctas"><a class="btn" href="%(url)s">%(cta)s %(arrow)s</a><a class="btn ghost" href="#features">See every feature</a></div>
     </div>
-    <div class="pmock rv">%(mock)s</div>
+    <div class="pmock rv">%(stagehtml)s</div>
   </div></section>
   <div class="factband"><div class="wrap facts rv">%(facts)s</div></div>
 
@@ -680,7 +699,7 @@ def app_page(key):
     <div class="nxs">%(nxt)s</div>
     <p class="back"><a href="/">See all three apps together %(arrow)s</a></p>
   </div></section>
-</main>''' % dict(a, logo=logo(key), url=URL[key], arrow=ARROW, facts=facts, steps=steps, feats=feats, lib=lib, who=who, faq=faq, nxt=nxt,
+</main>''' % dict(a, stagehtml=stage(key, a["mock"]), logo=logo(key), url=URL[key], arrow=ARROW, facts=facts, steps=steps, feats=feats, lib=lib, who=who, faq=faq, nxt=nxt,
                   p1=a["problem"][0], p2=a["problem"][1], f1=a["fix"][0], f2=a["fix"][1])
 
 
@@ -751,6 +770,14 @@ def shell(path, title, desc, og, body, active):
 <script>
 (function () {
   document.getElementById("yr").textContent = new Date().getFullYear();
+  // product pictures lean a little toward the mouse (computers only, and not when motion is reduced)
+  if (matchMedia("(hover:hover) and (prefers-reduced-motion:no-preference)").matches) {
+    document.querySelectorAll(".stage").forEach(function (st) {
+      var box = st.closest(".phero,.product") || st;
+      box.addEventListener("pointermove", function (e) { var r = box.getBoundingClientRect(); st.style.setProperty("--px", ((e.clientX - r.left) / r.width - .5).toFixed(3)); st.style.setProperty("--py", ((e.clientY - r.top) / r.height - .5).toFixed(3)); });
+      box.addEventListener("pointerleave", function () { st.style.setProperty("--px", 0); st.style.setProperty("--py", 0); });
+    });
+  }
   var fv = document.getElementById("fpVid");
   if (fv) {
     // start playing with sound; if the browser blocks sound, play muted and offer one tap to unmute
