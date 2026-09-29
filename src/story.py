@@ -745,7 +745,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{color:var(--soft)}
 
 JS = r"""
 (function () {
-  document.getElementById("yr").textContent = new Date().getFullYear();
+
   var hd = document.querySelector("header"), first = document.getElementById("test");
   function bar() { hd.classList.toggle("hid", first.getBoundingClientRect().top > innerHeight * .55); }
   addEventListener("scroll", bar, { passive: true }); addEventListener("resize", bar); bar();
@@ -885,8 +885,6 @@ PAGE = """<!DOCTYPE html>
     <div class="ccta rv"><a class="btn" href="https://harshvittori.github.io/hv-tests/">Start week 1 today</a><a class="btn ghost" href="#test">Read the steps again</a></div>
   </div></section>
 </main>
-<footer><div class="wrap row"><span>© <span id="yr">2026</span> HV World · Built by Harsh Goyal</span>
-<nav aria-label="Footer"><a href="/">All features</a><a href="/watch/">Watch</a><a href="/test/">About HV Test</a><a href="/reset/">About HV Reset</a><a href="/vault/">About HV Vault</a><a href="https://harshvittori.github.io/hv-tests/">HV Test</a><a href="https://harshvittori.github.io/hv-reset/">HV Reset</a><a href="https://harshvittori.github.io/hv-vault-web/">HV Vault</a><a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/harshvittori" target="_blank" rel="noopener">GitHub</a></nav></div></footer>
 <script>__JS__</script>
 </body>
 </html>
