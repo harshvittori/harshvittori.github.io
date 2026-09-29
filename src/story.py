@@ -220,7 +220,7 @@ def ch_test():
              bubble(300, 34, 280, 70, "Your strengths? And a quick|SQL query, top 5 customers.", "right", "t v1", size=15, tailx=462) +
              chair(190, 396) + riya(190, 370, 1.05, faces={"w": "v1", "n": "v2", "h": "v3", "d": "v4"}, arms={"down": "v1", "phone": "v2 v3 v4"}, sweat="v1", bulb="v3") +
              thought(60, 60, 150, 58, '<text x="135" y="98" text-anchor="middle" font-size="26" font-weight="700" fill="#C7C7CC">? ? ?</text>', "t v1", hx=160, hy=150) +
-             bubble(28, 40, 272, 66, "Strong: problem solving, patience.|To fix: speaking, SQL, consistency.", "right", "t v4", "#E3F2EA", 14, "#0B4F33", tailx=182) +
+             bubble(28, 40, 272, 66, "Strong: problem solving, teamwork.|To fix: speaking, SQL, consistency.", "right", "t v4", "#E3F2EA", 14, "#0B4F33", tailx=182) +
              phone)
     return scene(inner, "Riya freezing at an interview, then taking HV Test on her phone, seeing her strengths and gaps, and getting a 30-day plan")
 
@@ -379,12 +379,12 @@ CH = [
         "Without an honest picture of yourself, you practise the wrong things and apply for the wrong roles. Everything after this depends on it.", ch_test(), [
         ("Week 0 · The problem", "Two questions. Two blanks.", "&ldquo;Tell me about your strengths.&rdquo; Riya says &ldquo;hard-working&rdquo; three times and gives no example. &ldquo;Now write a quick SQL query for our top five customers.&rdquo; Her certificate says SQL. Her hands don't. She freezes on both."),
         ("Week 1 · What she did", "She stops collecting certificates and measures.", "Two honest tests: one for her strengths and how she works, one for her actual skills. She used HV Test, which has both, free. What mattered was being honest with herself."),
-        ("The result", "Strengths she never noticed. Gaps she never faced.", "Problem solving 82 and patience 86: a year of angry support calls taught her more than she knew. But communication 46, and SQL 38: she knew the words from her courses, not the work. And consistency 48. It stings, and it's the first honest picture she's had."),
+        ("The result", "Strengths she never noticed. Gaps she never faced.", "Problem solving 82 and teamwork 86: all those college projects she quietly held together. But communication 46, and SQL 38: she knew the words from her courses, not the work. And consistency 48. It stings, and it's the first honest picture she's had."),
         ("The plan", "Less watching. More doing.", "No new course. 45 minutes of real, timed SQL problems and 20 minutes of speaking practice every day: answer one question, record it, listen back. Three real stories that prove her strengths. And the hard one: show up every day.")],
         '<a href="https://harshvittori.github.io/hv-tests/">HV Test</a>, free: a strengths assessment and a skills test.'),
     chapter("reset", 2, "Show up daily", "Why can't I stay consistent?",
         "Skills and confidence aren't things you finish, like a certificate. You practise them until the test and the hard question stop scaring you. This is the step where most people stop.", ch_reset(), [
-        ("The problem", "Big plans. Lost days.", "Night shift ends at 6 AM. She sleeps till noon, gets stuck on SQL question 3, records one answer, hates how she sounds, checks her phone at 2:05, and suddenly it's time for work again."),
+        ("The problem", "Big plans. Lost days.", "No college, no office, no routine. She wakes at 10, gets stuck on SQL question 3 at 11, records one answer, hates how she sounds, checks her phone at 11:05, and suddenly it's evening. Again."),
         ("What she did", "She makes every day simple.", "Each night she picks tomorrow's one or two important tasks, with a time for each. She used HV Reset, typing &ldquo;Roz 9 baje SQL, 2 baje speaking practice&rdquo; to HV AI to set the day. One task at a time, nothing else."),
         ("Week 2 · A setback", "She misses two days. She doesn't quit.", "A cold, a family function, a lost weekend. Instead of starting over on Monday, she shifts today's plan, keeps the one core task, and goes again. The streak resets. The progress doesn't."),
         ("Week 6 · The change", "Now it's just what she does.", "300 SQL problems and 42 recordings. Her timed SQL test: 38% five weeks ago, 81% today. Her answers: three minutes of rambling then, 60 seconds with a real example now. Neha ma'am, her old college teacher, does a mock interview with her: &ldquo;Now I believe you.&rdquo; Looking back at her hours, she can see it: she really is getting better.")],
@@ -780,7 +780,7 @@ PAGE = """<!DOCTYPE html>
     <div class="rv">
       <p class="eyebrow">An 11-week story</p>
       <h1>This is Riya. She's 25.</h1>
-      <p class="lead">Jaipur. A B.Com, three online certificates, a year and a half of night shifts in customer support. On paper, she's ready. But she fails the companies' skill tests, and goes blank when they ask about her strengths. <b>So why does she keep getting rejected?</b></p>
+      <p class="lead">Jaipur. A B.Com, an MBA, three online certificates. A fresher from the 2025 batch, still without a job. On paper, she's ready. But she fails the companies' skill tests, and goes blank when they ask about her strengths. <b>So why does she keep getting rejected?</b></p>
       <div class="worries"><span><i style="background:#127A4F"></i>What are my real strengths?</span><span><i style="background:#4A72C8"></i>Why can't I stay consistent?</span><span><i style="background:#A87A22"></i>Where did my applications go?</span></div>
       <a class="scroll-hint" href="#test">Follow her story __ARROW__</a>
     </div>
