@@ -1096,7 +1096,7 @@ def build():
         '<meta property="og:video" content="https://harshvittori.github.io/media/hv-world-film.mp4">'
         '<meta property="og:video:secure_url" content="https://harshvittori.github.io/media/hv-world-film.mp4">'
         '<meta property="og:video:type" content="video/mp4"><meta property="og:video:width" content="1920"><meta property="og:video:height" content="1080">'
-        '<meta property="video:duration" content="46">', 1).replace("</style>", FILM_CSS + "</style>", 1)
+        '<meta property="video:duration" content="59">', 1).replace("</style>", FILM_CSS + "</style>", 1)
     write("/watch/", film)
     for k in ORDER:
         a = APPS[k]

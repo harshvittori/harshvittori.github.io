@@ -228,7 +228,7 @@ html += ('<div class="card tr" data-out="watch/og.jpg"><div class="trbg"></div><
          + '<div class="trl"><div class="trk">%s HV WORLD</div>'
          '<div class="trh">3 apps.<br>1 AI.<br><span>One calm day.</span></div>'
          '<div class="trapps">%s%s%s<em>Test · Reset · Vault</em></div></div>'
-         '<div class="trplay"><i></i></div><div class="trdur">0:46</div></div>') % (
+         '<div class="trplay"><i></i></div><div class="trdur">0:59</div></div>') % (
     svg("world", 36, 0, False), svg("logo-test", 44, 0, False), svg("logo-reset", 44, 0, False), svg("logo-vault", 44, 0, False))
 open(os.path.join(HERE, "og-cards.html"), "w").write(html + "</body></html>")
 print("ok", len(CARDS), "cards")
