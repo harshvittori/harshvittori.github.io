@@ -638,6 +638,17 @@ __TOGGLES__
 .ncta{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}.ncta .btn{margin:0}
 .nfor{color:var(--faint);font-size:15px;margin-top:18px}
 @media (max-width:880px){.ngrid{grid-template-columns:1fr;gap:28px}.nart svg{max-width:340px}}
+.challenge{padding:96px 0 110px;text-align:center;background:#FFFFFF;border-top:1px solid #EEF0F4}
+.challenge h2{font-size:clamp(34px,5vw,58px);font-weight:700;letter-spacing:-.04em;line-height:1.05;margin-top:8px}
+.challenge .sub{font-size:20px;color:var(--soft);margin:12px auto 0;max-width:620px}
+.cgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:980px;margin:40px auto 0;text-align:left;counter-reset:w}
+.cw{background:var(--gray);border-radius:22px;padding:22px 22px 20px;border-top:5px solid var(--c)}
+.cw small{display:block;font-size:12.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--c)}
+.cw b{display:block;font-size:20px;letter-spacing:-.02em;margin-top:8px}
+.cw p{color:var(--soft);font-size:15.5px;margin-top:6px;line-height:1.45}
+.cw em{display:block;font-style:normal;font-size:13.5px;color:var(--faint);margin-top:12px}
+.ccta{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:32px}.ccta .btn{margin:0}
+@media (max-width:820px){.cgrid{grid-template-columns:1fr}}
 .who{display:flex;align-items:center;gap:16px;margin-bottom:26px}
 .who svg{width:128px;height:128px;border-radius:32px;flex:none;box-shadow:0 18px 36px -18px rgba(0,0,0,.55)}
 .who b{display:block;font-size:19px}.who span{display:block;font-size:15px;opacity:.72;margin-top:2px}
@@ -845,17 +856,23 @@ PAGE = """<!DOCTYPE html>
   <section class="next" id="you"><div class="wrap ngrid">
     <div class="nart rv">__NEXT_ART__</div>
     <div class="ntxt">
-      <p class="label rv">The 11-week challenge</p>
+      <p class="label rv">Your turn</p>
       <h2 class="rv">You could be the next Riya.</h2>
-      <p class="sub rv">Take the same 11 weeks. Three steps, in order, a little every day. See where you are by week 11.</p>
-      <ol class="nsteps rv">
-        <li><span style="background:#127A4F">1</span><div><small>Week 1</small><b>Know where you stand</b><em>Test your strengths and skills. Make a 30-day plan. Riya used HV Test.</em></div></li>
-        <li><span style="background:#4A72C8">2</span><div><small>Weeks 2 to 6</small><b>Show up daily</b><em>Give every task a fixed time. Don't wait for Monday. Riya used HV Reset.</em></div></li>
-        <li><span style="background:#A87A22">3</span><div><small>Weeks 7 to 11</small><b>Apply with a system</b><em>Track every application and follow up. Riya used HV Vault.</em></div></li>
-      </ol>
-      <div class="ncta rv"><a class="btn" href="https://harshvittori.github.io/hv-tests/">Start week 1 today</a><a class="btn ghost" href="#test">Read the steps again</a></div>
+      <p class="sub rv">Different city, different dream, same stuck feeling. She changed it in 11 weeks, one honest step at a time.</p>
+      <div class="ncta rv"><a class="btn" href="#challenge">Take the 11-week challenge ↓</a></div>
       <p class="nfor rv">For students, job seekers and anyone starting again.</p>
     </div>
+  </div></section>
+  <section class="challenge" id="challenge"><div class="wrap">
+    <p class="label rv">The 11-week challenge</p>
+    <h2 class="rv">Your 11 weeks start today.</h2>
+    <p class="sub rv">The same three steps, in order, a little every day. See where you are by week 11.</p>
+    <div class="cgrid">
+      <div class="cw rv" style="--c:#127A4F"><small>Week 1</small><b>Know where you stand</b><p>Test your strengths and skills. Make a 30-day plan.</p><em>Riya used HV Test</em></div>
+      <div class="cw rv" style="--c:#4A72C8"><small>Weeks 2 to 6</small><b>Show up daily</b><p>Give every task a fixed time. Don't wait for Monday.</p><em>Riya used HV Reset</em></div>
+      <div class="cw rv" style="--c:#A87A22"><small>Weeks 7 to 11</small><b>Apply with a system</b><p>Track every application and follow up.</p><em>Riya used HV Vault</em></div>
+    </div>
+    <div class="ccta rv"><a class="btn" href="https://harshvittori.github.io/hv-tests/">Start week 1 today</a><a class="btn ghost" href="#test">Read the steps again</a></div>
   </div></section>
 </main>
 <footer><div class="wrap row"><span>© <span id="yr">2026</span> HV World · Built by Harsh Goyal</span>
