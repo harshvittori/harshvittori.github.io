@@ -345,7 +345,7 @@ def interlude(key):
         "".join(item(*i) for i in d["items"]))
 
 LESSONS = [("Know your strengths and your gaps.", "She had strengths she'd never noticed and gaps her certificates had hidden. Two honest tests showed her both."),
-           ("Practise, don't just watch.", "45 minutes of real SQL and 20 minutes of speaking a day did what three certificates couldn't. Keeping each day that simple was the whole trick."),
+           ("Give every task a time.", "Her comfort zone had no clock. A fixed start time for 45 minutes of SQL and 20 of speaking, every day, did what three certificates couldn't."),
            ("A missed day isn't a lost week.", "She shifted the day and kept going, instead of waiting for Monday to start over."),
            ("Track every chance. Follow up.", "34 applications, one list, reminders on time. The interview that changed everything came from a follow-up.")]
 def cast():
@@ -383,12 +383,12 @@ CH = [
         ("The plan", "Less watching. More doing.", "No new course. 45 minutes of real, timed SQL problems and 20 minutes of speaking practice every day: answer one question, record it, listen back. Three real stories that prove her strengths. And the hard one: show up every day.")],
         '<a href="https://harshvittori.github.io/hv-tests/">HV Test</a>, free: a strengths assessment and a skills test.'),
     chapter("reset", 2, "Show up daily", "Why can't I stay consistent?",
-        "Skills and confidence aren't things you finish, like a certificate. You practise them until the test and the hard question stop scaring you. This is the step where most people stop.", ch_reset(), [
+        "Skills and confidence aren't things you finish, like a certificate. You practise them until the test and the hard question stop scaring you. And a comfort zone has no clock: without a time for each task, &ldquo;later&rdquo; always wins. This is the step where most people stop.", ch_reset(), [
         ("The problem", "Big plans. Lost days.", "Two years of no college, no office, no routine. Her comfort zone is very comfortable. She wakes at 10, gets stuck on SQL question 3 at 11, records one answer, hates how she sounds, checks her phone at 11:05, and suddenly it's evening. Again."),
-        ("What she did", "She makes every day simple.", "Each night she picks tomorrow's one or two important tasks, with a time for each. She used HV Reset, typing &ldquo;Roz 9 baje SQL, 2 baje speaking practice&rdquo; to HV AI to set the day. One task at a time, nothing else."),
+        ("What she did", "Every task gets a time. No more &ldquo;later&rdquo;.", "Her comfort zone had no clock, so &ldquo;baad mein karungi&rdquo; always won. Now every task has a fixed start time. She used HV Reset: she typed &ldquo;Roz 9 baje SQL, 2 baje speaking practice&rdquo; to HV AI, and at 9:00 the task is on screen with a clock counting down. One task at a time, and the day pulls her out of bed."),
         ("Week 2 · A setback", "She misses two days. She doesn't quit.", "A cold, a family function, a lost weekend. Instead of starting over on Monday, she shifts today's plan, keeps the one core task, and goes again. The streak resets. The progress doesn't."),
         ("Week 6 · The change", "Now it's just what she does.", "300 SQL problems and 42 recordings. Her timed SQL test: 38% five weeks ago, 81% today. Her answers: three minutes of rambling then, 60 seconds with a real example now. Neha ma'am, her old college teacher, does a mock interview with her: &ldquo;Now I believe you.&rdquo; Looking back at her hours, she can see it: she really is getting better.")],
-        '<a href="https://harshvittori.github.io/hv-reset/">HV Reset</a> with HV AI, free: a simple plan for each day.'),
+        '<a href="https://harshvittori.github.io/hv-reset/">HV Reset</a> with HV AI, free: a start time for every task and a clock that keeps the day moving.'),
     chapter("vault", 3, "Apply with a system", "Where did all my applications go?",
         "Real skills and confidence get you through the tests and interviews. A system gets you in front of enough of them. Without tracking and follow-ups, good chances quietly slip away, and the work from steps 1 and 2 goes to waste.", ch_vault(), [
         ("The problem", "Applications vanish into silence.", "Job links in WhatsApp, resume_final_v3.pdf, and no idea who she applied to last week, or who she should chase."),
@@ -842,7 +842,7 @@ PAGE = """<!DOCTYPE html>
       <p class="sub rv">Different city, different dream, same feeling of being stuck. Her 11 weeks started with one small step. Yours can start today.</p>
       <ol class="nsteps rv">
         <li><span style="background:#127A4F">1</span><div><b>Know where you stand</b><em>Test your strengths and your skills honestly, and write down what to fix. Riya used HV Test, free.</em></div></li>
-        <li><span style="background:#4A72C8">2</span><div><b>Plan just today</b><em>Pick one or two important tasks, with a time for each. Riya used HV Reset, free.</em></div></li>
+        <li><span style="background:#4A72C8">2</span><div><b>Plan just today</b><em>Give one or two important tasks a fixed start time, and start when the time comes. Riya used HV Reset, free.</em></div></li>
         <li><span style="background:#A87A22">3</span><div><b>Track every chance</b><em>Keep every application in one place and follow up on time. Riya used HV Vault, free.</em></div></li>
       </ol>
       <div class="ncta rv"><a class="btn" href="#test">Go through the steps again</a><a class="btn ghost" href="#products">See the tools Riya used</a></div>
