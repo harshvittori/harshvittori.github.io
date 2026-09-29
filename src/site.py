@@ -62,10 +62,16 @@ MOCK_RESET = '''<div class="mock day">
   <div class="stats"><div><b>4/5</b><small>done today</small></div><div><b>2h 40m</b><small>focused</small></div><div><b>6 days</b><small>streak</small></div></div>
 </div>'''
 
-MOCK_VAULT = '''<div class="mock kan">
-  <div><h4>Saved</h4><div><b>GTM Associate</b><small>Razorpay</small></div><div><b>Growth Analyst</b><small>Meesho</small></div></div>
-  <div><h4>Applied</h4><div class="hot"><b>Founder's Office</b><small>Cred · follow-up in 5 days</small></div></div>
-  <div><h4>Interview</h4><div><b>Partnerships Lead</b><small>Zomato · Tue, 4:00 PM</small></div></div>
+MOCK_VAULT = '''<div class="mock vt">
+  <div class="qh"><span class="qlogo">''' + LOGOS["vault"] + '''</span><div><b>Your job search</b><small>This week</small></div><span class="qn">3 due today</span></div>
+  <div class="vs"><div><b>12</b><small>Applied</small></div><div><b>3</b><small>Interviews</small></div><div><b>25%</b><small>Reply rate</small></div></div>
+  <div class="kan">
+    <div><h4>Saved</h4><div><b>GTM Associate</b><small>Razorpay</small></div><div><b>Growth Analyst</b><small>Meesho</small></div></div>
+    <div><h4>Applied</h4><div class="hot"><b>Founder's Office</b><small>Cred &middot; follow-up today</small></div><div><b>Product Analyst</b><small>Swiggy</small></div></div>
+    <div><h4>Interview</h4><div class="int"><b>Partnerships Lead</b><small>Zomato &middot; Tue 4 PM</small></div></div>
+  </div>
+  <div class="vfu"><span class="vb">&#128276;</span><div><b>Follow up with Cred</b><small>Founder's Office &middot; message ready</small></div><span class="nx">Send</span></div>
+  <div class="vai"><span class="sp">&#10022;</span><span class="tx">&ldquo;Kal 4 baje Zomato ka interview hai&rdquo;</span><em>HV AI</em></div>
 </div>'''
 
 MOCK_AI = '''<div class="mock chat">
@@ -101,7 +107,7 @@ PRODUCTS = [
 CHIPS = {
     "test": [("&#10003; Score 72 of 100", "good"), ("&#127941; Scorecard with ID", ""), ("&#127793; Your 30-day plan", "")],
     "reset": [("&#9200; Running 30 min late", "warn"), ("&#10003; Whole day shifted", "good"), ("&#128293; 6-day streak", "")],
-    "vault": [("&#128276; Follow-up due today", "warn"), ("&#128197; Interview Tue, 4 PM", ""), ("&#10003; Moved to Applied", "good")],
+    "vault": [("&#10003; Moved to Applied", "good"), ("&#128197; Interview Tue, 4 PM", ""), ("&#10024; Auto follow-up set", "warn")],
 }
 def stage(key, mock):
     chips = "".join('<span class="chip c%d %s" aria-hidden="true">%s</span>' % (i, cls, t) for i, (t, cls) in enumerate(CHIPS.get(key, [])))
@@ -219,10 +225,10 @@ section{scroll-margin-top:72px}
 .mock{width:100%;max-width:450px;background:#fff;border:1px solid var(--line);border-radius:22px;padding:20px;font-size:14.5px;font-family:HVSora,var(--font);letter-spacing:-.01em;box-shadow:0 24px 50px -32px rgba(20,30,60,.35)}
 .mock h5,.mock b{font-family:HVSora,var(--font)}
 .meta{font-size:12.5px;color:var(--faint)}
-.q .qh{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.q .qlogo svg{width:34px;height:34px;border-radius:10px;display:block;box-shadow:0 6px 14px -6px rgba(18,122,79,.6)}
-.q .qh b{display:block;font-size:14px;font-weight:600;line-height:1.2}.q .qh small{display:block;font-size:12px;color:var(--faint)}
-.q .qn{margin-left:auto;font-size:12px;font-weight:600;color:var(--test);background:#EAF6EF;border:1px solid #CFE9DA;padding:4px 10px;border-radius:999px}
+.mock .qh{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.mock .qlogo svg{width:34px;height:34px;border-radius:10px;display:block;box-shadow:0 6px 14px -6px rgba(18,122,79,.6)}
+.mock .qh b{display:block;font-size:14px;font-weight:600;line-height:1.2}.mock .qh small{display:block;font-size:12px;color:var(--faint)}
+.mock .qn{margin-left:auto;font-size:12px;font-weight:600;color:var(--test);background:#EAF6EF;border:1px solid #CFE9DA;padding:4px 10px;border-radius:999px}
 .q .prog{height:6px;border-radius:9px;background:#E3F2EA;margin-bottom:14px;overflow:hidden}.q .prog i{display:block;height:100%;width:62%;border-radius:9px;background:linear-gradient(90deg,#3FB27F,#127A4F)}
 .q h5{font-size:17px;font-weight:600;line-height:1.35;margin:4px 0 14px;letter-spacing:-.025em}
 .q .opt{display:flex;gap:10px;align-items:center;padding:9px 12px 9px 9px;border-radius:13px;border:1px solid var(--line);margin-bottom:7px;background:#fff}
@@ -242,7 +248,18 @@ section{scroll-margin-top:72px}
 .kan>div{min-width:0}
 .kan h4{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin:0 0 8px}
 .kan div div{background:var(--gray);border-radius:10px;padding:9px 10px;margin-bottom:7px;line-height:1.3}
-.kan div div.hot{background:#FBF4E4}
+.kan div div.hot{background:#FBF4E4;box-shadow:inset 3px 0 0 var(--vault)}.kan div div.int{background:#EEF2FB}
+.vt .qlogo svg{box-shadow:0 6px 14px -6px rgba(20,30,60,.6)}.vt .qn{color:#8A5A00;background:#FFF4DE;border-color:#F3DFB4}
+.vs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.vs div{background:#FBF7EE;border:1px solid #F1E6CF;border-radius:12px;padding:10px 12px}
+.vs b{display:block;font-size:20px;font-weight:600;letter-spacing:-.03em;color:var(--vault);line-height:1.1}.vs small{font-size:11.5px;color:var(--soft)}
+.vt .kan{margin-bottom:6px}
+.vfu{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:13px;border:1px solid #F3DFB4;background:#FFFBF2;margin-bottom:10px}
+.vfu .vb{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:#FFF1D3;flex:none}
+.vfu b{display:block;font-size:13px;font-weight:600}.vfu small{display:block;font-size:11.5px;color:var(--soft)}
+.vfu .nx{margin-left:auto;font-weight:600;font-size:12.5px;color:#fff;background:var(--vault);padding:6px 13px;border-radius:999px}
+.vai{display:flex;align-items:center;gap:9px;padding:10px 12px;border-radius:999px;background:#F4F5F8;border:1px solid var(--line);font-size:13px;color:var(--ink)}
+.vai .sp{color:#6B5BD6;font-size:14px}.vai .tx{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.vai em{font-style:normal;font-size:11px;font-weight:600;color:#6B5BD6;background:#EEEBFF;padding:3px 8px;border-radius:999px}
 .kan b{display:block;font-size:12.5px;font-weight:600}.kan small{color:var(--soft);font-size:11px}
 .chat{display:grid;gap:8px}
 .chat p{padding:9px 12px;border-radius:16px;max-width:86%;line-height:1.35;font-size:13px}
@@ -374,7 +391,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
 .stage .mock{position:relative;z-index:1;transform:translateZ(0);box-shadow:0 60px 90px -45px rgba(20,30,60,.55),0 18px 36px -24px rgba(20,30,60,.35)}
 .chip{position:absolute;z-index:2;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;font-size:13px;font-weight:600;padding:8px 13px;border-radius:999px;background:#fff;color:var(--ink);border:1px solid var(--pline,var(--line));box-shadow:0 14px 30px -14px rgba(20,30,60,.35);transform:translateZ(70px);box-shadow:0 22px 40px -16px rgba(20,30,60,.45)}
 .chip.good{background:#EAF7EF;color:#0F6B3A;border-color:#CFE9DA}.chip.warn{background:#FFF4DE;color:#8A5A00;border-color:#F3DFB4}
-.chip.c0{top:-16px;left:-22px}.chip.c1{top:42%;right:-30px}.chip.c2{bottom:-16px;left:14%}.kan~.chip.c1{top:auto;bottom:-18px;right:6%}
+.chip.c0{top:-16px;left:-22px}.chip.c1{top:42%;right:-30px}.chip.c2{bottom:-16px;left:14%}.vt~.chip.c1{top:31%;right:-30px}
 @media (prefers-reduced-motion:no-preference){.stage .mock{animation:bob 8s ease-in-out infinite}.chip{animation:bob 6s ease-in-out infinite}.chip.c1{animation-duration:7s;animation-delay:-2.4s}.chip.c2{animation-duration:6.6s;animation-delay:-4.2s}}
 @keyframes bob{50%{translate:0 -9px}}
 @media (max-width:880px){.stage{transform:perspective(1400px) rotateX(4deg) rotateY(-7deg)}.stage::before{inset:14px -10px -14px 10px}.stage::after{inset:28px -18px -28px 18px}}
@@ -428,8 +445,9 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
   .product .top svg{width:48px;height:48px;border-radius:13px}.product h3{font-size:24px}
   .product .pitch{font-size:16.5px}.product li{font-size:15px}.product ul{gap:9px}
   .mock{max-width:360px;padding:15px;border-radius:18px;font-size:13px}
-  .q .qlogo svg{width:28px;height:28px}.q .qh{margin-bottom:10px}.q .opt .k{width:20px;height:20px;font-size:11px}.q .qf{margin-top:8px}
-  .chip{font-size:11.5px;padding:6px 10px}.chip.c0{left:-6px;top:-14px}.chip.c1{top:auto;bottom:-14px;right:-6px}.chip.c2{display:none}.q~.chip.c1{bottom:-34px;right:auto;left:14%}.q{margin-bottom:18px}
+  .mock .qlogo svg{width:28px;height:28px}.mock .qh{margin-bottom:10px}
+  .vs b{font-size:17px}.vs div{padding:8px 10px}.vfu{padding:8px 10px}.vai{padding:8px 10px;font-size:12px}.q .opt .k{width:20px;height:20px;font-size:11px}.q .qf{margin-top:8px}
+  .chip{font-size:11.5px;padding:6px 10px}.chip.c0{left:-6px;top:-14px}.chip.c1{top:auto;bottom:-14px;right:-6px}.chip.c2{display:none}.q~.chip.c1{bottom:-34px;right:auto;left:14%}.vt~.chip.c1{top:auto;bottom:-16px;right:-6px}.q{margin-bottom:18px}
   .q h5{font-size:14.5px;margin:4px 0 10px}.q .opt{padding:7px 10px;margin-bottom:5px;font-size:13px}
   .day .now{font-size:30px}.day .meta:nth-of-type(2){margin-bottom:10px}.day .blk{padding:7px 10px;margin-bottom:5px;font-size:13px}
   .kan b{font-size:11.5px}.kan small{font-size:10px}.kan div div{padding:7px 8px}
