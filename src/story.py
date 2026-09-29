@@ -291,7 +291,7 @@ def finale():
 # (icon letter, icon colour, app, title, body, meta, side)  side: "" notification, "me" her own message, "them" a reply
 INTER = {
  "night": dict(face=("s", "scroll", "#26305E"), mood="another rejection, can't sleep", dark=True, time="Sunday · 11:48 PM", title="The night it all piles up.",
-   text="Riya should be asleep. Two years since college, and she's still at home: comfortable, safe, and quietly stuck. Tonight she's reading the same email again. Another skill test failed, another interview gone wrong. She has the degree. She has the certificates. So why does every test feel like a language she only half knows, and why does she go blank the moment someone asks about her?",
+   text="Two years since college, still at home, quietly stuck. Tonight: another failed skill test, another interview gone wrong.",
    items=[("@mom", "", "WhatsApp", "Mom", "Beta, Sharma aunty ki beti ki job lag gayi 😊 Tera kab hoga?", "11:31 PM", ""),
           ("@ananya", "", "LinkedIn", "Ananya, your batchmate", "started a new position at a top startup. Say congrats!", "11:40 PM", ""),
           ("M", "#EA4335", "Mail", "Online skill test result", "You scored 41%. The cut-off was 65%. We won't be moving ahead.", "9:14 PM", ""),
@@ -300,7 +300,7 @@ INTER = {
    pains=["Failed skill tests", "Doesn't know her strengths", "Freezes in interviews", "Family pressure"],
    bridge="She doesn't need a fourth certificate. She needs to know where she actually stands."),
  "kalse": dict(face=("g", "scroll", "#2B2F5C"), mood="caught in the scroll, again", dark=True, time="Day 3 of her plan · 10:05 AM", title="Knowing isn't doing.",
-   text="Her self-assessment told her exactly what to fix. For two days she's on fire. On day three the old Riya is back: one reel becomes forty, and the interview-practice video sits paused at 7:42. Again.",
+   text="Two good days. On day three, one reel becomes forty, and the practice video sits paused at 7:42. Again.",
    items=[("▶", "#FF0000", "YouTube", "How to answer &ldquo;Tell me about yourself&rdquo;", "Paused at 7:42 of 18:20", "yesterday", ""),
           ("◎", "#E1306C", "Instagram", "priya.codes and 12 others", "posted new reels", "10:02 AM", ""),
           ("✎", "#F4B942", "Notes", "My routine", "Monday: start fresh ✅  Tuesday: start fresh again", "", ""),
@@ -309,21 +309,21 @@ INTER = {
    pains=["Procrastination", "Phone traps", "Restarting every Monday", "Guilt"],
    bridge="She doesn't need more motivation. She needs a simpler day."),
  "inbox": dict(face=("c", "face", "#2A2A52"), mood="two rejections before breakfast", dark=True, time="Week 7 · Monday morning", title="The inbox that hurts.",
-   text="Her skills are real now, and so is the job hunt. So is the mess: job links buried in chats, three versions of her resume, and a tracker spreadsheet she stopped updating 19 days ago.",
+   text="Her skills are ready. Her job hunt is a mess: links in chats, three resumes, a spreadsheet last opened 19 days ago.",
    items=[("M", "#EA4335", "Mail", "Finlo Careers", "Unfortunately, we have decided to move forward with other candidates.", "9:02 AM", ""),
           ("M", "#EA4335", "Mail", "Brightpath Analytics", "Thank you for your interest. The position has been filled.", "Sat", ""),
           ("@rohit", "", "WhatsApp", "Rohit (recruiter)", "Will get back to you by Friday 👍", "12 days ago", ""),
           ("▦", "#0F9D58", "Sheets", "jobs_tracker_FINAL_v2.xlsx", "Last edited 19 days ago", "", "")],
    voice="Did I already apply to that role? Did I ever follow up with Cred?",
    pains=["Rejections", "Ghosting", "Lost links", "Missed follow-ups"],
-   bridge="Rejections are part of the game. Losing track of good chances doesn't have to be."),
+   bridge="Rejections are normal. Losing good chances isn't."),
  "call": dict(face=("j", "ear", "#FFE3C4"), mood="happy tears", dark=False, time="Week 11 · Thursday, 4:12 PM", title="The call.",
-   text="Two weeks after the rejection that almost broke her streak, her phone rings. Unknown number. She almost lets it go. Then she picks up.",
+   text="Two weeks after the rejection, an unknown number calls. She almost lets it go.",
    items=[("@kavya", "", "Phone", "Incoming call", "Kavya, Talent team", "4:12 PM", ""),
           ("M", "#EA4335", "Mail", "Offer letter: Product Analyst", "We're delighted to offer you the role. Please find the details attached.", "4:31 PM", ""),
           ("", "", "", "", "Maa, job lag gayi!! 🎉🎉", "4:33 PM", "me"),
           ("@mom", "", "", "Mom", "Mujhe pata tha ❤️ Sharma aunty ko main bataungi 😄", "4:34 PM", "them")],
-   voice="Not luck. Consistency: eleven weeks of small, honest, slightly boring days.",
+   voice="Not luck. Eleven weeks of small, honest days.",
    pains=["Knew her strengths", "Showed up daily", "Never lost a lead", "Got the job"]),
 }
 def portrait(face, pose, bg):
@@ -380,27 +380,27 @@ def chapter(key, num, step, title, why, art, steps, tools):
 
 CH = [
     chapter("test", 1, "Know where you stand", "What am I actually good at?",
-        "Without an honest picture of yourself, you practise the wrong things and apply for the wrong roles. Everything after this depends on it.", ch_test(), [
-        ("Week 0 · The problem", "Two questions. Two blanks.", "&ldquo;Tell me about your strengths.&rdquo; Riya says &ldquo;hard-working&rdquo; three times and gives no example. &ldquo;Now write a quick SQL query for our top five customers.&rdquo; Her certificate says SQL. Her hands don't. She freezes on both."),
-        ("Week 1 · What she did", "She stops collecting certificates and measures.", "Two honest tests: one for her strengths and how she works, one for her actual skills. She used HV Test, which has both, free. What mattered was being honest with herself."),
-        ("The result", "Strengths she never noticed. Gaps she never faced.", "Problem solving 82 and teamwork 86: all those college projects she quietly held together. But communication 46, and SQL 38: she knew the words from her courses, not the work. And consistency 48. It stings, and it's the first honest picture she's had."),
-        ("The plan", "Less watching. More doing.", "No new course. 45 minutes of real, timed SQL problems and 20 minutes of speaking practice every day: answer one question, record it, listen back. Three real stories that prove her strengths. And the hard one: show up every day.")],
-        '<a href="https://harshvittori.github.io/hv-tests/">HV Test</a>, free: a strengths assessment and a skills test.'),
+        "Without an honest picture of yourself, you practise the wrong things. Everything after this depends on it.", ch_test(), [
+        ("Week 0 · The problem", "Two questions. Two blanks.", "&ldquo;Your strengths?&rdquo; She says &ldquo;hard-working&rdquo;. &ldquo;A quick SQL query?&rdquo; She freezes. Her certificate says SQL. Her hands don't."),
+        ("Week 1 · What she did", "She stops collecting certificates and measures.", "Two honest tests: one for her strengths, one for her skills. She used HV Test, free."),
+        ("The result", "Strengths she never noticed. Gaps she never faced.", "Strong: problem solving 82, teamwork 86. Weak: communication 46, SQL 38, consistency 48."),
+        ("The plan", "Less watching. More doing.", "Daily: 45 minutes of timed SQL and 20 minutes of speaking practice. Three real stories about her strengths.")],
+        '<a href="https://harshvittori.github.io/hv-tests/">HV Test</a>, free: a strengths test and a skills test.'),
     chapter("reset", 2, "Show up daily", "Why can't I stay consistent?",
-        "Skills and confidence aren't things you finish, like a certificate. You practise them until the test and the hard question stop scaring you. And a comfort zone has no clock: without a time for each task, &ldquo;later&rdquo; always wins. This is the step where most people stop.", ch_reset(), [
-        ("The problem", "Big plans. Lost days.", "Two years of no college, no office, no routine. Her comfort zone is very comfortable. She wakes at 10, gets stuck on SQL question 3 at 11, records one answer, hates how she sounds, checks her phone at 11:05, and suddenly it's evening. Again."),
-        ("What she did", "Every task gets a time. No more &ldquo;later&rdquo;.", "Her comfort zone had no clock, so &ldquo;baad mein karungi&rdquo; always won. Now her 30-day plan runs on the clock: every task has a fixed start time. She used HV Reset: she typed &ldquo;Roz 9 baje SQL, 2 baje speaking practice&rdquo; to HV AI, and at 9:00 the task is on screen with a clock counting down. One task at a time, and the day pulls her out of bed."),
-        ("Week 2 · A setback", "The comfort zone pulls back. She doesn't quit.", "A cold, a family function, and the old comfort of &ldquo;aaj rehne do&rdquo;. Two days gone. Instead of starting over on Monday, she shifts today's plan, keeps the one core task, and goes again. The streak resets. The progress doesn't."),
-        ("Week 6 · The change", "Now it's just what she does.", "300 SQL problems and 42 recordings. Her timed SQL test: 38% five weeks ago, 81% today. Her answers: three minutes of rambling then, 60 seconds with a real example now. Neha ma'am, her old college teacher, does a mock interview with her: &ldquo;Now I believe you.&rdquo; Her HV Reset dashboard shows the rest: 78% of tasks started on time (it was 20% in week 1), 42 focused hours, a 12-day streak. It also shows her evening tasks slip the most, so she moves speaking practice to 2 PM. Out of the comfort zone, and she can see it."),
-        ("Week 6 · Next", "Interview prep and applying go on the clock too.", "Day 24 of her 30-day plan. The same timed day now holds two more tasks: 4:00 interview prep with her three real stories, and 6:00 apply to three good roles. Applying stops being a midnight panic and becomes something she starts on time.")],
-        '<a href="https://harshvittori.github.io/hv-reset/">HV Reset</a> with HV AI, free: a start time for every task, a clock that keeps the day moving, and a dashboard that shows how she&rsquo;s really doing.'),
+        "A comfort zone has no clock. Without a time for each task, &ldquo;later&rdquo; always wins. Most people stop here.", ch_reset(), [
+        ("The problem", "Big plans. Lost days.", "Two years at home, no routine. She starts at 11, checks her phone at 11:05, and suddenly it's evening."),
+        ("What she did", "Every task gets a time.", "Her 30-day plan goes on the clock in HV Reset. At 9:00 the task is on screen with a countdown. &ldquo;Baad mein&rdquo; stops working."),
+        ("Week 2 · A setback", "The comfort zone pulls back.", "&ldquo;Aaj rehne do.&rdquo; Two days gone. She doesn't wait for Monday: she keeps one core task and goes again."),
+        ("Week 6 · The change", "Now it's just what she does.", "SQL test: 38% to 81%. Mock interview: 4 to 8. Her dashboard shows 78% of tasks started on time, and that evenings slip, so she moves them."),
+        ("Week 6 · Next", "Interview prep and applying go on the clock too.", "4:00 interview prep. 6:00 apply to three jobs. Applying becomes a task she starts on time.")],
+        '<a href="https://harshvittori.github.io/hv-reset/">HV Reset</a> with HV AI, free: timed tasks and a dashboard.'),
     chapter("vault", 3, "Apply with a system", "Where did all my applications go?",
-        "Real skills and confidence get you through the tests and interviews. A system gets you in front of enough of them. Without tracking and follow-ups, good chances quietly slip away, and the work from steps 1 and 2 goes to waste.", ch_vault(), [
-        ("The problem", "Skills ready. Offers still missing.", "Her technical and communication skills are finally where they should be, and she clears most tests now. But offers don't come. She applies on five job sites, links sit in WhatsApp, she applied to one company twice, and she can't remember whom to follow up with."),
-        ("Week 7 · What she did", "Every job in one place.", "Saved, applied, interview: every job in one place, updated the same day. She used HV Vault, a free job tracker. No more applying twice or losing a link: 34 applications over four weeks, each with its status, and three final interviews."),
-        ("Follow-ups", "The follow-ups actually happen.", "After every application she sets a reminder to follow up. One quiet application turns into an interview because of it. She adds the interview to her calendar the moment it's fixed: &ldquo;Kal 4 baje&rdquo;, done."),
-        ("Week 11 · The outcome", "A no. Then the yes.", "A final round says no, and it hurts. She notes what went wrong, preps with her real stories, and two weeks later signs the offer she wanted: Product Analyst.")],
-        '<a href="https://harshvittori.github.io/hv-vault-web/">HV Vault</a>, free: one board for her applications and follow-ups.'),
+        "Skills get you through the interview. A system gets you enough interviews. Without it, good chances slip away.", ch_vault(), [
+        ("The problem", "Skills ready. Offers still missing.", "Five job sites, links in WhatsApp, one company applied to twice, and no idea whom to follow up with."),
+        ("Week 7 · What she did", "Every job in one place.", "Saved, applied, interview, on one board. She used HV Vault, free. 34 applications, each with its status."),
+        ("Follow-ups", "The follow-ups actually happen.", "A reminder after every application. One quiet application turns into an interview."),
+        ("Week 11 · The outcome", "A no. Then the yes.", "A final round says no. She preps again, and two weeks later signs the offer: Product Analyst.")],
+        '<a href="https://harshvittori.github.io/hv-vault-web/">HV Vault</a>, free: one board for applications and follow-ups.'),
 ]
 
 TIMELINE = [("Week 1", "Takes a strengths test and a skills test. Communication 46, SQL 38, consistency 48. Ouch.", "#127A4F"),
