@@ -40,30 +40,59 @@ def logo_at(name, x, y, size):          # a logo placed inside a scene
     return s
 
 # ---------------------------------------------------------------- the characters
-SKIN, HAIR, TOP, INK, CHEEK = "#F0C29E", "#2A2238", "#5B6FE0", "#1D1D1F", "#F2A0A0"
+SKIN, SHADE, HAIR, SHINE, INK = "#D9A07A", "#BF8460", "#231715", "#4A3430", "#1D1D1F"
+BLAZER, LAPEL, TEE, LIP, CHEEK, GOLD = "#2F3B6E", "#44528F", "#F6EFE6", "#B4545E", "#E8826F", "#E3AE45"
+TOP = BLAZER
 
 def riya(x, y, s=1.0, faces=None, arms=None, cls="", sweat=None, bulb=None):
-    """Riya, upper body. faces/arms map a variant to the step classes where it shows (e.g. {'w': 'v1'})."""
+    """Riya, 25: long hair, blazer over a tee, small gold earrings. Upper body, head centred at (0,-94).
+    faces/arms map a variant to the step classes where it shows (e.g. {'w': 'v1'})."""
     faces = faces or {"n": ""}
     arms = arms or {"down": ""}
     p = []
-    p.append('<path d="M-40,-118 C-48,-166 48,-166 40,-118 L44,-64 C30,-52 -30,-52 -44,-64Z" fill="%s"/>' % HAIR)  # hair behind
-    p.append('<rect x="-9" y="-64" width="18" height="22" rx="7" fill="%s"/>' % SKIN)
-    p.append('<path d="M-60,26 C-60,-26 -42,-46 0,-46 C42,-46 60,-26 60,26 Z" fill="%s"/>' % TOP)
-    p.append('<path d="M-14,-46 L0,-30 L14,-46" fill="none" stroke="#FFFFFF" stroke-opacity=".55" stroke-width="3" stroke-linecap="round"/>')
-    p.append('<circle cx="-34" cy="-92" r="6" fill="%s"/><circle cx="34" cy="-92" r="6" fill="%s"/>' % (SKIN, SKIN))
-    p.append('<circle cx="0" cy="-94" r="35" fill="%s"/>' % SKIN)
-    p.append('<path d="M-36,-98 C-34,-138 34,-142 37,-100 C26,-118 -8,-122 -36,-98Z" fill="%s"/>' % HAIR)       # fringe
+    # hair behind the shoulders
+    p.append('<path d="M-35,-112 C-48,-158 48,-158 35,-112 C42,-92 46,-64 44,-40 C46,-30 40,-24 34,-26 C20,-30 -20,-30 -34,-26 C-40,-24 -46,-30 -44,-40 C-46,-64 -42,-92 -35,-112Z" fill="%s"/>' % HAIR)
+    # neck
+    p.append('<rect x="-9" y="-66" width="18" height="26" rx="7" fill="%s"/><path d="M-9,-60 Q0,-53 9,-60 V-50 Q0,-45 -9,-50Z" fill="%s" opacity=".55"/>' % (SKIN, SHADE))
+    # tee, then the blazer's two halves with lapels, and a thin chain
+    p.append('<path d="M-17,-47 Q0,-40 17,-47 L12,26 H-12Z" fill="%s"/>' % TEE)
+    p.append('<path d="M-8,-44 Q0,-35 8,-44" fill="none" stroke="%s" stroke-width="1.6"/><circle cx="0" cy="-36.5" r="2" fill="%s"/>' % (GOLD, GOLD))
+    for m in (1, -1):
+        p.append('<path d="M%g,26 C%g,-22 %g,-42 %g,-47 L%g,-4 L%g,26Z" fill="%s"/>' % (-62 * m, -62 * m, -46 * m, -16 * m, -5 * m, -9 * m, BLAZER))
+        p.append('<path d="M%g,-47 L%g,-30 L%g,-24 L%g,-4" fill="none" stroke="%s" stroke-width="3" stroke-linejoin="round"/>' % (-16 * m, -26 * m, -14 * m, -5 * m, LAPEL))
+    # ears and earrings
+    p.append('<circle cx="-30" cy="-92" r="5.5" fill="%s"/><circle cx="30" cy="-92" r="5.5" fill="%s"/><circle cx="-30" cy="-84" r="2.6" fill="%s"/><circle cx="30" cy="-84" r="2.6" fill="%s"/>' % (SKIN, SKIN, GOLD, GOLD))
+    # face
+    p.append('<path d="M-29,-104 C-29,-129 29,-129 29,-104 C29,-80 17,-60 0,-58 C-17,-60 -29,-80 -29,-104Z" fill="%s"/>' % SKIN)
+    p.append('<path d="M-1,-88 Q2.6,-80 -1.6,-77.5" fill="none" stroke="%s" stroke-width="2" stroke-linecap="round"/>' % SHADE)
+    # hair in front: side-parted fringe and two long strands
+    p.append('<path d="M-31,-100 C-36,-136 -4,-146 18,-139 C35,-132 38,-113 31,-95 C27,-111 17,-121 1,-123 C-11,-117 -22,-110 -31,-100Z" fill="%s"/>' % HAIR)
+    p.append('<path d="M-30,-106 C-37,-86 -36,-66 -41,-44 L-33,-44 C-30,-64 -28,-86 -26,-102Z" fill="%s"/><path d="M31,-100 C36,-84 36,-66 41,-46 L33,-46 C30,-64 29,-84 28,-98Z" fill="%s"/>' % (HAIR, HAIR))
+    p.append('<path d="M-14,-136 C-4,-141 10,-141 18,-136" fill="none" stroke="%s" stroke-width="2.6" stroke-linecap="round" opacity=".8"/>' % SHINE)
+    D = "#2A1C18"
+    eyes = lambda: "".join('<ellipse cx="%g" cy="-93" rx="3.6" ry="4.3" fill="%s"/><circle cx="%g" cy="-94.6" r="1.2" fill="#FFFFFF"/><path d="M%g,-97.5 Q%g,-100.5 %g,-97.5" fill="none" stroke="%s" stroke-width="1.7" stroke-linecap="round"/>' % (
+        x, D, x + 1.2, x - 5, x, x + 5, D) for x in (-11, 11))
+    brow = lambda d: '<path d="%s" fill="none" stroke="%s" stroke-width="2.8" stroke-linecap="round"/>' % (d, HAIR)
+    cheeks = lambda o: '<circle cx="-19" cy="-80" r="5" fill="%s" opacity="%s"/><circle cx="19" cy="-80" r="5" fill="%s" opacity="%s"/>' % (CHEEK, o, CHEEK, o)
     F = {
-        "w": '<path d="M-19,-101 L-7,-106 M19,-101 L7,-106" stroke="%s" stroke-width="3" stroke-linecap="round"/><circle cx="-12" cy="-92" r="3.4" fill="%s"/><circle cx="12" cy="-92" r="3.4" fill="%s"/><path d="M-9,-73 Q0,-80 9,-73" fill="none" stroke="%s" stroke-width="3" stroke-linecap="round"/>' % (INK, INK, INK, INK),
-        "t": '<path d="M-18,-92 L-7,-92 M7,-92 L18,-92" stroke="%s" stroke-width="3" stroke-linecap="round"/><path d="M-19,-102 L-7,-104 M19,-102 L7,-104" stroke="%s" stroke-width="3" stroke-linecap="round"/><path d="M-7,-75 L7,-75" stroke="%s" stroke-width="3" stroke-linecap="round"/>' % (INK, INK, INK),
-        "n": '<path d="M-19,-104 L-7,-104 M19,-104 L7,-104" stroke="%s" stroke-width="3" stroke-linecap="round"/><circle cx="-12" cy="-92" r="3.4" fill="%s"/><circle cx="12" cy="-92" r="3.4" fill="%s"/><path d="M-8,-76 Q0,-72 8,-76" fill="none" stroke="%s" stroke-width="3" stroke-linecap="round"/>' % (INK, INK, INK, INK),
-        "h": '<path d="M-17,-91 Q-12,-97 -7,-91 M7,-91 Q12,-97 17,-91" fill="none" stroke="%s" stroke-width="3" stroke-linecap="round"/><circle cx="-21" cy="-80" r="5" fill="%s" opacity=".7"/><circle cx="21" cy="-80" r="5" fill="%s" opacity=".7"/><path d="M-11,-79 Q0,-66 11,-79" fill="%s"/>' % (INK, CHEEK, CHEEK, INK),
+        "n": brow("M-17,-103 Q-11,-106 -5,-104 M5,-104 Q11,-106 17,-103") + eyes() + cheeks(".22") +
+             '<path d="M-7,-71 Q0,-66 7,-71" fill="none" stroke="%s" stroke-width="2.6" stroke-linecap="round"/>' % LIP,
+        "w": brow("M-17,-101 Q-11,-103 -5,-107 M5,-107 Q11,-103 17,-101") + eyes() +
+             '<path d="M-6,-69 Q0,-73 6,-69" fill="none" stroke="%s" stroke-width="2.6" stroke-linecap="round"/>' % LIP,
+        "t": brow("M-17,-102 L-5,-103 M5,-103 L17,-102") +
+             '<path d="M-16,-93.5 Q-11,-90.5 -6,-93.5 M6,-93.5 Q11,-90.5 16,-93.5" fill="none" stroke="%s" stroke-width="2.4" stroke-linecap="round"/>' % D +
+             '<path d="M-15,-87.5 Q-11,-85.5 -7,-87.5 M7,-87.5 Q11,-85.5 15,-87.5" fill="none" stroke="%s" stroke-width="1.3" stroke-linecap="round"/>' % SHADE +
+             '<path d="M-6,-71 L6,-71" stroke="%s" stroke-width="2.6" stroke-linecap="round"/>' % LIP,
+        "d": brow("M-17,-104 Q-11,-104.5 -5,-102 M5,-102 Q11,-104.5 17,-104") + eyes() + cheeks(".25") +
+             '<path d="M-8,-72 Q0,-65 8,-72" fill="none" stroke="%s" stroke-width="2.8" stroke-linecap="round"/>' % LIP,
+        "h": brow("M-17,-105 Q-11,-109 -5,-106 M5,-106 Q11,-109 17,-105") +
+             '<path d="M-16,-92 Q-11,-98 -6,-92 M6,-92 Q11,-98 16,-92" fill="none" stroke="%s" stroke-width="2.6" stroke-linecap="round"/>' % D + cheeks(".5") +
+             '<path d="M-9,-73.5 Q0,-60 9,-73.5Z" fill="#7E2F38"/><path d="M-7.6,-73 Q0,-71 7.6,-73 L6.6,-70.4 Q0,-68.8 -6.6,-70.4Z" fill="#FFFFFF"/>',
     }
     for k, c in faces.items():
         p.append('<g class="%s">%s</g>' % (("t " + c) if c else "", F[k]))
     def arm(d, hx, hy):
-        return '<path d="%s" fill="none" stroke="%s" stroke-width="17" stroke-linecap="round"/><circle cx="%g" cy="%g" r="8.5" fill="%s"/>' % (d, TOP, hx, hy, SKIN)
+        return ('<path d="%s" fill="none" stroke="%s" stroke-width="17" stroke-linecap="round"/><circle cx="%g" cy="%g" r="8.5" fill="%s"/>' % (d, BLAZER, hx, hy, SKIN))
     A = {
         "down": arm("M-50,-26 C-64,-8 -66,10 -62,24", -62, 28) + arm("M50,-26 C64,-8 66,10 62,24", 62, 28),
         "desk": arm("M-50,-26 C-62,-6 -52,14 -30,20", -26, 20) + arm("M50,-26 C62,-6 52,14 30,20", 26, 20),
@@ -74,6 +103,7 @@ def riya(x, y, s=1.0, faces=None, arms=None, cls="", sweat=None, bulb=None):
                + '<path d="M-14,-14 h28 v18 a8,8 0 0 1 -8,8 h-12 a8,8 0 0 1 -8,-8Z" fill="#FFFFFF" stroke="%s" stroke-width="2.5"/><path d="M14,-8 a6,6 0 0 1 0,12" fill="none" stroke="%s" stroke-width="2.5"/><path class="steam" d="M-4,-22 q-4,-6 0,-12 q4,-6 0,-12" fill="none" stroke="#C7C7CC" stroke-width="2.5" stroke-linecap="round"/>' % (INK, INK),
         "reach": arm("M-50,-26 C-64,-8 -66,10 -62,24", -62, 28) + arm("M50,-28 C72,-48 84,-70 94,-96", 96, -100),
         "talk": arm("M-50,-26 C-64,-8 -66,10 -62,24", -62, 28) + arm("M50,-26 C70,-16 80,-30 88,-46", 90, -50),
+        "chin": arm("M-50,-26 C-62,-6 -52,14 -30,20", -26, 20) + arm("M50,-26 C60,-10 40,-40 16,-60", 14, -62),
     }
     for k, c in arms.items():
         p.append('<g class="%s">%s</g>' % (("t " + c) if c else "", A[k]))
@@ -126,24 +156,29 @@ def scene(inner, label, bg="#F5F6FA"):
 def prologue():
     stars = "".join('<circle class="twinkle" style="animation-delay:%.1fs" cx="%d" cy="%d" r="2.2" fill="#FFFFFF"/>' % (d, cx, cy)
                     for d, cx, cy in [(0, 92, 84), (.7, 150, 72), (1.3, 120, 118), (2, 176, 104)])
-    papers = "".join('<rect x="%d" y="%d" width="70" height="8" rx="3" fill="%s" transform="rotate(%d %d %d)"/>' % (150 + i * 2, 318 - i * 9, c, r, 185, 318 - i * 9)
-                     for i, (c, r) in enumerate([("#FFFFFF", -3), ("#F2F2F5", 2), ("#FFFFFF", -1), ("#ECEEF3", 4), ("#FFFFFF", 0)]))
+    notes = "".join('<g transform="rotate(%d %d %d)"><rect x="%d" y="%d" width="46" height="40" rx="4" fill="%s"/><text x="%d" y="%d" text-anchor="middle" font-size="9.5" font-weight="700" fill="#5B4A1C">%s</text></g>' % (
+        r, x + 23, y + 20, x, y, c, x + 23, y + 24, t) for x, y, c, r, t in [(226, 52, "#FFE58A", -5, "Learn SQL"), (280, 46, "#FFD1DC", 4, "Apply!!"), (310, 96, "#CDEBD9", 3, "Gym?")])
+    cert = ('<rect x="64" y="186" width="92" height="66" rx="6" fill="#FFFFFF" stroke="#D9CBA8" stroke-width="3"/><circle cx="110" cy="206" r="8" fill="#F2C063"/>'
+            '<rect x="80" y="222" width="60" height="5" rx="2.5" fill="#D8DAE0"/><rect x="88" y="233" width="44" height="5" rx="2.5" fill="#D8DAE0"/>')
     icons = ('<g class="pop" style="animation-delay:0s"><circle cx="404" cy="104" r="22" fill="#E3F2EA"/><text x="404" y="113" text-anchor="middle" font-size="24" font-weight="700" fill="#127A4F">?</text></g>'
              '<g class="pop" style="animation-delay:.6s"><circle cx="464" cy="104" r="22" fill="#E6EDF9"/><circle cx="464" cy="104" r="11" fill="none" stroke="#4A72C8" stroke-width="3"/><path d="M464,97 v7 l5,4" stroke="#4A72C8" stroke-width="3" fill="none" stroke-linecap="round"/></g>'
              '<g class="pop" style="animation-delay:1.2s"><circle cx="524" cy="104" r="22" fill="#F6EEDC"/><path d="M514,110 c0,-14 4,-19 10,-19 s10,5 10,19Z" fill="none" stroke="#A87A22" stroke-width="3" stroke-linejoin="round"/><circle cx="524" cy="114" r="2.5" fill="#A87A22"/></g>')
-    inner = ('<rect x="64" y="56" width="140" height="104" rx="14" fill="#1F2A55"/><circle cx="176" cy="82" r="14" fill="#F6E7B8"/><circle cx="182" cy="78" r="12" fill="#1F2A55"/>' + stars +
-             FLOOR + riya(270, 330, 1, faces={"t": ""}, arms={"desk": ""}) + desk(120, 322, 380) + papers +
-             '<g><path d="M338,322 h118 l-10,-6 h-98Z" fill="#9AA0AE"/><rect x="350" y="248" width="94" height="66" rx="7" fill="#2B3350"/><rect class="glowlap" x="356" y="254" width="82" height="54" rx="3" fill="#8FA6FF" opacity=".55"/></g>'
+    tabs = "".join('<rect x="%d" y="252" width="14" height="5" rx="2" fill="%s"/>' % (356 + i * 16, c) for i, c in enumerate(["#FF6B6B", "#F4B942", "#7FD1AE", "#8FA6FF", "#C7C7CC"]))
+    inner = ('<rect x="64" y="56" width="140" height="104" rx="14" fill="#1F2A55"/><circle cx="176" cy="82" r="14" fill="#F6E7B8"/><circle cx="182" cy="78" r="12" fill="#1F2A55"/>' + stars + notes + cert +
+             FLOOR + riya(270, 308, 1, faces={"t": ""}, arms={"desk": ""}) + desk(120, 322, 380) +
+             '<g><rect x="150" y="296" width="64" height="26" rx="4" fill="#E9E1D2"/><rect x="154" y="286" width="58" height="12" rx="3" fill="#6B7BD8"/><rect x="152" y="276" width="62" height="12" rx="3" fill="#F2A77E"/></g>'
+             '<g><path d="M338,322 h118 l-10,-6 h-98Z" fill="#9AA0AE"/><rect x="350" y="248" width="94" height="66" rx="7" fill="#2B3350"/><rect class="glowlap" x="356" y="260" width="82" height="48" rx="3" fill="#8FA6FF" opacity=".55"/>' + tabs +
+             '<rect x="362" y="270" width="52" height="5" rx="2.5" fill="#FFFFFF" opacity=".8"/><rect x="362" y="281" width="68" height="4" rx="2" fill="#FFFFFF" opacity=".5"/><rect x="362" y="291" width="40" height="4" rx="2" fill="#FFFFFF" opacity=".5"/></g>'
              '<g><rect x="468" y="298" width="22" height="24" rx="5" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="2"/><path class="steam" d="M479,292 q-4,-6 0,-12 q4,-6 0,-12" fill="none" stroke="#C7C7CC" stroke-width="2.5" stroke-linecap="round"/></g>' +
              thought(376, 70, 176, 68, icons, hx=318, hy=184))
-    return scene(inner, "Riya at her desk late at night, worried about three things: who she is, where her day goes, and follow-ups", "#F2F3F8")
+    return scene(inner, "Riya, 25, at her desk late at night: certificates on the wall, sticky notes, too many browser tabs, and three worries: what she's good at, where her days go, and her job search", "#F2F3F8")
 
 def ch_test():
     q = lambda y, on=False, cls="": ('<g class="%s"><rect x="378" y="%g" width="150" height="26" rx="8" fill="%s" stroke="%s" stroke-width="1.5"/><circle cx="394" cy="%g" r="6" fill="%s" stroke="%s" stroke-width="1.5"/><rect x="408" y="%g" width="%d" height="6" rx="3" fill="%s"/></g>') % (
         cls, y, "#E3F2EA" if on else "#FFFFFF", "#127A4F" if on else "#E5E5EA", y + 13, "#127A4F" if on else "#FFFFFF", "#127A4F" if on else "#C7C7CC", y + 10, 96 if on else 80, "#127A4F" if on else "#D8DAE0")
     bars = "".join('<rect class="bar" style="transition-delay:%.2fs" x="%d" y="%d" width="10" height="%d" rx="3" fill="#127A4F" opacity="%.2f"/>' % (i * .06, 386 + i * 14, 340 - h, h, .55 + .045 * i)
                    for i, h in enumerate([44, 62, 38, 70, 52, 58, 34, 66, 48, 60]))
-    phone = ('<g class="t v2 v3"><rect x="360" y="64" width="186" height="334" rx="28" fill="%s"/><rect x="368" y="72" width="170" height="318" rx="22" fill="#FFFFFF"/>' % INK +
+    phone = ('<g class="t v2 v3 v4"><rect x="360" y="64" width="186" height="334" rx="28" fill="%s"/><rect x="368" y="72" width="170" height="318" rx="22" fill="#FFFFFF"/>' % INK +
              logo_at("test", 380, 88, 24) + '<text x="412" y="106" font-size="14" font-weight="700" fill="%s">HV Test</text>' % INK +
              '<g class="t v2"><rect x="380" y="124" width="146" height="5" rx="3" fill="#E3F2EA"/><rect class="progress" x="380" y="124" width="146" height="5" rx="3" fill="#127A4F"/>'
              '<rect x="380" y="146" width="140" height="8" rx="4" fill="%s"/><rect x="380" y="162" width="104" height="8" rx="4" fill="%s"/>' % (INK, INK) +
@@ -151,17 +186,19 @@ def ch_test():
              '<g class="t v3"><text x="453" y="140" text-anchor="middle" font-size="12" font-weight="600" fill="#86868B">YOUR SCORE</text>'
              '<circle cx="453" cy="196" r="40" fill="none" stroke="#E3F2EA" stroke-width="10"/><circle class="ring" cx="453" cy="196" r="40" fill="none" stroke="#127A4F" stroke-width="10" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="251" transform="rotate(-90 453 196)"/>'
              '<text x="453" y="205" text-anchor="middle" font-size="28" font-weight="700" fill="%s">78</text>' % INK + bars +
-             '<text x="453" y="366" text-anchor="middle" font-size="12" font-weight="600" fill="#86868B">10 AREAS · 2 PDFs</text></g></g>')
+             '<text x="453" y="366" text-anchor="middle" font-size="12" font-weight="600" fill="#86868B">10 AREAS · 2 PDFs</text></g>'
+             '<g class="t v4"><text x="380" y="140" font-size="11" font-weight="700" fill="#127A4F" letter-spacing=".6">YOUR 30-DAY PLAN</text>' +
+             "".join('<rect x="380" y="%d" width="146" height="42" rx="10" fill="%s"/><rect x="390" y="%d" width="14" height="14" rx="4" fill="#FFFFFF" stroke="#127A4F" stroke-width="1.8"/><text x="412" y="%d" font-size="12" font-weight="600" fill="%s">%s</text><text x="412" y="%d" font-size="10" fill="#86868B">%s</text>' % (
+                 y, "#F2F8F4" if i % 2 == 0 else "#FFFFFF", y + 10, y + 18, INK, t, y + 32, sub) for i, (y, t, sub) in enumerate([(152, "Learn SQL basics", "45 min a day"), (200, "Build 1 dashboard", "a real project"), (248, "Practise my story", "3 real examples"), (296, "Show up daily", "consistency: 48")])) +
+             '<text x="453" y="366" text-anchor="middle" font-size="12" font-weight="600" fill="#86868B">Built from your results</text></g></g>')
     inner = (FLOOR +
-             '<g class="t v1 v4">' + desk(360, 330, 220) + interviewer(470, 330) + '</g>' +
+             '<g class="t v1">' + desk(360, 330, 220) + interviewer(470, 330) + '</g>' +
              bubble(300, 40, 280, 54, "So, what are your strengths?", "right", "t v1", tailx=462) +
-             bubble(300, 40, 280, 54, "Tell me about a conflict…", "right", "t v4", tailx=462) +
-             chair(190, 396) + riya(190, 370, 1.05, faces={"w": "v1", "n": "v2", "h": "v3 v4"}, arms={"down": "v1", "phone": "v2 v3", "talk": "v4"}, sweat="v1", bulb="v3") +
+             chair(190, 396) + riya(190, 370, 1.05, faces={"w": "v1", "n": "v2", "h": "v3", "d": "v4"}, arms={"down": "v1", "phone": "v2 v3 v4"}, sweat="v1", bulb="v3") +
              thought(60, 60, 150, 58, '<text x="135" y="98" text-anchor="middle" font-size="26" font-weight="700" fill="#C7C7CC">? ? ?</text>', "t v1", hx=160, hy=150) +
-             bubble(30, 36, 250, 92, "I talk to them|privately first.|Then we fix it.", "right", "t v4", "#E3F2EA", 16, "#0B4F33", tailx=182) +
-             '<g class="t v4 badge"><circle cx="540" cy="232" r="22" fill="#127A4F"/><path d="M530,232 l7,7 l13,-14" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g>' +
+             bubble(40, 40, 230, 66, "Strong: communication.|To fix: consistency, SQL.", "right", "t v4", "#E3F2EA", 14, "#0B4F33", tailx=182) +
              phone)
-    return scene(inner, "Riya at an interview, then taking HV Test on her phone, seeing her score, and answering with confidence")
+    return scene(inner, "Riya freezing at an interview, then taking HV Test on her phone, seeing her strengths and gaps, and getting a 30-day plan")
 
 def ch_reset():
     def blk(i, y, w, label, fill, txt="#FFFFFF"):
@@ -173,15 +210,17 @@ def ch_reset():
     inner = ('<g><rect x="48" y="46" width="148" height="104" rx="14" fill="#9CC3F0"/><g class="t v1"><rect class="skycycle" x="48" y="46" width="148" height="104" rx="14" fill="#1F2A55"/></g>'
              '<rect class="t v4" x="48" y="46" width="148" height="104" rx="14" fill="#F4A774"/><circle class="t v4" cx="122" cy="116" r="18" fill="#FFD27A"/></g>'
              '<g transform="translate(262 96)"><circle r="38" fill="#FFFFFF" stroke="%s" stroke-width="4"/><path class="hand hour" d="M0,0 V-20" stroke="%s" stroke-width="5" stroke-linecap="round"/><path class="hand minute" d="M0,0 V-30" stroke="#4A72C8" stroke-width="4" stroke-linecap="round"/><circle r="4" fill="%s"/></g>' % (INK, INK, INK) +
-             FLOOR + riya(180, 356, 1, faces={"t": "v1", "n": "v2 v3", "h": "v4"}, arms={"desk": "v1 v2 v3", "tea": "v4"}) + desk(40, 348, 290) +
+             FLOOR + riya(180, 334, 1, faces={"t": "v1", "n": "v2", "d": "v3", "h": "v4"}, arms={"desk": "v1 v2 v3", "tea": "v4"}) + desk(40, 348, 290) +
              '<g class="t v1"><rect x="236" y="318" width="20" height="30" rx="5" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="2"/><rect x="262" y="322" width="20" height="26" rx="5" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="2"/><rect x="288" y="316" width="20" height="32" rx="5" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="2"/></g>'
              '<g class="t v1">' + notifs + '<g transform="rotate(4 470 90)"><rect x="420" y="40" width="112" height="96" rx="8" fill="#FFF8E1" stroke="#EADCB0"/>' +
              "".join('<rect x="434" y="%d" width="12" height="12" rx="3" fill="#FFFFFF" stroke="#C9B98A"/><rect class="wiggle" x="454" y="%d" width="62" height="6" rx="3" fill="#C9B98A"/>' % (58 + i * 20, 61 + i * 20) for i in range(4)) + '</g></g>'
              '<g class="t v2 v3 v4 panel"><rect x="336" y="56" width="236" height="330" rx="22" fill="#FFFFFF" stroke="#E5E5EA" stroke-width="1.5"/>' + logo_at("reset", 352, 72, 26) +
              '<text x="386" y="91" font-size="14" font-weight="700" fill="%s">HV Reset</text><text x="352" y="134" font-size="36" font-weight="300" fill="%s" class="mono">01:14:52</text>' % (INK, INK) +
-             '<g class="shift">' + blk(0, 156, 204, "Project work", "#4A72C8") + blk(1, 204, 204, "Short break", "#EEF0F4", "#6E6E73") + blk(2, 252, 204, "Lunch", "#F4B942", INK) + blk(3, 300, 204, "Evening walk", "#4A72C8") + '</g>'
-             '<g class="t v3 late"><rect x="478" y="72" width="80" height="26" rx="13" fill="#FBF1DF"/><text x="518" y="90" text-anchor="middle" font-size="13" font-weight="700" fill="#9A6512">+30 min</text></g></g>')
-    return scene(inner, "Riya's chaotic day, then HV Reset turning it into calm blocks that shift when she is late, all ticked by sunset")
+             '<g class="shift">' + blk(0, 156, 204, "9:00  SQL practice", "#4A72C8") + blk(1, 204, 204, "11:00  Short break", "#EEF0F4", "#6E6E73") + blk(2, 252, 204, "2:00  Dashboard project", "#4A72C8") + blk(3, 300, 204, "6:00  Evening walk", "#F4B942", INK) + '</g>'
+             '<g class="t v3 late"><rect x="478" y="72" width="80" height="26" rx="13" fill="#FBF1DF"/><text x="518" y="90" text-anchor="middle" font-size="12" font-weight="700" fill="#9A6512">Restart ↻</text></g>'
+             '<g class="t v4"><rect x="352" y="350" width="204" height="26" rx="13" fill="#E3F2EA"/><text x="454" y="367" text-anchor="middle" font-size="12" font-weight="700" fill="#0B4F33">42h focused · score 81 ↑</text></g></g>'
+             '<g class="t v2"><rect x="24" y="136" width="292" height="44" rx="16" fill="#2E43A6"/><text x="40" y="156" font-size="11" font-weight="700" fill="#C9D3FF">To HV AI</text><text x="40" y="172" font-size="12.5" font-weight="600" fill="#FFFFFF">“Roz 9 se 11 SQL, 2 baje project”</text></g>')
+    return scene(inner, "Riya's scattered days, then HV AI turning one sentence into a plan in HV Reset, a restart after missed days, and a finished day with her progress going up")
 
 def ch_vault():
     notes = "".join('<g class="drift" style="animation-delay:%.1fs"><rect x="%d" y="%d" width="%d" height="%d" rx="6" fill="%s" transform="rotate(%d %d %d)"/>%s</g>' % (
@@ -198,6 +237,7 @@ def ch_vault():
              chair(170, 393) + riya(170, 366, 1.05, faces={"w": "v1", "n": "v2", "h": "v3 v4"}, arms={"reach": "v1", "down": "v2 v3", "up": "v4"}) +
              '<g class="t v2 v3 v4 panel"><rect x="318" y="52" width="258" height="244" rx="20" fill="#FFFFFF" stroke="#E5E5EA" stroke-width="1.5"/>' + logo_at("vault", 332, 66, 24) +
              '<text x="364" y="84" font-size="14" font-weight="700" fill="%s">HV Vault</text>' % INK +
+             '<text x="562" y="84" text-anchor="end" font-size="12" font-weight="700" fill="#A87A22">34 applied</text>' +
              "".join('<text x="%d" y="116" font-size="10" font-weight="700" fill="#86868B" letter-spacing="1">%s</text>' % (x, t) for x, t in [(334, "SAVED"), (416, "APPLIED"), (498, "INTERVIEW")]) +
              card(332, 126, "", "Razorpay", False, "v2 v3 v4", 0) + card(332, 178, "", "Meesho", False, "v2 v3 v4", .15) +
              card(414, 126, "", "Cred", True, "v2 v3 v4", .3) + card(496, 126, "", "Zomato", False, "v2 v3 v4", .45) + card(496, 178, "", "Tue 4 PM", False, "v3 v4", .1) + '</g>' +
@@ -205,8 +245,8 @@ def ch_vault():
              '<rect x="318" y="312" width="258" height="40" rx="14" fill="%s"/><text x="334" y="337" font-size="13.5" font-weight="600" fill="#FFFFFF">Kal 4 baje Zomato interview</text>' % "#2E43A6" +
              '<rect x="318" y="360" width="200" height="40" rx="14" fill="#FFFFFF" stroke="#E5E5EA"/><text x="334" y="385" font-size="13.5" font-weight="600" fill="%s">📅 Tue · 4:00 PM ✓</text></g>' % INK +
              '<g class="t v4"><g class="envelope"><rect x="360" y="316" width="150" height="92" rx="10" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="2"/><path d="M360,322 l75,50 l75,-50" fill="none" stroke="#D2D2D7" stroke-width="2"/>'
-             '<rect class="letter" x="378" y="300" width="114" height="60" rx="6" fill="#F6EEDC"/><text class="letter" x="435" y="336" text-anchor="middle" font-size="16" font-weight="800" fill="#A87A22">OFFER</text></g>' + confetti + '</g>')
-    return scene(inner, "Riya's scattered notes and a floating opportunity, then HV Vault organising everything, a follow-up reminder, and an offer letter")
+             '<rect class="letter" x="378" y="300" width="114" height="60" rx="6" fill="#F6EEDC"/><text class="letter" x="435" y="336" text-anchor="middle" font-size="16" font-weight="800" fill="#A87A22">OFFER</text><text class="letter" x="435" y="352" text-anchor="middle" font-size="10.5" font-weight="600" fill="#7C5712">Product Analyst</text></g>' + confetti + '</g>')
+    return scene(inner, "Riya's scattered job links, then HV Vault holding 34 applications on one board, a follow-up and an interview on the calendar, and finally an offer letter")
 
 def finale():
     inner = ('<rect width="600" height="460" rx="28" fill="#F5F6FA"/>' +
@@ -216,7 +256,7 @@ def finale():
              "".join('<g class="link" style="animation-delay:%.1fs"><rect x="%d" y="232" width="70" height="26" rx="13" fill="none" stroke="%s" stroke-width="6"/><rect x="%d" y="232" width="70" height="26" rx="13" fill="none" stroke="%s" stroke-width="6"/></g>' % (
                  d, x, c1, x + 44, c2) for d, x, c1, c2 in [(.2, 172, "#127A4F", "#4A72C8"), (.5, 342, "#4A72C8", "#A87A22")]) +
              logo_at("test", 70, 190, 110) + logo_at("reset", 245, 190, 110) + logo_at("vault", 420, 190, 110) +
-             "".join('<text x="%d" y="332" text-anchor="middle" font-size="18" font-weight="700" fill="%s">%s</text>' % (x, INK, t) for x, t in [(125, "Know"), (300, "Plan"), (475, "Act")]) +
+             "".join('<text x="%d" y="332" text-anchor="middle" font-size="18" font-weight="700" fill="%s">%s</text>' % (x, INK, t) for x, t in [(125, "Know"), (300, "Grow"), (475, "Act")]) +
              riya(300, 150, .62, faces={"h": ""}, arms={"up": ""}))
     return '<svg class="art" viewBox="0 0 600 460" role="img" aria-label="HV Test, HV Reset and HV Vault linked as a chain, looping back to grow, with Riya cheering">%s</svg>' % inner
 
@@ -230,22 +270,35 @@ def chapter(key, num, verb, prod, title, art, steps, url, cta):
         key, num, verb, logo(key, size=40), prod, title, art, st)
 
 CH = [
-    chapter("test", 1, "Know", "HV Test", "Who am I, really?", ch_test(), [
-        ("The problem", "Riya freezes.", "&ldquo;What are your strengths?&rdquo; She has worked hard for years, but she has never really measured herself."),
-        ("HV Test", "So she takes a test.", "Real-life situations, four honest options, no right answers to game. About 10 minutes."),
-        ("The result", "Now she can see herself.", "A score out of 100 across 10 areas, a full report and a 30-day plan."),
-        ("The change", "Next interview, she's ready.", "She knows her strengths, and she has real stories to prove them.")], "https://harshvittori.github.io/hv-tests/", "Open HV Test"),
-    chapter("reset", 2, "Plan", "HV Reset", "Where did my day go?", ch_reset(), [
-        ("The problem", "Every day slips away.", "Notifications, coffee, a to-do list that never shrinks. The clock just spins."),
-        ("HV Reset", "Her day becomes blocks.", "One block, one task, with a calm focus clock that shows what to do right now."),
-        ("Running late?", "The day bends. It doesn't break.", "One tap shifts the rest of the plan. Lunch stays. Nothing is lost."),
-        ("The change", "Evening, and it's all done.", "Every block ticked. Tea, and tomorrow's first step already written.")], "https://harshvittori.github.io/hv-reset/", "Open HV Reset"),
-    chapter("vault", 3, "Act", "HV Vault", "Did I ever follow up?", ch_vault(), [
-        ("The problem", "Opportunities float away.", "Links in chats, five versions of her resume, sticky notes. The good ones go quiet."),
-        ("HV Vault", "Everything, in one place.", "Every job and company on one board: saved, applied, interview."),
-        ("HV AI", "Nothing slips anymore.", "Follow-ups remind her on time. She just says &ldquo;Kal 4 baje interview&rdquo; and it's on the calendar."),
-        ("The change", "And then, the offer.", "Not luck. A system that kept every opportunity alive.")], "https://harshvittori.github.io/hv-vault-web/", "Open HV Vault"),
+    chapter("test", 1, "Know", "HV Test", "What am I actually good at?", ch_test(), [
+        ("Week 0 · The problem", "She freezes on the easy question.", "&ldquo;So, what are your strengths?&rdquo; Riya says &ldquo;hard-working&rdquo;. So did the last ten candidates. She has skills, but she has never measured them."),
+        ("Week 1 · HV Test", "She stops guessing and measures.", "The Maturity Assessment, then a skills test. Real situations and honest options, about ten minutes each. No right answers to game."),
+        ("The result", "Strong where she didn't expect. Weak where it hurts.", "Communication 84 and problem solving 79. But consistency 48, and her data skills are basic. It stings, and it's the first honest picture she's had."),
+        ("The plan", "A 30-day plan, not a vague wish.", "Learn SQL basics, build one real dashboard project, practise her story with three real examples. And the hard one: show up every day.")],
+        "https://harshvittori.github.io/hv-tests/", "Take a test"),
+    chapter("reset", 2, "Grow", "HV Reset + HV AI", "Why can't I stay consistent?", ch_reset(), [
+        ("The problem", "Big plans. Lost days.", "She opens a course at 10, checks her phone at 10:05, and suddenly it's evening. Again. Four courses started, none finished."),
+        ("HV AI", "She just tells HV AI her day.", "&ldquo;Roz 9 se 11 SQL, 2 baje project, 6 baje walk.&rdquo; HV AI turns it into a simple plan in HV Reset. One task at a time, nothing else on the screen."),
+        ("Week 2 · A setback", "She misses two days. She doesn't quit.", "A cold, a family function, a lost weekend. Instead of starting over on Monday, she shifts today's plan, keeps the one core task, and goes again. The streak resets. The progress doesn't."),
+        ("Week 6 · The change", "Now it's just what she does.", "42 focused hours, a finished SQL course and her first dashboard project online. Her dashboard shows the trend: she really is getting better.")],
+        "https://harshvittori.github.io/hv-reset/", "Plan my day"),
+    chapter("vault", 3, "Act", "HV Vault + HV AI", "Where did all my applications go?", ch_vault(), [
+        ("The problem", "Applications vanish into silence.", "Job links in WhatsApp, resume_final_v3.pdf, and no idea who she applied to last week, or who she should chase."),
+        ("Week 7 · HV Vault", "Every job on one board.", "Saved, applied, interview. Riya applies with focus now, not in panic: 34 applications over four weeks, and she knows exactly where each one stands."),
+        ("HV AI", "The follow-ups actually happen.", "Mark a job applied and the follow-up is set. One quiet application turns into an interview after her reminder. She says &ldquo;Kal 4 baje Zomato interview&rdquo; and it's on the calendar."),
+        ("Week 11 · The outcome", "A no. Then the yes.", "A final round says no, and it hurts. She notes what went wrong, preps with her real stories, and two weeks later signs the offer she wanted: Product Analyst.")],
+        "https://harshvittori.github.io/hv-vault-web/", "Open HV Vault"),
 ]
+
+TIMELINE = [("Week 1", "Takes the Maturity Assessment and a skills test. Consistency: 48. Ouch.", "#127A4F"),
+            ("Week 2", "Plans her days with HV AI. Misses two days, then restarts instead of quitting.", "#4A72C8"),
+            ("Week 5", "Finishes SQL basics. Her first dashboard project goes online.", "#4A72C8"),
+            ("Week 7", "Starts applying through HV Vault, a few good roles a day.", "#A87A22"),
+            ("Week 9", "34 applications, 6 replies, 3 interviews. A follow-up revives a quiet lead.", "#A87A22"),
+            ("Week 10", "Rejected after a final round. Writes down why, and preps again.", "#86868B"),
+            ("Week 11", "Offer: Product Analyst. The role she was aiming for.", "#2E43A6")]
+def timeline():
+    return "".join('<li class="rv"><span class="dot" style="background:%s"></span><b>%s</b><p>%s</p></li>' % (c, w, t) for w, t, c in TIMELINE)
 
 TOGGLE_CSS = "".join('.stage[data-step="%d"] .v%d{opacity:1;translate:0 0}\n.stage[data-step="%d"] .v%d,.stage[data-step="%d"] .v%d *{animation-play-state:running}\n' % (n, n, n, n, n, n) for n in range(1, 5))
 
@@ -397,6 +450,26 @@ __TOGGLES__
 .art .link,.art .pop{transform-box:fill-box;transform-origin:center}
 @media (prefers-reduced-motion:reduce){.art *,.art .t{animation:none!important;transition:none!important}.art .ring{stroke-dashoffset:55}.art .bar{transform:none}}
 
+/* before + journey */
+.label{font-size:15px;font-weight:600;color:var(--accent);text-align:center}
+.before{padding:72px 0 30px;background:var(--gray)}
+.before .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:980px;margin:18px auto 0}
+.before .stats div{background:#fff;border:1px solid #E4E5EA;border-radius:20px;padding:22px 20px;text-align:left}
+.before .stats b{display:block;font-size:44px;font-weight:700;letter-spacing:-.04em;line-height:1}
+.before .stats span{display:block;color:var(--soft);font-size:15px;margin-top:8px;line-height:1.35}
+.before .note{text-align:center;color:var(--soft);font-size:19px;margin:26px 0 30px}
+@media (max-width:820px){.before .stats{grid-template-columns:1fr 1fr}.before .stats b{font-size:36px}}
+.journey{padding:100px 0 90px;border-top:1px solid #EEF0F4}
+.journey h2{text-align:center;font-size:clamp(34px,5vw,58px);font-weight:700;letter-spacing:-.04em;line-height:1.05;margin-top:8px}
+.journey .sub{text-align:center;color:var(--soft);font-size:20px;margin-top:10px}
+.tl{list-style:none;margin:48px auto 0;padding:0 0 0 30px;max-width:680px;position:relative}
+.tl::before{content:"";position:absolute;left:8px;top:8px;bottom:8px;width:2px;background:#E4E5EA}
+.tl li{position:relative;padding:0 0 26px}
+.tl .dot{position:absolute;left:-28px;top:5px;width:14px;height:14px;border-radius:50%;box-shadow:0 0 0 4px #fff}
+.tl b{font-size:15px;font-weight:700;color:var(--soft)}
+.tl p{font-size:19px;line-height:1.4;margin-top:2px}
+.tl li:last-child p{font-weight:700}
+
 /* finale + people + builder */
 .finale{padding:110px 0;text-align:center;background:var(--gray)}
 .finale h2{font-size:clamp(40px,6.4vw,76px);font-weight:700;letter-spacing:-.045em;line-height:1.02}
@@ -462,19 +535,19 @@ PAGE = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Hard work, no progress? Meet Riya | HV World</title>
-<meta name="description" content="Follow Riya through the three problems that hold people back, and see how HV Test, HV Reset and HV Vault fix each one. From HV World.">
+<title>From stuck to hired in 11 weeks: Riya's story | HV World</title>
+<meta name="description" content="Riya is 25, skilled but stuck. Follow her 11 weeks with HV Test, HV Reset, HV AI and HV Vault: from unsure and inconsistent to skilled, organised and hired.">
 <link rel="canonical" href="https://harshvittori.github.io/story/">
 <meta name="theme-color" content="#FFFFFF">
 <meta property="og:type" content="website"><meta property="og:site_name" content="HV World">
-<meta property="og:title" content="Hard work, no progress? Meet Riya | HV World">
-<meta property="og:description" content="A 1-minute illustrated story about the 3 things that quietly hold you back, and how to fix them.">
+<meta property="og:title" content="From stuck to hired in 11 weeks: Riya's story | HV World">
+<meta property="og:description" content="Riya is 25, skilled but stuck. An illustrated story of her 11 weeks from unsure to hired.">
 <meta property="og:url" content="https://harshvittori.github.io/story/"><meta property="og:image" content="https://harshvittori.github.io/story/og.jpg">
 <meta property="og:image:type" content="image/jpeg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Hard work, no progress? Meet Riya: a 1-minute illustrated story from HV World.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Hard work, no progress? Meet Riya | HV World">
-<meta name="twitter:description" content="A 1-minute illustrated story about the 3 things that quietly hold you back, and how to fix them.">
+<meta name="twitter:title" content="From stuck to hired in 11 weeks: Riya's story | HV World">
+<meta name="twitter:description" content="Riya is 25, skilled but stuck. An illustrated story of her 11 weeks from unsure to hired.">
 <meta name="twitter:image" content="https://harshvittori.github.io/story/og.jpg">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"HV World","url":"https://harshvittori.github.io/"}</script>
@@ -487,22 +560,33 @@ PAGE = """<!DOCTYPE html>
 <main id="main">
   <section id="top"><div class="wrap hero">
     <div class="rv">
-      <p class="eyebrow">HV World · a story in three products</p>
-      <h1>This is Riya.</h1>
-      <p class="lead">She works hard. She applies everywhere. <b>So why does she feel stuck?</b></p>
-      <div class="worries"><span><i style="background:#127A4F"></i>Who am I, really?</span><span><i style="background:#4A72C8"></i>Where did my day go?</span><span><i style="background:#A87A22"></i>Did I follow up?</span></div>
+      <p class="eyebrow">HV World · an 11-week story</p>
+      <h1>This is Riya. She's 25.</h1>
+      <p class="lead">A degree, two certificates and real skills. Plenty of ambition. <b>So why does she feel stuck?</b></p>
+      <div class="worries"><span><i style="background:#127A4F"></i>What am I good at?</span><span><i style="background:#4A72C8"></i>Why can't I stay consistent?</span><span><i style="background:#A87A22"></i>Where did my applications go?</span></div>
       <a class="scroll-hint" href="#test">Follow her story __ARROW__</a>
     </div>
     <div class="art-box rv">__PROLOGUE__</div>
   </div></section>
+  <section class="before"><div class="wrap">
+    <p class="label rv">Riya, before</p>
+    <div class="stats rv"><div><b>4</b><span>online courses started, none finished</span></div><div><b>37</b><span>browser tabs &ldquo;for later&rdquo;</span></div><div><b>26</b><span>applications sent, 1 reply</span></div><div><b>0</b><span>idea what to fix first</span></div></div>
+    <p class="note rv">Sound familiar? Here's what changed, one honest step at a time.</p>
+  </div></section>
   __CHAPTERS__
+  <section class="journey"><div class="wrap">
+    <p class="label rv">Her 11 weeks</p>
+    <h2 class="rv">Not overnight. Not magic.</h2>
+    <p class="sub rv">Good weeks, bad weeks, and one simple system she kept coming back to.</p>
+    <ol class="tl">__TIMELINE__</ol>
+  </div></section>
   <section class="finale" id="products"><div class="wrap">
-    <h2 class="rv">Know. Plan. Act.</h2>
-    <p class="sub rv">Three problems. Three products. One chain that keeps Riya growing.</p>
+    <h2 class="rv">Know. Grow. Act.</h2>
+    <p class="sub rv">Know your strengths, grow them every day, and act on every opportunity. The same simple loop works for your next goal too.</p>
     <div class="art-box rv">__FINALE__</div>
     <div class="cards">
       <div class="pcard rv"><div class="h">__L_TEST__<b>HV Test</b></div><p>Know yourself. Tests for your traits, thinking, skills and growth, starting with the Maturity Assessment.</p><div class="pacts"><a class="btn" href="https://harshvittori.github.io/hv-tests/">Open HV Test</a><a class="lm" href="/test/">Learn more</a></div></div>
-      <div class="pcard rv"><div class="h">__L_RESET__<b>HV Reset</b></div><p>Plan your day. One block, one task, and a day that bends instead of breaking.</p><div class="pacts"><a class="btn" href="https://harshvittori.github.io/hv-reset/">Open HV Reset</a><a class="lm" href="/reset/">Learn more</a></div></div>
+      <div class="pcard rv"><div class="h">__L_RESET__<b>HV Reset</b></div><p>Grow every day. Tell HV AI your day, do one task at a time, and see your progress.</p><div class="pacts"><a class="btn" href="https://harshvittori.github.io/hv-reset/">Open HV Reset</a><a class="lm" href="/reset/">Learn more</a></div></div>
       <div class="pcard rv"><div class="h">__L_VAULT__<b>HV Vault</b></div><p>Act on every opportunity. One board, automatic follow-ups and HV AI.</p><div class="pacts"><a class="btn" href="https://harshvittori.github.io/hv-vault-web/">Open HV Vault</a><a class="lm" href="/vault/">Learn more</a></div></div>
     </div>
     <p class="more rv"><a href="/">See every feature, HV AI, privacy and FAQ →</a></p>
@@ -530,7 +614,7 @@ PAGE = """<!DOCTYPE html>
 def build():
     html = (PAGE.replace("__CSS__", CSS).replace("__JS__", JS).replace("__ARROW__", ARROW)
             .replace("__LOGO_NAV__", logo("world")).replace("__PROLOGUE__", prologue()).replace("__CHAPTERS__", "\n".join(CH))
-            .replace("__FINALE__", finale()).replace("__L_TEST__", logo("test", size=44)).replace("__L_RESET__", logo("reset", size=44)).replace("__L_VAULT__", logo("vault", size=44)))
+            .replace("__FINALE__", finale()).replace("__TIMELINE__", timeline()).replace("__L_TEST__", logo("test", size=44)).replace("__L_RESET__", logo("reset", size=44)).replace("__L_VAULT__", logo("vault", size=44)))
     assert "__" not in re.sub(r"<script>.*?</script>", "", html, flags=re.S).replace("__proto__", ""), "unfilled placeholder"
     os.makedirs(os.path.join(OUT, "story"), exist_ok=True)
     html = html.replace("</style>", transitions.CSS + "</style>", 1).replace("</head>", transitions.HEAD + "\n</head>", 1)

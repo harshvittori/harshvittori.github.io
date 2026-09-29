@@ -75,16 +75,16 @@ HOME_ART2 = ('<div class="bleed">'
     '</div><div class="toast" style="left:250px;bottom:40px;z-index:5">✓&nbsp; Follow-up reminder set</div></div>') % (
     svg("logo-test", 26, 0, False), svg("logo-reset", 26, 0, False), svg("logo-vault", 26, 0, False))
 RIYA = ('<div class="bleed"><div class="riya">%s</div>'
-        '<div class="pchip" style="left:-6px;top:70px;transform:rotate(-4deg);--c:#127A4F;--b:#E3F4EA">%s<span>Who am I, really?</span></div>'
-        '<div class="pchip" style="right:70px;top:452px;transform:rotate(3deg);--c:#3F66BE;--b:#E6EDFB">%s<span>Where did my day go?</span></div>'
-        '<div class="pchip" style="left:-10px;bottom:34px;transform:rotate(-2deg);--c:#A0721C;--b:#FBF1DC">%s<span>Did I ever follow up?</span></div></div>') % (
+        '<div class="pchip" style="left:-6px;top:70px;transform:rotate(-4deg);--c:#127A4F;--b:#E3F4EA">%s<span>What am I good at?</span></div>'
+        '<div class="pchip" style="right:70px;top:452px;transform:rotate(3deg);--c:#3F66BE;--b:#E6EDFB">%s<span>Why can&rsquo;t I stay consistent?</span></div>'
+        '<div class="pchip" style="left:-10px;bottom:34px;transform:rotate(-2deg);--c:#A0721C;--b:#FBF1DC">%s<span>Where did my applications go?</span></div></div>') % (
         story.prologue(), svg("logo-test", 34, 0, False), svg("logo-reset", 34, 0, False), svg("logo-vault", 34, 0, False))
 
 CARDS = [  # out, brand logo, brand word, accent, dark, tint, circle, eyebrow, headline, sub, cta, art
     ("og.jpg", "world", "WORLD", "#2E43A6", "#233489", "#F4F5FB", "#E2E7F8", "3 free apps · 1 AI",
      "Stop guessing.<br>Start growing.", "Know your strengths. Run a calm day.<br>Never miss a follow-up.", "Explore HV World &nbsp;→", HOME_ART2),
-    ("story/og.jpg", "world", "WORLD", "#2E43A6", "#233489", "#F4F5FB", "#E2E7F8", "A 1-minute illustrated story",
-     "Hard work. No progress. Sound familiar?", "Meet Riya. A 1-minute story about the 3 things quietly holding her back.", "Read her story &nbsp;→", RIYA),
+    ("story/og.jpg", "world", "WORLD", "#2E43A6", "#233489", "#F4F5FB", "#E2E7F8", "An illustrated story",
+     "From stuck to hired in 11 weeks.", "Riya is 25, skilled but stuck. See how she turned it around, one honest week at a time.", "Read her story &nbsp;→", RIYA),
     ("test/og.jpg", "logo-test", "TEST", "#127A4F", "#0D5E3C", "#F4F8F5", "#DDEFE4", "Tests for how you think and grow",
      "You think you know yourself. Prove it.", "Traits, thinking, skills and growth. Start with the free Maturity Assessment.", "Take a test &nbsp;→",
      TEST_ART),
