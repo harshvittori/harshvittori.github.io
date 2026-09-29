@@ -33,9 +33,9 @@ RESET_ART = ('<div class="bleed">' +
     window("r-intro-0", (320, 175, 800, 470), 565, "harshvittori.github.io/hv-reset", "left:8px;top:50%;transform:translateY(-50%) rotate(-2deg)") +
     '<div class="fchip amber" style="left:10px;top:78px;transform:rotate(-4deg)">⏰&nbsp; Running 30 min late</div>'
     '<div class="plan" style="left:-24px;bottom:58px;transform:rotate(2deg)">'
-    '<div class="row now"><b>3:00 PM</b><span>Send applications</span><em>+30m</em></div>'
-    '<div class="row"><b>4:30 PM</b><span>Outreach</span><em>+30m</em></div>'
-    '<div class="row meal"><b>5:30 PM</b><span>Lunch break</span><em>kept</em></div></div>'
+    '<div class="row now"><b>3:00 PM</b><span>Deep work</span><em>+30m</em></div>'
+    '<div class="row"><b>4:30 PM</b><span>Gym</span><em>+30m</em></div>'
+    '<div class="row meal"><b>5:30 PM</b><span>Tea break</span><em>kept</em></div></div>'
     '<div class="fchip green" style="right:40px;bottom:150px;transform:rotate(3deg)">✓&nbsp; Whole day shifted</div></div>')
 
 def kcard(t, co, col, tag, style="", cls=""):
@@ -68,8 +68,8 @@ HOME_ART2 = ('<div class="bleed">'
     '<circle cx="60" cy="60" r="50" fill="none" stroke="#127A4F" stroke-width="13" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="104" transform="rotate(-90 60 60)"/></svg>'
     '<div class="sc-num"><b style="font-size:60px">67<span style="font-size:22px">/100</span></b><em style="font-size:16px">Grounded</em></div></div></div>'
     '<div class="plan" style="left:214px;top:215px;width:350px;transform:rotate(3deg);z-index:4"><div class="tag-app">%s<span>HV Reset</span></div>'
-    '<div class="row now"><b>3:00 PM</b><span>Send applications</span><em>+30m</em></div>'
-    '<div class="row"><b>4:30 PM</b><span>Outreach</span><em>+30m</em></div></div>'
+    '<div class="row now"><b>3:00 PM</b><span>Deep work</span><em>+30m</em></div>'
+    '<div class="row"><b>4:30 PM</b><span>Gym</span><em>+30m</em></div></div>'
     '<div class="vmini" style="left:40px;top:392px;transform:rotate(-2deg)"><div class="tag-app">%s<span>HV Vault</span></div>'
     + kcard("Growth Associate", "Swiggy", "#FC8019", "Applied ✓", "position:relative;box-shadow:none;border:1px solid #EEF0F5") +
     '</div><div class="toast" style="left:250px;bottom:40px;z-index:5">✓&nbsp; Follow-up reminder set</div></div>') % (

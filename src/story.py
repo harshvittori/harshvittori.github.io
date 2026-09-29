@@ -179,7 +179,7 @@ def ch_reset():
              "".join('<rect x="434" y="%d" width="12" height="12" rx="3" fill="#FFFFFF" stroke="#C9B98A"/><rect class="wiggle" x="454" y="%d" width="62" height="6" rx="3" fill="#C9B98A"/>' % (58 + i * 20, 61 + i * 20) for i in range(4)) + '</g></g>'
              '<g class="t v2 v3 v4 panel"><rect x="336" y="56" width="236" height="330" rx="22" fill="#FFFFFF" stroke="#E5E5EA" stroke-width="1.5"/>' + logo_at("reset", 352, 72, 26) +
              '<text x="386" y="91" font-size="14" font-weight="700" fill="%s">HV Reset</text><text x="352" y="134" font-size="36" font-weight="300" fill="%s" class="mono">01:14:52</text>' % (INK, INK) +
-             '<g class="shift">' + blk(0, 156, 204, "Send applications", "#4A72C8") + blk(1, 204, 204, "Short break", "#EEF0F4", "#6E6E73") + blk(2, 252, 204, "Lunch", "#F4B942", INK) + blk(3, 300, 204, "Outreach", "#4A72C8") + '</g>'
+             '<g class="shift">' + blk(0, 156, 204, "Project work", "#4A72C8") + blk(1, 204, 204, "Short break", "#EEF0F4", "#6E6E73") + blk(2, 252, 204, "Lunch", "#F4B942", INK) + blk(3, 300, 204, "Evening walk", "#4A72C8") + '</g>'
              '<g class="t v3 late"><rect x="478" y="72" width="80" height="26" rx="13" fill="#FBF1DF"/><text x="518" y="90" text-anchor="middle" font-size="13" font-weight="700" fill="#9A6512">+30 min</text></g></g>')
     return scene(inner, "Riya's chaotic day, then HV Reset turning it into calm blocks that shift when she is late, all ticked by sunset")
 

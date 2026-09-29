@@ -54,8 +54,8 @@ MOCK_TEST = '''<div class="mock q">
 MOCK_RESET = '''<div class="mock day">
   <p class="meta">Now · until 12:30 PM</p>
   <div class="now">01:14:52</div>
-  <p class="meta">Send applications</p>
-  <div class="blk cur"><span>11:00 AM</span>Send applications</div>
+  <p class="meta">Deep work: project report</p>
+  <div class="blk cur"><span>11:00 AM</span>Deep work: project report</div>
   <div class="blk"><span>12:30 PM</span>Short break</div>
   <div class="blk meal"><span>1:15 PM</span>Lunch</div>
   <div class="stats"><div><b>4/5</b><small>done today</small></div><div><b>2h 40m</b><small>focused</small></div><div><b>6 days</b><small>streak</small></div></div>
@@ -472,8 +472,8 @@ OVERVIEW_MAIN = """<main id="main">
   <section id="together" class="wrap band band-w">
     <div class="head rv"><p class="label">Better together</p><h2>Use one. Or let them work as a team.</h2><p>Each app stands on its own. Together, your plan and your progress stay in step.</p></div>
     <div class="together">
-      <div class="feat rv"><div class="ic">__CHAIN__</div><h3>Reset and Vault in sync</h3><p>Log an application in HV Reset and it lands in HV Vault as Applied, with its first follow-up. Your day counter counts it too.</p></div>
-      <div class="feat rv"><div class="ic">__USER__</div><h3>One Google sign-in</h3><p>Sign in to HV Vault once and HV Reset on the same browser is connected. Your phone and laptop show the same data.</p></div>
+      <div class="feat rv"><div class="ic">__CHAIN__</div><h3>Reset and Vault, better together</h3><p>Use both with the same Google account and HV Reset shows your HV Vault follow-ups and weekly numbers right next to your day.</p></div>
+      <div class="feat rv"><div class="ic">__USER__</div><h3>One Google sign-in</h3><p>Sign in with Google and your plans, dashboard and data follow you. Your phone and laptop show the same thing.</p></div>
       <div class="feat rv"><div class="ic">__SPARK__</div><h3>HV AI in each app</h3><p>In HV Vault it handles jobs, follow-ups and interviews. In HV Reset it builds and adjusts your day, and your dashboard shows how it went. Each one changes only its own app.</p></div>
     </div>
   </section>
@@ -622,10 +622,10 @@ APPS = {
           ("BULB", "Tips from your own patterns", "“You finish most tasks between 9 and 12.” Plain insights and gentle alerts, never judgement."),
           ("NOTE", "Daily, weekly and monthly reports", "What you did, what's left and what needs attention, ready to copy and share."),
           ("SUN", "Music that follows the day", "Soft ambient sound for morning, day focus, evening and night, based on the time of day."),
-          ("SPARK", "HV AI plans your day", "“Kal subah 10 se 12 apply, 2 se 3 outreach.” It builds the plan and keeps your exact times."),
-          ("SYNC", "Linked to HV Vault", "One Google sign-in for both apps. Applications you log in HV Reset land in HV Vault.")],
+          ("SPARK", "HV AI plans your day", "“Kal subah 6 baje gym, 10 se 1 padhai, shaam 7 baje family time.” It builds the plan and keeps your exact times."),
+          ("SYNC", "Better with HV Vault", "Use HV Vault too? Sign in to both with the same Google account and your follow-ups due and weekly numbers show up next to your day.")],
    who=[("Students", "Study blocks, real breaks, and a clear view of how much you really studied."),
-        ("Job seekers", "Apply, outreach and prep blocks, counted into HV Vault."),
+        ("Parents and homemakers", "School runs, home, work and a little time for yourself, in one calm day."),
         ("Professionals", "Protect deep work between meetings and see where the hours go."),
         ("Freelancers", "Client work, admin and rest, balanced in one day."),
         ("Creators", "Make, edit and post in focused sessions."),
@@ -634,7 +634,7 @@ APPS = {
         ("What happens if I fall behind?", "Tap to shift the rest of the day, pause the task, move it to tomorrow, or do a shorter version."),
         ("What does the dashboard show?", "Your time, focus, punctuality, streaks, a productivity score, trends, a calendar heatmap, goals and habits, and daily, weekly and monthly reports. Every number comes from what you really did, and nothing is made up."),
         ("Do I need an account?", "No. Try it freely. Sign in with Google to save your plan, keep your dashboard history, and use it on phone and laptop."),
-        ("Does it work with HV Vault?", "Yes. It's the same Google account, and applications you log in HV Reset land in HV Vault as Applied."),
+        ("Does it work with HV Vault?", "Yes, if you use both. HV Reset works fully on its own. If you also use HV Vault with the same Google account, HV Reset shows your follow-ups due and this week's numbers from it, and HV AI knows about them."),
         ("Who can use it?", "Everyone. It's free for everyone, HV AI included, and runs right in your browser.")]),
  "vault": dict(name="HV Vault", verb="Act on every opportunity", color="#A87A22", tint="#F8F3E8", pline="#EADDC2", mock=MOCK_VAULT, cta="Open HV Vault", story="/#vault",
    title="Stop losing job leads in WhatsApp chats | HV Vault",
