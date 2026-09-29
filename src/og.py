@@ -84,15 +84,15 @@ RIYA = ('<div class="bleed"><div class="riya">%s</div>'
 def ntf(av, app, title, body, style):
     return '<div class="ntf" style="%s"><span class="av">%s</span><div><em>%s</em><b>%s</b><p>%s</p></div></div>' % (style, av, app, title, body)
 # the story card: a sad Riya, Mom's WhatsApp and a batchmate's new-job post
-STORY_ART = ('<div class="bleed"><div class="por" style="left:330px;top:50px;transform:rotate(3deg)">%s</div>' % story.portrait("s", "scroll", "#26305E") +
-    ntf(people.head(people.CAST["mom"], 44), "WhatsApp", "Mom", "Beta, Sharma aunty ki beti ki job lag gayi 😊 Tera kab hoga?", "left:20px;top:250px;transform:rotate(-2deg)") +
-    ntf(people.head(people.CAST["ananya"], 44), "LinkedIn", "Ananya, your batchmate", "started a new position. Say congrats!", "left:70px;top:420px;transform:rotate(1.5deg)") + '</div>')
+STORY_ART = ('<div class="bleed"><div class="por" style="left:300px;top:28px;transform:rotate(3deg)">%s</div>' % story.portrait("s", "scroll", "#26305E") +
+    ntf(people.head(people.CAST["mom"], 60), "Mom", "", "Tera kab hoga? 😟", "left:-6px;top:300px;transform:rotate(-2deg)") +
+    ntf(people.head(people.CAST["ananya"], 60), "Ananya", "", "Got the job! 🎉", "left:40px;top:452px;transform:rotate(1.5deg)") + '</div>')
 
 CARDS = [  # out, brand logo, brand word, accent, dark, tint, circle, eyebrow, headline, sub, cta, art
     ("og.jpg", "world", "WORLD", "#2E43A6", "#233489", "#F4F5FB", "#E2E7F8", "3 free apps · 1 AI",
      "Stop guessing.<br>Start growing.", "Know your strengths. Run a calm day.<br>Never miss a follow-up.", "Explore HV World &nbsp;→", HOME_ART2),
-    ("story/og.jpg", None, "", "#1F7A55", "#155E41", "#F2F8F4", "#D8EEE1", "Riya's story",
-     "Everyone's moving ahead.<br>Except you?", "Mom's asking. Friends are posting new jobs. Riya felt it too, until she found her own way forward.", "Read her story &nbsp;→", STORY_ART),
+    ("story/og.jpg", None, "", "#1F7A55", "#155E41", "#F2F8F4", "#D8EEE1", "",
+     "Everyone's<br>moving ahead.<br>Except you?", "Riya felt it too.", "Read her story &nbsp;→", STORY_ART),
     ("test/og.jpg", "logo-test", "TEST", "#127A4F", "#0D5E3C", "#F4F8F5", "#DDEFE4", "Tests for how you think and grow",
      "You think you know yourself. Prove it.", "Traits, thinking, skills and growth. Start with the free Maturity Assessment.", "Take a test &nbsp;→",
      TEST_ART),
@@ -193,6 +193,17 @@ h1{margin-top:12px;font-weight:700;font-size:64px;line-height:1.02;letter-spacin
 .trdur{position:absolute;right:28px;bottom:26px;font-weight:700;font-size:26px;color:#fff;background:rgba(0,0,0,.85);padding:6px 14px;border-radius:8px;z-index:7}
 .riya{position:absolute;left:40px;top:50%;width:560px;transform:translateY(-50%) rotate(2deg);border-radius:26px;overflow:hidden;box-shadow:0 40px 80px -30px rgba(20,30,60,.55)}
 .riya svg{display:block;width:100%;height:auto}
+.big .left{width:620px}.big .eye{display:none}
+.big h1{font-size:88px;line-height:.98;letter-spacing:-.025em;margin-top:0}
+.big .rule{width:80px;height:8px;margin:30px 0 22px}
+.big .sub{font-size:40px;font-weight:600;color:#16212B}
+.big .cta{font-size:32px;padding:18px 34px;margin-top:30px}
+.big .bleed{left:660px;width:540px}
+.big .por{width:250px;height:250px}
+.big .ntf{width:440px;align-items:center;padding:16px 22px;border-radius:26px}
+.big .ntf .av{width:60px;height:60px}.big .ntf .av svg{width:60px;height:60px}
+.big .ntf em{font-size:24px;letter-spacing:0;text-transform:none;color:#16212B}
+.big .ntf b{display:none}.big .ntf p{font-size:36px;font-weight:600;color:#16212B;margin-top:0}
 .ntf{position:absolute;z-index:4;display:flex;gap:14px;width:430px;background:#fff;border-radius:22px;padding:16px 18px;box-shadow:0 26px 50px -22px rgba(20,30,60,.5)}
 .ntf .av{flex:none;width:44px;height:44px;border-radius:50%;overflow:hidden}.ntf .av svg{display:block;width:44px;height:44px}
 .ntf em{display:block;font-style:normal;font-size:14px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#86868B}
@@ -201,9 +212,9 @@ h1{margin-top:12px;font-weight:700;font-size:64px;line-height:1.02;letter-spacin
 """
 html = "<!DOCTYPE html><html><head><meta charset='utf-8'><style>%s</style></head><body>" % CSS
 for out, lg, word, acc, dark, tint, circ, eye, h1, sub, cta, art in CARDS:
-    html += ('<div class="card" data-out="%s" style="--accent:%s;--dark:%s;--tint:%s;--circle:%s"><div class="c1"></div><div class="c2"></div>'
+    html += ('<div class="card%s" data-out="%s" style="--accent:%s;--dark:%s;--tint:%s;--circle:%s"><div class="c1"></div><div class="c2"></div>'
              '<div class="left">%s<p class="eye">%s</p><h1>%s</h1><div class="rule"></div><p class="sub">%s</p>'
-             '<div class="cta">%s</div></div>%s</div>') % (out, acc, dark, tint, circ, ('<div class="brand">%sHV <b>%s</b></div>' % (svg(lg, 48, 0, False), word)) if lg else "", eye, h1, sub, cta, art)
+             '<div class="cta">%s</div></div>%s</div>') % (" big" if out == "story/og.jpg" else "", out, acc, dark, tint, circ, ('<div class="brand">%sHV <b>%s</b></div>' % (svg(lg, 48, 0, False), word)) if lg else "", eye, h1, sub, cta, art)
 # the video page: a product-trailer thumbnail -- real app screens glowing in 3D, bold title, play + duration
 def gwin(img, crop, width, glow, style):
     x, y, w, h = crop; k = width / w
