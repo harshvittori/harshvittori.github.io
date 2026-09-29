@@ -91,7 +91,7 @@ STORY_ART = ('<div class="bleed"><div class="por" style="left:330px;top:50px;tra
 CARDS = [  # out, brand logo, brand word, accent, dark, tint, circle, eyebrow, headline, sub, cta, art
     ("og.jpg", "world", "WORLD", "#2E43A6", "#233489", "#F4F5FB", "#E2E7F8", "3 free apps · 1 AI",
      "Stop guessing.<br>Start growing.", "Know your strengths. Run a calm day.<br>Never miss a follow-up.", "Explore HV World &nbsp;→", HOME_ART2),
-    ("story/og.jpg", "world", "WORLD", "#1F7A55", "#155E41", "#F2F8F4", "#D8EEE1", "Riya's story",
+    ("story/og.jpg", None, "", "#1F7A55", "#155E41", "#F2F8F4", "#D8EEE1", "Riya's story",
      "Everyone's moving ahead.<br>Except you?", "Mom's asking. Friends are posting new jobs. Riya felt it too, until she found her own way forward.", "Read her story &nbsp;→", STORY_ART),
     ("test/og.jpg", "logo-test", "TEST", "#127A4F", "#0D5E3C", "#F4F8F5", "#DDEFE4", "Tests for how you think and grow",
      "You think you know yourself. Prove it.", "Traits, thinking, skills and growth. Start with the free Maturity Assessment.", "Take a test &nbsp;→",
@@ -202,8 +202,8 @@ h1{margin-top:12px;font-weight:700;font-size:64px;line-height:1.02;letter-spacin
 html = "<!DOCTYPE html><html><head><meta charset='utf-8'><style>%s</style></head><body>" % CSS
 for out, lg, word, acc, dark, tint, circ, eye, h1, sub, cta, art in CARDS:
     html += ('<div class="card" data-out="%s" style="--accent:%s;--dark:%s;--tint:%s;--circle:%s"><div class="c1"></div><div class="c2"></div>'
-             '<div class="left"><div class="brand">%sHV <b>%s</b></div><p class="eye">%s</p><h1>%s</h1><div class="rule"></div><p class="sub">%s</p>'
-             '<div class="cta">%s</div></div>%s</div>') % (out, acc, dark, tint, circ, svg(lg, 48, 0, False), word, eye, h1, sub, cta, art)
+             '<div class="left">%s<p class="eye">%s</p><h1>%s</h1><div class="rule"></div><p class="sub">%s</p>'
+             '<div class="cta">%s</div></div>%s</div>') % (out, acc, dark, tint, circ, ('<div class="brand">%sHV <b>%s</b></div>' % (svg(lg, 48, 0, False), word)) if lg else "", eye, h1, sub, cta, art)
 # the video page: a product-trailer thumbnail -- real app screens glowing in 3D, bold title, play + duration
 def gwin(img, crop, width, glow, style):
     x, y, w, h = crop; k = width / w

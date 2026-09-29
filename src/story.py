@@ -441,6 +441,10 @@ header{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.82);-webkit
 @media (max-width:470px){.brand{font-size:0;gap:0}.nav nav a{padding:0 9px}}
 @media (max-width:360px){.nav nav a{padding:0 7px;font-size:13.5px}}
 
+/* no branding at the start: the menu bar slides in when Chapter 1 (the first tool) begins */
+header{position:fixed;left:0;right:0;top:0;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+header.hid{transform:translateY(-110%)}
+header.hid:focus-within{transform:none}
 /* hero */
 .hero{display:grid;grid-template-columns:.9fr 1.1fr;gap:48px;align-items:center;padding:72px 0 84px}
 .hero .eyebrow{font-size:15px;font-weight:600;color:var(--soft)}
@@ -706,6 +710,9 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{color:var(--soft)}
 JS = r"""
 (function () {
   document.getElementById("yr").textContent = new Date().getFullYear();
+  var hd = document.querySelector("header"), first = document.getElementById("test");
+  function bar() { hd.classList.toggle("hid", first.getBoundingClientRect().top > innerHeight * .55); }
+  addEventListener("scroll", bar, { passive: true }); addEventListener("resize", bar); bar();
   // smooth scrolling: a section's animations run only while it's on screen
   if ("IntersectionObserver" in window) {
     var ao = new IntersectionObserver(function (es) { es.forEach(function (e) { e.target.classList.toggle("aoff", !e.isIntersecting); }); }, { rootMargin: "150px 0px" });
@@ -739,32 +746,32 @@ PAGE = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>From stuck to hired in 11 weeks: Riya's story | HV World</title>
-<meta name="description" content="Riya is 25, skilled but stuck. Follow her 11 weeks with HV Test, HV Reset, HV AI and HV Vault: from unsure and inconsistent to skilled, organised and hired.">
+<title>From stuck to hired in 11 weeks: Riya's story</title>
+<meta name="description" content="Riya is 25, skilled but stuck. Follow her 11 weeks from unsure and inconsistent to skilled, organised and hired.">
 <link rel="canonical" href="https://harshvittori.github.io/story/">
 <meta name="theme-color" content="#FFFFFF">
-<meta property="og:type" content="website"><meta property="og:site_name" content="HV World">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Everyone's moving ahead except you? Meet Riya.">
 <meta property="og:description" content="For students, job seekers and anyone restarting. A 3-minute illustrated story: consistency is the key, with the right direction and tools.">
-<meta property="og:url" content="https://harshvittori.github.io/story/"><meta property="og:image" content="https://harshvittori.github.io/story/og.jpg?v=2">
+<meta property="og:url" content="https://harshvittori.github.io/story/"><meta property="og:image" content="https://harshvittori.github.io/story/og.jpg?v=3">
 <meta property="og:image:type" content="image/jpeg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Everyone's moving ahead. Except you? Riya's story from HV World, with her mom's WhatsApp and a batchmate's new-job post.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Everyone's moving ahead except you? Meet Riya.">
 <meta name="twitter:description" content="For students, job seekers and anyone restarting. A 3-minute illustrated story: consistency is the key, with the right direction and tools.">
-<meta name="twitter:image" content="https://harshvittori.github.io/story/og.jpg?v=2">
+<meta name="twitter:image" content="https://harshvittori.github.io/story/og.jpg?v=3">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"HV World","url":"https://harshvittori.github.io/"}</script>
 <style>__CSS__</style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header><div class="wrap nav"><a class="brand" href="/">__LOGO_NAV__HV World</a>
+<header class="hid"><div class="wrap nav"><a class="brand" href="/">__LOGO_NAV__HV World</a>
 <nav aria-label="Main"><a class="opt" href="/">Home</a><a href="/test/"><span class="d">HV </span>Test</a><a href="/reset/"><span class="d">HV </span>Reset</a><a href="/vault/"><span class="d">HV </span>Vault</a><a class="ic" aria-label="Watch" href="/watch/"><svg class="ni" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 8.3v7.4l6-3.7z" fill="currentColor"/></svg><span class="nt">Watch</span></a><a class="ic" aria-current="page" aria-label="Riya's story" href="/story/"><svg class="ni" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5C10 5 7 4.5 3.5 5v13c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5z"/><path d="M12 6.5v13"/></svg><span class="nt"><span class="d">Riya's </span>Story</span></a></nav></div></header>
 <main id="main">
   <section id="top"><div class="wrap hero">
     <div class="rv">
-      <p class="eyebrow">HV World · an 11-week story</p>
+      <p class="eyebrow">An 11-week story</p>
       <h1>This is Riya. She's 25.</h1>
       <p class="lead">Jaipur. A B.Com, then a year and a half of night shifts in customer support. She's teaching herself data after work, and dreams of becoming a product analyst. <b>So why does she feel stuck?</b></p>
       <div class="worries"><span><i style="background:#127A4F"></i>What am I good at?</span><span><i style="background:#4A72C8"></i>Why can't I stay consistent?</span><span><i style="background:#A87A22"></i>Where did my applications go?</span></div>
