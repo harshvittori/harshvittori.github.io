@@ -632,9 +632,18 @@ __TOGGLES__
 @media (max-width:520px){.yourturn .btn{display:flex;margin:14px auto 0;width:max-content}}
 
 /* finale + people + builder */
-.finale{padding:110px 0;text-align:center;background:var(--gray)}
-.finale h2{font-size:clamp(40px,6.4vw,76px);font-weight:700;letter-spacing:-.045em;line-height:1.02}
+.finale{padding:100px 0 110px;text-align:center;background:#FFFFFF;border-top:1px solid #EEF0F4}
+.finale h2{font-size:clamp(34px,5vw,58px);font-weight:700;letter-spacing:-.04em;line-height:1.05}
 .finale .sub{font-size:clamp(19px,2.2vw,24px);color:var(--soft);margin:12px auto 0;max-width:760px}
+.key{padding:110px 0 120px;text-align:center;color:#fff;background:linear-gradient(135deg,#17225A,#2E43A6 58%,#4A46C9);position:relative;overflow:hidden}
+.key::before{content:"";position:absolute;left:50%;top:-240px;width:760px;height:480px;margin-left:-380px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.14),transparent 70%);pointer-events:none}
+.key .wrap{position:relative}
+.key .label{color:#C9D3FF;margin-bottom:8px}
+.key h2{font-size:clamp(44px,7vw,84px);font-weight:700;letter-spacing:-.045em;line-height:1.02}
+.key .sub{font-size:clamp(19px,2.2vw,24px);color:rgba(255,255,255,.82);margin:14px auto 0;max-width:760px}
+.key .eq i{color:rgba(255,255,255,.6)}
+.key .term{color:var(--ink);border:0;border-top:4px solid var(--c);box-shadow:0 24px 50px -28px rgba(0,0,0,.5)}
+.key .term.goal{--c:#F2C063;background:#F2C063;color:#1D1D1F}.key .term.goal em{color:#6B4A0E}.key .term.goal span{color:#4A3A1A}
 .finale .label{margin-bottom:8px}
 .eq{display:flex;align-items:stretch;justify-content:center;gap:10px;flex-wrap:wrap;margin:44px auto 0;max-width:1060px}
 .eq i{align-self:center;font-style:normal;font-size:30px;font-weight:300;color:var(--faint)}
@@ -644,7 +653,7 @@ __TOGGLES__
 .term span{display:block;color:var(--soft);font-size:15px;margin-top:6px;line-height:1.4}
 .term.goal{--c:#2E43A6;background:#2E43A6;border-color:#2E43A6;color:#fff}.term.goal em{color:#C9D3FF}.term.goal span{color:rgba(255,255,255,.8)}
 @media (max-width:760px){.eq{flex-direction:column;align-items:center}.term{max-width:420px;width:100%;flex:none}.eq i{font-size:24px}}
-.finale .art-box{max-width:720px;margin:48px auto 0;box-shadow:none}
+.finale .art-box{max-width:720px;margin:40px auto 0;box-shadow:none;border:1px solid #EEF0F4}
 .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:56px auto 0;max-width:960px;text-align:left}
 .pcard{background:#fff;border:1px solid #E4E5EA;border-radius:22px;padding:26px;display:flex;flex-direction:column}
 .pcard .h{display:flex;align-items:center;gap:12px}.pcard .h svg{border-radius:12px}
@@ -652,11 +661,11 @@ __TOGGLES__
 .pcard p{color:var(--soft);margin-top:10px;flex:1}
 .pcard .btn{align-self:flex-start}
 @media (max-width:820px){.cards{grid-template-columns:1fr}}
-.people{padding:100px 0;text-align:center}
+.people{padding:100px 0;text-align:center;background:var(--gray)}
 .people h2{font-size:clamp(32px,4.6vw,52px);font-weight:700;letter-spacing:-.035em;line-height:1.08}
 .people .sub{font-size:20px;color:var(--soft);margin-top:10px}
 .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:900px;margin:44px auto 0;text-align:left}
-.tile{background:var(--gray);border-radius:18px;padding:22px}
+.tile{background:#fff;border:1px solid #E4E5EA;border-radius:18px;padding:22px}
 .tile b{font-size:18px;font-weight:600}.tile span{display:block;color:var(--soft);font-size:15px;margin-top:4px}
 @media (max-width:760px){.tiles{grid-template-columns:1fr 1fr}}@media (max-width:460px){.tiles{grid-template-columns:1fr}}
 .builder{padding:90px 0;text-align:center;background:var(--gray)}
@@ -762,7 +771,7 @@ PAGE = """<!DOCTYPE html>
     <div class="lgrid">__LESSONS__</div>
     <p class="yourturn rv">Your turn. Start where she did: <a class="btn" href="https://harshvittori.github.io/hv-tests/">Take the free test</a></p>
   </div></section>
-  <section class="finale" id="products"><div class="wrap">
+  <section class="key" id="key"><div class="wrap">
     <p class="label rv">The whole point</p>
     <h2 class="rv">Consistency is the key.</h2>
     <p class="sub rv">Riya didn't get lucky. She kept showing up, in the right direction, with the right tools. That's what HV World is for.</p>
@@ -772,6 +781,11 @@ PAGE = """<!DOCTYPE html>
       <div class="term" style="--c:#A87A22"><em>Right tools</em><b>HV Vault</b><span>Every opportunity tracked and followed up.</span></div><i>=</i>
       <div class="term goal"><em>The result</em><b>Your goal</b><span>Not overnight. But it comes.</span></div>
     </div>
+  </div></section>
+  <section class="finale" id="products"><div class="wrap">
+    <p class="label rv">How it fits together</p>
+    <h2 class="rv">Three apps. One loop.</h2>
+    <p class="sub rv">Know where you stand, grow a little every day, act on every chance. Then go again, for your next goal.</p>
     <div class="art-box rv">__FINALE__</div>
     <div class="cards">
       <div class="pcard rv"><div class="h">__L_TEST__<b>HV Test</b></div><p>Know yourself. Tests for your traits, thinking, skills and growth, starting with the Maturity Assessment.</p><div class="pacts"><a class="btn" href="https://harshvittori.github.io/hv-tests/">Open HV Test</a><a class="lm" href="/test/">Learn more</a></div></div>
