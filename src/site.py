@@ -6,6 +6,7 @@ The story page (index.html) comes from src/story.py."""
 import os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import transitions
+import legal
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -980,7 +981,7 @@ def shell(path, title, desc, og, body, active):
 <nav aria-label="Main">%s<a class="ic" aria-label="Riya's story" href="/story/"><svg class="ni" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5C10 5 7 4.5 3.5 5v13c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5z"/><path d="M12 6.5v13"/></svg><span class="nt"><span class="d">Riya's </span>Story</span></a></nav></div></header>
 %s
 <footer><div class="wrap row"><span>© <span id="yr">2026</span> HV World · Built by Harsh Goyal</span>
-<nav aria-label="Footer"><a href="/">Home</a><a href="/watch/">Watch</a><a href="/story/">Riya's story</a><a href="/test/">HV Test</a><a href="/reset/">HV Reset</a><a href="/vault/">HV Vault</a><a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/harshvittori" target="_blank" rel="noopener">GitHub</a></nav></div></footer>
+<nav aria-label="Footer"><a href="/">Home</a><a href="/watch/">Watch</a><a href="/story/">Riya's story</a><a href="/test/">HV Test</a><a href="/reset/">HV Reset</a><a href="/vault/">HV Vault</a><a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/harshvittori" target="_blank" rel="noopener">GitHub</a><a href="/terms/">Terms</a><a href="/privacy/">Privacy</a></nav></div></footer>
 <script>
 (function () {
   document.getElementById("yr").textContent = new Date().getFullYear();
@@ -1099,6 +1100,12 @@ def build():
     for k in ORDER:
         a = APPS[k]
         write("/%s/" % k, fill(shell("/%s/" % k, a["title"], a["desc"], "https://harshvittori.github.io/%s/og.jpg" % k, app_page(k), k)))
+    for path, title, desc, kind, lead, secs in [
+        ("/terms/", "Terms and Conditions | HV World", "The terms for using HV World, HV Test, HV Reset, HV Vault and HV AI.", "terms", legal.TERMS_LEAD, legal.TERMS),
+        ("/privacy/", "Privacy Policy | HV World", "What data HV World, HV Test, HV Reset, HV Vault and HV AI collect, why, and your rights.", "privacy", legal.PRIVACY_LEAD, legal.PRIVACY)]:
+        name = "Terms and Conditions" if kind == "terms" else "Privacy Policy"
+        page = shell(path, title, desc, "https://harshvittori.github.io/og.jpg", legal.page(kind, name, lead, secs), kind)
+        write(path, fill(page.replace("</style>", legal.CSS + "</style>", 1)))
 
 if __name__ == "__main__":
     build()
