@@ -88,6 +88,23 @@ def riya(x, y, s=1.0, faces=None, arms=None, cls="", sweat=None, bulb=None):
         "h": brow("M-17,-105 Q-11,-109 -5,-106 M5,-106 Q11,-109 17,-105") +
              '<path d="M-16,-92 Q-11,-98 -6,-92 M6,-92 Q11,-98 16,-92" fill="none" stroke="%s" stroke-width="2.6" stroke-linecap="round"/>' % D + cheeks(".5") +
              '<path d="M-9,-73.5 Q0,-60 9,-73.5Z" fill="#7E2F38"/><path d="M-7.6,-73 Q0,-71 7.6,-73 L6.6,-70.4 Q0,-68.8 -6.6,-70.4Z" fill="#FFFFFF"/>',
+        "s": brow("M-17,-101 Q-11,-103 -5,-106 M5,-106 Q11,-103 17,-101") +
+             "".join('<ellipse cx="%g" cy="-91.5" rx="3.4" ry="3.6" fill="%s"/><path d="M%g,-95.5 Q%g,-97.5 %g,-95.5" fill="none" stroke="%s" stroke-width="2" stroke-linecap="round"/>' % (x, D, x - 5, x, x + 5, D) for x in (-11, 11)) +
+             '<path d="M-7,-69 Q0,-74 7,-69" fill="none" stroke="%s" stroke-width="2.6" stroke-linecap="round"/>' % LIP,
+        "c": brow("M-17,-100 Q-11,-102 -5,-107 M5,-107 Q11,-102 17,-100") +
+             "".join('<ellipse cx="%g" cy="-91.5" rx="3.4" ry="3.6" fill="%s"/><circle cx="%g" cy="-92.6" r="1.1" fill="#FFFFFF"/>' % (x, D, x + 1, ) for x in (-11, 11)) +
+             '<path class="tear" d="M-14,-86 q-3.2,6 0,9 q3.2,-3 0,-9Z" fill="#8EC5FF"/><path class="tear" style="animation-delay:.8s" d="M14,-86 q-3.2,6 0,9 q3.2,-3 0,-9Z" fill="#8EC5FF"/>' +
+             '<path d="M-7,-69 Q-3.5,-72.5 0,-70.5 Q3.5,-72.5 7,-69" fill="none" stroke="%s" stroke-width="2.6" stroke-linecap="round"/>' % LIP,
+        "g": brow("M-17,-104 Q-11,-106 -5,-105 M5,-106 Q11,-110 17,-107") +
+             "".join('<ellipse cx="%g" cy="-93" rx="3.6" ry="4.3" fill="%s"/><circle cx="%g" cy="-94.6" r="1.2" fill="#FFFFFF"/>' % (x + 2.4, D, x + 3.4) for x in (-11, 11)) + cheeks(".5") +
+             '<path d="M-6,-70.5 Q2,-67 8,-73" fill="none" stroke="%s" stroke-width="2.6" stroke-linecap="round"/>' % LIP,
+        "x": brow("M-17,-107 Q-11,-111 -5,-108 M5,-108 Q11,-111 17,-107") +
+             "".join('<ellipse cx="%g" cy="-93" rx="4" ry="5" fill="%s"/><circle cx="%g" cy="-95" r="1.4" fill="#FFFFFF"/>' % (x, D, x + 1.3) for x in (-11, 11)) +
+             '<ellipse cx="0" cy="-70" rx="4.2" ry="5.2" fill="#7E2F38"/>',
+        "j": brow("M-17,-106 Q-11,-110 -5,-107 M5,-107 Q11,-110 17,-106") +
+             '<path d="M-16,-92 Q-11,-98 -6,-92 M6,-92 Q11,-98 16,-92" fill="none" stroke="%s" stroke-width="2.6" stroke-linecap="round"/>' % D + cheeks(".55") +
+             '<path class="tear" d="M-19,-89 q-2.4,5 0,7.5 q2.4,-2.5 0,-7.5Z" fill="#8EC5FF"/><path class="tear" style="animation-delay:.6s" d="M19,-89 q-2.4,5 0,7.5 q2.4,-2.5 0,-7.5Z" fill="#8EC5FF"/>' +
+             '<path d="M-10,-74 Q0,-58 10,-74Z" fill="#7E2F38"/><path d="M-8.4,-73.4 Q0,-71.2 8.4,-73.4 L7.4,-70.6 Q0,-68.8 -7.4,-70.6Z" fill="#FFFFFF"/>',
     }
     for k, c in faces.items():
         p.append('<g class="%s">%s</g>' % (("t " + c) if c else "", F[k]))
@@ -103,6 +120,11 @@ def riya(x, y, s=1.0, faces=None, arms=None, cls="", sweat=None, bulb=None):
                + '<path d="M-14,-14 h28 v18 a8,8 0 0 1 -8,8 h-12 a8,8 0 0 1 -8,-8Z" fill="#FFFFFF" stroke="%s" stroke-width="2.5"/><path d="M14,-8 a6,6 0 0 1 0,12" fill="none" stroke="%s" stroke-width="2.5"/><path class="steam" d="M-4,-22 q-4,-6 0,-12 q4,-6 0,-12" fill="none" stroke="#C7C7CC" stroke-width="2.5" stroke-linecap="round"/>' % (INK, INK),
         "reach": arm("M-50,-26 C-64,-8 -66,10 -62,24", -62, 28) + arm("M50,-28 C72,-48 84,-70 94,-96", 96, -100),
         "talk": arm("M-50,-26 C-64,-8 -66,10 -62,24", -62, 28) + arm("M50,-26 C70,-16 80,-30 88,-46", 90, -50),
+        "ear": arm("M-50,-26 C-64,-8 -66,10 -62,24", -62, 28) + '<rect x="26" y="-114" width="15" height="30" rx="4" fill="%s" transform="rotate(-14 33 -99)"/>' % INK
+               + arm("M50,-26 C68,-42 56,-72 38,-86", 36, -88),
+        "face": arm("M-50,-26 C-64,-42 -48,-64 -27,-74", -25, -76) + arm("M50,-26 C64,-42 48,-64 27,-74", 25, -76),
+        "scroll": '<rect x="-13" y="-30" width="26" height="38" rx="5" fill="%s"/><rect x="-10" y="-26" width="20" height="28" rx="2" fill="#8FA6FF"/>' % INK
+                  + arm("M-50,-26 C-62,-6 -40,8 -14,-2", -11, -3) + arm("M50,-26 C62,-6 40,8 14,-2", 11, -3),
         "chin": arm("M-50,-26 C-62,-6 -52,14 -30,20", -26, 20) + arm("M50,-26 C60,-10 40,-40 16,-60", 14, -62),
     }
     for k, c in arms.items():
@@ -210,7 +232,7 @@ def ch_reset():
     inner = ('<g><rect x="48" y="46" width="148" height="104" rx="14" fill="#9CC3F0"/><g class="t v1"><rect class="skycycle" x="48" y="46" width="148" height="104" rx="14" fill="#1F2A55"/></g>'
              '<rect class="t v4" x="48" y="46" width="148" height="104" rx="14" fill="#F4A774"/><circle class="t v4" cx="122" cy="116" r="18" fill="#FFD27A"/></g>'
              '<g transform="translate(262 96)"><circle r="38" fill="#FFFFFF" stroke="%s" stroke-width="4"/><path class="hand hour" d="M0,0 V-20" stroke="%s" stroke-width="5" stroke-linecap="round"/><path class="hand minute" d="M0,0 V-30" stroke="#4A72C8" stroke-width="4" stroke-linecap="round"/><circle r="4" fill="%s"/></g>' % (INK, INK, INK) +
-             FLOOR + riya(180, 334, 1, faces={"t": "v1", "n": "v2", "d": "v3", "h": "v4"}, arms={"desk": "v1 v2 v3", "tea": "v4"}) + desk(40, 348, 290) +
+             FLOOR + riya(180, 334, 1, faces={"g": "v1", "n": "v2", "d": "v3", "h": "v4"}, arms={"desk": "v1 v2 v3", "tea": "v4"}) + desk(40, 348, 290) +
              '<g class="t v1"><rect x="236" y="318" width="20" height="30" rx="5" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="2"/><rect x="262" y="322" width="20" height="26" rx="5" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="2"/><rect x="288" y="316" width="20" height="32" rx="5" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="2"/></g>'
              '<g class="t v1">' + notifs + '<g transform="rotate(4 470 90)"><rect x="420" y="40" width="112" height="96" rx="8" fill="#FFF8E1" stroke="#EADCB0"/>' +
              "".join('<rect x="434" y="%d" width="12" height="12" rx="3" fill="#FFFFFF" stroke="#C9B98A"/><rect class="wiggle" x="454" y="%d" width="62" height="6" rx="3" fill="#C9B98A"/>' % (58 + i * 20, 61 + i * 20) for i in range(4)) + '</g></g>'
@@ -234,7 +256,7 @@ def ch_vault():
         i * .13, 330 + (i * 37) % 240, c, (i * 47) % 90, 330 + (i * 37) % 240) for i, c in enumerate(["#F4B942", "#4A72C8", "#127A4F", "#FF6B6B", "#A87A22", "#8FA6FF"] * 3))
     inner = (FLOOR +
              '<g class="t v1">' + notes + '<g class="balloon"><path d="M522,300 C520,330 530,350 520,380" fill="none" stroke="#9AA0AE" stroke-width="2"/><ellipse cx="522" cy="276" rx="34" ry="40" fill="#FF8A8A"/><path d="M516,314 h12 l-6,8Z" fill="#FF8A8A"/><text x="522" y="281" text-anchor="middle" font-size="11" font-weight="700" fill="#FFFFFF">OFFER?</text></g></g>' +
-             chair(170, 393) + riya(170, 366, 1.05, faces={"w": "v1", "n": "v2", "h": "v3 v4"}, arms={"reach": "v1", "down": "v2 v3", "up": "v4"}) +
+             chair(170, 393) + riya(170, 366, 1.05, faces={"w": "v1", "n": "v2", "x": "v3", "j": "v4"}, arms={"reach": "v1", "down": "v2", "face": "v3", "up": "v4"}) +
              '<g class="t v2 v3 v4 panel"><rect x="318" y="52" width="258" height="244" rx="20" fill="#FFFFFF" stroke="#E5E5EA" stroke-width="1.5"/>' + logo_at("vault", 332, 66, 24) +
              '<text x="364" y="84" font-size="14" font-weight="700" fill="%s">HV Vault</text>' % INK +
              '<text x="562" y="84" text-anchor="end" font-size="12" font-weight="700" fill="#A87A22">34 applied</text>' +
@@ -262,7 +284,7 @@ def finale():
 
 # (icon letter, icon colour, app, title, body, meta, side)  side: "" notification, "me" her own message, "them" a reply
 INTER = {
- "night": dict(dark=True, time="Sunday · 11:48 PM", title="The night it all piles up.",
+ "night": dict(face=("s", "scroll", "#26305E"), mood="11:48 PM, can't sleep, feeling invisible", dark=True, time="Sunday · 11:48 PM", title="The night it all piles up.",
    text="Riya should be asleep. Instead she's scrolling. Everyone seems to be moving ahead except her. This month she sent 26 applications and heard back from exactly one: an automatic &ldquo;thank you for applying&rdquo;.",
    items=[("W", "#25D366", "WhatsApp", "Mom", "Beta, Sharma aunty ki beti ki job lag gayi 😊 Tera kab hoga?", "11:31 PM", ""),
           ("in", "#0A66C2", "LinkedIn", "Ananya, your batchmate", "started a new position at a top startup. Say congrats!", "11:40 PM", ""),
@@ -271,7 +293,7 @@ INTER = {
    voice="I'm doing everything. So why is nothing working?",
    pains=["Comparison", "Family pressure", "No replies", "No clarity"],
    bridge="She doesn't need another course. She needs to know where she actually stands."),
- "kalse": dict(dark=True, time="Day 3 of her plan · 10:05 AM", title="Knowing isn't doing.",
+ "kalse": dict(face=("g", "scroll", "#2B2F5C"), mood="caught in the scroll, again", dark=True, time="Day 3 of her plan · 10:05 AM", title="Knowing isn't doing.",
    text="HV Test told her exactly what to fix. For two days she's on fire. On day three the old Riya is back: one reel becomes forty, and the SQL course sits paused at 7:42. Again.",
    items=[("▶", "#FF0000", "YouTube", "SQL for beginners, full course", "Paused at 7:42 of 4:20:00", "yesterday", ""),
           ("◎", "#E1306C", "Instagram", "priya.codes and 12 others", "posted new reels", "10:02 AM", ""),
@@ -280,7 +302,7 @@ INTER = {
    voice="Kal se pakka. (From tomorrow. For sure.)",
    pains=["Procrastination", "Phone traps", "Restarting every Monday", "Guilt"],
    bridge="She doesn't need more motivation. She needs a simpler day."),
- "inbox": dict(dark=True, time="Week 7 · Monday morning", title="The inbox that hurts.",
+ "inbox": dict(face=("c", "face", "#2A2A52"), mood="two rejections before breakfast", dark=True, time="Week 7 · Monday morning", title="The inbox that hurts.",
    text="Her skills are real now, and so is the job hunt. So is the mess: job links buried in chats, three versions of her resume, and a tracker spreadsheet she stopped updating 19 days ago.",
    items=[("M", "#EA4335", "Mail", "Finlo Careers", "Unfortunately, we have decided to move forward with other candidates.", "9:02 AM", ""),
           ("M", "#EA4335", "Mail", "Brightpath Analytics", "Thank you for your interest. The position has been filled.", "Sat", ""),
@@ -289,7 +311,7 @@ INTER = {
    voice="Did I already apply to that role? Did I ever follow up with Cred?",
    pains=["Rejections", "Ghosting", "Lost links", "Missed follow-ups"],
    bridge="Rejections are part of the game. Losing track of good chances doesn't have to be."),
- "call": dict(dark=False, time="Week 11 · Thursday, 4:12 PM", title="The call.",
+ "call": dict(face=("j", "ear", "#FFE3C4"), mood="happy tears", dark=False, time="Week 11 · Thursday, 4:12 PM", title="The call.",
    text="Two weeks after the rejection that almost broke her streak, her phone rings. Unknown number. She almost lets it go. Then she picks up.",
    items=[("✆", "#34C759", "Phone", "Incoming call", "Talent team", "4:12 PM", ""),
           ("M", "#EA4335", "Mail", "Offer letter: Product Analyst", "We're delighted to offer you the role. Please find the details attached.", "4:31 PM", ""),
@@ -298,6 +320,11 @@ INTER = {
    voice="Not luck. Eleven weeks of small, honest, slightly boring days.",
    pains=["Knew her strengths", "Showed up daily", "Never lost a lead", "Got the job"]),
 }
+def portrait(face, pose, bg):
+    top = -146 if pose == "scroll" else -160   # show the phone in her hands
+    return ('<svg viewBox="-68 %d 136 136" aria-hidden="true" focusable="false"><rect x="-68" y="%d" width="136" height="136" fill="%s"/>%s</svg>' % (
+        top, top, bg, riya(0, 0, 1, faces={face: ""}, arms={pose: ""})))
+
 def interlude(key):
     d = INTER[key]
     def item(ic, col, app, t, body, meta, side):
@@ -305,10 +332,10 @@ def interlude(key):
             return '<div class="nt %s">%s<p>%s</p><small>%s</small></div>' % (side, ('<b>%s</b>' % t) if t else "", body, meta)
         return ('<div class="nt"><span class="ico" style="background:%s">%s</span><div><div class="top"><em>%s</em><small>%s</small></div><b>%s</b><p>%s</p></div></div>' % (col, ic, app, meta, t, body))
     return ('<section class="inter%s" id="%s"><div class="wrap grid">'
-            '<div class="txt rv"><p class="when">%s</p><h2>%s</h2><p class="story">%s</p><blockquote>&ldquo;%s&rdquo;</blockquote>'
+            '<div class="txt rv"><div class="who">%s<div><b>Riya</b><span>%s</span></div></div><p class="when">%s</p><h2>%s</h2><p class="story">%s</p><blockquote>&ldquo;%s&rdquo;</blockquote>'
             '<div class="pains">%s</div>%s</div>'
             '<div class="ph rv" role="group" aria-label="Riya\'s phone"><div class="notch"></div>%s</div></div></section>') % (
-        "" if d["dark"] else " win", key, d["time"], d["title"], d["text"], d["voice"],
+        "" if d["dark"] else " win", key, portrait(*d["face"]), d["mood"], d["time"], d["title"], d["text"], d["voice"],
         "".join('<span>%s</span>' % x for x in d["pains"]), ('<p class="bridge">%s</p>' % d["bridge"]) if d.get("bridge") else "",
         "".join(item(*i) for i in d["items"]))
 
@@ -332,11 +359,11 @@ CH = [
     chapter("test", 1, "Know", "HV Test", "What am I actually good at?", ch_test(), [
         ("Week 0 · The problem", "She freezes on the easy question.", "&ldquo;So, what are your strengths?&rdquo; Riya says &ldquo;hard-working&rdquo;. So did the last ten candidates. She has skills, but she has never measured them."),
         ("Week 1 · HV Test", "She stops guessing and measures.", "The Maturity Assessment, then a skills test. Real situations and honest options, about ten minutes each. No right answers to game."),
-        ("The result", "Strong where she didn't expect. Weak where it hurts.", "Communication 84 and problem solving 79. But consistency 48, and her data skills are basic. It stings, and it's the first honest picture she's had."),
+        ("The result", "Strong where she didn't expect. Weak where it hurts.", "Communication 84: all those support calls paid off. Problem solving 79. But consistency 48, and her data skills are basic. It stings, and it's the first honest picture she's had."),
         ("The plan", "A 30-day plan, not a vague wish.", "Learn SQL basics, build one real dashboard project, practise her story with three real examples. And the hard one: show up every day.")],
         "https://harshvittori.github.io/hv-tests/", "Take a test"),
     chapter("reset", 2, "Grow", "HV Reset + HV AI", "Why can't I stay consistent?", ch_reset(), [
-        ("The problem", "Big plans. Lost days.", "She opens a course at 10, checks her phone at 10:05, and suddenly it's evening. Again. Four courses started, none finished."),
+        ("The problem", "Big plans. Lost days.", "Night shift ends at 6 AM. She sleeps till noon, opens a course at 2, checks her phone at 2:05, and suddenly it's time for work again. Four courses started, none finished."),
         ("HV AI", "She just tells HV AI her day.", "&ldquo;Roz 9 se 11 SQL, 2 baje project, 6 baje walk.&rdquo; HV AI turns it into a simple plan in HV Reset. One task at a time, nothing else on the screen."),
         ("Week 2 · A setback", "She misses two days. She doesn't quit.", "A cold, a family function, a lost weekend. Instead of starting over on Monday, she shifts today's plan, keeps the one core task, and goes again. The streak resets. The progress doesn't."),
         ("Week 6 · The change", "Now it's just what she does.", "42 focused hours, a finished SQL course and her first dashboard project online. Her dashboard shows the trend: she really is getting better.")],
@@ -546,6 +573,11 @@ __TOGGLES__
 .pains span{font-size:14px;font-weight:600;padding:7px 13px;border-radius:999px;background:rgba(255,120,120,.14);color:#FFB3B3;border:1px solid rgba(255,138,138,.3)}
 .inter.win .pains span{background:#E3F4EA;color:#0B6B3F;border-color:#BFE3CD}
 .inter.win .pains span::before{content:"✓ "}
+.who{display:flex;align-items:center;gap:16px;margin-bottom:26px}
+.who svg{width:128px;height:128px;border-radius:32px;flex:none;box-shadow:0 18px 36px -18px rgba(0,0,0,.55)}
+.who b{display:block;font-size:19px}.who span{display:block;font-size:15px;opacity:.72;margin-top:2px}
+.tear{animation:tear 1.8s ease-in infinite}
+@keyframes tear{0%{transform:translateY(0);opacity:0}15%{opacity:1}100%{transform:translateY(12px);opacity:0}}
 .bridge{margin-top:26px;font-size:18px;font-weight:600;color:#C9D3FF}
 .ph{background:#151B38;border-radius:40px;padding:34px 14px 18px;box-shadow:0 40px 80px -30px rgba(0,0,0,.6),inset 0 0 0 2px rgba(255,255,255,.08);position:relative}
 .inter.win .ph{background:#FFFFFF;box-shadow:0 40px 80px -36px rgba(120,60,20,.35),inset 0 0 0 1px #F0E4D8}
@@ -670,7 +702,7 @@ PAGE = """<!DOCTYPE html>
     <div class="rv">
       <p class="eyebrow">HV World · an 11-week story</p>
       <h1>This is Riya. She's 25.</h1>
-      <p class="lead">A degree, two certificates and real skills. Plenty of ambition. <b>So why does she feel stuck?</b></p>
+      <p class="lead">Jaipur. A B.Com, then a year and a half of night shifts in customer support. She's teaching herself data after work, and dreams of becoming a product analyst. <b>So why does she feel stuck?</b></p>
       <div class="worries"><span><i style="background:#127A4F"></i>What am I good at?</span><span><i style="background:#4A72C8"></i>Why can't I stay consistent?</span><span><i style="background:#A87A22"></i>Where did my applications go?</span></div>
       <a class="scroll-hint" href="#test">Follow her story __ARROW__</a>
     </div>
