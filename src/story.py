@@ -468,13 +468,13 @@ header.hid:focus-within{transform:none}
 .hero h1{font-size:clamp(46px,7vw,84px);font-weight:700;letter-spacing:-.045em;line-height:1.02;margin:12px 0 18px}
 .hero .lead{font-size:clamp(19px,2.2vw,24px);color:var(--soft);line-height:1.35}
 .hero .lead b{color:var(--ink);font-weight:600}
-.worries{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
-.worries span{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:980px;background:var(--gray);font-size:15px;font-weight:500}
-.worries i{width:10px;height:10px;border-radius:50%;display:inline-block}
-.scroll-hint{display:inline-flex;align-items:center;gap:8px;margin-top:28px;font-size:16px;color:var(--faint)}
+.worries{list-style:none;margin:22px 0 0;padding:6px;max-width:440px;background:#fff;border:1px solid #E4E5EA;border-radius:20px;box-shadow:0 18px 40px -30px rgba(20,30,60,.45)}
+.worries li{display:flex;align-items:center;gap:12px;padding:10px 12px;font-size:16px;font-weight:500;color:var(--ink)}.worries li+li{border-top:1px solid #EEEFF2}
+.worries svg{flex:none;width:34px;height:34px;padding:8px;border-radius:10px;background:var(--t);stroke:var(--c);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.scroll-hint{display:inline-flex;align-items:center;gap:8px;margin-top:20px;font-size:16px;color:var(--faint)}
 .scroll-hint svg{width:18px;height:18px}
 @media (prefers-reduced-motion:no-preference){.scroll-hint svg{animation:bob 1.8s ease-in-out infinite}}
-@media (max-width:880px){.hero{grid-template-columns:1fr;gap:28px;padding:40px 0 56px}.hero .art-box{order:-1}}
+@media (max-width:880px){.hero{grid-template-columns:1fr;gap:28px;padding:40px 0 36px}.hero .art-box{order:-1}.worries{max-width:none}.worries li{font-size:15.5px;padding:9px 10px}.before{padding-top:44px!important}.before .note{margin:20px 0 10px!important}}
 .art-box{border-radius:28px;overflow:hidden;box-shadow:0 30px 60px -36px rgba(20,30,60,.4)}
 .art{display:block;width:100%;height:auto;overflow:hidden;border-radius:28px}
 
@@ -810,7 +810,7 @@ PAGE = """<!DOCTYPE html>
       <p class="eyebrow">An 11-week story</p>
       <h1>This is Riya. She's 25.</h1>
       <p class="lead">B.Tech, two years out of college, still no job. Three certificates, yet she fails company tests and goes blank on &ldquo;your strengths?&rdquo; <b>Quietly stuck. What now?</b></p>
-      <div class="worries"><span><i style="background:#127A4F"></i>What am I actually good at?</span><span><i style="background:#4A72C8"></i>Why can't I stay consistent?</span><span><i style="background:#A87A22"></i>Where did my applications go?</span></div>
+      <ul class="worries"><li style="--c:#127A4F;--t:#E7F4EC"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8L3.5 9.7l5.9-.9z"/></svg><span>What am I actually good at?</span></li><li style="--c:#4A72C8;--t:#E9EFFB"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v4h-4"/></svg><span>Why can't I stay consistent?</span></li><li style="--c:#A87A22;--t:#F7F0E1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 3 10 14M21 3l-7 18-4-7-7-4z"/></svg><span>Where did my applications go?</span></li></ul>
       <p class="scroll-hint" aria-hidden="true">Scroll to read __ARROW__</p>
     </div>
     <div class="art-box rv">__PROLOGUE__</div>
