@@ -780,7 +780,7 @@ PAGE = """<!DOCTYPE html>
     <div class="rv">
       <p class="eyebrow">An 11-week story</p>
       <h1>This is Riya. She's 25.</h1>
-      <p class="lead">Jaipur. A B.Com, an MBA, three online certificates. A fresher from the 2025 batch, still without a job. On paper, she's ready. But she fails the companies' skill tests, and goes blank when they ask about her strengths. <b>So why does she keep getting rejected?</b></p>
+      <p class="lead">Jaipur. A B.Tech, three online certificates. A fresher from the 2025 batch, still without a job. On paper, she's ready. But she fails the companies' skill tests, and goes blank when they ask about her strengths. <b>So why does she keep getting rejected?</b></p>
       <div class="worries"><span><i style="background:#127A4F"></i>What are my real strengths?</span><span><i style="background:#4A72C8"></i>Why can't I stay consistent?</span><span><i style="background:#A87A22"></i>Where did my applications go?</span></div>
       <a class="scroll-hint" href="#test">Follow her story __ARROW__</a>
     </div>
