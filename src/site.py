@@ -416,15 +416,17 @@ html{overflow-x:clip}
 .band-w .feat,.band-w .two>div{background:#F7F8FA}
 .final{background:#FFFFFF}
 .factband{background:#F2F3F7;display:flow-root}
-.lib{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
-.lc small{display:block;margin-top:12px;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--faint)}
+.lib{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.lcat+.lcat{margin-top:40px}
+.lch{display:flex;align-items:baseline;gap:10px;font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--pc);margin:0 0 14px}
+.lch span{font-size:13px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--faint)}
 .lc{position:relative;background:#fff;border:1.5px solid var(--pc);border-radius:20px;padding:24px 22px;box-shadow:0 18px 40px -28px rgba(20,30,60,.35)}
 .lc.soon{border:1px dashed #C9CDD8;box-shadow:none;background:rgba(255,255,255,.6)}
 .lc .lb{display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.04em;padding:4px 11px;border-radius:999px;color:#fff;background:var(--pc);margin-bottom:14px}
 .lc.soon .lb{color:var(--soft);background:#EDEFF4}
 .lc h3{font-size:19px;font-weight:700;letter-spacing:-.02em;margin-bottom:6px}.lc p{color:var(--soft);font-size:15.5px;line-height:1.45}
 .lc.soon h3{color:#3A3F4B}
-@media (max-width:1180px){.lib{grid-template-columns:repeat(3,1fr)}}@media (max-width:980px){.lib{grid-template-columns:1fr 1fr}}@media (max-width:560px){.lib{grid-template-columns:1fr}}
+@media (max-width:980px){.lib{grid-template-columns:1fr 1fr}}@media (max-width:560px){.lib{grid-template-columns:1fr}}
 .pp-sec{background:#F2F3F7}.pp-sec:nth-of-type(odd){background:#FFFFFF}
 .pp-sec:nth-of-type(even) .steps3,.pp-sec:nth-of-type(even) .fgrid{background:#fff}
 @media (max-width:880px){.band{padding:64px 0}}
@@ -562,7 +564,7 @@ APPS = {
    title="How well do you really know yourself? | HV Test",
    desc="Tests for how you think, learn, act and grow. Start with the free Maturity Assessment: an honest score, a full report and a 30-day plan. No login.",
    lead="One place to understand yourself: how you handle life, your real strengths, how you communicate, how consistent you are, and how well you use AI. Take a test, see where you stand, and keep growing.",
-   facts=[("5 tests", "strengths, communication, consistency, AI and more"), ("Live now", "the Maturity Assessment"), ("2 PDFs", "report and 30-day plan"), ("No login", "answers stay on your device")],
+   facts=[("2 categories", "Personal Growth, and AI and Future Skills"), ("Live now", "the Maturity Assessment"), ("2 PDFs", "report and 30-day plan"), ("No login", "answers stay on your device")],
    problem=("“So, what are your strengths?”", "Most of us have never measured how we think, learn or react. So in an interview, a review or a big decision, we guess."),
    fix=("See yourself clearly. Then grow.", "HV Test measures your traits, abilities and habits with honest, carefully designed tests. You see where you stand, what to improve, and how you change over time."),
    steps=[("Pick a test", "Choose what you want to understand. Start with the Maturity Assessment: about 10 minutes."),
@@ -588,7 +590,7 @@ APPS = {
         ("Team leads", "Understand your own patterns before you guide others."),
         ("Career switchers", "Check what you bring to a new field, beyond your old job title."),
         ("Anyone curious", "A calm look at yourself, and small steps to grow.")],
-   faq=[("What tests are on HV Test?", "The Maturity Assessment is live now. Strengths Finder, Communication Style, Consistency Check and AI Basics are coming soon."),
+   faq=[("What tests are on HV Test?", "Personal Growth: the Maturity Assessment (live now), Strengths Finder, Communication Style and Consistency Check. AI and Future Skills: AI Basics. The new ones are coming soon."),
         ("Is there a test about AI?", "Yes. AI Basics, in the new AI and Future Skills category, is coming soon: how well you understand and use AI, and when to double-check it."),
         ("Is HV Test a diagnosis?", "No. It's a self-assessment for personal growth, not a clinical or psychological diagnosis."),
         ("Do I need an account?", "No. There's no login, and your answers never leave your browser."),
@@ -685,9 +687,12 @@ def app_page(key):
     faq = "".join('<details><summary>%s</summary><p>%s</p></details>' % qa for qa in a["faq"])
     lib = ""
     if a.get("library"):
-        cards = "".join('<div class="lc%s"><span class="lb">%s</span><h3>%s</h3><p>%s</p><small>%s</small></div>' % ("" if st == "Live now" else " soon", st, t, d, c) for t, st, d, c in a["library"])
+        groups = {}
+        for t, st, d, c in a["library"]:
+            groups.setdefault(c, []).append('<div class="lc%s"><span class="lb">%s</span><h3>%s</h3><p>%s</p></div>' % ("" if st == "Live now" else " soon", st, t, d))
+        cards = "".join('<div class="lcat"><h3 class="lch">%s<span>%d test%s</span></h3><div class="lib">%s</div></div>' % (c, len(v), "" if len(v) == 1 else "s", "".join(v)) for c, v in groups.items())
         lib = ('<section class="pp-sec" id="tests"><div class="wrap"><div class="head rv"><p class="label">The tests</p><h2>Five ways to understand yourself.</h2>'
-               '<p>Each test looks at a different side of you. The Maturity Assessment is live now, and four more are on the way.</p></div><div class="lib rv">%s</div></div></section>') % cards
+               '<p>Each test looks at a different side of you. The Maturity Assessment is live now, and four more are on the way.</p></div><div class="rv">%s</div></div></section>') % cards
     show = ""
     if a.get("showcase"):
         sc = a["showcase"]
