@@ -396,9 +396,13 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
 @keyframes bob{50%{translate:0 -9px}}
 @media (max-width:880px){.stage{transform:perspective(1400px) rotateX(4deg) rotateY(-7deg)}.stage::before{inset:14px -10px -14px 10px}.stage::after{inset:28px -18px -28px 18px}}
 .pmock{display:flex;justify-content:center}.pmock .mock{border-color:var(--pline);box-shadow:0 30px 60px -36px rgba(20,30,60,.4)}
-.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;position:relative}
-.facts div{padding:20px 22px;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 14px 30px -24px rgba(20,30,60,.35)}
-.facts b{display:block;font-size:22px;font-weight:700;letter-spacing:-.03em;color:var(--pc)}.facts span{font-size:14px;color:var(--soft)}
+.facts{position:relative;overflow:hidden;display:grid;grid-template-columns:repeat(4,1fr);padding:28px 8px;border-radius:26px;background:#fff;
+  background:linear-gradient(120deg,#fff 0%,#fff 35%,color-mix(in srgb,var(--pc) 12%,#fff) 100%);border:1px solid var(--pline);
+  box-shadow:0 30px 60px -38px color-mix(in srgb,var(--pc) 60%,transparent)}
+.facts::before{content:"";position:absolute;right:-70px;top:-90px;width:300px;height:300px;border-radius:50%;background:color-mix(in srgb,var(--pc) 6%,transparent);pointer-events:none}
+.facts::after{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(var(--pc),color-mix(in srgb,var(--pc) 40%,#fff))}
+.facts div{position:relative;padding:0 26px;border-left:1px solid var(--pline)}.facts div:first-child{border-left:0}
+.facts b{display:block;font:600 30px/1.15 HVSora,var(--font);letter-spacing:-.04em;color:var(--pc)}.facts span{display:block;font-size:15px;color:var(--soft);margin-top:4px;line-height:1.4}
 .pp-sec{padding:96px 0;border-bottom:1px solid var(--line)}
 .pp-sec .head{margin-bottom:40px}
 .pf{display:grid;grid-template-columns:1fr 1fr;gap:0}
@@ -429,7 +433,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
 .back{text-align:center;margin-top:28px}.back a{display:inline-flex;align-items:center;gap:6px;color:var(--accent);font-weight:600;text-decoration:none}.back svg{width:16px;height:16px}.back a:hover{text-decoration:underline}
 @media (max-width:880px){.phero .wrap{grid-template-columns:1fr;padding:44px 0 60px;gap:36px}
   .phero .pmock{padding:36px 0 20px}
-  .facts{grid-template-columns:1fr 1fr;gap:12px}.facts div{padding:16px;border-radius:16px}
+  .facts{grid-template-columns:1fr 1fr;padding:6px 4px;border-radius:22px}.facts div{padding:16px 18px}.facts div:nth-child(3){border-left:0}.facts div:nth-child(-n+2){border-bottom:1px solid var(--pline)}
   .pp-sec{padding:64px 0}.pf{grid-template-columns:1fr}.pf>div,.pf>div+div{padding:0}.pf>div+div{border-left:0;border-top:1px solid var(--line);margin-top:32px;padding-top:32px}
   .steps3{grid-template-columns:1fr}.st{border-right:0;border-bottom:1px solid var(--line)}.st:last-child{border-bottom:0}
   .fgrid{grid-template-columns:1fr 1fr}.nxs{grid-template-columns:1fr}}
@@ -460,7 +464,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
   .final{padding:60px 16px}
   .phero .wrap{padding:28px 0 36px;gap:24px}.pname svg{width:60px;height:60px;border-radius:16px}.pname{gap:14px}
   .pp .lead{margin:18px 0 22px;font-size:17px}.crumb{margin-bottom:18px}
-  .facts{margin-top:0}.factband{padding-bottom:44px}.facts b{font-size:19px}.facts span{font-size:13px}
+  .facts{margin-top:0}.factband{padding-bottom:44px}.facts b{font-size:21px}.facts span{font-size:13px}
   .pp-sec{padding:56px 0}.pp-sec .head{margin-bottom:24px}
   .pf h2{font-size:26px}.pf p:not(.label){font-size:16.5px}
   .st{display:grid;grid-template-columns:34px 1fr;column-gap:14px;padding:18px}
@@ -694,7 +698,7 @@ APPS = {
    title="How well do you really know yourself? | HV Test",
    desc="Tests for how you think, learn, act and grow. Start with the free Maturity Assessment: an honest score, a checkable scorecard, a full report and a 30-day plan. No login.",
    lead="One place to understand yourself: how you handle life, your real strengths, how you communicate, how consistent you are, and how well you use AI. Take a test, see where you stand, and keep growing.",
-   facts=[("2 categories", "Personal Growth, and AI and Future Skills"), ("Live now", "the Maturity Assessment"), ("Scorecard", "with a unique ID and QR"), ("No login", "answers stay on your device")],
+   facts=[("10 min", "real-life situations, no right answers"), ("10 skills", "each scored out of 10"), ("Checkable", "scorecard with a unique ID and QR"), ("Free", "no login, answers stay on your device")],
    problem=("“So, what are your strengths?”", "Most of us have never measured how we think, learn or react. So in an interview, a review or a big decision, we guess."),
    fix=("See yourself clearly. Then grow.", "HV Test measures your traits, abilities and habits with honest, carefully designed tests. You see where you stand, what to improve, and how you change over time."),
    steps=[("Pick a test", "Choose what you want to understand. Start with the Maturity Assessment: about 10 minutes."),
@@ -746,7 +750,7 @@ APPS = {
    title="Plan your day and see where your time goes | HV Reset",
    desc="One task at a time, a day that moves when you're late, and a personal dashboard for your time, focus, streaks and progress. Free, in your browser.",
    lead="Plan your day, do one task at a time, and see what you really did. Your own dashboard shows where your time goes and whether you're getting better.",
-   facts=[("1 task", "at a time"), ("1 tap", "to shift a late day"), ("6-part", "productivity score"), ("HV AI", "plans from one sentence")],
+   facts=[("1 sentence", "and HV AI plans your whole day"), ("1 tap", "shifts your day when you're late"), ("Dashboard", "time, focus, streaks and score"), ("Free", "in your browser, nothing to install")],
    problem=("“Where did my day go?”", "Busy all day, but you can't say what got done. Plans slip, and you never really know if you're improving."),
    fix=("Plan it. Do it. See it.", "HV Reset shows one task at a time and moves your day when you're late. Then your dashboard shows the real picture: time spent, focus, what started on time, and your progress week after week."),
    steps=[("Make your plan", "Add tasks with a time, pick a ready plan, or just tell HV AI how your day looks."),
@@ -780,7 +784,7 @@ APPS = {
    title="Stop losing job leads in WhatsApp chats | HV Vault",
    desc="Every job, recruiter and interview on one board. Follow-ups set themselves. Just tell the AI what happened.",
    lead="Every job, company, follow-up and interview in one calm place, so nothing slips. Just tell HV AI what happened.",
-   facts=[("1 board", "Saved to Offer"), ("Auto", "follow-ups"), ("AI", "fills in job posts"), ("Any device", "same data everywhere")],
+   facts=[("1 board", "every job, Saved to Offer"), ("Auto", "follow-ups set the day you apply"), ("Just say it", "HV AI adds interviews and updates"), ("Any device", "synced, with Excel export")],
    problem=("“Did I ever follow up?”", "Links in chats, five versions of a resume, sticky notes everywhere. The good opportunities go quiet."),
    fix=("Nothing slips anymore.", "HV Vault puts every opportunity on one board and reminds you on time. Say “Kal 4 baje interview” and it's on the calendar."),
    steps=[("Sign in and upload", "Sign in with Google and upload your resume. Your profile fills itself in."),
