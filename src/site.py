@@ -436,7 +436,7 @@ OVERVIEW_MAIN = """<main id="main">
     <div class="rv">
       <p class="eyebrow">Free for everyone</p>
       <h1>Your work, your day, your growth. <span>One calm world.</span></h1>
-      <p class="lead">Three simple apps that work together. Know yourself with HV Test, plan your day with HV Reset, and keep every opportunity in HV Vault. Just tell HV AI what you need.</p>
+      <p class="lead">Consistency is the key, and it's easier with the right direction and the right tools. Know yourself with HV Test, stay consistent with HV Reset, and keep every opportunity in HV Vault. Just tell HV AI what you need.</p>
       <div class="ctas"><a class="btn" href="#apps">Explore the apps</a><a class="btn ghost" href="/story/">Watch Riya's story __ARROW__</a></div>
       <p class="note">Nothing to install. Works on your phone and laptop.</p>
     </div>

@@ -319,7 +319,7 @@ INTER = {
           ("M", "#EA4335", "Mail", "Offer letter: Product Analyst", "We're delighted to offer you the role. Please find the details attached.", "4:31 PM", ""),
           ("", "", "", "", "Maa, job lag gayi!! 🎉🎉", "4:33 PM", "me"),
           ("@mom", "", "", "Mom", "Mujhe pata tha ❤️ Sharma aunty ko main bataungi 😄", "4:34 PM", "them")],
-   voice="Not luck. Eleven weeks of small, honest, slightly boring days.",
+   voice="Not luck. Consistency: eleven weeks of small, honest, slightly boring days.",
    pains=["Knew her strengths", "Showed up daily", "Never lost a lead", "Got the job"]),
 }
 def portrait(face, pose, bg):
@@ -634,7 +634,16 @@ __TOGGLES__
 /* finale + people + builder */
 .finale{padding:110px 0;text-align:center;background:var(--gray)}
 .finale h2{font-size:clamp(40px,6.4vw,76px);font-weight:700;letter-spacing:-.045em;line-height:1.02}
-.finale .sub{font-size:clamp(19px,2.2vw,24px);color:var(--soft);margin-top:12px}
+.finale .sub{font-size:clamp(19px,2.2vw,24px);color:var(--soft);margin:12px auto 0;max-width:760px}
+.finale .label{margin-bottom:8px}
+.eq{display:flex;align-items:stretch;justify-content:center;gap:10px;flex-wrap:wrap;margin:44px auto 0;max-width:1060px}
+.eq i{align-self:center;font-style:normal;font-size:30px;font-weight:300;color:var(--faint)}
+.term{flex:1 1 200px;max-width:230px;background:#fff;border:1px solid #E4E5EA;border-top:4px solid var(--c);border-radius:20px;padding:18px 18px 20px;text-align:left}
+.term em{display:block;font-style:normal;font-size:13px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--c)}
+.term b{display:block;font-size:20px;letter-spacing:-.02em;margin-top:6px}
+.term span{display:block;color:var(--soft);font-size:15px;margin-top:6px;line-height:1.4}
+.term.goal{--c:#2E43A6;background:#2E43A6;border-color:#2E43A6;color:#fff}.term.goal em{color:#C9D3FF}.term.goal span{color:rgba(255,255,255,.8)}
+@media (max-width:760px){.eq{flex-direction:column;align-items:center}.term{max-width:420px;width:100%;flex:none}.eq i{font-size:24px}}
 .finale .art-box{max-width:720px;margin:48px auto 0;box-shadow:none}
 .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:56px auto 0;max-width:960px;text-align:left}
 .pcard{background:#fff;border:1px solid #E4E5EA;border-radius:22px;padding:26px;display:flex;flex-direction:column}
@@ -754,8 +763,15 @@ PAGE = """<!DOCTYPE html>
     <p class="yourturn rv">Your turn. Start where she did: <a class="btn" href="https://harshvittori.github.io/hv-tests/">Take the free test</a></p>
   </div></section>
   <section class="finale" id="products"><div class="wrap">
-    <h2 class="rv">Know. Grow. Act.</h2>
-    <p class="sub rv">Know your strengths, grow them every day, and act on every opportunity. The same simple loop works for your next goal too.</p>
+    <p class="label rv">The whole point</p>
+    <h2 class="rv">Consistency is the key.</h2>
+    <p class="sub rv">Riya didn't get lucky. She kept showing up, in the right direction, with the right tools. That's what HV World is for.</p>
+    <div class="eq rv">
+      <div class="term" style="--c:#127A4F"><em>Right direction</em><b>HV Test</b><span>Know your strengths and exactly what to fix.</span></div><i>+</i>
+      <div class="term" style="--c:#4A72C8"><em>Consistency</em><b>HV Reset + HV AI</b><span>A simple plan, one task at a time, every day.</span></div><i>+</i>
+      <div class="term" style="--c:#A87A22"><em>Right tools</em><b>HV Vault</b><span>Every opportunity tracked and followed up.</span></div><i>=</i>
+      <div class="term goal"><em>The result</em><b>Your goal</b><span>Not overnight. But it comes.</span></div>
+    </div>
     <div class="art-box rv">__FINALE__</div>
     <div class="cards">
       <div class="pcard rv"><div class="h">__L_TEST__<b>HV Test</b></div><p>Know yourself. Tests for your traits, thinking, skills and growth, starting with the Maturity Assessment.</p><div class="pacts"><a class="btn" href="https://harshvittori.github.io/hv-tests/">Open HV Test</a><a class="lm" href="/test/">Learn more</a></div></div>
