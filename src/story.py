@@ -180,7 +180,7 @@ def prologue():
     stars = "".join('<circle class="twinkle" style="animation-delay:%.1fs" cx="%d" cy="%d" r="2.2" fill="#FFFFFF"/>' % (d, cx, cy)
                     for d, cx, cy in [(0, 92, 84), (.7, 150, 72), (1.3, 120, 118), (2, 176, 104)])
     notes = "".join('<g transform="rotate(%d %d %d)"><rect x="%d" y="%d" width="46" height="40" rx="4" fill="%s"/><text x="%d" y="%d" text-anchor="middle" font-size="9.5" font-weight="700" fill="#5B4A1C">%s</text></g>' % (
-        r, x + 23, y + 20, x, y, c, x + 23, y + 24, t) for x, y, c, r, t in [(226, 52, "#FFE58A", -5, "Learn SQL"), (280, 46, "#FFD1DC", 4, "Apply!!"), (310, 96, "#CDEBD9", 3, "Gym?")])
+        r, x + 23, y + 20, x, y, c, x + 23, y + 24, t) for x, y, c, r, t in [(226, 52, "#FFE58A", -5, "Speak up!"), (280, 46, "#FFD1DC", 4, "Apply!!"), (310, 96, "#CDEBD9", 3, "Gym?")])
     cert = ('<rect x="64" y="186" width="92" height="66" rx="6" fill="#FFFFFF" stroke="#D9CBA8" stroke-width="3"/><circle cx="110" cy="206" r="8" fill="#F2C063"/>'
             '<rect x="80" y="222" width="60" height="5" rx="2.5" fill="#D8DAE0"/><rect x="88" y="233" width="44" height="5" rx="2.5" fill="#D8DAE0"/>')
     icons = ('<g class="pop" style="animation-delay:0s"><circle cx="404" cy="104" r="22" fill="#E3F2EA"/><text x="404" y="113" text-anchor="middle" font-size="24" font-weight="700" fill="#127A4F">?</text></g>'
@@ -212,15 +212,15 @@ def ch_test():
              '<text x="453" y="366" text-anchor="middle" font-size="12" font-weight="600" fill="#86868B">10 AREAS · 2 PDFs</text></g>'
              '<g class="t v4"><text x="380" y="140" font-size="11" font-weight="700" fill="#127A4F" letter-spacing=".6">YOUR 30-DAY PLAN</text>' +
              "".join('<rect x="380" y="%d" width="146" height="42" rx="10" fill="%s"/><rect x="390" y="%d" width="14" height="14" rx="4" fill="#FFFFFF" stroke="#127A4F" stroke-width="1.8"/><text x="412" y="%d" font-size="12" font-weight="600" fill="%s">%s</text><text x="412" y="%d" font-size="10" fill="#86868B">%s</text>' % (
-                 y, "#F2F8F4" if i % 2 == 0 else "#FFFFFF", y + 10, y + 18, INK, t, y + 32, sub) for i, (y, t, sub) in enumerate([(152, "Practise SQL daily", "real problems, timed"), (200, "Build 1 dashboard", "a real project"), (248, "Practise my story", "3 real examples"), (296, "Show up daily", "consistency: 48")])) +
+                 y, "#F2F8F4" if i % 2 == 0 else "#FFFFFF", y + 10, y + 18, INK, t, y + 32, sub) for i, (y, t, sub) in enumerate([(152, "Speak 20 min daily", "record, listen back"), (200, "Write 3 real stories", "proof of strengths"), (248, "1 mock interview", "every week"), (296, "Show up daily", "consistency: 48")])) +
              '<text x="453" y="366" text-anchor="middle" font-size="12" font-weight="600" fill="#86868B">Built from your results</text></g></g>')
     inner = (FLOOR +
              '<g class="t v1"><clipPath id="mehta-cut"><rect x="330" y="0" width="270" height="344"/></clipPath><g clip-path="url(#mehta-cut)">' + people.figure(dict(people.CAST["mehta"], pose="clasp"), 470, 340, 1) + '</g>' + desk(360, 330, 220) +
              '<rect x="372" y="344" width="196" height="72" rx="4" fill="#CDB592"/></g>' +
-             bubble(300, 34, 280, 70, "Write a query for our|top 5 customers.", "right", "t v1", tailx=462) +
+             bubble(300, 34, 280, 70, "So, tell me about|your strengths.", "right", "t v1", tailx=462) +
              chair(190, 396) + riya(190, 370, 1.05, faces={"w": "v1", "n": "v2", "h": "v3", "d": "v4"}, arms={"down": "v1", "phone": "v2 v3 v4"}, sweat="v1", bulb="v3") +
              thought(60, 60, 150, 58, '<text x="135" y="98" text-anchor="middle" font-size="26" font-weight="700" fill="#C7C7CC">? ? ?</text>', "t v1", hx=160, hy=150) +
-             bubble(40, 40, 230, 66, "Strong: communication.|To fix: SQL 38, consistency 48.", "right", "t v4", "#E3F2EA", 14, "#0B4F33", tailx=182) +
+             bubble(28, 40, 272, 66, "Strong: problem solving, patience.|To fix: communication, consistency.", "right", "t v4", "#E3F2EA", 14, "#0B4F33", tailx=182) +
              phone)
     return scene(inner, "Riya freezing at an interview, then taking HV Test on her phone, seeing her strengths and gaps, and getting a 30-day plan")
 
@@ -240,10 +240,10 @@ def ch_reset():
              "".join('<rect x="434" y="%d" width="12" height="12" rx="3" fill="#FFFFFF" stroke="#C9B98A"/><rect class="wiggle" x="454" y="%d" width="62" height="6" rx="3" fill="#C9B98A"/>' % (58 + i * 20, 61 + i * 20) for i in range(4)) + '</g></g>'
              '<g class="t v2 v3 v4 panel"><rect x="336" y="56" width="236" height="330" rx="22" fill="#FFFFFF" stroke="#E5E5EA" stroke-width="1.5"/>' + logo_at("reset", 352, 72, 26) +
              '<text x="386" y="91" font-size="14" font-weight="700" fill="%s">HV Reset</text><text x="352" y="134" font-size="36" font-weight="300" fill="%s" class="mono">01:14:52</text>' % (INK, INK) +
-             '<g class="shift">' + blk(0, 156, 204, "9:00  SQL practice", "#4A72C8") + blk(1, 204, 204, "11:00  Short break", "#EEF0F4", "#6E6E73") + blk(2, 252, 204, "2:00  Dashboard project", "#4A72C8") + blk(3, 300, 204, "6:00  Evening walk", "#F4B942", INK) + '</g>'
+             '<g class="shift">' + blk(0, 156, 204, "9:00  Speaking practice", "#4A72C8") + blk(1, 204, 204, "11:00  Short break", "#EEF0F4", "#6E6E73") + blk(2, 252, 204, "2:00  Write my stories", "#4A72C8") + blk(3, 300, 204, "6:00  Evening walk", "#F4B942", INK) + '</g>'
              '<g class="t v3 late"><rect x="478" y="72" width="80" height="26" rx="13" fill="#FBF1DF"/><text x="518" y="90" text-anchor="middle" font-size="12" font-weight="700" fill="#9A6512">Restart ↻</text></g>'
-             '<g class="t v4"><rect x="352" y="350" width="204" height="26" rx="13" fill="#E3F2EA"/><text x="454" y="367" text-anchor="middle" font-size="12" font-weight="700" fill="#0B4F33">SQL test: 38% → 81% ↑</text></g></g>'
-             '<g class="t v2"><rect x="24" y="136" width="292" height="44" rx="16" fill="#2E43A6"/><text x="40" y="156" font-size="11" font-weight="700" fill="#C9D3FF">To HV AI</text><text x="40" y="172" font-size="12.5" font-weight="600" fill="#FFFFFF">“Roz 9 se 11 SQL, 2 baje project”</text></g>')
+             '<g class="t v4"><rect x="352" y="350" width="204" height="26" rx="13" fill="#E3F2EA"/><text x="454" y="367" text-anchor="middle" font-size="12" font-weight="700" fill="#0B4F33">Mock interview: 4 → 8 /10 ↑</text></g></g>'
+             '<g class="t v2"><rect x="24" y="136" width="292" height="44" rx="16" fill="#2E43A6"/><text x="40" y="156" font-size="11" font-weight="700" fill="#C9D3FF">To HV AI</text><text x="40" y="172" font-size="12.5" font-weight="600" fill="#FFFFFF">“Roz 9 baje speaking, 2 baje stories”</text></g>')
     return scene(inner, "Riya's scattered days, then HV AI turning one sentence into a plan in HV Reset, a restart after missed days, and a finished day with her progress going up")
 
 def ch_vault():
@@ -269,7 +269,7 @@ def ch_vault():
              '<rect x="318" y="312" width="258" height="40" rx="14" fill="%s"/><text x="334" y="337" font-size="13.5" font-weight="600" fill="#FFFFFF">Kal 4 baje Zomato interview</text>' % "#2E43A6" +
              '<rect x="318" y="360" width="200" height="40" rx="14" fill="#FFFFFF" stroke="#E5E5EA"/><text x="334" y="385" font-size="13.5" font-weight="600" fill="%s">📅 Tue · 4:00 PM ✓</text></g>' % INK +
              '<g class="t v4"><g class="envelope"><rect x="360" y="316" width="150" height="92" rx="10" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="2"/><path d="M360,322 l75,50 l75,-50" fill="none" stroke="#D2D2D7" stroke-width="2"/>'
-             '<rect class="letter" x="378" y="300" width="114" height="60" rx="6" fill="#F6EEDC"/><text class="letter" x="435" y="336" text-anchor="middle" font-size="16" font-weight="800" fill="#A87A22">OFFER</text><text class="letter" x="435" y="352" text-anchor="middle" font-size="10.5" font-weight="600" fill="#7C5712">Product Analyst</text></g>' + confetti + '</g>')
+             '<rect class="letter" x="378" y="300" width="114" height="60" rx="6" fill="#F6EEDC"/><text class="letter" x="435" y="336" text-anchor="middle" font-size="16" font-weight="800" fill="#A87A22">OFFER</text><text class="letter" x="435" y="349" text-anchor="middle" font-size="9.5" font-weight="600" fill="#7C5712">Customer Success</text><text class="letter" x="435" y="359" text-anchor="middle" font-size="9.5" font-weight="600" fill="#7C5712">Manager</text></g>' + confetti + '</g>')
     return scene(inner, "Riya's scattered job links, then HV Vault holding 34 applications on one board, a follow-up and an interview on the calendar, and finally an offer letter")
 
 def finale():
@@ -286,21 +286,21 @@ def finale():
 
 # (icon letter, icon colour, app, title, body, meta, side)  side: "" notification, "me" her own message, "them" a reply
 INTER = {
- "night": dict(face=("s", "scroll", "#26305E"), mood="another test failed, can't sleep", dark=True, time="Sunday · 11:48 PM", title="The night it all piles up.",
-   text="Riya should be asleep. Instead she's reading the same email again. Another company, another online test, another fail. She has the certificates. She did the courses. So why does every test feel like it's in a language she only half knows?",
+ "night": dict(face=("s", "scroll", "#26305E"), mood="another rejection, can't sleep", dark=True, time="Sunday · 11:48 PM", title="The night it all piles up.",
+   text="Riya should be asleep. Instead she's reading the same email again. Another interview, another &ldquo;no&rdquo;. She has the degree. She has the certificates. So why does she go blank the moment someone asks her about herself?",
    items=[("@mom", "", "WhatsApp", "Mom", "Beta, Sharma aunty ki beti ki job lag gayi 😊 Tera kab hoga?", "11:31 PM", ""),
           ("@ananya", "", "LinkedIn", "Ananya, your batchmate", "started a new position at a top startup. Say congrats!", "11:40 PM", ""),
-          ("M", "#EA4335", "Mail", "Online assessment result", "You scored 41%. The cut-off was 65%. We won't be moving ahead.", "9:14 PM", ""),
-          ("★", "#F4B942", "Certificates", "Data Analytics · SQL · Excel", "3 of 3 completed", "", "")],
-   voice="I have the certificates. Why can't I pass their test?",
-   pains=["Failed tests", "Certificates without skills", "Family pressure", "Comparison"],
+          ("M", "#EA4335", "Mail", "Interview feedback", "Good profile, but communication and clarity need work. We won't be moving ahead.", "9:14 PM", ""),
+          ("★", "#F4B942", "Certificates", "Business Communication · Excel · Digital Marketing", "3 of 3 completed", "", "")],
+   voice="I have the degree and the certificates. Why does nobody pick me?",
+   pains=["Rejections", "Doesn't know her strengths", "Freezes in interviews", "Family pressure"],
    bridge="She doesn't need a fourth certificate. She needs to know where she actually stands."),
  "kalse": dict(face=("g", "scroll", "#2B2F5C"), mood="caught in the scroll, again", dark=True, time="Day 3 of her plan · 10:05 AM", title="Knowing isn't doing.",
-   text="Her self-assessment told her exactly what to fix. For two days she's on fire. On day three the old Riya is back: one reel becomes forty, and the SQL course sits paused at 7:42. Again.",
-   items=[("▶", "#FF0000", "YouTube", "SQL for beginners, full course", "Paused at 7:42 of 4:20:00", "yesterday", ""),
+   text="Her self-assessment told her exactly what to fix. For two days she's on fire. On day three the old Riya is back: one reel becomes forty, and the interview-practice video sits paused at 7:42. Again.",
+   items=[("▶", "#FF0000", "YouTube", "How to answer &ldquo;Tell me about yourself&rdquo;", "Paused at 7:42 of 18:20", "yesterday", ""),
           ("◎", "#E1306C", "Instagram", "priya.codes and 12 others", "posted new reels", "10:02 AM", ""),
           ("✎", "#F4B942", "Notes", "My routine", "Monday: start fresh ✅  Tuesday: start fresh again", "", ""),
-          ("31", "#4A72C8", "Calendar", "Study 10:00 to 12:00", "Missed", "10:00 AM", "")],
+          ("31", "#4A72C8", "Calendar", "Speaking practice, 10:00", "Missed", "10:00 AM", "")],
    voice="Kal se pakka. (From tomorrow. For sure.)",
    pains=["Procrastination", "Phone traps", "Restarting every Monday", "Guilt"],
    bridge="She doesn't need more motivation. She needs a simpler day."),
@@ -316,7 +316,7 @@ INTER = {
  "call": dict(face=("j", "ear", "#FFE3C4"), mood="happy tears", dark=False, time="Week 11 · Thursday, 4:12 PM", title="The call.",
    text="Two weeks after the rejection that almost broke her streak, her phone rings. Unknown number. She almost lets it go. Then she picks up.",
    items=[("@kavya", "", "Phone", "Incoming call", "Kavya, Talent team", "4:12 PM", ""),
-          ("M", "#EA4335", "Mail", "Offer letter: Product Analyst", "We're delighted to offer you the role. Please find the details attached.", "4:31 PM", ""),
+          ("M", "#EA4335", "Mail", "Offer letter: Customer Success Manager", "We're delighted to offer you the role. Please find the details attached.", "4:31 PM", ""),
           ("", "", "", "", "Maa, job lag gayi!! 🎉🎉", "4:33 PM", "me"),
           ("@mom", "", "", "Mom", "Mujhe pata tha ❤️ Sharma aunty ko main bataungi 😄", "4:34 PM", "them")],
    voice="Not luck. Consistency: eleven weeks of small, honest, slightly boring days.",
@@ -344,8 +344,8 @@ def interlude(key):
         "".join('<span>%s</span>' % x for x in d["pains"]), ('<p class="bridge">%s</p>' % d["bridge"]) if d.get("bridge") else "",
         "".join(item(*i) for i in d["items"]))
 
-LESSONS = [("Certificates aren't skills.", "Her certificates said she was ready. The tests said otherwise. One honest skills check showed her exactly where the gap was."),
-           ("Practise, don't just watch.", "45 minutes of real, timed problems a day did what three courses couldn't. Keeping each day that simple was the whole trick."),
+LESSONS = [("Know your real strengths.", "She had strengths she'd never noticed and a weakness she'd never faced. One honest check showed her both."),
+           ("Practise out loud.", "20 minutes of real speaking practice a day did what three certificates couldn't. Keeping each day that simple was the whole trick."),
            ("A missed day isn't a lost week.", "She shifted the day and kept going, instead of waiting for Monday to start over."),
            ("Track every chance. Follow up.", "34 applications, one list, reminders on time. The interview that changed everything came from a follow-up.")]
 def cast():
@@ -377,35 +377,35 @@ def chapter(key, num, step, title, why, art, steps, tools):
 CH = [
     chapter("test", 1, "Know where you stand", "What am I actually good at?",
         "Without an honest picture of yourself, you practise the wrong things and apply for the wrong roles. Everything after this depends on it.", ch_test(), [
-        ("Week 0 · The problem", "Her certificate says SQL. Her hands don't.", "Her one interview this month. Mr. Mehta asks her to write a simple query for the top five customers. She knows every term from her course, but she has never written one from scratch under pressure. She freezes."),
-        ("Week 1 · What she did", "She stops collecting certificates and measures.", "An honest self-assessment of how she thinks and works, plus a real skills check. She used HV Test, a free set of assessments. What mattered was being honest with herself."),
-        ("The result", "She knew the words, not the work.", "Communication 84: all those support calls paid off. But SQL 38 and consistency 48. The certificates taught her what things are called; the tests want her to use them. It stings, and it's the first honest picture she's had."),
-        ("The plan", "Less watching. More doing.", "No new course. 45 minutes of real SQL problems every day, timed like a company test. One real dashboard project. And the hard one: show up every day.")],
+        ("Week 0 · The problem", "She freezes on the easy question.", "&ldquo;So, tell me about your strengths.&rdquo; Riya talks for two minutes, says &ldquo;hard-working&rdquo; three times, and gives no example. Mr. Mehta nods politely. She knows, before the email comes."),
+        ("Week 1 · What she did", "She stops collecting certificates and measures.", "An honest self-assessment of how she thinks, works and communicates. She used HV Test, a free set of assessments. What mattered was being honest with herself."),
+        ("The result", "Strengths she never noticed. A weakness she never faced.", "Problem solving 82 and patience 86: a year of angry support calls taught her more than she knew. But communication 46: she rambles, speaks too fast and never gives an example. And consistency 48. It stings, and it's the first honest picture she's had."),
+        ("The plan", "Less watching. More speaking.", "No new course. 20 minutes of speaking practice a day: answer one question, record it, listen back. Three real stories that prove her strengths. One mock interview a week. And the hard one: show up every day.")],
         '<a href="https://harshvittori.github.io/hv-tests/">HV Test</a>, free: the Maturity Assessment and a skills test.'),
     chapter("reset", 2, "Show up daily", "Why can't I stay consistent?",
-        "A skill isn't something you finish, like a certificate. It's something you practise until a test can't surprise you. This is the step where most people stop.", ch_reset(), [
-        ("The problem", "Big plans. Lost days.", "Night shift ends at 6 AM. She sleeps till noon, opens a practice set at 2, gets stuck on question 3, checks her phone at 2:05, and suddenly it's time for work again."),
-        ("What she did", "She makes every day simple.", "Each night she picks tomorrow's one or two important tasks, with a time for each. She used HV Reset, typing &ldquo;Roz 9 se 11 SQL, 2 baje project&rdquo; to HV AI to set the day. One task at a time, nothing else."),
+        "Confidence isn't something you finish, like a certificate. It's something you practise until the hard question stops scaring you. This is the step where most people stop.", ch_reset(), [
+        ("The problem", "Big plans. Lost days.", "Night shift ends at 6 AM. She sleeps till noon, records one answer at 2, hates how she sounds, checks her phone at 2:05, and suddenly it's time for work again."),
+        ("What she did", "She makes every day simple.", "Each night she picks tomorrow's one or two important tasks, with a time for each. She used HV Reset, typing &ldquo;Roz 9 baje speaking practice, 2 baje ek story&rdquo; to HV AI to set the day. One task at a time, nothing else."),
         ("Week 2 · A setback", "She misses two days. She doesn't quit.", "A cold, a family function, a lost weekend. Instead of starting over on Monday, she shifts today's plan, keeps the one core task, and goes again. The streak resets. The progress doesn't."),
-        ("Week 6 · The change", "Now it's just what she does.", "42 focused hours and 300 practice questions. She retakes a timed SQL test: 38% five weeks ago, 81% today. Her first dashboard project goes online. She sends it to Neha ma'am, her old college teacher: &ldquo;Show this in every interview.&rdquo; Looking back at her hours, she can see it: she really is getting better.")],
+        ("Week 6 · The change", "Now it's just what she does.", "42 recordings and six mock interviews. Her first answer was three minutes of rambling; now it's 60 seconds, with a real example. Neha ma'am, her old college teacher, does a mock interview with her: &ldquo;Now I believe you.&rdquo; Looking back at her hours, she can see it: she really is getting better.")],
         '<a href="https://harshvittori.github.io/hv-reset/">HV Reset</a> with HV AI, free: a simple plan for each day.'),
     chapter("vault", 3, "Apply with a system", "Where did all my applications go?",
-        "Real skills get you through the tests. A system gets you in front of enough of them. Without tracking and follow-ups, good chances quietly slip away, and the work from steps 1 and 2 goes to waste.", ch_vault(), [
+        "Real confidence gets you through the interviews. A system gets you in front of enough of them. Without tracking and follow-ups, good chances quietly slip away, and the work from steps 1 and 2 goes to waste.", ch_vault(), [
         ("The problem", "Applications vanish into silence.", "Job links in WhatsApp, resume_final_v3.pdf, and no idea who she applied to last week, or who she should chase."),
-        ("Week 7 · What she did", "Every job in one place.", "Saved, applied, interview: one list, updated the same day. She used HV Vault, a free job tracker. 34 applications over four weeks. This time, when the online tests arrive, she clears four out of five."),
+        ("Week 7 · What she did", "Every job in one place.", "Saved, applied, interview: one list, updated the same day. She used HV Vault, a free job tracker. 34 applications over four weeks. This time, when the interviews come, she gets through four of five first rounds."),
         ("Follow-ups", "The follow-ups actually happen.", "After every application she sets a reminder to follow up. One quiet application turns into an interview because of it. She adds the interview to her calendar the moment it's fixed: &ldquo;Kal 4 baje&rdquo;, done."),
-        ("Week 11 · The outcome", "A no. Then the yes.", "A final round says no, and it hurts. She notes what went wrong, preps with her real stories, and two weeks later signs the offer she wanted: Product Analyst.")],
+        ("Week 11 · The outcome", "A no. Then the yes.", "A final round says no, and it hurts. She notes what went wrong, preps with her real stories, and two weeks later signs the offer she wanted: Customer Success Manager.")],
         '<a href="https://harshvittori.github.io/hv-vault-web/">HV Vault</a>, free: one board for her applications and follow-ups.'),
 ]
 
-TIMELINE = [("Week 1", "Takes an honest self-assessment and a skills test. SQL: 38. Consistency: 48. Ouch.", "#127A4F"),
+TIMELINE = [("Week 1", "Takes an honest self-assessment. Communication: 46. Consistency: 48. Ouch.", "#127A4F"),
             ("Week 2", "Plans each day the night before. Misses two days, then restarts instead of quitting.", "#4A72C8"),
-            ("Week 5", "Timed SQL test: 81%, up from 38%. Her first dashboard project goes online, and Neha ma'am says it's interview-ready.", "#4A72C8"),
+            ("Week 5", "Mock interview score: 8 out of 10, up from 4. Neha ma'am says she's ready.", "#4A72C8"),
             ("Week 7", "Starts applying, a few good roles a day, every one tracked in one place.", "#A87A22"),
             ("Week 8", "Ananya, the batchmate she used to envy, sends an opening at a friend's startup. Riya adds it to her list and applies that evening.", "#A87A22"),
-            ("Week 9", "34 applications, 4 of 5 online tests cleared, 3 interviews. A follow-up revives a quiet lead.", "#A87A22"),
+            ("Week 9", "34 applications, 4 of 5 first rounds cleared, 3 final interviews. A follow-up revives a quiet lead.", "#A87A22"),
             ("Week 10", "Rejected after a final round. Writes down why, and preps again.", "#86868B"),
-            ("Week 11", "Offer: Product Analyst. The role she was aiming for.", "#2E43A6")]
+            ("Week 11", "Offer: Customer Success Manager. The role she was aiming for.", "#2E43A6")]
 def timeline():
     return "".join('<li class="rv"><span class="dot" style="background:%s"></span><b>%s</b><p>%s</p></li>' % (c, w, t) for w, t, c in TIMELINE)
 
@@ -780,15 +780,15 @@ PAGE = """<!DOCTYPE html>
     <div class="rv">
       <p class="eyebrow">An 11-week story</p>
       <h1>This is Riya. She's 25.</h1>
-      <p class="lead">Jaipur. A B.Com, three online certificates, a year and a half of night shifts in customer support. On paper, she's ready to become a data analyst. <b>So why does she fail every company test she takes?</b></p>
-      <div class="worries"><span><i style="background:#127A4F"></i>Why do I keep failing their tests?</span><span><i style="background:#4A72C8"></i>Why can't I stay consistent?</span><span><i style="background:#A87A22"></i>Where did my applications go?</span></div>
+      <p class="lead">Jaipur. A B.Com, three online certificates, a year and a half of night shifts in customer support. On paper, she's ready for a better job. <b>So why does she keep getting rejected?</b></p>
+      <div class="worries"><span><i style="background:#127A4F"></i>What are my real strengths?</span><span><i style="background:#4A72C8"></i>Why can't I stay consistent?</span><span><i style="background:#A87A22"></i>Where did my applications go?</span></div>
       <a class="scroll-hint" href="#test">Follow her story __ARROW__</a>
     </div>
     <div class="art-box rv">__PROLOGUE__</div>
   </div></section>
   <section class="before"><div class="wrap">
     <p class="label rv">Riya, before</p>
-    <div class="stats rv"><div><b>3</b><span>certificates on her resume</span></div><div><b>5</b><span>company online tests failed in a row</span></div><div><b>26</b><span>applications sent, 1 interview</span></div><div><b>0</b><span>idea why the certificates aren't enough</span></div></div>
+    <div class="stats rv"><div><b>3</b><span>certificates on her resume</span></div><div><b>26</b><span>applications sent this month</span></div><div><b>5</b><span>interviews, 5 rejections</span></div><div><b>0</b><span>idea what her real strengths are</span></div></div>
     <p class="note rv">Sound familiar? This is her story: the bad nights, the restarts, and what finally changed.</p>
   </div></section>
   <section class="cast"><div class="wrap">
