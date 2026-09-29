@@ -224,7 +224,7 @@ TABLET = '<rect x="-24" y="-10" width="54" height="40" rx="6" fill="#2B2B30"/><r
 FOLDER = '<rect x="4" y="-16" width="36" height="46" rx="3" fill="#E8C98A"/><rect x="8" y="-10" width="28" height="3" rx="1.5" fill="#B99A5C"/>'
 
 CAST = {
-    "riya": dict(name="Riya", role="25 · a fresher, 2025 batch", line="B.Tech, three certificates. Keeps failing tests and interviews.",
+    "riya": dict(name="Riya", role="22 · a fresher, 2025 batch", line="B.Tech, three certificates. Keeps failing tests and interviews.",
                  skin="#D9A07A", hair="#231715", hairstyle="long", top="blazer", top_col="#2F3B6E", accent="#F6EFE6", bottom="trousers", bottom_col="#3B3F4A",
                  shoes="#E8DCCB", extras=["earrings", "chain", "bag"], pose="down"),
     "mom": dict(name="Mom", role="her biggest fan, and her biggest worry", line="Asks &ldquo;tera kab hoga?&rdquo; every week. Means it with love.",
