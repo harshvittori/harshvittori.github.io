@@ -260,11 +260,70 @@ def finale():
              riya(300, 150, .62, faces={"h": ""}, arms={"up": ""}))
     return '<svg class="art" viewBox="0 0 600 460" role="img" aria-label="HV Test, HV Reset and HV Vault linked as a chain, looping back to grow, with Riya cheering">%s</svg>' % inner
 
+# (icon letter, icon colour, app, title, body, meta, side)  side: "" notification, "me" her own message, "them" a reply
+INTER = {
+ "night": dict(dark=True, time="Sunday · 11:48 PM", title="The night it all piles up.",
+   text="Riya should be asleep. Instead she's scrolling. Everyone seems to be moving ahead except her. This month she sent 26 applications and heard back from exactly one: an automatic &ldquo;thank you for applying&rdquo;.",
+   items=[("W", "#25D366", "WhatsApp", "Mom", "Beta, Sharma aunty ki beti ki job lag gayi 😊 Tera kab hoga?", "11:31 PM", ""),
+          ("in", "#0A66C2", "LinkedIn", "Ananya, your batchmate", "started a new position at a top startup. Say congrats!", "11:40 PM", ""),
+          ("M", "#EA4335", "Mail", "Careers team", "Thank you for applying. We'll be in touch.", "3 weeks ago", ""),
+          ("⏱", "#5E5CE6", "Screen time", "4h 51m today", "Instagram 3h 12m · YouTube 1h 06m", "now", "")],
+   voice="I'm doing everything. So why is nothing working?",
+   pains=["Comparison", "Family pressure", "No replies", "No clarity"],
+   bridge="She doesn't need another course. She needs to know where she actually stands."),
+ "kalse": dict(dark=True, time="Day 3 of her plan · 10:05 AM", title="Knowing isn't doing.",
+   text="HV Test told her exactly what to fix. For two days she's on fire. On day three the old Riya is back: one reel becomes forty, and the SQL course sits paused at 7:42. Again.",
+   items=[("▶", "#FF0000", "YouTube", "SQL for beginners, full course", "Paused at 7:42 of 4:20:00", "yesterday", ""),
+          ("◎", "#E1306C", "Instagram", "priya.codes and 12 others", "posted new reels", "10:02 AM", ""),
+          ("✎", "#F4B942", "Notes", "My routine", "Monday: start fresh ✅  Tuesday: start fresh again", "", ""),
+          ("31", "#4A72C8", "Calendar", "Study 10:00 to 12:00", "Missed", "10:00 AM", "")],
+   voice="Kal se pakka. (From tomorrow. For sure.)",
+   pains=["Procrastination", "Phone traps", "Restarting every Monday", "Guilt"],
+   bridge="She doesn't need more motivation. She needs a simpler day."),
+ "inbox": dict(dark=True, time="Week 7 · Monday morning", title="The inbox that hurts.",
+   text="Her skills are real now, and so is the job hunt. So is the mess: job links buried in chats, three versions of her resume, and a tracker spreadsheet she stopped updating 19 days ago.",
+   items=[("M", "#EA4335", "Mail", "Finlo Careers", "Unfortunately, we have decided to move forward with other candidates.", "9:02 AM", ""),
+          ("M", "#EA4335", "Mail", "Brightpath Analytics", "Thank you for your interest. The position has been filled.", "Sat", ""),
+          ("W", "#25D366", "WhatsApp", "Rohit (recruiter)", "Will get back to you by Friday 👍", "12 days ago", ""),
+          ("▦", "#0F9D58", "Sheets", "jobs_tracker_FINAL_v2.xlsx", "Last edited 19 days ago", "", "")],
+   voice="Did I already apply to that role? Did I ever follow up with Cred?",
+   pains=["Rejections", "Ghosting", "Lost links", "Missed follow-ups"],
+   bridge="Rejections are part of the game. Losing track of good chances doesn't have to be."),
+ "call": dict(dark=False, time="Week 11 · Thursday, 4:12 PM", title="The call.",
+   text="Two weeks after the rejection that almost broke her streak, her phone rings. Unknown number. She almost lets it go. Then she picks up.",
+   items=[("✆", "#34C759", "Phone", "Incoming call", "Talent team", "4:12 PM", ""),
+          ("M", "#EA4335", "Mail", "Offer letter: Product Analyst", "We're delighted to offer you the role. Please find the details attached.", "4:31 PM", ""),
+          ("", "", "", "", "Maa, job lag gayi!! 🎉🎉", "4:33 PM", "me"),
+          ("", "", "", "Mom", "Mujhe pata tha ❤️ Sharma aunty ko main bataungi 😄", "4:34 PM", "them")],
+   voice="Not luck. Eleven weeks of small, honest, slightly boring days.",
+   pains=["Knew her strengths", "Showed up daily", "Never lost a lead", "Got the job"]),
+}
+def interlude(key):
+    d = INTER[key]
+    def item(ic, col, app, t, body, meta, side):
+        if side:
+            return '<div class="nt %s">%s<p>%s</p><small>%s</small></div>' % (side, ('<b>%s</b>' % t) if t else "", body, meta)
+        return ('<div class="nt"><span class="ico" style="background:%s">%s</span><div><div class="top"><em>%s</em><small>%s</small></div><b>%s</b><p>%s</p></div></div>' % (col, ic, app, meta, t, body))
+    return ('<section class="inter%s" id="%s"><div class="wrap grid">'
+            '<div class="txt rv"><p class="when">%s</p><h2>%s</h2><p class="story">%s</p><blockquote>&ldquo;%s&rdquo;</blockquote>'
+            '<div class="pains">%s</div>%s</div>'
+            '<div class="ph rv" role="group" aria-label="Riya\'s phone"><div class="notch"></div>%s</div></div></section>') % (
+        "" if d["dark"] else " win", key, d["time"], d["title"], d["text"], d["voice"],
+        "".join('<span>%s</span>' % x for x in d["pains"]), ('<p class="bridge">%s</p>' % d["bridge"]) if d.get("bridge") else "",
+        "".join(item(*i) for i in d["items"]))
+
+LESSONS = [("Measure before you fix.", "She stopped guessing what was wrong. Ten honest minutes with HV Test showed her the two things that mattered most."),
+           ("Plan small. Show up daily.", "Two hours of SQL a day beat a perfect eight-hour plan she never started. HV AI kept it that simple."),
+           ("A missed day isn't a lost week.", "She shifted the day and kept going, instead of waiting for Monday to start over."),
+           ("Track every chance. Follow up.", "34 applications, one board, reminders on time. The interview that changed everything came from a follow-up.")]
+def lessons():
+    return "".join('<div class="ls rv"><span>%d</span><b>%s</b><p>%s</p></div>' % (i + 1, h, t) for i, (h, t) in enumerate(LESSONS))
+
 # ---------------------------------------------------------------- chapters (scrollytelling)
 def chapter(key, num, verb, prod, title, art, steps, url, cta):
     st = "".join('<div class="step" data-step="%d"><div class="cap"><p class="k">%s</p><h3>%s</h3><p>%s</p>%s</div></div>' % (
         i + 1, k, h, p, ('<a class="btn" href="%s">%s</a>' % (url, cta)) if i == len(steps) - 1 else "") for i, (k, h, p) in enumerate(steps))
-    return ('<section class="chapter" id="%s"><div class="wrap"><div class="chead rv"><span class="num">Chapter %d · %s</span>'
+    return interlude({"test": "night", "reset": "kalse", "vault": "inbox"}[key]) + ('<section class="chapter" id="%s"><div class="wrap"><div class="chead rv"><span class="num">Chapter %d · %s</span>'
             '<div class="pname">%s<span>%s</span></div><h2>%s</h2></div>'
             '<div class="scrolly"><div class="stage-wrap"><div class="stage" data-step="1">%s</div></div><div class="steps">%s</div></div></div></section>') % (
         key, num, verb, logo(key, size=40), prod, title, art, st)
@@ -470,6 +529,55 @@ __TOGGLES__
 .tl p{font-size:19px;line-height:1.4;margin-top:2px}
 .tl li:last-child p{font-weight:700}
 
+/* interludes: her phone, between chapters */
+.inter{padding:96px 0;background:#0E1430;color:#fff;position:relative;overflow:hidden}
+.inter::before{content:"";position:absolute;inset:-30% -10% auto auto;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(91,111,224,.35),transparent 70%);pointer-events:none}
+.inter.win{background:linear-gradient(135deg,#FFF6E6,#FDE7EF 55%,#E8EEFF);color:var(--ink)}
+.inter.win::before{background:radial-gradient(circle,rgba(242,192,99,.45),transparent 70%)}
+.inter .grid{display:grid;grid-template-columns:1fr 380px;gap:64px;align-items:center;position:relative}
+.inter .when{font-size:14px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#9FB0FF}
+.inter.win .when{color:#B5561E}
+.inter h2{font-size:clamp(34px,5vw,58px);font-weight:700;letter-spacing:-.04em;line-height:1.04;margin-top:10px}
+.inter .story{font-size:19px;line-height:1.5;color:rgba(255,255,255,.78);margin-top:16px;max-width:560px}
+.inter.win .story{color:var(--soft)}
+.inter blockquote{margin:26px 0 0;font-size:clamp(22px,2.6vw,30px);font-weight:600;font-style:italic;letter-spacing:-.02em;line-height:1.25;border-left:4px solid #FF8A8A;padding-left:18px;max-width:560px}
+.inter.win blockquote{border-color:#34C759}
+.pains{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.pains span{font-size:14px;font-weight:600;padding:7px 13px;border-radius:999px;background:rgba(255,120,120,.14);color:#FFB3B3;border:1px solid rgba(255,138,138,.3)}
+.inter.win .pains span{background:#E3F4EA;color:#0B6B3F;border-color:#BFE3CD}
+.inter.win .pains span::before{content:"✓ "}
+.bridge{margin-top:26px;font-size:18px;font-weight:600;color:#C9D3FF}
+.ph{background:#151B38;border-radius:40px;padding:34px 14px 18px;box-shadow:0 40px 80px -30px rgba(0,0,0,.6),inset 0 0 0 2px rgba(255,255,255,.08);position:relative}
+.inter.win .ph{background:#FFFFFF;box-shadow:0 40px 80px -36px rgba(120,60,20,.35),inset 0 0 0 1px #F0E4D8}
+.ph .notch{position:absolute;top:12px;left:50%;width:90px;height:8px;margin-left:-45px;border-radius:8px;background:rgba(255,255,255,.14)}
+.inter.win .ph .notch{background:#EEE6DD}
+.nt{display:flex;gap:11px;background:rgba(255,255,255,.08);border-radius:20px;padding:12px 14px;margin-top:10px;text-align:left}
+.inter.win .nt{background:#F6F4F1}
+.nt .ico{flex:none;width:34px;height:34px;border-radius:9px;display:grid;place-items:center;font-size:13px;font-weight:800;color:#fff}
+.nt>div{min-width:0;flex:1}
+.nt .top{display:flex;justify-content:space-between;gap:8px;font-size:12px;opacity:.65}
+.nt .top em{font-style:normal;font-weight:600;text-transform:uppercase;letter-spacing:.03em}
+.nt b{display:block;font-size:14.5px;margin-top:1px}
+.nt p{font-size:14.5px;line-height:1.35;opacity:.86;margin-top:1px}
+.nt.me,.nt.them{display:block;max-width:82%;border-radius:18px;padding:9px 13px}
+.nt.me{margin-left:auto;background:#DCF8C6!important;color:#10331A;border-bottom-right-radius:6px}
+.nt.them{background:#FFFFFF!important;color:var(--ink);border:1px solid #EEE;border-bottom-left-radius:6px}
+.nt.me small,.nt.them small{display:block;text-align:right;font-size:11px;opacity:.55;margin-top:2px}
+.nt.them b{font-size:12px;color:#B5561E}
+@media (prefers-reduced-motion:no-preference){.ph .nt{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .6s cubic-bezier(.2,.8,.2,1)}
+  .ph.in .nt{opacity:1;transform:none}.ph.in .nt:nth-of-type(2){transition-delay:.35s}.ph.in .nt:nth-of-type(3){transition-delay:.7s}.ph.in .nt:nth-of-type(4){transition-delay:1.05s}}
+@media (max-width:880px){.inter{padding:64px 0}.inter .grid{grid-template-columns:1fr;gap:34px}.ph{max-width:380px;width:100%;margin:0 auto}.inter .story{font-size:17px}}
+.lessons{padding:90px 0 100px;background:var(--gray)}
+.lessons h2{text-align:center;font-size:clamp(32px,4.8vw,54px);font-weight:700;letter-spacing:-.04em;margin-top:8px}
+.lgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:40px}
+.ls{background:#fff;border:1px solid #E4E5EA;border-radius:22px;padding:24px}
+.ls span{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#E8ECFB;color:var(--accent);font-weight:700;font-size:15px}
+.ls b{display:block;font-size:19px;letter-spacing:-.02em;margin-top:14px;line-height:1.2}
+.ls p{color:var(--soft);font-size:15.5px;margin-top:8px;line-height:1.45}
+@media (max-width:980px){.lgrid{grid-template-columns:1fr 1fr}}@media (max-width:520px){.lgrid{grid-template-columns:1fr}}
+.yourturn{text-align:center;font-size:20px;font-weight:600;margin-top:40px}.yourturn .btn{margin:0 0 0 10px;vertical-align:middle}
+@media (max-width:520px){.yourturn .btn{display:flex;margin:14px auto 0;width:max-content}}
+
 /* finale + people + builder */
 .finale{padding:110px 0;text-align:center;background:var(--gray)}
 .finale h2{font-size:clamp(40px,6.4vw,76px);font-weight:700;letter-spacing:-.045em;line-height:1.02}
@@ -571,14 +679,21 @@ PAGE = """<!DOCTYPE html>
   <section class="before"><div class="wrap">
     <p class="label rv">Riya, before</p>
     <div class="stats rv"><div><b>4</b><span>online courses started, none finished</span></div><div><b>37</b><span>browser tabs &ldquo;for later&rdquo;</span></div><div><b>26</b><span>applications sent, 1 reply</span></div><div><b>0</b><span>idea what to fix first</span></div></div>
-    <p class="note rv">Sound familiar? Here's what changed, one honest step at a time.</p>
+    <p class="note rv">Sound familiar? This is her story: the bad nights, the restarts, and what finally changed.</p>
   </div></section>
   __CHAPTERS__
+  __CALL__
   <section class="journey"><div class="wrap">
     <p class="label rv">Her 11 weeks</p>
     <h2 class="rv">Not overnight. Not magic.</h2>
     <p class="sub rv">Good weeks, bad weeks, and one simple system she kept coming back to.</p>
     <ol class="tl">__TIMELINE__</ol>
+  </div></section>
+  <section class="lessons"><div class="wrap">
+    <p class="label rv">What Riya would tell you</p>
+    <h2 class="rv">Four things that actually worked.</h2>
+    <div class="lgrid">__LESSONS__</div>
+    <p class="yourturn rv">Your turn. Start where she did: <a class="btn" href="https://harshvittori.github.io/hv-tests/">Take the free test</a></p>
   </div></section>
   <section class="finale" id="products"><div class="wrap">
     <h2 class="rv">Know. Grow. Act.</h2>
@@ -614,7 +729,7 @@ PAGE = """<!DOCTYPE html>
 def build():
     html = (PAGE.replace("__CSS__", CSS).replace("__JS__", JS).replace("__ARROW__", ARROW)
             .replace("__LOGO_NAV__", logo("world")).replace("__PROLOGUE__", prologue()).replace("__CHAPTERS__", "\n".join(CH))
-            .replace("__FINALE__", finale()).replace("__TIMELINE__", timeline()).replace("__L_TEST__", logo("test", size=44)).replace("__L_RESET__", logo("reset", size=44)).replace("__L_VAULT__", logo("vault", size=44)))
+            .replace("__FINALE__", finale()).replace("__TIMELINE__", timeline()).replace("__CALL__", interlude("call")).replace("__LESSONS__", lessons()).replace("__L_TEST__", logo("test", size=44)).replace("__L_RESET__", logo("reset", size=44)).replace("__L_VAULT__", logo("vault", size=44)))
     assert "__" not in re.sub(r"<script>.*?</script>", "", html, flags=re.S).replace("__proto__", ""), "unfilled placeholder"
     os.makedirs(os.path.join(OUT, "story"), exist_ok=True)
     html = html.replace("</style>", transitions.CSS + "</style>", 1).replace("</head>", transitions.HEAD + "\n</head>", 1)
