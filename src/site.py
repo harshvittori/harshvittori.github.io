@@ -396,6 +396,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
 .nx>svg:last-child{width:20px;height:20px;color:var(--pc)}
 .back{text-align:center;margin-top:28px}.back a{display:inline-flex;align-items:center;gap:6px;color:var(--accent);font-weight:600;text-decoration:none}.back svg{width:16px;height:16px}.back a:hover{text-decoration:underline}
 @media (max-width:880px){.phero .wrap{grid-template-columns:1fr;padding:44px 0 60px;gap:36px}
+  .phero .pmock{padding-top:26px}
   .facts{grid-template-columns:1fr 1fr;gap:12px}.facts div{padding:16px;border-radius:16px}
   .pp-sec{padding:64px 0}.pf{grid-template-columns:1fr}.pf>div,.pf>div+div{padding:0}.pf>div+div{border-left:0;border-top:1px solid var(--line);margin-top:32px;padding-top:32px}
   .steps3{grid-template-columns:1fr}.st{border-right:0;border-bottom:1px solid var(--line)}.st:last-child{border-bottom:0}
@@ -407,7 +408,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
   .strip{margin-bottom:64px}
   .head{margin-bottom:28px}.head h2,.sec-h{font-size:32px}.head p:not(.label){font-size:17px}
   .products{gap:16px;margin-bottom:72px}
-  .product .right{order:-1;padding:20px 16px;border-top:0!important;border-bottom:1px solid var(--pline)}
+  .product .right{order:-1;padding:36px 16px 24px;border-top:0!important;border-bottom:1px solid var(--pline)}
   .product .left{padding:22px 20px 24px;gap:14px}
   .product .top svg{width:48px;height:48px;border-radius:13px}.product h3{font-size:24px}
   .product .pitch{font-size:16.5px}.product li{font-size:15px}.product ul{gap:9px}
