@@ -224,7 +224,7 @@ TABLET = '<rect x="-24" y="-10" width="54" height="40" rx="6" fill="#2B2B30"/><r
 FOLDER = '<rect x="4" y="-16" width="36" height="46" rx="3" fill="#E8C98A"/><rect x="8" y="-10" width="28" height="3" rx="1.5" fill="#B99A5C"/>'
 
 CAST = {
-    "riya": dict(name="Riya", role="25 · the one chasing a better life", line="B.Com, three certificates, night shifts in customer support. Keeps getting rejected.",
+    "riya": dict(name="Riya", role="25 · the one chasing a better life", line="B.Com, three certificates, night shifts in customer support. Keeps failing tests and interviews.",
                  skin="#D9A07A", hair="#231715", hairstyle="long", top="blazer", top_col="#2F3B6E", accent="#F6EFE6", bottom="trousers", bottom_col="#3B3F4A",
                  shoes="#E8DCCB", extras=["earrings", "chain", "bag"], pose="down"),
     "mom": dict(name="Mom", role="her biggest fan, and her biggest worry", line="Asks &ldquo;tera kab hoga?&rdquo; every week. Means it with love.",
@@ -239,7 +239,7 @@ CAST = {
     "rohit": dict(name="Rohit", role="a recruiter who goes quiet", line="&ldquo;Will get back to you by Friday 👍&rdquo; Twelve days later: nothing.",
                   skin="#B97D58", hair="#1E1716", hairstyle="short", gender="m", top="shirt", top_col="#BFD4EA", bottom="trousers", bottom_col="#2F3440", shoes="#3A2A22",
                   extras=["stubble", "lanyard", "watch"], lanyard="#C0392B", rolled=True, pose="hold", held=PHONE),
-    "mehta": dict(name="Mr. Mehta", role="the interviewer", line="Asks the question that stumps her: &ldquo;So, tell me about your strengths.&rdquo;",
+    "mehta": dict(name="Mr. Mehta", role="the interviewer", line="Asks about her strengths, then for one quick SQL query. She freezes on both.",
                   skin="#C28A66", hair="#6E6661", hairstyle="short", gender="m", top="blazer", top_col="#3A4150", accent="#DCE3F0", bottom="trousers", bottom_col="#2C3038",
                   shoes="#1F1B1A", extras=["glasses", "beard", "age"], pose="hold", held=FOLDER),
     "kavya": dict(name="Kavya", role="HR at the company that hires her", line="Makes the call on a Thursday at 4:12 PM. Riya almost doesn't pick up.",
