@@ -667,10 +667,10 @@ __TOGGLES__
 .lessons{padding:90px 0 100px;background:var(--gray)}
 .lessons h2{text-align:center;font-size:clamp(32px,4.8vw,54px);font-weight:700;letter-spacing:-.04em;margin-top:8px}
 .lgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:40px}
-.ls{background:#fff;border:1px solid #E4E5EA;border-radius:22px;padding:24px}
-.ls span{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#E8ECFB;color:var(--accent);font-weight:700;font-size:15px}
-.ls b{display:block;font-size:19px;letter-spacing:-.02em;margin-top:14px;line-height:1.2}
-.ls p{color:var(--soft);font-size:15.5px;margin-top:8px;line-height:1.45}
+.ls{display:grid;grid-template-columns:34px 1fr;column-gap:14px;align-items:start;background:#fff;border:1px solid #E4E5EA;border-radius:20px;padding:18px 20px}
+.ls span{grid-row:span 2;display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#E8ECFB;color:var(--accent);font-weight:700;font-size:15px}
+.ls b{display:block;font-size:18px;font-weight:700;letter-spacing:-.02em;line-height:1.25;margin-top:5px;color:var(--ink)}
+.ls p{color:var(--faint);font-size:14.5px;font-weight:400;margin-top:4px;line-height:1.4}
 @media (max-width:980px){.lgrid{grid-template-columns:1fr 1fr}}@media (max-width:520px){.lgrid{grid-template-columns:1fr}}
 .yourturn{text-align:center;font-size:20px;font-weight:600;margin-top:40px}.yourturn .btn{margin:0 0 0 10px;vertical-align:middle}
 @media (max-width:520px){.yourturn .btn{display:flex;margin:14px auto 0;width:max-content}}
