@@ -298,16 +298,16 @@ INTER = {
           ("M", "#EA4335", "Mail", "Interview feedback", "Communication and clarity need work. Couldn't complete the SQL task.", "Fri", "")],
    voice="I have the degree and the certificates. Why does nobody pick me?",
    pains=["Failed skill tests", "Doesn't know her strengths", "Freezes in interviews", "Family pressure"],
-   bridge="She doesn't need a fourth certificate. She needs to know where she actually stands."),
+   bridge="She doesn't need a fourth certificate. She needs the truth."),
  "kalse": dict(face=("g", "scroll", "#2B2F5C"), mood="caught in the scroll, again", dark=True, time="Day 3 of her plan · 10:05 AM", title="Knowing isn't doing.",
    text="Two good days. On day three, one reel becomes forty, and the practice video sits paused at 7:42. Again.",
    items=[("▶", "#FF0000", "YouTube", "How to answer &ldquo;Tell me about yourself&rdquo;", "Paused at 7:42 of 18:20", "yesterday", ""),
           ("◎", "#E1306C", "Instagram", "priya.codes and 12 others", "posted new reels", "10:02 AM", ""),
           ("✎", "#F4B942", "Notes", "My routine", "Monday: start fresh ✅  Tuesday: start fresh again", "", ""),
           ("31", "#4A72C8", "Calendar", "SQL practice, 10:00", "Missed", "10:00 AM", "")],
-   voice="Kal se pakka. (From tomorrow. For sure.)",
+   voice="Kal se pakka.",
    pains=["Procrastination", "Phone traps", "Restarting every Monday", "Guilt"],
-   bridge="She doesn't need more motivation. She needs a simpler day."),
+   bridge="Not more motivation. A simpler day."),
  "inbox": dict(face=("c", "face", "#2A2A52"), mood="two rejections before breakfast", dark=True, time="Week 7 · Monday morning", title="The inbox that hurts.",
    text="Her skills are ready. Her job hunt is a mess: links in chats, three resumes, a spreadsheet last opened 19 days ago.",
    items=[("M", "#EA4335", "Mail", "Finlo Careers", "Unfortunately, we have decided to move forward with other candidates.", "9:02 AM", ""),
@@ -316,7 +316,7 @@ INTER = {
           ("▦", "#0F9D58", "Sheets", "jobs_tracker_FINAL_v2.xlsx", "Last edited 19 days ago", "", "")],
    voice="Did I already apply to that role? Did I ever follow up with Cred?",
    pains=["Rejections", "Ghosting", "Lost links", "Missed follow-ups"],
-   bridge="Rejections are normal. Losing good chances isn't."),
+   bridge="Rejections are normal. Losing chances isn't."),
  "call": dict(face=("j", "ear", "#FFE3C4"), mood="happy tears", dark=False, time="Week 11 · Thursday, 4:12 PM", title="The call.",
    text="Two weeks after the rejection, an unknown number calls. She almost lets it go.",
    items=[("@kavya", "", "Phone", "Incoming call", "Kavya, Talent team", "4:12 PM", ""),
@@ -348,10 +348,10 @@ def interlude(key):
         "".join('<span>%s</span>' % x for x in d["pains"]), ('<p class="bridge">%s</p>' % d["bridge"]) if d.get("bridge") else "",
         "".join(item(*i) for i in d["items"]))
 
-LESSONS = [("Know your strengths and your gaps.", "She had strengths she'd never noticed and gaps her certificates had hidden. Two honest tests showed her both."),
-           ("Give every task a time.", "Her comfort zone had no clock. A fixed start time for 45 minutes of SQL and 20 of speaking, every day, did what three certificates couldn't."),
-           ("A missed day isn't a lost week.", "She shifted the day and kept going, instead of waiting for Monday to start over."),
-           ("Track every chance. Follow up.", "34 applications, one list, reminders on time. The interview that changed everything came from a follow-up.")]
+LESSONS = [("Know your strengths and gaps.", "Two honest tests showed her both."),
+           ("Give every task a time.", "A fixed time beat three certificates."),
+           ("A missed day isn't a lost week.", "Shift the day. Don't wait for Monday."),
+           ("Track every chance.", "Her best interview came from a follow-up.")]
 def cast():
     return "".join('<figure class="pc rv"><svg viewBox="-86 -166 172 520" role="img" aria-label="%s">%s</svg><figcaption><b>%s</b><em>%s</em><span>%s</span></figcaption></figure>' % (
         c["name"], people.figure(c), c["name"], c["role"], c["line"]) for c in people.CAST.values())
@@ -380,22 +380,22 @@ def chapter(key, num, step, title, why, art, steps, tools):
 
 CH = [
     chapter("test", 1, "Know where you stand", "What am I actually good at?",
-        "Without an honest picture of yourself, you practise the wrong things. Everything after this depends on it.", ch_test(), [
+        "Without an honest picture, you practise the wrong things.", ch_test(), [
         ("Week 0 · The problem", "Two questions. Two blanks.", "&ldquo;Your strengths?&rdquo; She says &ldquo;hard-working&rdquo;. &ldquo;A quick SQL query?&rdquo; She freezes. Her certificate says SQL. Her hands don't."),
         ("Week 1 · What she did", "She stops collecting certificates and measures.", "Two honest tests: one for her strengths, one for her skills. She used HV Test, free."),
         ("The result", "Strengths she never noticed. Gaps she never faced.", "Strong: problem solving 82, teamwork 86. Weak: communication 46, SQL 38, consistency 48."),
-        ("The plan", "Less watching. More doing.", "Daily: 45 minutes of timed SQL and 20 minutes of speaking practice. Three real stories about her strengths.")],
+        ("The plan", "Less watching. More doing.", "Daily: 45 minutes of SQL, 20 minutes of speaking. Three real stories about her strengths.")],
         '<a href="https://harshvittori.github.io/hv-tests/">HV Test</a>, free: a strengths test and a skills test.'),
     chapter("reset", 2, "Show up daily", "Why can't I stay consistent?",
-        "A comfort zone has no clock. Without a time for each task, &ldquo;later&rdquo; always wins. Most people stop here.", ch_reset(), [
+        "A comfort zone has no clock. Without a set time, &ldquo;later&rdquo; always wins.", ch_reset(), [
         ("The problem", "Big plans. Lost days.", "Two years at home, no routine. She starts at 11, checks her phone at 11:05, and suddenly it's evening."),
-        ("What she did", "Every task gets a time.", "Her 30-day plan goes on the clock in HV Reset. At 9:00 the task is on screen with a countdown. &ldquo;Baad mein&rdquo; stops working."),
+        ("What she did", "Every task gets a time.", "Her 30-day plan goes on the clock in HV Reset. At 9:00, a countdown starts. &ldquo;Baad mein&rdquo; stops working."),
         ("Week 2 · A setback", "The comfort zone pulls back.", "&ldquo;Aaj rehne do.&rdquo; Two days gone. She doesn't wait for Monday: she keeps one core task and goes again."),
-        ("Week 6 · The change", "Now it's just what she does.", "SQL test: 38% to 81%. Mock interview: 4 to 8. Her dashboard shows 78% of tasks started on time, and that evenings slip, so she moves them."),
+        ("Week 6 · The change", "Now it's just what she does.", "SQL 38% → 81%. Mock interview 4 → 8. Her dashboard: 78% of tasks on time, and evenings slip, so she moves them."),
         ("Week 6 · Next", "Interview prep and applying go on the clock too.", "4:00 interview prep. 6:00 apply to three jobs. Applying becomes a task she starts on time.")],
         '<a href="https://harshvittori.github.io/hv-reset/">HV Reset</a> with HV AI, free: timed tasks and a dashboard.'),
     chapter("vault", 3, "Apply with a system", "Where did all my applications go?",
-        "Skills get you through the interview. A system gets you enough interviews. Without it, good chances slip away.", ch_vault(), [
+        "Skills win interviews. A system gets you enough of them.", ch_vault(), [
         ("The problem", "Skills ready. Offers still missing.", "Five job sites, links in WhatsApp, one company applied to twice, and no idea whom to follow up with."),
         ("Week 7 · What she did", "Every job in one place.", "Saved, applied, interview, on one board. She used HV Vault, free. 34 applications, each with its status."),
         ("Follow-ups", "The follow-ups actually happen.", "A reminder after every application. One quiet application turns into an interview."),
@@ -403,15 +403,15 @@ CH = [
         '<a href="https://harshvittori.github.io/hv-vault-web/">HV Vault</a>, free: one board for applications and follow-ups.'),
 ]
 
-TIMELINE = [("Week 1", "Takes a strengths test and a skills test. Communication 46, SQL 38, consistency 48. Ouch.", "#127A4F"),
-            ("Week 2", "Plans each day the night before. Misses two days, then restarts instead of quitting.", "#4A72C8"),
-            ("Week 5", "SQL test 81%, up from 38%. Mock interview 8 out of 10, up from 4. Her dashboard: 78% of tasks started on time, up from 20%.", "#4A72C8"),
-            ("Week 6", "Adds interview prep and &ldquo;apply to 3 jobs&rdquo; to her timed daily plan.", "#4A72C8"),
-            ("Week 7", "Starts applying, a few good roles a day, every one tracked in one place.", "#A87A22"),
-            ("Week 8", "Ananya, the batchmate she used to envy, sends an opening at a friend's startup. Riya adds it to her list and applies that evening.", "#A87A22"),
-            ("Week 9", "34 applications, 4 of 5 skill tests cleared, 3 final interviews. A follow-up revives a quiet lead.", "#A87A22"),
-            ("Week 10", "Rejected after a final round. Writes down why, and preps again.", "#86868B"),
-            ("Week 11", "Offer: Product Analyst. The role she was aiming for.", "#2E43A6")]
+TIMELINE = [("Week 1", "Two honest tests. Communication 46, SQL 38. Ouch.", "#127A4F"),
+            ("Week 2", "A timed daily plan. Misses two days, restarts.", "#4A72C8"),
+            ("Week 5", "SQL 81%, mock interview 8/10, 78% of tasks on time.", "#4A72C8"),
+            ("Week 6", "Interview prep and applying join the daily plan.", "#4A72C8"),
+            ("Week 7", "Every application tracked in one place.", "#A87A22"),
+            ("Week 8", "Ananya sends an opening. Riya applies that evening.", "#A87A22"),
+            ("Week 9", "34 applications, 3 final interviews.", "#A87A22"),
+            ("Week 10", "Rejected in a final round. Preps again.", "#86868B"),
+            ("Week 11", "Offer: Product Analyst.", "#2E43A6")]
 def timeline():
     return "".join('<li class="rv"><span class="dot" style="background:%s"></span><b>%s</b><p>%s</p></li>' % (c, w, t) for w, t, c in TIMELINE)
 
@@ -786,7 +786,7 @@ PAGE = """<!DOCTYPE html>
     <div class="rv">
       <p class="eyebrow">An 11-week story</p>
       <h1>This is Riya. She's 25.</h1>
-      <p class="lead">Jaipur. B.Tech. Two years since graduation, and still no job. Three certificates on her resume, but she fails the companies' skill tests and goes blank when they ask about her strengths. <b>Comfortable at home, and quietly stuck. What now?</b></p>
+      <p class="lead">B.Tech, two years out of college, still no job. Three certificates, yet she fails company tests and goes blank on &ldquo;your strengths?&rdquo; <b>Quietly stuck. What now?</b></p>
       <div class="worries"><span><i style="background:#127A4F"></i>What am I actually good at?</span><span><i style="background:#4A72C8"></i>Why can't I stay consistent?</span><span><i style="background:#A87A22"></i>Where did my applications go?</span></div>
       <p class="scroll-hint" aria-hidden="true">Scroll to read __ARROW__</p>
     </div>
@@ -795,7 +795,7 @@ PAGE = """<!DOCTYPE html>
   <section class="before"><div class="wrap">
     <p class="label rv">Riya, before</p>
     <div class="stats rv"><div><b>2</b><span>years since graduation, still no job</span></div><div><b>3</b><span>certificates on her resume</span></div><div><b>5</b><span>company skill tests failed</span></div><div><b>0</b><span>idea what her real strengths are</span></div></div>
-    <p class="note rv">Sound familiar? This is her story: the bad nights, the restarts, and what finally changed.</p>
+    <p class="note rv">Sound familiar? Here's what changed.</p>
   </div></section>
   <section class="cast"><div class="wrap">
     <p class="label rv">The people in her story</p>
@@ -814,29 +814,29 @@ PAGE = """<!DOCTYPE html>
     <p class="label rv">What Riya would tell you</p>
     <h2 class="rv">Four things that actually worked.</h2>
     <div class="lgrid">__LESSONS__</div>
-    <p class="yourturn rv">Your turn. Start where she did, with step 1: an honest look at where you stand.</p>
+    <p class="yourturn rv">Your turn: start with step 1.</p>
   </div></section>
   <section class="key" id="key"><div class="wrap">
     <p class="label rv">The whole point</p>
     <h2 class="rv">Consistency is the key.</h2>
-    <p class="sub rv">Riya didn't get lucky. She followed three steps, in order, and kept going through the bad weeks. That's what made the difference. Just don't skip a step.</p>
+    <p class="sub rv">Riya didn't get lucky. She did three steps, in order, and kept going. Don't skip a step.</p>
     <div class="eq rv">
       <div class="term" style="--c:#127A4F"><em>Right direction</em><b>Know where you stand</b><span>An honest self-assessment and a clear 30-day plan.</span></div><i>+</i>
       <div class="term" style="--c:#4A72C8"><em>Consistency</em><b>Show up daily</b><span>One or two important tasks every day, even after a bad week.</span></div><i>+</i>
       <div class="term" style="--c:#A87A22"><em>A system</em><b>Track every chance</b><span>One place for every application, and follow-ups on time.</span></div><i>=</i>
       <div class="term goal"><em>The result</em><b>Your goal</b><span>Not overnight. But it comes.</span></div>
     </div>
-    <p class="order rv">Each step builds on the one before. Skills without direction go nowhere. Applications without skills go unanswered. Skip one, and the next one gets harder.</p>
+    <p class="order rv">Each step builds on the last. Skip one, and the next gets harder.</p>
   </div></section>
   <section class="finale" id="products"><div class="wrap">
     <p class="label rv">What Riya used</p>
     <h2 class="rv">The free tools behind her three steps.</h2>
-    <p class="sub rv">One for each step. The steps are what changed her story: know where you stand, show up daily, apply with a system. Then go again for the next goal.</p>
+    <p class="sub rv">One tool for each step. The steps did the work.</p>
     <div class="art-box rv">__FINALE__</div>
     <div class="cards">
-      <div class="pcard rv"><div class="h">__L_TEST__<b>HV Test</b></div><p>For step 1. Free tests for your traits, thinking and skills, with a report and a 30-day plan.</p><div class="pacts"><a class="btn" href="https://harshvittori.github.io/hv-tests/">Open HV Test</a><a class="lm" href="/test/">Learn more</a></div></div>
-      <div class="pcard rv"><div class="h">__L_RESET__<b>HV Reset</b></div><p>For step 2. Tell HV AI your day, do one task at a time, and see your progress.</p><div class="pacts"><a class="btn" href="https://harshvittori.github.io/hv-reset/">Open HV Reset</a><a class="lm" href="/reset/">Learn more</a></div></div>
-      <div class="pcard rv"><div class="h">__L_VAULT__<b>HV Vault</b></div><p>For step 3. One board for every application, with follow-up reminders.</p><div class="pacts"><a class="btn" href="https://harshvittori.github.io/hv-vault-web/">Open HV Vault</a><a class="lm" href="/vault/">Learn more</a></div></div>
+      <div class="pcard rv"><div class="h">__L_TEST__<b>HV Test</b></div><p>For step 1: strengths and skills tests, with a 30-day plan.</p><div class="pacts"><a class="btn" href="https://harshvittori.github.io/hv-tests/">Open HV Test</a><a class="lm" href="/test/">Learn more</a></div></div>
+      <div class="pcard rv"><div class="h">__L_RESET__<b>HV Reset</b></div><p>For step 2: timed tasks, HV AI and a dashboard.</p><div class="pacts"><a class="btn" href="https://harshvittori.github.io/hv-reset/">Open HV Reset</a><a class="lm" href="/reset/">Learn more</a></div></div>
+      <div class="pcard rv"><div class="h">__L_VAULT__<b>HV Vault</b></div><p>For step 3: one board for applications and follow-ups.</p><div class="pacts"><a class="btn" href="https://harshvittori.github.io/hv-vault-web/">Open HV Vault</a><a class="lm" href="/vault/">Learn more</a></div></div>
     </div>
     <p class="more rv"><a href="/">See every feature, HV AI, privacy and FAQ →</a></p>
   </div></section>
@@ -845,14 +845,14 @@ PAGE = """<!DOCTYPE html>
     <div class="ntxt">
       <p class="label rv">Your turn</p>
       <h2 class="rv">You could be the next Riya.</h2>
-      <p class="sub rv">Different city, different dream, same feeling of being stuck. Her 11 weeks started with one small step. Yours can start today.</p>
+      <p class="sub rv">Different city, different dream, same stuck feeling. Start today.</p>
       <ol class="nsteps rv">
-        <li><span style="background:#127A4F">1</span><div><b>Know where you stand</b><em>Test your strengths and your skills honestly, and write down what to fix. Riya used HV Test, free.</em></div></li>
-        <li><span style="background:#4A72C8">2</span><div><b>Plan just today</b><em>Give one or two important tasks a fixed start time, and start when the time comes. Riya used HV Reset, free.</em></div></li>
-        <li><span style="background:#A87A22">3</span><div><b>Track every chance</b><em>Keep every application in one place and follow up on time. Riya used HV Vault, free.</em></div></li>
+        <li><span style="background:#127A4F">1</span><div><b>Know where you stand</b><em>Test your strengths and skills honestly. Riya used HV Test.</em></div></li>
+        <li><span style="background:#4A72C8">2</span><div><b>Plan just today</b><em>Give each task a fixed time. Riya used HV Reset.</em></div></li>
+        <li><span style="background:#A87A22">3</span><div><b>Track every chance</b><em>Track every application. Riya used HV Vault.</em></div></li>
       </ol>
       <div class="ncta rv"><a class="btn" href="#test">Go through the steps again</a><a class="btn ghost" href="#products">See the tools Riya used</a></div>
-      <p class="nfor rv">Every step matters. For students, job seekers, professionals, freelancers, career switchers, and anyone starting again.</p>
+      <p class="nfor rv">For students, job seekers and anyone starting again.</p>
     </div>
   </div></section>
 </main>
