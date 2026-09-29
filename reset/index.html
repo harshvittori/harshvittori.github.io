@@ -203,6 +203,10 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
 .filmdlg{padding:0;border:0;background:transparent;width:min(1200px,94vw);max-width:none;overflow:visible}
 .filmdlg::backdrop{background:rgba(6,9,19,.9)}
 .filmdlg video{width:100%;display:block;border-radius:18px;background:#000;aspect-ratio:16/9}
+.fdv{position:relative}
+.again{position:absolute;left:0;right:0;bottom:5%;margin:0 auto;width:max-content;z-index:3;display:inline-flex;align-items:center;gap:8px;border:0;cursor:pointer;font:600 15px/1 inherit;color:#1D1D1F;background:rgba(255,255,255,.94);padding:8px 16px 8px 8px;border-radius:999px;box-shadow:0 14px 30px -12px rgba(0,0,0,.7)}
+.again svg{width:24px;height:24px;padding:5px;border-radius:50%;background:#2E43A6;color:#fff}.again[hidden]{display:none}
+@media (max-width:560px){.again{bottom:3%;font-size:13px;padding:6px 12px 6px 6px}.again svg{width:20px;height:20px;padding:4px}}
 .filmdlg .x{position:absolute;top:-54px;right:0;width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.16);color:#fff;font-size:28px;line-height:1;cursor:pointer}
 @media (max-width:880px){.film{margin-bottom:72px}.filmbox{border-radius:18px}.play{width:68px;height:68px}.play svg{width:26px;height:26px}}
 .sep{border:0;height:1px;background:var(--line);width:min(1120px,100% - 32px);margin:0 auto 96px}
@@ -556,6 +560,12 @@ html:active-view-transition-type(back)::view-transition-new(page){animation:vt-i
     if (document.prerendering) document.addEventListener("prerenderingchange", start, { once: true }); else start();
     ub.addEventListener("click", function (e) { e.stopPropagation(); unmute(); });
     fv.addEventListener("volumechange", function () { if (!fv.muted) { ub.hidden = true; off(); } });
+    // when the film ends: hide the player controls and rest on the HV World logo frame (just before it fades); a tap brings the controls back and plays again
+    var again = document.getElementById("fpAgain");
+    var replay = function () { again.hidden = true; fv.controls = true; fv.currentTime = 0; fv.play().catch(function () {}); };
+    fv.addEventListener("ended", function () { fv.controls = false; if (isFinite(fv.duration)) fv.currentTime = Math.max(0, fv.duration - 1.2); again.hidden = false; ub.hidden = true; off(); });
+    again.addEventListener("click", replay);
+    fv.addEventListener("click", function () { if (!fv.controls) replay(); });
   }
   var fo = document.getElementById("filmOpen");
   if (fo) {
@@ -568,8 +578,14 @@ html:active-view-transition-type(back)::view-transition-new(page){animation:vt-i
     fo.addEventListener("click", function () {
       loopv.pause();
       if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
-      film.currentTime = 0; film.play().catch(function () {});
+      fagain.hidden = true; film.controls = true; film.currentTime = 0; film.play().catch(function () {});
     });
+    // when the film ends: hide the controls and rest on the logo frame; a tap plays it again
+    var fagain = document.getElementById("filmAgain");
+    var freplay = function () { fagain.hidden = true; film.controls = true; film.currentTime = 0; film.play().catch(function () {}); };
+    film.addEventListener("ended", function () { film.controls = false; if (isFinite(film.duration)) film.currentTime = Math.max(0, film.duration - 1.2); fagain.hidden = false; });
+    fagain.addEventListener("click", freplay);
+    film.addEventListener("click", function () { if (!film.controls) freplay(); });
     document.getElementById("filmClose").addEventListener("click", function () { dlg.close(); });
     dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); });
     dlg.addEventListener("close", function () { film.pause(); if (!still) loopv.play().catch(function () {}); });

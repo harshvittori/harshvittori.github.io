@@ -316,6 +316,10 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
 .filmdlg{padding:0;border:0;background:transparent;width:min(1200px,94vw);max-width:none;overflow:visible}
 .filmdlg::backdrop{background:rgba(6,9,19,.9)}
 .filmdlg video{width:100%;display:block;border-radius:18px;background:#000;aspect-ratio:16/9}
+.fdv{position:relative}
+.again{position:absolute;left:0;right:0;bottom:5%;margin:0 auto;width:max-content;z-index:3;display:inline-flex;align-items:center;gap:8px;border:0;cursor:pointer;font:600 15px/1 inherit;color:#1D1D1F;background:rgba(255,255,255,.94);padding:8px 16px 8px 8px;border-radius:999px;box-shadow:0 14px 30px -12px rgba(0,0,0,.7)}
+.again svg{width:24px;height:24px;padding:5px;border-radius:50%;background:#2E43A6;color:#fff}.again[hidden]{display:none}
+@media (max-width:560px){.again{bottom:3%;font-size:13px;padding:6px 12px 6px 6px}.again svg{width:20px;height:20px;padding:4px}}
 .filmdlg .x{position:absolute;top:-54px;right:0;width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.16);color:#fff;font-size:28px;line-height:1;cursor:pointer}
 @media (max-width:880px){.film{margin-bottom:72px}.filmbox{border-radius:18px}.play{width:68px;height:68px}.play svg{width:26px;height:26px}}
 .sep{border:0;height:1px;background:var(--line);width:min(1120px,100% - 32px);margin:0 auto 96px}
@@ -616,7 +620,8 @@ OVERVIEW_MAIN = """<main id="main">
   </section>
   <dialog id="filmDlg" class="filmdlg" aria-label="HV World in action">
     <button type="button" class="x" id="filmClose" aria-label="Close the video">×</button>
-    <video id="filmVid" controls playsinline preload="none" poster="/media/hv-world-poster.jpg"><source src="/media/hv-world-film.mp4" type="video/mp4"><source src="/media/hv-world-film.webm" type="video/webm"></video>
+    <div class="fdv"><button type="button" class="again" id="filmAgain" hidden aria-label="Watch again"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg><span>Watch again</span></button>
+    <video id="filmVid" controls playsinline preload="none" poster="/media/hv-world-poster.jpg"><source src="/media/hv-world-film.mp4" type="video/mp4"><source src="/media/hv-world-film.webm" type="video/webm"></video></div>
   </dialog>
 </main>"""
 
@@ -916,7 +921,7 @@ FILM_MAIN = """<main id="main" class="filmpage">
   <section class="wrap fp">
     <p class="label">HV World in action</p>
     <h1>See all 3 apps in action.</h1>
-    <div class="fpv"><button type="button" class="unmute" id="fpUnmute" hidden>🔊&nbsp; Tap for sound</button><video id="fpVid" controls playsinline autoplay preload="auto" poster="/watch/poster.jpg"><source src="/media/hv-world-film.mp4" type="video/mp4"><source src="/media/hv-world-film.webm" type="video/webm"></video></div>
+    <div class="fpv"><button type="button" class="again" id="fpAgain" hidden aria-label="Watch again"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg><span>Watch again</span></button><button type="button" class="unmute" id="fpUnmute" hidden>🔊&nbsp; Tap for sound</button><video id="fpVid" controls playsinline autoplay preload="auto" poster="/watch/poster.jpg"><source src="/media/hv-world-film.mp4" type="video/mp4"><source src="/media/hv-world-film.webm" type="video/webm"></video></div>
     <p class="fpsub">Real screens from HV Test, HV Reset and HV Vault.</p>
     <div class="ctas"><a class="btn" href="/">Explore HV World __ARROW__</a><a class="btn ghost" href="/story/">Read Riya's story</a></div>
     <div class="fpapps"><a href="__U_TEST__">__LOGO_TEST__HV Test</a><a href="__U_RESET__">__LOGO_RESET__HV Reset</a><a href="__U_VAULT__">__LOGO_VAULT__HV Vault</a></div>
@@ -1019,6 +1024,12 @@ def shell(path, title, desc, og, body, active):
     if (document.prerendering) document.addEventListener("prerenderingchange", start, { once: true }); else start();
     ub.addEventListener("click", function (e) { e.stopPropagation(); unmute(); });
     fv.addEventListener("volumechange", function () { if (!fv.muted) { ub.hidden = true; off(); } });
+    // when the film ends: hide the player controls and rest on the HV World logo frame (just before it fades); a tap brings the controls back and plays again
+    var again = document.getElementById("fpAgain");
+    var replay = function () { again.hidden = true; fv.controls = true; fv.currentTime = 0; fv.play().catch(function () {}); };
+    fv.addEventListener("ended", function () { fv.controls = false; if (isFinite(fv.duration)) fv.currentTime = Math.max(0, fv.duration - 1.2); again.hidden = false; ub.hidden = true; off(); });
+    again.addEventListener("click", replay);
+    fv.addEventListener("click", function () { if (!fv.controls) replay(); });
   }
   var fo = document.getElementById("filmOpen");
   if (fo) {
@@ -1031,8 +1042,14 @@ def shell(path, title, desc, og, body, active):
     fo.addEventListener("click", function () {
       loopv.pause();
       if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
-      film.currentTime = 0; film.play().catch(function () {});
+      fagain.hidden = true; film.controls = true; film.currentTime = 0; film.play().catch(function () {});
     });
+    // when the film ends: hide the controls and rest on the logo frame; a tap plays it again
+    var fagain = document.getElementById("filmAgain");
+    var freplay = function () { fagain.hidden = true; film.controls = true; film.currentTime = 0; film.play().catch(function () {}); };
+    film.addEventListener("ended", function () { film.controls = false; if (isFinite(film.duration)) film.currentTime = Math.max(0, film.duration - 1.2); fagain.hidden = false; });
+    fagain.addEventListener("click", freplay);
+    film.addEventListener("click", function () { if (!film.controls) freplay(); });
     document.getElementById("filmClose").addEventListener("click", function () { dlg.close(); });
     dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); });
     dlg.addEventListener("close", function () { film.pause(); if (!still) loopv.play().catch(function () {}); });
