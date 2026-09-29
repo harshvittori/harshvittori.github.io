@@ -296,7 +296,7 @@ INTER = {
    pains=["Comparison", "Family pressure", "No replies", "No clarity"],
    bridge="She doesn't need another course. She needs to know where she actually stands."),
  "kalse": dict(face=("g", "scroll", "#2B2F5C"), mood="caught in the scroll, again", dark=True, time="Day 3 of her plan · 10:05 AM", title="Knowing isn't doing.",
-   text="HV Test told her exactly what to fix. For two days she's on fire. On day three the old Riya is back: one reel becomes forty, and the SQL course sits paused at 7:42. Again.",
+   text="Her self-assessment told her exactly what to fix. For two days she's on fire. On day three the old Riya is back: one reel becomes forty, and the SQL course sits paused at 7:42. Again.",
    items=[("▶", "#FF0000", "YouTube", "SQL for beginners, full course", "Paused at 7:42 of 4:20:00", "yesterday", ""),
           ("◎", "#E1306C", "Instagram", "priya.codes and 12 others", "posted new reels", "10:02 AM", ""),
           ("✎", "#F4B942", "Notes", "My routine", "Monday: start fresh ✅  Tuesday: start fresh again", "", ""),
@@ -344,10 +344,10 @@ def interlude(key):
         "".join('<span>%s</span>' % x for x in d["pains"]), ('<p class="bridge">%s</p>' % d["bridge"]) if d.get("bridge") else "",
         "".join(item(*i) for i in d["items"]))
 
-LESSONS = [("Measure before you fix.", "She stopped guessing what was wrong. Ten honest minutes with HV Test showed her the two things that mattered most."),
-           ("Plan small. Show up daily.", "Two hours of SQL a day beat a perfect eight-hour plan she never started. HV AI kept it that simple."),
+LESSONS = [("Measure before you fix.", "She stopped guessing what was wrong. One honest self-assessment showed her the two things that mattered most."),
+           ("Plan small. Show up daily.", "Two hours of SQL a day beat a perfect eight-hour plan she never started. Keeping each day that simple was the whole trick."),
            ("A missed day isn't a lost week.", "She shifted the day and kept going, instead of waiting for Monday to start over."),
-           ("Track every chance. Follow up.", "34 applications, one board, reminders on time. The interview that changed everything came from a follow-up.")]
+           ("Track every chance. Follow up.", "34 applications, one list, reminders on time. The interview that changed everything came from a follow-up.")]
 def cast():
     return "".join('<figure class="pc rv"><svg viewBox="-86 -166 172 520" role="img" aria-label="%s">%s</svg><figcaption><b>%s</b><em>%s</em><span>%s</span></figcaption></figure>' % (
         c["name"], people.figure(c), c["name"], c["role"], c["line"]) for c in people.CAST.values())
@@ -366,40 +366,43 @@ def lessons():
     return "".join('<div class="ls rv"><span>%d</span><b>%s</b><p>%s</p></div>' % (i + 1, h, t) for i, (h, t) in enumerate(LESSONS))
 
 # ---------------------------------------------------------------- chapters (scrollytelling)
-def chapter(key, num, verb, prod, title, art, steps, url, cta):
+def chapter(key, num, step, title, why, art, steps, tools):
     st = "".join('<div class="step" data-step="%d"><div class="cap"><p class="k">%s</p><h3>%s</h3><p>%s</p>%s</div></div>' % (
-        i + 1, k, h, p, ('<a class="btn" href="%s">%s</a>' % (url, cta)) if i == len(steps) - 1 else "") for i, (k, h, p) in enumerate(steps))
-    return interlude({"test": "night", "reset": "kalse", "vault": "inbox"}[key]) + ('<section class="chapter" id="%s"><div class="wrap"><div class="chead rv"><span class="num">Chapter %d · %s</span>'
-            '<div class="pname">%s<span>%s</span></div><h2>%s</h2></div>'
+        i + 1, k, h, p, ('<p class="tools"><b>Tools that can help</b>%s</p>' % tools) if i == len(steps) - 1 else "") for i, (k, h, p) in enumerate(steps))
+    return interlude({"test": "night", "reset": "kalse", "vault": "inbox"}[key]) + ('<section class="chapter" id="%s"><div class="wrap"><div class="chead rv"><span class="num">Step %d · %s</span>'
+            '<h2>%s</h2><p class="why"><b>Why this step matters.</b> %s</p></div>'
             '<div class="scrolly"><div class="stage-wrap"><div class="stage" data-step="1">%s</div></div><div class="steps">%s</div></div></div></section>') % (
-        key, num, verb, logo(key, size=40), prod, title, art, st)
+        key, num, step, title, why, art, st)
 
 CH = [
-    chapter("test", 1, "Know", "HV Test", "What am I actually good at?", ch_test(), [
+    chapter("test", 1, "Know where you stand", "What am I actually good at?",
+        "Without an honest picture of yourself, you practise the wrong things and apply for the wrong roles. Everything after this depends on it.", ch_test(), [
         ("Week 0 · The problem", "She freezes on the easy question.", "&ldquo;So, what are your strengths?&rdquo; Riya says &ldquo;hard-working&rdquo;. So did the last ten candidates. She has skills, but she has never measured them."),
-        ("Week 1 · HV Test", "She stops guessing and measures.", "The Maturity Assessment, then a skills test. Real situations and honest options, about ten minutes each. No right answers to game."),
+        ("Week 1 · What she did", "She stops guessing and measures.", "An honest self-assessment of how she thinks and works, plus a skills check. She used HV Test. A mentor's feedback or any well-made assessment can do the same job: the point is honesty, not the tool."),
         ("The result", "Strong where she didn't expect. Weak where it hurts.", "Communication 84: all those support calls paid off. Problem solving 79. But consistency 48, and her data skills are basic. It stings, and it's the first honest picture she's had."),
         ("The plan", "A 30-day plan, not a vague wish.", "Learn SQL basics, build one real dashboard project, practise her story with three real examples. And the hard one: show up every day.")],
-        "https://harshvittori.github.io/hv-tests/", "Take a test"),
-    chapter("reset", 2, "Grow", "HV Reset + HV AI", "Why can't I stay consistent?", ch_reset(), [
+        'An honest mentor or senior, a trusted assessment, or <a href="https://harshvittori.github.io/hv-tests/">HV Test</a> (free).'),
+    chapter("reset", 2, "Show up daily", "Why can't I stay consistent?",
+        "Knowing your gaps changes nothing until you work on them, a little, every day. This is the step where most people stop.", ch_reset(), [
         ("The problem", "Big plans. Lost days.", "Night shift ends at 6 AM. She sleeps till noon, opens a course at 2, checks her phone at 2:05, and suddenly it's time for work again. Four courses started, none finished."),
-        ("HV AI", "She just tells HV AI her day.", "&ldquo;Roz 9 se 11 SQL, 2 baje project, 6 baje walk.&rdquo; HV AI turns it into a simple plan in HV Reset. One task at a time, nothing else on the screen."),
+        ("What she did", "She makes every day simple.", "Each night she picks tomorrow's one or two important tasks, with a time for each. She used HV AI in HV Reset to turn &ldquo;Roz 9 se 11 SQL, 2 baje project&rdquo; into a plan. A notebook or a phone calendar works too. One task at a time, nothing else."),
         ("Week 2 · A setback", "She misses two days. She doesn't quit.", "A cold, a family function, a lost weekend. Instead of starting over on Monday, she shifts today's plan, keeps the one core task, and goes again. The streak resets. The progress doesn't."),
-        ("Week 6 · The change", "Now it's just what she does.", "42 focused hours, a finished SQL course and her first dashboard project online. She sends it to Neha ma'am, her old college teacher: &ldquo;Show this in every interview.&rdquo; Her HV Reset dashboard shows it too: she really is getting better.")],
-        "https://harshvittori.github.io/hv-reset/", "Plan my day"),
-    chapter("vault", 3, "Act", "HV Vault + HV AI", "Where did all my applications go?", ch_vault(), [
+        ("Week 6 · The change", "Now it's just what she does.", "42 focused hours, a finished SQL course and her first dashboard project online. She sends it to Neha ma'am, her old college teacher: &ldquo;Show this in every interview.&rdquo; Looking back at her hours, she can see it: she really is getting better.")],
+        'A notebook, a calendar, any habit tracker, or <a href="https://harshvittori.github.io/hv-reset/">HV Reset</a> with HV AI (free).'),
+    chapter("vault", 3, "Apply with a system", "Where did all my applications go?",
+        "Skills make you ready. A system gets you seen. Without tracking and follow-ups, good chances quietly slip away, and the work from steps 1 and 2 goes to waste.", ch_vault(), [
         ("The problem", "Applications vanish into silence.", "Job links in WhatsApp, resume_final_v3.pdf, and no idea who she applied to last week, or who she should chase."),
-        ("Week 7 · HV Vault", "Every job on one board.", "Saved, applied, interview. Riya applies with focus now, not in panic: 34 applications over four weeks, and she knows exactly where each one stands."),
-        ("HV AI", "The follow-ups actually happen.", "Mark a job applied and the follow-up is set. One quiet application turns into an interview after her reminder. She says &ldquo;Kal 4 baje Zomato interview&rdquo; and it's on the calendar."),
+        ("Week 7 · What she did", "Every job in one place.", "Saved, applied, interview: one list, updated the same day. She used HV Vault. A spreadsheet or a Notion board works too, if you keep it up. 34 applications over four weeks, and she knows where each one stands."),
+        ("Follow-ups", "The follow-ups actually happen.", "After every application she sets a reminder to follow up. One quiet application turns into an interview because of it. She adds the interview to her calendar the moment it's fixed: &ldquo;Kal 4 baje&rdquo;, done."),
         ("Week 11 · The outcome", "A no. Then the yes.", "A final round says no, and it hurts. She notes what went wrong, preps with her real stories, and two weeks later signs the offer she wanted: Product Analyst.")],
-        "https://harshvittori.github.io/hv-vault-web/", "Open HV Vault"),
+        'A spreadsheet, a Notion board, calendar reminders, or <a href="https://harshvittori.github.io/hv-vault-web/">HV Vault</a> (free).'),
 ]
 
 TIMELINE = [("Week 1", "Takes the Maturity Assessment and a skills test. Consistency: 48. Ouch.", "#127A4F"),
-            ("Week 2", "Plans her days with HV AI. Misses two days, then restarts instead of quitting.", "#4A72C8"),
+            ("Week 2", "Plans each day the night before. Misses two days, then restarts instead of quitting.", "#4A72C8"),
             ("Week 5", "Finishes SQL basics. Her first dashboard project goes online, and Neha ma'am says it's interview-ready.", "#4A72C8"),
-            ("Week 7", "Starts applying through HV Vault, a few good roles a day.", "#A87A22"),
-            ("Week 8", "Ananya, the batchmate she used to envy, sends an opening at a friend's startup. Riya saves it in HV Vault and applies that evening.", "#A87A22"),
+            ("Week 7", "Starts applying, a few good roles a day, every one tracked in one place.", "#A87A22"),
+            ("Week 8", "Ananya, the batchmate she used to envy, sends an opening at a friend's startup. Riya adds it to her list and applies that evening.", "#A87A22"),
             ("Week 9", "34 applications, 6 replies, 3 interviews. A follow-up revives a quiet lead.", "#A87A22"),
             ("Week 10", "Rejected after a final round. Writes down why, and preps again.", "#86868B"),
             ("Week 11", "Offer: Product Analyst. The role she was aiming for.", "#2E43A6")]
@@ -467,6 +470,10 @@ header.hid:focus-within{transform:none}
 .num{font-size:14px;font-weight:600;color:var(--soft);letter-spacing:0}
 .pname{display:flex;align-items:center;justify-content:center;gap:10px;margin:14px 0 8px;font-size:20px;font-weight:600}
 .pname svg{border-radius:11px}
+.why{font-size:18px;color:var(--soft);margin:14px auto 0;max-width:620px;line-height:1.45}.why b{color:var(--ink)}
+.tools{margin-top:18px;padding:12px 14px;border-radius:14px;background:var(--gray);font-size:15px;color:var(--soft);line-height:1.45}
+.tools b{display:block;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);margin-bottom:2px}
+.key .order{font-size:17px;color:rgba(255,255,255,.8);max-width:640px;margin:34px auto 0;line-height:1.5}
 .chead h2{font-size:clamp(36px,5.6vw,64px);font-weight:700;letter-spacing:-.04em;line-height:1.05}
 #test .num{color:var(--test)}#reset .num{color:var(--reset)}#vault .num{color:var(--vault)}
 .scrolly{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;position:relative}
@@ -801,28 +808,29 @@ PAGE = """<!DOCTYPE html>
     <p class="label rv">What Riya would tell you</p>
     <h2 class="rv">Four things that actually worked.</h2>
     <div class="lgrid">__LESSONS__</div>
-    <p class="yourturn rv">Your turn. Start where she did: <a class="btn" href="https://harshvittori.github.io/hv-tests/">Take the free test</a></p>
+    <p class="yourturn rv">Your turn. Start where she did, with step 1: an honest look at where you stand.</p>
   </div></section>
   <section class="key" id="key"><div class="wrap">
     <p class="label rv">The whole point</p>
     <h2 class="rv">Consistency is the key.</h2>
-    <p class="sub rv">Riya didn't get lucky. She kept showing up, in the right direction, with the right tools. That's what HV World is for.</p>
+    <p class="sub rv">Riya didn't get lucky, and no single app did it for her. She followed three steps, in order, and kept going. Use any tools you like. Just don't skip a step.</p>
     <div class="eq rv">
-      <div class="term" style="--c:#127A4F"><em>Right direction</em><b>HV Test</b><span>Know your strengths and exactly what to fix.</span></div><i>+</i>
-      <div class="term" style="--c:#4A72C8"><em>Consistency</em><b>HV Reset + HV AI</b><span>A simple plan, one task at a time, every day.</span></div><i>+</i>
-      <div class="term" style="--c:#A87A22"><em>Right tools</em><b>HV Vault</b><span>Every opportunity tracked and followed up.</span></div><i>=</i>
+      <div class="term" style="--c:#127A4F"><em>Right direction</em><b>Know where you stand</b><span>An honest self-assessment and a clear 30-day plan.</span></div><i>+</i>
+      <div class="term" style="--c:#4A72C8"><em>Consistency</em><b>Show up daily</b><span>One or two important tasks every day, even after a bad week.</span></div><i>+</i>
+      <div class="term" style="--c:#A87A22"><em>A system</em><b>Track every chance</b><span>One place for every application, and follow-ups on time.</span></div><i>=</i>
       <div class="term goal"><em>The result</em><b>Your goal</b><span>Not overnight. But it comes.</span></div>
     </div>
+    <p class="order rv">Each step builds on the one before. Skills without direction go nowhere. Applications without skills go unanswered. Skip one, and the next one gets harder.</p>
   </div></section>
   <section class="finale" id="products"><div class="wrap">
-    <p class="label rv">How it fits together</p>
-    <h2 class="rv">Three apps. One loop.</h2>
-    <p class="sub rv">Know where you stand, grow a little every day, act on every chance. Then go again, for your next goal.</p>
+    <p class="label rv">Optional help</p>
+    <h2 class="rv">Tools that can make each step easier.</h2>
+    <p class="sub rv">Riya used these free tools. A notebook, a calendar and a spreadsheet can do the same job. What matters is doing every step, and then going again for your next goal.</p>
     <div class="art-box rv">__FINALE__</div>
     <div class="cards">
-      <div class="pcard rv"><div class="h">__L_TEST__<b>HV Test</b></div><p>Know yourself. Tests for your traits, thinking, skills and growth, starting with the Maturity Assessment.</p><div class="pacts"><a class="btn" href="https://harshvittori.github.io/hv-tests/">Open HV Test</a><a class="lm" href="/test/">Learn more</a></div></div>
-      <div class="pcard rv"><div class="h">__L_RESET__<b>HV Reset</b></div><p>Grow every day. Tell HV AI your day, do one task at a time, and see your progress.</p><div class="pacts"><a class="btn" href="https://harshvittori.github.io/hv-reset/">Open HV Reset</a><a class="lm" href="/reset/">Learn more</a></div></div>
-      <div class="pcard rv"><div class="h">__L_VAULT__<b>HV Vault</b></div><p>Act on every opportunity. One board, automatic follow-ups and HV AI.</p><div class="pacts"><a class="btn" href="https://harshvittori.github.io/hv-vault-web/">Open HV Vault</a><a class="lm" href="/vault/">Learn more</a></div></div>
+      <div class="pcard rv"><div class="h">__L_TEST__<b>HV Test</b></div><p>For step 1. Free tests for your traits, thinking and skills, with a report and a 30-day plan.</p><div class="pacts"><a class="btn" href="https://harshvittori.github.io/hv-tests/">Open HV Test</a><a class="lm" href="/test/">Learn more</a></div></div>
+      <div class="pcard rv"><div class="h">__L_RESET__<b>HV Reset</b></div><p>For step 2. Tell HV AI your day, do one task at a time, and see your progress.</p><div class="pacts"><a class="btn" href="https://harshvittori.github.io/hv-reset/">Open HV Reset</a><a class="lm" href="/reset/">Learn more</a></div></div>
+      <div class="pcard rv"><div class="h">__L_VAULT__<b>HV Vault</b></div><p>For step 3. One board for every application, with follow-up reminders.</p><div class="pacts"><a class="btn" href="https://harshvittori.github.io/hv-vault-web/">Open HV Vault</a><a class="lm" href="/vault/">Learn more</a></div></div>
     </div>
     <p class="more rv"><a href="/">See every feature, HV AI, privacy and FAQ →</a></p>
   </div></section>
@@ -833,12 +841,12 @@ PAGE = """<!DOCTYPE html>
       <h2 class="rv">You could be the next Riya.</h2>
       <p class="sub rv">Different city, different dream, same feeling of being stuck. Her 11 weeks started with one small step. Yours can start today.</p>
       <ol class="nsteps rv">
-        <li><span style="background:#127A4F">1</span><div><b>Know where you stand</b><em>Take the free Maturity Assessment in HV Test. About 10 minutes.</em></div></li>
-        <li><span style="background:#4A72C8">2</span><div><b>Plan just today</b><em>Tell HV AI your day in HV Reset. One task at a time.</em></div></li>
-        <li><span style="background:#A87A22">3</span><div><b>Track every chance</b><em>Put your applications in HV Vault and let the follow-ups remind you.</em></div></li>
+        <li><span style="background:#127A4F">1</span><div><b>Know where you stand</b><em>Take an honest self-assessment, or ask someone who knows your work. HV Test is one free option.</em></div></li>
+        <li><span style="background:#4A72C8">2</span><div><b>Plan just today</b><em>Pick one or two important tasks, with a time for each. A notebook works; HV Reset makes it quicker.</em></div></li>
+        <li><span style="background:#A87A22">3</span><div><b>Track every chance</b><em>Keep every application in one place and follow up on time. A spreadsheet works; HV Vault reminds you.</em></div></li>
       </ol>
-      <div class="ncta rv"><a class="btn" href="https://harshvittori.github.io/hv-tests/">Start with the free test</a><a class="btn ghost" href="https://harshvittori.github.io/hv-reset/">Plan my day</a></div>
-      <p class="nfor rv">For students, job seekers, professionals, freelancers, career switchers, and anyone starting again.</p>
+      <div class="ncta rv"><a class="btn" href="#test">Go through the steps again</a><a class="btn ghost" href="#products">See the optional tools</a></div>
+      <p class="nfor rv">Any tools work. Every step matters. For students, job seekers, professionals, freelancers, career switchers, and anyone starting again.</p>
     </div>
   </div></section>
 </main>
