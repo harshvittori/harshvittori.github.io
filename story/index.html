@@ -188,7 +188,7 @@ header.hid:focus-within{transform:none}
 @keyframes linkin{from{transform:scale(.4);opacity:0}to{transform:none;opacity:1}}
 @keyframes dash{to{stroke-dashoffset:-56}}
 .aoff,.aoff *{animation-play-state:paused!important}   /* animations only run while their section is on screen */
-@supports (content-visibility:auto){main>section:not(:first-child){content-visibility:auto;contain-intrinsic-size:auto 900px}}
+@supports (content-visibility:auto){main>section:not(:first-child):not(:last-child){content-visibility:auto;contain-intrinsic-size:auto 900px}}
 @keyframes bob{50%{transform:translateY(4px)}}
 .art .link,.art .pop{transform-box:fill-box;transform-origin:center}
 @media (prefers-reduced-motion:reduce){.art *,.art .t{animation:none!important;transition:none!important}.art .ring{stroke-dashoffset:55}.art .bar{transform:none}}
@@ -260,17 +260,21 @@ header.hid:focus-within{transform:none}
 .ncta{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}.ncta .btn{margin:0}
 .nfor{color:var(--faint);font-size:15px;margin-top:18px}
 @media (max-width:880px){.ngrid{grid-template-columns:1fr;gap:28px}.nart svg{max-width:340px}}
-.challenge{padding:96px 0 110px;text-align:center;background:#FFFFFF;border-top:1px solid #EEF0F4}
+.challenge{padding:88px 0 80px;text-align:center;background:#FFFFFF;border-top:1px solid #EEF0F4}
 .challenge h2{font-size:clamp(34px,5vw,58px);font-weight:700;letter-spacing:-.04em;line-height:1.05;margin-top:8px}
 .challenge .sub{font-size:20px;color:var(--soft);margin:12px auto 0;max-width:620px}
-.cgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:980px;margin:40px auto 0;text-align:left;counter-reset:w}
-.cw{background:var(--gray);border-radius:22px;padding:22px 22px 20px;border-top:5px solid var(--c)}
+.cgrid{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:980px;margin:40px auto 0;text-align:left}
+.cgrid::before{content:"";position:absolute;left:12%;right:12%;top:40px;border-top:2px dashed #DCDFE7;z-index:0}
+.cw{position:relative;z-index:1;background:#fff;border:1px solid #E6E8EE;border-radius:22px;padding:22px 22px 20px;box-shadow:0 18px 40px -32px rgba(20,30,60,.5)}
+.cn{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:var(--t);color:var(--c);font-weight:700;font-size:17px;margin-bottom:14px;box-shadow:0 0 0 6px #fff}
 .cw small{display:block;font-size:12.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--c)}
 .cw b{display:block;font-size:20px;letter-spacing:-.02em;margin-top:8px}
 .cw p{color:var(--soft);font-size:15.5px;margin-top:6px;line-height:1.45}
-.cw em{display:block;font-style:normal;font-size:13.5px;color:var(--faint);margin-top:12px}
-.ccta{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:32px}.ccta .btn{margin:0}
-@media (max-width:820px){.cgrid{grid-template-columns:1fr}}
+.cw em{display:inline-block;font-style:normal;font-size:13px;font-weight:600;color:var(--c);background:var(--t);padding:4px 10px;border-radius:999px;margin-top:14px}
+.ccta{display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:34px}.ccta .btn{margin:0;min-width:260px;justify-content:center}
+.ccta .again{font-size:15.5px;font-weight:600;color:var(--accent);text-decoration:none}.ccta .again:hover{text-decoration:underline}
+@media (max-width:820px){.challenge{padding:64px 0 56px}.cgrid{grid-template-columns:1fr;gap:12px;margin-top:30px}.cgrid::before{left:41px;right:auto;top:30px;bottom:30px;border-top:0;border-left:2px dashed #DCDFE7}
+  .cw{display:grid;grid-template-columns:38px 1fr;column-gap:14px;padding:18px}.cn{grid-row:1/5;margin:0}.cw small,.cw b,.cw p,.cw em{grid-column:2}.cw b{font-size:18.5px;margin-top:4px}.cw em{justify-self:start;margin-top:10px}.ccta .btn{width:100%;min-width:0}}
 .who{display:flex;align-items:center;gap:16px;margin-bottom:26px}
 .who svg{width:128px;height:128px;border-radius:32px;flex:none;box-shadow:0 18px 36px -18px rgba(0,0,0,.55)}
 .who b{display:block;font-size:19px}.who span{display:block;font-size:15px;opacity:.72;margin-top:2px}
@@ -473,11 +477,11 @@ html:active-view-transition-type(back)::view-transition-new(page){animation:vt-i
     <h2 class="rv">Your 11 weeks start today.</h2>
     <p class="sub rv">The same three steps, in order, a little every day. See where you are by week 11.</p>
     <div class="cgrid">
-      <div class="cw rv" style="--c:#127A4F"><small>Week 1</small><b>Know where you stand</b><p>Test your strengths and skills. Make a 30-day plan.</p><em>Riya used HV Test</em></div>
-      <div class="cw rv" style="--c:#4A72C8"><small>Weeks 2 to 6</small><b>Show up daily</b><p>Give every task a fixed time. Don't wait for Monday.</p><em>Riya used HV Reset</em></div>
-      <div class="cw rv" style="--c:#A87A22"><small>Weeks 7 to 11</small><b>Apply with a system</b><p>Track every application and follow up.</p><em>Riya used HV Vault</em></div>
+      <div class="cw rv" style="--c:#127A4F;--t:#E7F4EC"><span class="cn">1</span><small>Week 1</small><b>Know where you stand</b><p>Test your strengths and skills. Make a 30-day plan.</p><em>Riya used HV Test</em></div>
+      <div class="cw rv" style="--c:#4A72C8;--t:#E9EFFB"><span class="cn">2</span><small>Weeks 2 to 6</small><b>Show up daily</b><p>Give every task a fixed time. Don't wait for Monday.</p><em>Riya used HV Reset</em></div>
+      <div class="cw rv" style="--c:#A87A22;--t:#F7F0E1"><span class="cn">3</span><small>Weeks 7 to 11</small><b>Apply with a system</b><p>Track every application and follow up.</p><em>Riya used HV Vault</em></div>
     </div>
-    <div class="ccta rv"><a class="btn" href="https://harshvittori.github.io/hv-tests/" target="_blank" rel="noopener">Start week 1 today</a><a class="btn ghost" href="#test">Read the steps again</a></div>
+    <div class="ccta rv"><a class="btn" href="https://harshvittori.github.io/hv-tests/" target="_blank" rel="noopener">Start week 1 today</a><a class="again" href="#test">Read the steps again &uarr;</a></div>
   </div></section>
 </main>
 <script>
