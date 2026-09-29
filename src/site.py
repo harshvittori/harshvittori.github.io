@@ -330,7 +330,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
 .showcase.tall .sc-grid{grid-template-columns:minmax(0,.9fr) minmax(0,1fr);gap:48px}
 .showcase.tall .sc-shot{max-width:500px;justify-self:center;width:100%}
 .vf{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
-.vf h2,.pt h2{font-size:clamp(28px,3.4vw,42px);font-weight:700;letter-spacing:-.035em;line-height:1.1;margin-bottom:14px}
+.vf h2{font-size:clamp(28px,3.4vw,42px);font-weight:700;letter-spacing:-.035em;line-height:1.1;margin-bottom:14px}
 .vf .btn{background:var(--pc)}.vf .btn:hover{filter:brightness(.92)}.vf .btn.ghost{background:none;color:var(--pc)}
 .vf-steps{list-style:none;margin:26px 0 28px;padding:0;display:grid;gap:14px}
 .vf-steps li{display:flex;gap:14px;align-items:flex-start}
@@ -344,14 +344,16 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
 .vf-share svg{width:20px;height:20px;flex:none;color:var(--pc)}
 .vf-note{margin-top:20px;padding-top:18px;border-top:1px solid var(--line);display:grid;gap:8px}
 .vf-note p{font-size:14.5px;color:var(--muted);line-height:1.5;margin:0}.vf-note b{color:var(--ink)}
-.partner .pt{max-width:760px;margin:0 auto;text-align:center;padding:48px 32px;border-radius:28px;border:1.5px dashed var(--pline);background:linear-gradient(180deg,var(--tint),#fff)}
-.pt-badge{display:inline-block;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--pc);background:#fff;border:1px solid var(--pline);padding:6px 14px;border-radius:999px;margin-bottom:16px}
-.pt>p{color:var(--muted);max-width:600px;margin:0 auto}
-.pt-list{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:24px 0 18px}
-.pt-list span{font-size:14.5px;font-weight:600;padding:9px 16px;border-radius:999px;background:#fff;border:1px solid var(--line);color:var(--ink)}
-.pt .pt-small{font-size:14px;color:var(--faint)}
-@media (max-width:880px){.showcase.tall .sc-grid{grid-template-columns:1fr;gap:22px}.vf{grid-template-columns:1fr;gap:32px}.vf-card{padding:22px}.partner .pt{padding:34px 20px}}
+.pt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.pt-c{background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px 22px;display:flex;flex-direction:column;gap:10px}
+.pt-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.pt-ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--tint);color:var(--pc)}.pt-ic svg{width:22px;height:22px}
+.pt-tag{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--pc);background:var(--tint);border:1px dashed var(--pline);padding:4px 10px;border-radius:999px}
+.pt-c h3{font-size:18px;font-weight:600;letter-spacing:-.01em}.pt-c p{font-size:15px;color:var(--muted);line-height:1.5}
+.pt-small{text-align:center;font-size:14.5px;color:var(--faint);margin-top:24px}
+@media (max-width:880px){.showcase.tall .sc-grid{grid-template-columns:1fr;gap:22px}.vf{grid-template-columns:1fr;gap:32px}.vf-card{padding:22px}.pt-grid{grid-template-columns:1fr 1fr}}
 @media (max-width:340px){.vf-share{grid-template-columns:1fr}}
+@media (max-width:560px){.pt-grid{grid-template-columns:1fr;gap:10px}.pt-c{display:grid;grid-template-columns:44px 1fr;column-gap:14px;row-gap:4px;padding:16px 18px;border-radius:16px}.pt-top{display:contents}.pt-ic{grid-row:1/3}.pt-tag{grid-column:2;grid-row:1;justify-self:start;font-size:10.5px;padding:2px 8px;margin-bottom:2px}.pt-c h3{grid-column:2;font-size:17px}.pt-c p{grid-column:2;font-size:14.5px}}
 @media (max-width:420px){.vf-share span{padding:11px 12px;font-size:14px;gap:8px}}
 
 .stage{position:relative;display:flex;justify-content:center;width:100%;max-width:420px;--px:0;--py:0}
@@ -362,8 +364,8 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
 @media (prefers-reduced-motion:no-preference){.stage .mock{animation:bob 8s ease-in-out infinite}.chip{animation:bob 6s ease-in-out infinite}.chip.c1{animation-duration:7s;animation-delay:-2.4s}.chip.c2{animation-duration:6.6s;animation-delay:-4.2s}}
 @keyframes bob{50%{translate:0 -9px}}
 .pmock{display:flex;justify-content:center}.pmock .mock{border-color:var(--pline);box-shadow:0 30px 60px -36px rgba(20,30,60,.4)}
-.facts{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border:1px solid var(--line);border-radius:20px;margin-top:-34px;position:relative}
-.facts div{padding:20px 22px;border-right:1px solid var(--line)}.facts div:last-child{border-right:0}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:-34px;position:relative}
+.facts div{padding:20px 22px;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 14px 30px -24px rgba(20,30,60,.35)}
 .facts b{display:block;font-size:22px;font-weight:700;letter-spacing:-.03em;color:var(--pc)}.facts span{font-size:14px;color:var(--soft)}
 .pp-sec{padding:96px 0;border-bottom:1px solid var(--line)}
 .pp-sec .head{margin-bottom:40px}
@@ -394,7 +396,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
 .nx>svg:last-child{width:20px;height:20px;color:var(--pc)}
 .back{text-align:center;margin-top:28px}.back a{display:inline-flex;align-items:center;gap:6px;color:var(--accent);font-weight:600;text-decoration:none}.back svg{width:16px;height:16px}.back a:hover{text-decoration:underline}
 @media (max-width:880px){.phero .wrap{grid-template-columns:1fr;padding:44px 0 60px;gap:36px}
-  .facts{grid-template-columns:1fr 1fr}.facts div:nth-child(2){border-right:0}.facts div:nth-child(-n+2){border-bottom:1px solid var(--line)}.facts div{padding:16px}
+  .facts{grid-template-columns:1fr 1fr;gap:12px}.facts div{padding:16px;border-radius:16px}
   .pp-sec{padding:64px 0}.pf{grid-template-columns:1fr}.pf>div,.pf>div+div{padding:0}.pf>div+div{border-left:0;border-top:1px solid var(--line);margin-top:32px;padding-top:32px}
   .steps3{grid-template-columns:1fr}.st{border-right:0;border-bottom:1px solid var(--line)}.st:last-child{border-bottom:0}
   .fgrid{grid-template-columns:1fr 1fr}.nxs{grid-template-columns:1fr}}
@@ -627,15 +629,16 @@ VERIFY_HTML = '''
       </div>
     </div>
   </div></section>''' % {"id": SAMPLE_ID, "v": VERIFY_URL}
+PARTNERS = [("Colleges and universities", "Bring HV Test to students before placements and first interviews.", '<path d="M3 9l9-5 9 5-9 5z"/><path d="M7 11v5c0 1.5 2.2 3 5 3s5-1.5 5-3v-5M21 9v6"/>'),
+            ("Training institutes", "Add HV Test to courses, so learners can see their real growth.", '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4M7 9l3 2 4-4 3 2"/>'),
+            ("Skill programmes", "Measure where people start, and how far they come by the end.", '<path d="M4 19h16M7 16V11M12 16V7M17 16v-3"/>'),
+            ("Hiring partners", "Help employers understand candidates beyond a resume.", '<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/>')]
 PARTNER_HTML = '''
   <section class="pp-sec partner"><div class="wrap">
-    <div class="pt rv">
-      <span class="pt-badge">Coming soon</span>
-      <h2>Partnering with top institutes.</h2>
-      <p>We're working towards partnerships with leading colleges, universities and training institutes, so your HV Test scorecard carries even more weight where it matters.</p>
-      <div class="pt-list"><span>Colleges and universities</span><span>Training institutes</span><span>Skill programmes</span><span>Hiring partners</span></div>
-      <p class="pt-small">Today HV Test is independent, and scorecards are issued by HV Test alone. We'll share partners here as they join.</p>
-    </div>
+    <div class="head rv"><p class="label pc">Coming soon</p><h2>Partnering with top institutes.</h2>
+      <p>We're working towards partnerships with leading colleges, universities and training institutes, so your HV Test scorecard carries even more weight where it matters.</p></div>
+    <div class="pt-grid rv">__PARTNERS__</div>
+    <p class="pt-small rv">Today HV Test is independent, and scorecards are issued by HV Test alone. We'll share partners here as they join.</p>
   </div></section>'''
 
 # ---------------------------------------------------------------- one page per app
@@ -851,7 +854,7 @@ def app_page(key):
     <div class="nxs">%(nxt)s</div>
     <p class="back"><a href="/">See all three apps together %(arrow)s</a></p>
   </div></section>
-</main>''' % dict(a, show=show, after_show=a.get("after_show", "").replace("__ARROW__", ARROW).replace("__SHARE__", "".join('<span>%s%s</span>' % (I(d), t) for t, d in SHARE)), before_faq=a.get("before_faq", ""), stagehtml=stage(key, a["mock"]), logo=logo(key), url=URL[key], arrow=ARROW, facts=facts, steps=steps, feats=feats, lib=lib, who=who, faq=faq, nxt=nxt,
+</main>''' % dict(a, show=show, after_show=a.get("after_show", "").replace("__ARROW__", ARROW).replace("__SHARE__", "".join('<span>%s%s</span>' % (I(d), t) for t, d in SHARE)), before_faq=a.get("before_faq", "").replace("__PARTNERS__", "".join('<div class="pt-c"><div class="pt-top"><span class="pt-ic">%s</span><span class="pt-tag">Upcoming</span></div><h3>%s</h3><p>%s</p></div>' % (I(d), t, x) for t, x, d in PARTNERS)), stagehtml=stage(key, a["mock"]), logo=logo(key), url=URL[key], arrow=ARROW, facts=facts, steps=steps, feats=feats, lib=lib, who=who, faq=faq, nxt=nxt,
                   p1=a["problem"][0], p2=a["problem"][1], f1=a["fix"][0], f2=a["fix"][1])
 
 
