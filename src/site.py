@@ -326,6 +326,34 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
 .sc-more{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:26px}
 .sc-more b{font-size:14px;margin-right:4px}.sc-more span{font-size:13.5px;padding:6px 12px;border-radius:999px;background:var(--tint);border:1px solid var(--pline);color:var(--ink)}
 @media (max-width:880px){.sc-grid{grid-template-columns:1fr;gap:22px}.mk{width:20px;height:20px;font-size:11px;box-shadow:0 0 0 2px #fff}}
+/* HV Test: verify + share, partnerships */
+.showcase.tall .sc-grid{grid-template-columns:minmax(0,.9fr) minmax(0,1fr);gap:48px}
+.showcase.tall .sc-shot{max-width:500px;justify-self:center;width:100%}
+.vf{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
+.vf h2,.pt h2{font-size:clamp(28px,3.4vw,42px);font-weight:700;letter-spacing:-.035em;line-height:1.1;margin-bottom:14px}
+.vf .btn{background:var(--pc)}.vf .btn:hover{filter:brightness(.92)}.vf .btn.ghost{background:none;color:var(--pc)}
+.vf-steps{list-style:none;margin:26px 0 28px;padding:0;display:grid;gap:14px}
+.vf-steps li{display:flex;gap:14px;align-items:flex-start}
+.vf-steps li>span{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:14px;color:#fff;background:var(--pc)}
+.vf-steps b{display:block;font-size:17px;margin-bottom:2px}.vf-steps div{color:var(--muted);font-size:15.5px;line-height:1.5}
+.vf-steps code{font:600 14px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--ink);background:var(--tint);border:1px solid var(--pline);padding:3px 7px;border-radius:6px;white-space:nowrap}
+.vf-card{background:#fff;border:1px solid var(--line);border-radius:24px;padding:30px;box-shadow:0 30px 60px -40px rgba(20,30,60,.35)}
+.vf-k{font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-bottom:16px}
+.vf-share{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.vf-share span{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:14px;background:var(--tint);border:1px solid var(--pline);font-weight:600;font-size:15px;color:var(--ink)}
+.vf-share svg{width:20px;height:20px;flex:none;color:var(--pc)}
+.vf-note{margin-top:20px;padding-top:18px;border-top:1px solid var(--line);display:grid;gap:8px}
+.vf-note p{font-size:14.5px;color:var(--muted);line-height:1.5;margin:0}.vf-note b{color:var(--ink)}
+.partner .pt{max-width:760px;margin:0 auto;text-align:center;padding:48px 32px;border-radius:28px;border:1.5px dashed var(--pline);background:linear-gradient(180deg,var(--tint),#fff)}
+.pt-badge{display:inline-block;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--pc);background:#fff;border:1px solid var(--pline);padding:6px 14px;border-radius:999px;margin-bottom:16px}
+.pt>p{color:var(--muted);max-width:600px;margin:0 auto}
+.pt-list{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:24px 0 18px}
+.pt-list span{font-size:14.5px;font-weight:600;padding:9px 16px;border-radius:999px;background:#fff;border:1px solid var(--line);color:var(--ink)}
+.pt .pt-small{font-size:14px;color:var(--faint)}
+@media (max-width:880px){.showcase.tall .sc-grid{grid-template-columns:1fr;gap:22px}.vf{grid-template-columns:1fr;gap:32px}.vf-card{padding:22px}.partner .pt{padding:34px 20px}}
+@media (max-width:340px){.vf-share{grid-template-columns:1fr}}
+@media (max-width:420px){.vf-share span{padding:11px 12px;font-size:14px;gap:8px}}
+
 .stage{position:relative;display:flex;justify-content:center;width:100%;max-width:420px;--px:0;--py:0}
 .stage .mock{position:relative;z-index:1;transform:translate(calc(var(--px)*-6px),calc(var(--py)*-5px));transition:transform .5s cubic-bezier(.22,1,.36,1)}
 .chip{position:absolute;z-index:2;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;font-size:13px;font-weight:600;padding:8px 13px;border-radius:999px;background:#fff;color:var(--ink);border:1px solid var(--pline,var(--line));box-shadow:0 14px 30px -14px rgba(20,30,60,.35);transform:translate(calc(var(--px)*14px),calc(var(--py)*10px));transition:transform .5s cubic-bezier(.22,1,.36,1)}
@@ -567,19 +595,74 @@ ICONS = {
  'CHECKC': '<circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.6 2.6L16.5 9"/>',
 }
 
+
+# ---------------------------------------------------------------- HV Test: verify + share, and institute partnerships
+SAMPLE_ID = "HVT-MA-68SM-E8LJ"
+VERIFY_URL = "https://harshvittori.github.io/hv-tests/verify/"
+SHARE = [("Portfolio", '<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/>'),
+         ("Resume", '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>'),
+         ("LinkedIn", '<rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 10v7M8 7v.5M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/>'),
+         ("Instagram", '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5v.5"/>'),
+         ("WhatsApp", '<path d="M4 20l1.3-4A8 8 0 1 1 8 18.7z"/><path d="M9 9.5c.5 2 2.5 4 4.5 4.5l1-1.2 2 .8-.4 1.6c-3.8.4-7.6-3.4-7.2-7.2l1.6-.4.8 2z"/>'),
+         ("Job applications", '<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M3 12h18M10 12v2h4v-2"/>')]
+VERIFY_HTML = '''
+  <section class="pp-sec" id="verify"><div class="wrap vf">
+    <div class="rv">
+      <p class="label pc">Unique and checkable</p>
+      <h2>Every scorecard has its own ID. Anyone can check it.</h2>
+      <p>When you save your scorecard, HV Test gives it a unique ID and a QR code, and keeps a locked copy of the result. Anyone you share it with can scan the code, or enter the ID, and see the record exactly as HV Test issued it.</p>
+      <ol class="vf-steps">
+        <li><span>1</span><div><b>Save your scorecard</b>You get an ID like <code>HVT-MA-68SM-E8LJ</code> and a QR code.</div></li>
+        <li><span>2</span><div><b>Share it</b>Add the image or PDF wherever people should see it.</div></li>
+        <li><span>3</span><div><b>They check it</b>A scan opens the HV Test verify page with the real record. It can't be edited.</div></li>
+      </ol>
+      <div class="ctas"><a class="btn" href="https://harshvittori.github.io/hv-tests/verify/">Check a scorecard __ARROW__</a><a class="btn ghost" href="https://harshvittori.github.io/hv-tests/verify/#HVT-MA-68SM-E8LJ">Try the sample ID</a></div>
+    </div>
+    <div class="rv vf-card">
+      <p class="vf-k">Share it where it counts</p>
+      <div class="vf-share">__SHARE__</div>
+      <div class="vf-note">
+        <p><b>It confirms</b> HV Test issued this scorecard, and the name, date and scores are exactly as saved.</p>
+        <p><b>It doesn't claim</b> to be an accredited certification. It's an honest self-assessment, issued by HV Test.</p>
+      </div>
+    </div>
+  </div></section>''' % {"id": SAMPLE_ID, "v": VERIFY_URL}
+PARTNER_HTML = '''
+  <section class="pp-sec partner"><div class="wrap">
+    <div class="pt rv">
+      <span class="pt-badge">Coming soon</span>
+      <h2>Partnering with top institutes.</h2>
+      <p>We're working towards partnerships with leading colleges, universities and training institutes, so your HV Test scorecard carries even more weight where it matters.</p>
+      <div class="pt-list"><span>Colleges and universities</span><span>Training institutes</span><span>Skill programmes</span><span>Hiring partners</span></div>
+      <p class="pt-small">Today HV Test is independent, and scorecards are issued by HV Test alone. We'll share partners here as they join.</p>
+    </div>
+  </div></section>'''
+
 # ---------------------------------------------------------------- one page per app
 APPS = {
  "test": dict(name="HV Test", verb="Know yourself", color="#127A4F", tint="#EEF6F1", pline="#D3E7DA", mock=MOCK_TEST, cta="Take a test", story="/#test",
+   showcase=dict(img="/test/scorecard.jpg", w=1080, h=1350, id="scorecard", label="Your scorecard", tall=True,
+     title="A real scorecard, not just a number.", lead="Finish the Maturity Assessment and get a one-page Skill Assessment Scorecard: your score, level and marks for every skill, ready to save, share and check.",
+     alt="A sample HV Test Skill Assessment Scorecard: Riya Verma (Sample), Maturity Assessment, 72 out of 100, Grounded, skill-wise marks, strengths, work on, scorecard ID and QR code",
+     points=[(3.6, 20.4, "Your name and test", "The name you choose, the test and its category."),
+             (91.5, 17.0, "Score out of 100 and level", "Developing, Emerging, Grounded or Highly Consistent."),
+             (50.0, 39.4, "A unique scorecard ID", "Every scorecard gets its own ID, like HVT-MA-68SM-E8LJ, the day you save it."),
+             (6.7, 47.3, "Marks for every skill", "All 10 skills out of 10, so strengths and gaps are clear at a glance."),
+             (54.6, 47.3, "Strengths and what to work on", "Your top three and the three to grow next."),
+             (6.7, 86.0, "QR code to verify", "Anyone can scan it and see the real record."),
+             (3.6, 93.6, "Honest by design", "Issued by HV Test. A self-assessment, not an accredited certification.")]),
+   after_show=VERIFY_HTML,
+   before_faq=PARTNER_HTML,
    title="How well do you really know yourself? | HV Test",
-   desc="Tests for how you think, learn, act and grow. Start with the free Maturity Assessment: an honest score, a full report and a 30-day plan. No login.",
+   desc="Tests for how you think, learn, act and grow. Start with the free Maturity Assessment: an honest score, a checkable scorecard, a full report and a 30-day plan. No login.",
    lead="One place to understand yourself: how you handle life, your real strengths, how you communicate, how consistent you are, and how well you use AI. Take a test, see where you stand, and keep growing.",
-   facts=[("2 categories", "Personal Growth, and AI and Future Skills"), ("Live now", "the Maturity Assessment"), ("2 PDFs", "report and 30-day plan"), ("No login", "answers stay on your device")],
+   facts=[("2 categories", "Personal Growth, and AI and Future Skills"), ("Live now", "the Maturity Assessment"), ("Scorecard", "with a unique ID and QR"), ("No login", "answers stay on your device")],
    problem=("“So, what are your strengths?”", "Most of us have never measured how we think, learn or react. So in an interview, a review or a big decision, we guess."),
    fix=("See yourself clearly. Then grow.", "HV Test measures your traits, abilities and habits with honest, carefully designed tests. You see where you stand, what to improve, and how you change over time."),
    steps=[("Pick a test", "Choose what you want to understand. Start with the Maturity Assessment: about 10 minutes."),
           ("Answer honestly", "Real situations and questions, with no right answers to game. Pick what you'd really do."),
-          ("See where you stand, then grow", "Your score, strengths and growth areas, a report and a plan. Retake later to see how you've grown.")],
-   library=[("Maturity Assessment", "Live now", "How you decide, handle emotions and act in real-life situations. A score out of 100, a full report and a 30-day plan.", "Personal Growth"),
+          ("See where you stand, then grow", "Your scorecard, a report and a plan. Share the scorecard, and retake later to see how you've grown.")],
+   library=[("Maturity Assessment", "Live now", "How you decide, handle emotions and act in real-life situations. A score out of 100, a scorecard, a full report and a 30-day plan.", "Personal Growth"),
             ("Strengths Finder", "Coming soon", "Find what you are naturally good at, and how to talk about it in an interview.", "Personal Growth"),
             ("Communication Style", "Coming soon", "How clearly you speak, listen and explain, with a 7-day practice plan.", "Personal Growth"),
             ("Consistency Check", "Coming soon", "Why you start strong and then stop, and a simple plan to keep going.", "Personal Growth"),
@@ -588,11 +671,13 @@ APPS = {
           ("SHUFFLE", "Real-life situations", "A bank of 104 situations. Each attempt picks 28 to 30, covering all 10 areas."),
           ("GRID", "10 areas", "Emotional control, accountability, self-awareness, conflict, relationships, decisions, patience, empathy, responsibility, long-term thinking."),
           ("TARGET", "Score out of 100", "Your overall score and a level: Developing, Emerging, Grounded or Highly Consistent."),
-          ("FILE", "Full report PDF", "About 12 pages on each area: where you're strong and where to grow."),
+          ("CHECKC", "Skill Assessment Scorecard", "One page with your score, level and marks for every skill. Save it as an image or PDF."),
+          ("SHIELD", "Unique ID and QR code", "Every saved scorecard gets its own ID. Anyone can scan the QR code to check it's real."),
+          ("FILE", "Full report PDF", "About 12 pages on each area, opening with your scorecard."),
           ("ROUTE", "30-day plan PDF", "About 10 pages of small daily steps. Download both PDFs in one tap."),
           ("SYNC", "Fresh every time", "Questions and options are shuffled, and a retake avoids the ones you saw last time."),
-          ("SHIELD", "Private by design", "No login and no server. Your answers never leave your device."),
-          ("HEART", "Honest, not a quiz", "Four believable options with real trade-offs. It's for growth, not a diagnosis.")],
+          ("HEART", "Private by design", "No login. Your answers never leave your device. Only a short scorecard summary is saved, and only if you ask."),
+          ("BULB", "Honest, not a quiz", "Four believable options with real trade-offs. It's for growth, not a diagnosis.")],
    who=[("Students", "Know your strengths before placements and first interviews."),
         ("Job seekers", "Real answers, with real examples, for “tell me about yourself”."),
         ("Professionals", "See how you handle conflict, pressure and feedback at work."),
@@ -602,11 +687,15 @@ APPS = {
    faq=[("What tests are on HV Test?", "Personal Growth: the Maturity Assessment (live now), Strengths Finder, Communication Style and Consistency Check. AI and Future Skills: AI Basics. The new ones are coming soon."),
         ("Is there a test about AI?", "Yes. AI Basics, in the new AI and Future Skills category, is coming soon: how well you understand and use AI, and when to double-check it."),
         ("Is HV Test a diagnosis?", "No. It's a self-assessment for personal growth, not a clinical or psychological diagnosis."),
-        ("Do I need an account?", "No. There's no login, and your answers never leave your browser."),
+        ("What is the scorecard?", "A one-page Skill Assessment Scorecard with your score, level and marks for every skill. It's issued by HV Test and it's a self-assessment, not an accredited certification or qualification."),
+        ("How can someone check my scorecard?", "They scan its QR code, or enter its ID at harshvittori.github.io/hv-tests/verify. They'll see the record exactly as HV Test saved it. Records can't be edited."),
+        ("Is HV Test partnered with any institute?", "Not yet. We're working towards partnerships with colleges, universities and training institutes. Today, scorecards are issued by HV Test alone."),
+        ("Do I need an account?", "No. There's no login, and your answers never leave your browser. If you save a scorecard, only its short summary is stored."),
         ("Can I take it again?", "Yes. Questions and options are shuffled, and a retake avoids the questions you saw last time."),
         ("Who can take it?", "Anyone. The Maturity Assessment is free for everyone, both PDFs included.")]),
  "reset": dict(name="HV Reset", verb="Plan your day. See your progress.", color="#4A72C8", tint="#EEF2FB", pline="#D6E0F4", mock=MOCK_RESET, cta="Open HV Reset", story="/#reset",
-   showcase=dict(img="/reset/dashboard.jpg", w=1440, h=1002,
+   showcase=dict(img="/reset/dashboard.jpg", w=1440, h=1002, id="dashboard", label="The dashboard", bar="harshvittori.github.io/hv-reset",
+     alt="The HV Reset dashboard: today at a glance, three questions answered, key numbers, productivity score, a 14-day trend and tips",
      title="Your personal dashboard", lead="See what you planned, what you really did, and whether you're getting better. Every number comes from what you actually do. Nothing is made up.",
      points=[(17.9, 14.4, "Today at a glance", "Tasks done, time worked and what's next, with one tap back to your day."),
              (17.9, 25.6, "Three honest answers", "What am I doing with my time? Am I completing what I plan? Am I improving?"),
@@ -707,11 +796,13 @@ def app_page(key):
         sc = a["showcase"]
         marks = "".join('<span class="mk" data-n="%d" style="left:%s%%;top:%s%%">%d</span>' % (i + 1, x, y, i + 1) for i, (x, y, t, d) in enumerate(sc["points"]))
         pts = "".join('<li data-n="%d" tabindex="0"><span class="pn">%d</span><span><b>%s</b>%s</span></li>' % (i + 1, i + 1, t, d) for i, (x, y, t, d) in enumerate(sc["points"]))
-        chips = "".join('<span>%s</span>' % m for m in sc["more"])
-        show = ('<section class="pp-sec showcase" id="dashboard"><div class="wrap"><div class="head rv"><p class="label pc">The dashboard</p><h2>%s</h2><p>%s</p></div>'
-                '<div class="sc-grid rv"><figure class="sc-shot"><div class="sc-bar"><i></i><i></i><i></i><span>harshvittori.github.io/hv-reset</span></div>'
-                '<div class="sc-img"><img src="%s" width="%d" height="%d" loading="lazy" decoding="async" alt="The HV Reset dashboard: today at a glance, three questions answered, key numbers, productivity score, a 14-day trend and tips">%s</div></figure>'
-                '<ol class="sc-pts">%s</ol></div><div class="sc-more rv"><b>Also inside</b>%s</div></div></section>') % (sc["title"], sc["lead"], sc["img"], sc["w"], sc["h"], marks, pts, chips)
+        chips = "".join('<span>%s</span>' % m for m in sc.get("more", []))
+        bar = '<div class="sc-bar"><i></i><i></i><i></i><span>%s</span></div>' % sc["bar"] if sc.get("bar") else ""
+        show = ('<section class="pp-sec showcase%s" id="%s"><div class="wrap"><div class="head rv"><p class="label pc">%s</p><h2>%s</h2><p>%s</p></div>'
+                '<div class="sc-grid rv"><figure class="sc-shot">%s'
+                '<div class="sc-img"><img src="%s" width="%d" height="%d" loading="lazy" decoding="async" alt="%s">%s</div></figure>'
+                '<ol class="sc-pts">%s</ol></div>%s</div></section>') % (" tall" if sc.get("tall") else "", sc["id"], sc["label"], sc["title"], sc["lead"], bar, sc["img"], sc["w"], sc["h"], sc["alt"], marks, pts,
+                ('<div class="sc-more rv"><b>Also inside</b>%s</div>' % chips) if chips else "")
     nxt = "".join('<a class="nx rv" href="/%s/" style="--pc:%s;--tint:%s;--pline:%s">%s<span><b>%s</b><small>%s</small></span>%s</a>' % (
         k, APPS[k]["color"], APPS[k]["tint"], APPS[k]["pline"], logo(k), APPS[k]["name"], APPS[k]["verb"], ARROW) for k in ORDER if k != key)
     return '''<main id="main" class="pp" style="--pc:%(color)s;--tint:%(tint)s;--pline:%(pline)s">
@@ -731,7 +822,7 @@ def app_page(key):
     <div class="rv"><p class="label pc">What %(name)s does</p><h2>%(f1)s</h2><p>%(f2)s</p><a class="more" href="%(story)s">See it in Riya's story %(arrow)s</a></div>
   </div></section>
 %(show)s
-
+%(after_show)s
   <section class="pp-sec"><div class="wrap">
     <div class="head rv"><p class="label">How it works</p><h2>Three steps. That's it.</h2></div>
     <div class="steps3">%(steps)s</div>
@@ -748,6 +839,7 @@ def app_page(key):
     <div class="who rv">%(who)s</div>
   </div></section>
 
+%(before_faq)s
   <section class="pp-sec"><div class="wrap">
     <div class="head rv"><p class="label">FAQ</p><h2>Questions about %(name)s.</h2></div>
     <div class="faq rv">%(faq)s</div>
@@ -759,7 +851,7 @@ def app_page(key):
     <div class="nxs">%(nxt)s</div>
     <p class="back"><a href="/">See all three apps together %(arrow)s</a></p>
   </div></section>
-</main>''' % dict(a, show=show, stagehtml=stage(key, a["mock"]), logo=logo(key), url=URL[key], arrow=ARROW, facts=facts, steps=steps, feats=feats, lib=lib, who=who, faq=faq, nxt=nxt,
+</main>''' % dict(a, show=show, after_show=a.get("after_show", "").replace("__ARROW__", ARROW).replace("__SHARE__", "".join('<span>%s%s</span>' % (I(d), t) for t, d in SHARE)), before_faq=a.get("before_faq", ""), stagehtml=stage(key, a["mock"]), logo=logo(key), url=URL[key], arrow=ARROW, facts=facts, steps=steps, feats=feats, lib=lib, who=who, faq=faq, nxt=nxt,
                   p1=a["problem"][0], p2=a["problem"][1], f1=a["fix"][0], f2=a["fix"][1])
 
 
