@@ -234,17 +234,21 @@ def ch_reset():
     inner = ('<g><rect x="48" y="46" width="148" height="104" rx="14" fill="#9CC3F0"/><g class="t v1"><rect class="skycycle" x="48" y="46" width="148" height="104" rx="14" fill="#1F2A55"/></g>'
              '<rect class="t v4" x="48" y="46" width="148" height="104" rx="14" fill="#F4A774"/><circle class="t v4" cx="122" cy="116" r="18" fill="#FFD27A"/></g>'
              '<g transform="translate(262 96)"><circle r="38" fill="#FFFFFF" stroke="%s" stroke-width="4"/><path class="hand hour" d="M0,0 V-20" stroke="%s" stroke-width="5" stroke-linecap="round"/><path class="hand minute" d="M0,0 V-30" stroke="#4A72C8" stroke-width="4" stroke-linecap="round"/><circle r="4" fill="%s"/></g>' % (INK, INK, INK) +
-             FLOOR + riya(180, 334, 1, faces={"g": "v1", "n": "v2", "d": "v3", "h": "v4"}, arms={"desk": "v1 v2 v3", "tea": "v4"}) + desk(40, 348, 290) +
+             FLOOR + riya(180, 334, 1, faces={"g": "v1", "n": "v2", "d": "v3 v5", "h": "v4"}, arms={"desk": "v1 v2 v3 v5", "tea": "v4"}) + desk(40, 348, 290) +
              '<g class="t v1"><rect x="236" y="318" width="20" height="30" rx="5" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="2"/><rect x="262" y="322" width="20" height="26" rx="5" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="2"/><rect x="288" y="316" width="20" height="32" rx="5" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="2"/></g>'
              '<g class="t v1">' + notifs + '<g transform="rotate(4 470 90)"><rect x="420" y="40" width="112" height="96" rx="8" fill="#FFF8E1" stroke="#EADCB0"/>' +
              "".join('<rect x="434" y="%d" width="12" height="12" rx="3" fill="#FFFFFF" stroke="#C9B98A"/><rect class="wiggle" x="454" y="%d" width="62" height="6" rx="3" fill="#C9B98A"/>' % (58 + i * 20, 61 + i * 20) for i in range(4)) + '</g></g>'
-             '<g class="t v2 v3 v4 panel"><rect x="336" y="56" width="236" height="330" rx="22" fill="#FFFFFF" stroke="#E5E5EA" stroke-width="1.5"/>' + logo_at("reset", 352, 72, 26) +
+             '<g class="t v2 v3 v4 v5 panel"><rect x="336" y="56" width="236" height="330" rx="22" fill="#FFFFFF" stroke="#E5E5EA" stroke-width="1.5"/>' + logo_at("reset", 352, 72, 26) +
              '<text x="386" y="91" font-size="14" font-weight="700" fill="%s">HV Reset</text><text x="352" y="134" font-size="36" font-weight="300" fill="%s" class="mono">01:14:52</text>' % (INK, INK) +
-             '<g class="shift">' + blk(0, 156, 204, "9:00  SQL practice", "#4A72C8") + blk(1, 204, 204, "11:00  Short break", "#EEF0F4", "#6E6E73") + blk(2, 252, 204, "2:00  Speaking practice", "#4A72C8") + blk(3, 300, 204, "6:00  Evening walk", "#F4B942", INK) + '</g>'
+             '<g class="t v2 v3 v4"><g class="shift">' + blk(0, 156, 204, "9:00  SQL practice", "#4A72C8") + blk(1, 204, 204, "11:00  Short break", "#EEF0F4", "#6E6E73") + blk(2, 252, 204, "2:00  Speaking practice", "#4A72C8") + blk(3, 300, 204, "6:00  Evening walk", "#F4B942", INK) + '</g></g>'
+             '<g class="t v5">' + "".join('<g class="blk5" style="--d:%.2fs"><rect x="352" y="%d" width="204" height="40" rx="10" fill="%s"/><text x="366" y="%d" font-size="14" font-weight="600" fill="%s">%s</text></g>' % (
+                 i * .12, 156 + i * 48, f, 181 + i * 48, tc, t) for i, (t, f, tc) in enumerate([("9:00  SQL practice", "#4A72C8", "#FFFFFF"), ("2:00  Speaking practice", "#4A72C8", "#FFFFFF"),
+                                                                                              ("4:00  Interview prep", "#127A4F", "#FFFFFF"), ("6:00  Apply to 3 jobs", "#A87A22", "#FFFFFF")])) +
+             '<rect x="352" y="350" width="204" height="26" rx="13" fill="#E6EDF9"/><text x="454" y="367" text-anchor="middle" font-size="12" font-weight="700" fill="#2E43A6">30-day plan · day 24 of 30</text></g>'
              '<g class="t v3 late"><rect x="478" y="72" width="80" height="26" rx="13" fill="#FBF1DF"/><text x="518" y="90" text-anchor="middle" font-size="12" font-weight="700" fill="#9A6512">Restart ↻</text></g>'
              '<g class="t v4"><rect x="352" y="350" width="204" height="26" rx="13" fill="#E3F2EA"/><text x="454" y="367" text-anchor="middle" font-size="12" font-weight="700" fill="#0B4F33">SQL 38 → 81% · Mock 4 → 8 ↑</text></g></g>'
              '<g class="t v2"><rect x="24" y="136" width="292" height="44" rx="16" fill="#2E43A6"/><text x="40" y="156" font-size="11" font-weight="700" fill="#C9D3FF">To HV AI</text><text x="40" y="172" font-size="12.5" font-weight="600" fill="#FFFFFF">“Roz 9 baje SQL, 2 baje speaking”</text></g>')
-    return scene(inner, "Riya's scattered days, then HV AI turning one sentence into a plan in HV Reset, a restart after missed days, and a finished day with her progress going up")
+    return scene(inner, "Riya's scattered days, then HV AI turning her 30-day plan into timed tasks in HV Reset, a restart after missed days, her progress going up, and interview prep and applying added to her day")
 
 def ch_vault():
     notes = "".join('<g class="drift" style="animation-delay:%.1fs"><rect x="%d" y="%d" width="%d" height="%d" rx="6" fill="%s" transform="rotate(%d %d %d)"/>%s</g>' % (
@@ -385,14 +389,15 @@ CH = [
     chapter("reset", 2, "Show up daily", "Why can't I stay consistent?",
         "Skills and confidence aren't things you finish, like a certificate. You practise them until the test and the hard question stop scaring you. And a comfort zone has no clock: without a time for each task, &ldquo;later&rdquo; always wins. This is the step where most people stop.", ch_reset(), [
         ("The problem", "Big plans. Lost days.", "Two years of no college, no office, no routine. Her comfort zone is very comfortable. She wakes at 10, gets stuck on SQL question 3 at 11, records one answer, hates how she sounds, checks her phone at 11:05, and suddenly it's evening. Again."),
-        ("What she did", "Every task gets a time. No more &ldquo;later&rdquo;.", "Her comfort zone had no clock, so &ldquo;baad mein karungi&rdquo; always won. Now every task has a fixed start time. She used HV Reset: she typed &ldquo;Roz 9 baje SQL, 2 baje speaking practice&rdquo; to HV AI, and at 9:00 the task is on screen with a clock counting down. One task at a time, and the day pulls her out of bed."),
+        ("What she did", "Every task gets a time. No more &ldquo;later&rdquo;.", "Her comfort zone had no clock, so &ldquo;baad mein karungi&rdquo; always won. Now her 30-day plan runs on the clock: every task has a fixed start time. She used HV Reset: she typed &ldquo;Roz 9 baje SQL, 2 baje speaking practice&rdquo; to HV AI, and at 9:00 the task is on screen with a clock counting down. One task at a time, and the day pulls her out of bed."),
         ("Week 2 · A setback", "She misses two days. She doesn't quit.", "A cold, a family function, a lost weekend. Instead of starting over on Monday, she shifts today's plan, keeps the one core task, and goes again. The streak resets. The progress doesn't."),
-        ("Week 6 · The change", "Now it's just what she does.", "300 SQL problems and 42 recordings. Her timed SQL test: 38% five weeks ago, 81% today. Her answers: three minutes of rambling then, 60 seconds with a real example now. Neha ma'am, her old college teacher, does a mock interview with her: &ldquo;Now I believe you.&rdquo; Looking back at her hours, she can see it: she really is getting better.")],
+        ("Week 6 · The change", "Now it's just what she does.", "300 SQL problems and 42 recordings. Her timed SQL test: 38% five weeks ago, 81% today. Her answers: three minutes of rambling then, 60 seconds with a real example now. Neha ma'am, her old college teacher, does a mock interview with her: &ldquo;Now I believe you.&rdquo; Looking back at her hours, she can see it: she really is getting better."),
+        ("Week 6 · Next", "Interview prep and applying go on the clock too.", "Day 24 of her 30-day plan. The same timed day now holds two more tasks: 4:00 interview prep with her three real stories, and 6:00 apply to three good roles. Applying stops being a midnight panic and becomes something she starts on time.")],
         '<a href="https://harshvittori.github.io/hv-reset/">HV Reset</a> with HV AI, free: a start time for every task and a clock that keeps the day moving.'),
     chapter("vault", 3, "Apply with a system", "Where did all my applications go?",
         "Real skills and confidence get you through the tests and interviews. A system gets you in front of enough of them. Without tracking and follow-ups, good chances quietly slip away, and the work from steps 1 and 2 goes to waste.", ch_vault(), [
-        ("The problem", "Applications vanish into silence.", "Job links in WhatsApp, resume_final_v3.pdf, and no idea who she applied to last week, or who she should chase."),
-        ("Week 7 · What she did", "Every job in one place.", "Saved, applied, interview: one list, updated the same day. She used HV Vault, a free job tracker. 34 applications over four weeks. This time the skill tests don't scare her: she clears four of five, and gets to three final interviews."),
+        ("The problem", "Skills ready. Offers still missing.", "Her technical and communication skills are finally where they should be, and she clears most tests now. But offers don't come. She applies on five job sites, links sit in WhatsApp, she applied to one company twice, and she can't remember whom to follow up with."),
+        ("Week 7 · What she did", "Every job in one place.", "Saved, applied, interview: every job in one place, updated the same day. She used HV Vault, a free job tracker. No more applying twice or losing a link: 34 applications over four weeks, each with its status, and three final interviews."),
         ("Follow-ups", "The follow-ups actually happen.", "After every application she sets a reminder to follow up. One quiet application turns into an interview because of it. She adds the interview to her calendar the moment it's fixed: &ldquo;Kal 4 baje&rdquo;, done."),
         ("Week 11 · The outcome", "A no. Then the yes.", "A final round says no, and it hurts. She notes what went wrong, preps with her real stories, and two weeks later signs the offer she wanted: Business Analyst.")],
         '<a href="https://harshvittori.github.io/hv-vault-web/">HV Vault</a>, free: one board for her applications and follow-ups.'),
@@ -401,6 +406,7 @@ CH = [
 TIMELINE = [("Week 1", "Takes a strengths test and a skills test. Communication 46, SQL 38, consistency 48. Ouch.", "#127A4F"),
             ("Week 2", "Plans each day the night before. Misses two days, then restarts instead of quitting.", "#4A72C8"),
             ("Week 5", "SQL test 81%, up from 38%. Mock interview 8 out of 10, up from 4. Neha ma'am says she's ready.", "#4A72C8"),
+            ("Week 6", "Adds interview prep and &ldquo;apply to 3 jobs&rdquo; to her timed daily plan.", "#4A72C8"),
             ("Week 7", "Starts applying, a few good roles a day, every one tracked in one place.", "#A87A22"),
             ("Week 8", "Ananya, the batchmate she used to envy, sends an opening at a friend's startup. Riya adds it to her list and applies that evening.", "#A87A22"),
             ("Week 9", "34 applications, 4 of 5 skill tests cleared, 3 final interviews. A follow-up revives a quiet lead.", "#A87A22"),
@@ -409,7 +415,7 @@ TIMELINE = [("Week 1", "Takes a strengths test and a skills test. Communication 
 def timeline():
     return "".join('<li class="rv"><span class="dot" style="background:%s"></span><b>%s</b><p>%s</p></li>' % (c, w, t) for w, t, c in TIMELINE)
 
-TOGGLE_CSS = "".join('.stage[data-step="%d"] .v%d{opacity:1;translate:0 0}\n.stage[data-step="%d"] .v%d,.stage[data-step="%d"] .v%d *{animation-play-state:running}\n' % (n, n, n, n, n, n) for n in range(1, 5))
+TOGGLE_CSS = ".stage[data-step=\"5\"] .blk5{animation:slidein .7s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--d);animation-play-state:running}\n.blk5{transform-box:fill-box}\n" + "".join('.stage[data-step="%d"] .v%d{opacity:1;translate:0 0}\n.stage[data-step="%d"] .v%d,.stage[data-step="%d"] .v%d *{animation-play-state:running}\n' % (n, n, n, n, n, n) for n in range(1, 6))
 
 CSS = r"""
 :root{--ink:#1D1D1F;--soft:#6E6E73;--faint:#86868B;--line:#D2D2D7;--gray:#F5F5F7;--accent:#2E43A6;--accent-hover:#1D2B72;
