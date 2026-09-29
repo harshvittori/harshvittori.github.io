@@ -352,6 +352,16 @@ def cast():
     return "".join('<figure class="pc rv"><svg viewBox="-86 -166 172 520" role="img" aria-label="%s">%s</svg><figcaption><b>%s</b><em>%s</em><span>%s</span></figcaption></figure>' % (
         c["name"], people.figure(c), c["name"], c["role"], c["line"]) for c in people.CAST.values())
 
+def next_art():
+    riya = dict(people.CAST["riya"], expr="h")
+    you = dict(people.CAST["riya"], hairstyle="short", extras=[], pose="down", expr="n")
+    return ('<svg viewBox="-200 -190 400 580" role="img" aria-label="Riya standing next to an outline of you, with a question mark: you could be next">'
+            '<circle cx="0" cy="70" r="190" fill="#E8ECFB"/>' + people.figure(riya, -86, 0, 1) +
+            '<g class="ghost">' + people.figure(you, 92, 0, 1) + '</g>'
+            '<text x="92" y="-78" text-anchor="middle" font-size="46" font-weight="700" fill="#FFFFFF">?</text>'
+            '<text x="-86" y="372" text-anchor="middle" font-size="20" font-weight="700" fill="#1D1D1F">Riya</text>'
+            '<text x="92" y="372" text-anchor="middle" font-size="20" font-weight="700" fill="#2E43A6">You</text></svg>')
+
 def lessons():
     return "".join('<div class="ls rv"><span>%d</span><b>%s</b><p>%s</p></div>' % (i + 1, h, t) for i, (h, t) in enumerate(LESSONS))
 
@@ -594,6 +604,21 @@ __TOGGLES__
 .pc span{display:block;font-size:14.5px;color:var(--soft);line-height:1.4;margin-top:8px}
 .nt .ico.av{background:none;overflow:hidden;border-radius:50%}.nt .ico.av svg{display:block;width:34px;height:34px}
 .nt .bav{float:left;margin:0 8px 0 -2px;border-radius:50%;overflow:hidden;width:26px;height:26px}.nt .bav svg{display:block}
+.next{padding:100px 0 110px;background:var(--gray);border-top:1px solid #EEF0F4}
+.ngrid{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:center}
+.nart svg{display:block;width:100%;max-width:440px;height:auto;margin:0 auto}
+.ghost *{fill:#AEBBEF!important;stroke:#AEBBEF!important;opacity:1!important}
+.ghost ellipse:first-child{stroke:none!important;fill:#000!important;opacity:.06!important}
+.next .label{text-align:left}
+.next h2{font-size:clamp(36px,5.4vw,62px);font-weight:700;letter-spacing:-.045em;line-height:1.03;margin-top:8px}
+.next .sub{font-size:20px;color:var(--soft);margin-top:14px;line-height:1.45}
+.nsteps{list-style:none;padding:0;margin:28px 0 0;display:grid;gap:12px}
+.nsteps li{display:flex;gap:14px;align-items:flex-start;background:#fff;border:1px solid #E4E5EA;border-radius:18px;padding:16px 18px}
+.nsteps span{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:15px}
+.nsteps b{display:block;font-size:17.5px}.nsteps em{display:block;font-style:normal;color:var(--soft);font-size:15.5px;margin-top:2px}
+.ncta{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}.ncta .btn{margin:0}
+.nfor{color:var(--faint);font-size:15px;margin-top:18px}
+@media (max-width:880px){.ngrid{grid-template-columns:1fr;gap:28px}.nart svg{max-width:340px}}
 .who{display:flex;align-items:center;gap:16px;margin-bottom:26px}
 .who svg{width:128px;height:128px;border-radius:32px;flex:none;box-shadow:0 18px 36px -18px rgba(0,0,0,.55)}
 .who b{display:block;font-size:19px}.who span{display:block;font-size:15px;opacity:.72;margin-top:2px}
@@ -794,16 +819,19 @@ PAGE = """<!DOCTYPE html>
     </div>
     <p class="more rv"><a href="/">See every feature, HV AI, privacy and FAQ →</a></p>
   </div></section>
-  <section class="people"><div class="wrap">
-    <h2 class="rv">Riya could be anyone.</h2>
-    <p class="sub rv">The same three problems, in every walk of life.</p>
-    <div class="tiles rv">
-      <div class="tile"><b>Students</b><span>Internships, study days, placements.</span></div>
-      <div class="tile"><b>Job seekers</b><span>A real system for the search.</span></div>
-      <div class="tile"><b>Professionals</b><span>Deep work, and the next move.</span></div>
-      <div class="tile"><b>Freelancers</b><span>Warm leads, balanced days.</span></div>
-      <div class="tile"><b>Career switchers</b><span>A new field, with a plan.</span></div>
-      <div class="tile"><b>Mentors</b><span>A clear structure to share.</span></div>
+  <section class="next" id="you"><div class="wrap ngrid">
+    <div class="nart rv">__NEXT_ART__</div>
+    <div class="ntxt">
+      <p class="label rv">Your turn</p>
+      <h2 class="rv">You could be the next Riya.</h2>
+      <p class="sub rv">Different city, different dream, same feeling of being stuck. Her 11 weeks started with one small step. Yours can start today.</p>
+      <ol class="nsteps rv">
+        <li><span style="background:#127A4F">1</span><div><b>Know where you stand</b><em>Take the free Maturity Assessment in HV Test. About 10 minutes.</em></div></li>
+        <li><span style="background:#4A72C8">2</span><div><b>Plan just today</b><em>Tell HV AI your day in HV Reset. One task at a time.</em></div></li>
+        <li><span style="background:#A87A22">3</span><div><b>Track every chance</b><em>Put your applications in HV Vault and let the follow-ups remind you.</em></div></li>
+      </ol>
+      <div class="ncta rv"><a class="btn" href="https://harshvittori.github.io/hv-tests/">Start with the free test</a><a class="btn ghost" href="https://harshvittori.github.io/hv-reset/">Plan my day</a></div>
+      <p class="nfor rv">For students, job seekers, professionals, freelancers, career switchers, and anyone starting again.</p>
     </div>
   </div></section>
 </main>
@@ -817,7 +845,7 @@ PAGE = """<!DOCTYPE html>
 def build():
     html = (PAGE.replace("__CSS__", CSS).replace("__JS__", JS).replace("__ARROW__", ARROW)
             .replace("__LOGO_NAV__", logo("world")).replace("__PROLOGUE__", prologue()).replace("__CHAPTERS__", "\n".join(CH))
-            .replace("__FINALE__", finale()).replace("__CAST__", cast()).replace("__TIMELINE__", timeline()).replace("__CALL__", interlude("call")).replace("__LESSONS__", lessons()).replace("__L_TEST__", logo("test", size=44)).replace("__L_RESET__", logo("reset", size=44)).replace("__L_VAULT__", logo("vault", size=44)))
+            .replace("__FINALE__", finale()).replace("__NEXT_ART__", next_art()).replace("__CAST__", cast()).replace("__TIMELINE__", timeline()).replace("__CALL__", interlude("call")).replace("__LESSONS__", lessons()).replace("__L_TEST__", logo("test", size=44)).replace("__L_RESET__", logo("reset", size=44)).replace("__L_VAULT__", logo("vault", size=44)))
     assert "__" not in re.sub(r"<script>.*?</script>", "", html, flags=re.S).replace("__proto__", ""), "unfilled placeholder"
     os.makedirs(os.path.join(OUT, "story"), exist_ok=True)
     html = html.replace("</style>", transitions.CSS + "</style>", 1).replace("</head>", transitions.HEAD + "\n</head>", 1)
