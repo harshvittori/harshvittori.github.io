@@ -336,10 +336,10 @@ def interlude(key):
     def item(ic, col, app, t, body, meta, side):
         if side:
             av = ('<span class="bav">%s</span>' % people.head(people.CAST[ic[1:]], 26)) if ic.startswith("@") else ""
-            return '<div class="nt %s">%s%s<p>%s</p><small>%s</small></div>' % (side, av, ('<b>%s</b>' % t) if t else "", body, meta)
+            return '<div class="pn %s">%s%s<p>%s</p><small>%s</small></div>' % (side, av, ('<b>%s</b>' % t) if t else "", body, meta)
         if ic.startswith("@"):
-            return ('<div class="nt"><span class="ico av">%s</span><div><div class="top"><em>%s</em><small>%s</small></div><b>%s</b><p>%s</p></div></div>' % (people.head(people.CAST[ic[1:]], 34), app, meta, t, body))
-        return ('<div class="nt"><span class="ico" style="background:%s">%s</span><div><div class="top"><em>%s</em><small>%s</small></div><b>%s</b><p>%s</p></div></div>' % (col, ic, app, meta, t, body))
+            return ('<div class="pn"><span class="ico av">%s</span><div><div class="top"><em>%s</em><small>%s</small></div><b>%s</b><p>%s</p></div></div>' % (people.head(people.CAST[ic[1:]], 34), app, meta, t, body))
+        return ('<div class="pn"><span class="ico" style="background:%s">%s</span><div><div class="top"><em>%s</em><small>%s</small></div><b>%s</b><p>%s</p></div></div>' % (col, ic, app, meta, t, body))
     return ('<section class="inter%s" id="%s"><div class="wrap grid">'
             '<div class="txt rv"><div class="who">%s<div><b>Riya</b><span>%s</span></div></div><p class="when">%s</p><h2>%s</h2><p class="story">%s</p><blockquote>&ldquo;%s&rdquo;</blockquote>'
             '<div class="pains">%s</div>%s</div>'
@@ -621,8 +621,8 @@ __TOGGLES__
 .pc b{display:block;font-size:19px;letter-spacing:-.02em;margin-top:10px}
 .pc em{display:block;font-style:normal;font-size:14px;font-weight:600;color:var(--accent);margin-top:2px}
 .pc span{display:block;font-size:14.5px;color:var(--soft);line-height:1.4;margin-top:8px}
-.nt .ico.av{background:none;overflow:hidden;border-radius:50%}.nt .ico.av svg{display:block;width:34px;height:34px}
-.nt .bav{float:left;margin:0 8px 0 -2px;border-radius:50%;overflow:hidden;width:26px;height:26px}.nt .bav svg{display:block}
+.pn .ico.av{background:none;overflow:hidden;border-radius:50%}.pn .ico.av svg{display:block;width:34px;height:34px}
+.pn .bav{float:left;margin:0 8px 0 -2px;border-radius:50%;overflow:hidden;width:26px;height:26px}.pn .bav svg{display:block}
 .next{padding:100px 0 110px;background:var(--gray);border-top:1px solid #EEF0F4}
 .ngrid{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:center}
 .nart svg{display:block;width:100%;max-width:440px;height:auto;margin:0 auto}
@@ -659,21 +659,21 @@ __TOGGLES__
 .inter.win .ph{background:#FFFFFF;box-shadow:0 40px 80px -36px rgba(120,60,20,.35),inset 0 0 0 1px #F0E4D8}
 .ph .notch{position:absolute;top:12px;left:50%;width:90px;height:8px;margin-left:-45px;border-radius:8px;background:rgba(255,255,255,.14)}
 .inter.win .ph .notch{background:#EEE6DD}
-.nt{display:flex;gap:11px;background:rgba(255,255,255,.08);border-radius:20px;padding:12px 14px;margin-top:10px;text-align:left}
-.inter.win .nt{background:#F6F4F1}
-.nt .ico{flex:none;width:34px;height:34px;border-radius:9px;display:grid;place-items:center;font-size:13px;font-weight:800;color:#fff}
-.nt>div{min-width:0;flex:1}
-.nt .top{display:flex;justify-content:space-between;gap:8px;font-size:12px;opacity:.65}
-.nt .top em{font-style:normal;font-weight:600;text-transform:uppercase;letter-spacing:.03em}
-.nt b{display:block;font-size:14.5px;margin-top:1px}
-.nt p{font-size:14.5px;line-height:1.35;opacity:.86;margin-top:1px}
-.nt.me,.nt.them{display:block;max-width:82%;border-radius:18px;padding:9px 13px}
-.nt.me{margin-left:auto;background:#DCF8C6!important;color:#10331A;border-bottom-right-radius:6px}
-.nt.them{background:#FFFFFF!important;color:var(--ink);border:1px solid #EEE;border-bottom-left-radius:6px}
-.nt.me small,.nt.them small{display:block;text-align:right;font-size:11px;opacity:.55;margin-top:2px}
-.nt.them b{font-size:12px;color:#B5561E}
-@media (prefers-reduced-motion:no-preference){.ph .nt{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .6s cubic-bezier(.2,.8,.2,1)}
-  .ph.in .nt{opacity:1;transform:none}.ph.in .nt:nth-of-type(2){transition-delay:.35s}.ph.in .nt:nth-of-type(3){transition-delay:.7s}.ph.in .nt:nth-of-type(4){transition-delay:1.05s}}
+.pn{display:flex;gap:11px;background:rgba(255,255,255,.08);border-radius:20px;padding:12px 14px;margin-top:10px;text-align:left}
+.inter.win .pn{background:#F6F4F1}
+.pn .ico{flex:none;width:34px;height:34px;border-radius:9px;display:grid;place-items:center;font-size:13px;font-weight:800;color:#fff}
+.pn>div{min-width:0;flex:1}
+.pn .top{display:flex;justify-content:space-between;gap:8px;font-size:12px;opacity:.65}
+.pn .top em{font-style:normal;font-weight:600;text-transform:uppercase;letter-spacing:.03em}
+.pn b{display:block;font-size:14.5px;margin-top:1px}
+.pn p{font-size:14.5px;line-height:1.35;opacity:.86;margin-top:1px}
+.pn.me,.pn.them{display:block;max-width:82%;border-radius:18px;padding:9px 13px}
+.pn.me{margin-left:auto;background:#DCF8C6!important;color:#10331A;border-bottom-right-radius:6px}
+.pn.them{background:#FFFFFF!important;color:var(--ink);border:1px solid #EEE;border-bottom-left-radius:6px}
+.pn.me small,.pn.them small{display:block;text-align:right;font-size:11px;opacity:.55;margin-top:2px}
+.pn.them b{font-size:12px;color:#B5561E}
+@media (prefers-reduced-motion:no-preference){.ph .pn{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .6s cubic-bezier(.2,.8,.2,1)}
+  .ph.in .pn{opacity:1;transform:none}.ph.in .pn:nth-of-type(2){transition-delay:.35s}.ph.in .pn:nth-of-type(3){transition-delay:.7s}.ph.in .pn:nth-of-type(4){transition-delay:1.05s}}
 @media (max-width:880px){.inter{padding:64px 0}.inter .grid{grid-template-columns:1fr;gap:34px}.ph{max-width:380px;width:100%;margin:0 auto}.inter .story{font-size:17px}}
 .lessons{padding:90px 0 100px;background:var(--gray)}
 .lessons h2{text-align:center;font-size:clamp(32px,4.8vw,54px);font-weight:700;letter-spacing:-.04em;margin-top:8px}
