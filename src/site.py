@@ -417,7 +417,12 @@ html{overflow-x:clip}
 .final{background:#FFFFFF}
 .factband{background:#F2F3F7;display:flow-root}
 .lib{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.lcat+.lcat{margin-top:40px}
+.lrow{display:grid;grid-template-columns:repeat(5,1fr);gap:0 14px}
+.lcat{grid-column:span var(--n);display:grid;grid-template-columns:subgrid;grid-template-rows:auto 1fr;row-gap:0}
+.lcat .lch{grid-column:1/-1}
+.lcat+.lcat .lch{border-left:0}
+@media (max-width:980px){.lrow{grid-template-columns:1fr 1fr;row-gap:36px}.lcat{grid-column:1/-1;grid-template-columns:1fr 1fr;grid-template-rows:none;gap:14px}.lcat .lch{margin:0}}
+@media (max-width:560px){.lrow{grid-template-columns:1fr}.lcat{grid-template-columns:1fr}}
 .lch{display:flex;align-items:baseline;gap:10px;font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--pc);margin:0 0 14px}
 .lch span{font-size:13px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--faint)}
 .lc{position:relative;background:#fff;border:1.5px solid var(--pc);border-radius:20px;padding:24px 22px;box-shadow:0 18px 40px -28px rgba(20,30,60,.35)}
@@ -690,7 +695,7 @@ def app_page(key):
         groups = {}
         for t, st, d, c in a["library"]:
             groups.setdefault(c, []).append('<div class="lc%s"><span class="lb">%s</span><h3>%s</h3><p>%s</p></div>' % ("" if st == "Live now" else " soon", st, t, d))
-        cards = "".join('<div class="lcat"><h3 class="lch">%s<span>%d test%s</span></h3><div class="lib">%s</div></div>' % (c, len(v), "" if len(v) == 1 else "s", "".join(v)) for c, v in groups.items())
+        cards = '<div class="lrow">' + "".join('<div class="lcat" style="--n:%d"><h3 class="lch">%s<span>%d test%s</span></h3>%s</div>' % (len(v), c, len(v), "" if len(v) == 1 else "s", "".join(v)) for c, v in groups.items()) + '</div>'
         lib = ('<section class="pp-sec" id="tests"><div class="wrap"><div class="head rv"><p class="label">The tests</p><h2>Five ways to understand yourself.</h2>'
                '<p>Each test looks at a different side of you. The Maturity Assessment is live now, and four more are on the way.</p></div><div class="rv">%s</div></div></section>') % cards
     show = ""
