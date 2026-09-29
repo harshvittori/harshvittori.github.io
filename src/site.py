@@ -19,7 +19,7 @@ def app_links_new_tab(html):
 def read(n):
     return open(os.path.join(HERE, n)).read().strip().replace('xmlns="http://www.w3.org/2000/svg" ', '')
 
-LOGOS = {"world": read("world.svg"), "test": read("logo-test.svg"), "reset": read("logo-reset.svg"), "vault": read("logo-vault.svg")}
+LOGOS = {"ai": read("logo-ai.svg"), "world": read("world.svg"), "test": read("logo-test.svg"), "reset": read("logo-reset.svg"), "vault": read("logo-vault.svg")}
 _n = [0]
 def logo(name, cls=""):
     _n[0] += 1
@@ -277,6 +277,7 @@ section{scroll-margin-top:72px}
 /* ai */
 .ai-sec{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:28px;overflow:hidden;background:#fff;margin-bottom:112px}
 .ai-sec .l{padding:48px;display:flex;flex-direction:column;justify-content:center}
+.ailab{display:inline-flex;align-items:center;gap:10px}.aiic svg{width:36px;height:36px;border-radius:10px;display:block;box-shadow:0 10px 20px -10px rgba(60,50,180,.6)}
 .ai-sec .l p:not(.label){font-size:18.5px;color:var(--soft);margin-top:14px}
 .ai-sec ul{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:10px}
 .ai-sec li{display:flex;gap:10px;font-size:16px;color:var(--soft)}.ai-sec li svg{width:20px;height:20px;flex:none;color:var(--accent);margin-top:2px}
@@ -582,7 +583,7 @@ OVERVIEW_MAIN = """<main id="main">
   <section id="ai" class="wrap band band-g">
     <div class="ai-sec rv">
       <div class="l">
-        <p class="label">HV AI</p>
+        <p class="label ailab"><span class="aiic">__LOGO_AI__</span>HV AI</p>
         <h2 class="sec-h">Just say it. HV AI does the work.</h2>
         <p>Type, or hold the mic and talk the way you normally do. HV AI turns it into clear changes you check before anything is saved.</p>
         <ul>
@@ -1073,7 +1074,7 @@ def fill(page):
         page = page.replace("__%s__" % k, v)
     for k in ("TEST", "RESET", "VAULT"):
         page = page.replace("__U_%s__" % k, URL[k.lower()])
-    page = re.sub(r"__LOGO_(WORLD|TEST|RESET|VAULT)(_P)?__", lambda m: logo(m.group(1).lower()), page)
+    page = re.sub(r"__LOGO_(AI|WORLD|TEST|RESET|VAULT)(_P)?__", lambda m: logo(m.group(1).lower()), page)
     left = re.findall(r"__[A-Z_]+__", page)
     assert not left, left
     return page
