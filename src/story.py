@@ -6,6 +6,7 @@ hides and animates the parts marked v1..v4. No libraries."""
 import os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import transitions
+import people
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.dirname(HERE)
@@ -214,7 +215,8 @@ def ch_test():
                  y, "#F2F8F4" if i % 2 == 0 else "#FFFFFF", y + 10, y + 18, INK, t, y + 32, sub) for i, (y, t, sub) in enumerate([(152, "Learn SQL basics", "45 min a day"), (200, "Build 1 dashboard", "a real project"), (248, "Practise my story", "3 real examples"), (296, "Show up daily", "consistency: 48")])) +
              '<text x="453" y="366" text-anchor="middle" font-size="12" font-weight="600" fill="#86868B">Built from your results</text></g></g>')
     inner = (FLOOR +
-             '<g class="t v1">' + desk(360, 330, 220) + interviewer(470, 330) + '</g>' +
+             '<g class="t v1"><clipPath id="mehta-cut"><rect x="330" y="0" width="270" height="344"/></clipPath><g clip-path="url(#mehta-cut)">' + people.figure(dict(people.CAST["mehta"], pose="clasp"), 470, 340, 1) + '</g>' + desk(360, 330, 220) +
+             '<rect x="372" y="344" width="196" height="72" rx="4" fill="#CDB592"/></g>' +
              bubble(300, 40, 280, 54, "So, what are your strengths?", "right", "t v1", tailx=462) +
              chair(190, 396) + riya(190, 370, 1.05, faces={"w": "v1", "n": "v2", "h": "v3", "d": "v4"}, arms={"down": "v1", "phone": "v2 v3 v4"}, sweat="v1", bulb="v3") +
              thought(60, 60, 150, 58, '<text x="135" y="98" text-anchor="middle" font-size="26" font-weight="700" fill="#C7C7CC">? ? ?</text>', "t v1", hx=160, hy=150) +
@@ -286,8 +288,8 @@ def finale():
 INTER = {
  "night": dict(face=("s", "scroll", "#26305E"), mood="11:48 PM, can't sleep, feeling invisible", dark=True, time="Sunday · 11:48 PM", title="The night it all piles up.",
    text="Riya should be asleep. Instead she's scrolling. Everyone seems to be moving ahead except her. This month she sent 26 applications and heard back from exactly one: an automatic &ldquo;thank you for applying&rdquo;.",
-   items=[("W", "#25D366", "WhatsApp", "Mom", "Beta, Sharma aunty ki beti ki job lag gayi 😊 Tera kab hoga?", "11:31 PM", ""),
-          ("in", "#0A66C2", "LinkedIn", "Ananya, your batchmate", "started a new position at a top startup. Say congrats!", "11:40 PM", ""),
+   items=[("@mom", "", "WhatsApp", "Mom", "Beta, Sharma aunty ki beti ki job lag gayi 😊 Tera kab hoga?", "11:31 PM", ""),
+          ("@ananya", "", "LinkedIn", "Ananya, your batchmate", "started a new position at a top startup. Say congrats!", "11:40 PM", ""),
           ("M", "#EA4335", "Mail", "Careers team", "Thank you for applying. We'll be in touch.", "3 weeks ago", ""),
           ("⏱", "#5E5CE6", "Screen time", "4h 51m today", "Instagram 3h 12m · YouTube 1h 06m", "now", "")],
    voice="I'm doing everything. So why is nothing working?",
@@ -306,17 +308,17 @@ INTER = {
    text="Her skills are real now, and so is the job hunt. So is the mess: job links buried in chats, three versions of her resume, and a tracker spreadsheet she stopped updating 19 days ago.",
    items=[("M", "#EA4335", "Mail", "Finlo Careers", "Unfortunately, we have decided to move forward with other candidates.", "9:02 AM", ""),
           ("M", "#EA4335", "Mail", "Brightpath Analytics", "Thank you for your interest. The position has been filled.", "Sat", ""),
-          ("W", "#25D366", "WhatsApp", "Rohit (recruiter)", "Will get back to you by Friday 👍", "12 days ago", ""),
+          ("@rohit", "", "WhatsApp", "Rohit (recruiter)", "Will get back to you by Friday 👍", "12 days ago", ""),
           ("▦", "#0F9D58", "Sheets", "jobs_tracker_FINAL_v2.xlsx", "Last edited 19 days ago", "", "")],
    voice="Did I already apply to that role? Did I ever follow up with Cred?",
    pains=["Rejections", "Ghosting", "Lost links", "Missed follow-ups"],
    bridge="Rejections are part of the game. Losing track of good chances doesn't have to be."),
  "call": dict(face=("j", "ear", "#FFE3C4"), mood="happy tears", dark=False, time="Week 11 · Thursday, 4:12 PM", title="The call.",
    text="Two weeks after the rejection that almost broke her streak, her phone rings. Unknown number. She almost lets it go. Then she picks up.",
-   items=[("✆", "#34C759", "Phone", "Incoming call", "Talent team", "4:12 PM", ""),
+   items=[("@kavya", "", "Phone", "Incoming call", "Kavya, Talent team", "4:12 PM", ""),
           ("M", "#EA4335", "Mail", "Offer letter: Product Analyst", "We're delighted to offer you the role. Please find the details attached.", "4:31 PM", ""),
           ("", "", "", "", "Maa, job lag gayi!! 🎉🎉", "4:33 PM", "me"),
-          ("", "", "", "Mom", "Mujhe pata tha ❤️ Sharma aunty ko main bataungi 😄", "4:34 PM", "them")],
+          ("@mom", "", "", "Mom", "Mujhe pata tha ❤️ Sharma aunty ko main bataungi 😄", "4:34 PM", "them")],
    voice="Not luck. Eleven weeks of small, honest, slightly boring days.",
    pains=["Knew her strengths", "Showed up daily", "Never lost a lead", "Got the job"]),
 }
@@ -329,7 +331,10 @@ def interlude(key):
     d = INTER[key]
     def item(ic, col, app, t, body, meta, side):
         if side:
-            return '<div class="nt %s">%s<p>%s</p><small>%s</small></div>' % (side, ('<b>%s</b>' % t) if t else "", body, meta)
+            av = ('<span class="bav">%s</span>' % people.head(people.CAST[ic[1:]], 26)) if ic.startswith("@") else ""
+            return '<div class="nt %s">%s%s<p>%s</p><small>%s</small></div>' % (side, av, ('<b>%s</b>' % t) if t else "", body, meta)
+        if ic.startswith("@"):
+            return ('<div class="nt"><span class="ico av">%s</span><div><div class="top"><em>%s</em><small>%s</small></div><b>%s</b><p>%s</p></div></div>' % (people.head(people.CAST[ic[1:]], 34), app, meta, t, body))
         return ('<div class="nt"><span class="ico" style="background:%s">%s</span><div><div class="top"><em>%s</em><small>%s</small></div><b>%s</b><p>%s</p></div></div>' % (col, ic, app, meta, t, body))
     return ('<section class="inter%s" id="%s"><div class="wrap grid">'
             '<div class="txt rv"><div class="who">%s<div><b>Riya</b><span>%s</span></div></div><p class="when">%s</p><h2>%s</h2><p class="story">%s</p><blockquote>&ldquo;%s&rdquo;</blockquote>'
@@ -343,6 +348,10 @@ LESSONS = [("Measure before you fix.", "She stopped guessing what was wrong. Ten
            ("Plan small. Show up daily.", "Two hours of SQL a day beat a perfect eight-hour plan she never started. HV AI kept it that simple."),
            ("A missed day isn't a lost week.", "She shifted the day and kept going, instead of waiting for Monday to start over."),
            ("Track every chance. Follow up.", "34 applications, one board, reminders on time. The interview that changed everything came from a follow-up.")]
+def cast():
+    return "".join('<figure class="pc rv"><svg viewBox="-86 -166 172 520" role="img" aria-label="%s">%s</svg><figcaption><b>%s</b><em>%s</em><span>%s</span></figcaption></figure>' % (
+        c["name"], people.figure(c), c["name"], c["role"], c["line"]) for c in people.CAST.values())
+
 def lessons():
     return "".join('<div class="ls rv"><span>%d</span><b>%s</b><p>%s</p></div>' % (i + 1, h, t) for i, (h, t) in enumerate(LESSONS))
 
@@ -366,7 +375,7 @@ CH = [
         ("The problem", "Big plans. Lost days.", "Night shift ends at 6 AM. She sleeps till noon, opens a course at 2, checks her phone at 2:05, and suddenly it's time for work again. Four courses started, none finished."),
         ("HV AI", "She just tells HV AI her day.", "&ldquo;Roz 9 se 11 SQL, 2 baje project, 6 baje walk.&rdquo; HV AI turns it into a simple plan in HV Reset. One task at a time, nothing else on the screen."),
         ("Week 2 · A setback", "She misses two days. She doesn't quit.", "A cold, a family function, a lost weekend. Instead of starting over on Monday, she shifts today's plan, keeps the one core task, and goes again. The streak resets. The progress doesn't."),
-        ("Week 6 · The change", "Now it's just what she does.", "42 focused hours, a finished SQL course and her first dashboard project online. Her dashboard shows the trend: she really is getting better.")],
+        ("Week 6 · The change", "Now it's just what she does.", "42 focused hours, a finished SQL course and her first dashboard project online. She sends it to Neha ma'am, her old college teacher: &ldquo;Show this in every interview.&rdquo; Her HV Reset dashboard shows it too: she really is getting better.")],
         "https://harshvittori.github.io/hv-reset/", "Plan my day"),
     chapter("vault", 3, "Act", "HV Vault + HV AI", "Where did all my applications go?", ch_vault(), [
         ("The problem", "Applications vanish into silence.", "Job links in WhatsApp, resume_final_v3.pdf, and no idea who she applied to last week, or who she should chase."),
@@ -378,8 +387,9 @@ CH = [
 
 TIMELINE = [("Week 1", "Takes the Maturity Assessment and a skills test. Consistency: 48. Ouch.", "#127A4F"),
             ("Week 2", "Plans her days with HV AI. Misses two days, then restarts instead of quitting.", "#4A72C8"),
-            ("Week 5", "Finishes SQL basics. Her first dashboard project goes online.", "#4A72C8"),
+            ("Week 5", "Finishes SQL basics. Her first dashboard project goes online, and Neha ma'am says it's interview-ready.", "#4A72C8"),
             ("Week 7", "Starts applying through HV Vault, a few good roles a day.", "#A87A22"),
+            ("Week 8", "Ananya, the batchmate she used to envy, sends an opening at a friend's startup. Riya saves it in HV Vault and applies that evening.", "#A87A22"),
             ("Week 9", "34 applications, 6 replies, 3 interviews. A follow-up revives a quiet lead.", "#A87A22"),
             ("Week 10", "Rejected after a final round. Writes down why, and preps again.", "#86868B"),
             ("Week 11", "Offer: Product Analyst. The role she was aiming for.", "#2E43A6")]
@@ -573,6 +583,17 @@ __TOGGLES__
 .pains span{font-size:14px;font-weight:600;padding:7px 13px;border-radius:999px;background:rgba(255,120,120,.14);color:#FFB3B3;border:1px solid rgba(255,138,138,.3)}
 .inter.win .pains span{background:#E3F4EA;color:#0B6B3F;border-color:#BFE3CD}
 .inter.win .pains span::before{content:"✓ "}
+.cast{padding:96px 0 90px}
+.cast h2{text-align:center;font-size:clamp(34px,5vw,58px);font-weight:700;letter-spacing:-.04em;line-height:1.05;margin-top:8px}
+.cast .sub{text-align:center;color:var(--soft);font-size:20px;margin-top:10px}
+.crow{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:40px max(20px,calc((100vw - 1120px)/2)) 20px;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+.pc{flex:none;width:230px;margin:0;scroll-snap-align:center;background:linear-gradient(#F6F3EE,#EFEBE4);border-radius:26px;padding:18px 16px 20px;text-align:left}
+.pc svg{display:block;width:100%;height:300px}
+.pc b{display:block;font-size:19px;letter-spacing:-.02em;margin-top:10px}
+.pc em{display:block;font-style:normal;font-size:14px;font-weight:600;color:var(--accent);margin-top:2px}
+.pc span{display:block;font-size:14.5px;color:var(--soft);line-height:1.4;margin-top:8px}
+.nt .ico.av{background:none;overflow:hidden;border-radius:50%}.nt .ico.av svg{display:block;width:34px;height:34px}
+.nt .bav{float:left;margin:0 8px 0 -2px;border-radius:50%;overflow:hidden;width:26px;height:26px}.nt .bav svg{display:block}
 .who{display:flex;align-items:center;gap:16px;margin-bottom:26px}
 .who svg{width:128px;height:128px;border-radius:32px;flex:none;box-shadow:0 18px 36px -18px rgba(0,0,0,.55)}
 .who b{display:block;font-size:19px}.who span{display:block;font-size:15px;opacity:.72;margin-top:2px}
@@ -713,6 +734,11 @@ PAGE = """<!DOCTYPE html>
     <div class="stats rv"><div><b>4</b><span>online courses started, none finished</span></div><div><b>37</b><span>browser tabs &ldquo;for later&rdquo;</span></div><div><b>26</b><span>applications sent, 1 reply</span></div><div><b>0</b><span>idea what to fix first</span></div></div>
     <p class="note rv">Sound familiar? This is her story: the bad nights, the restarts, and what finally changed.</p>
   </div></section>
+  <section class="cast"><div class="wrap">
+    <p class="label rv">The people in her story</p>
+    <h2 class="rv">Nobody's journey is solo.</h2>
+    <p class="sub rv">The ones who worry, push, ignore, test and finally say yes.</p>
+  </div><div class="crow">__CAST__</div></section>
   __CHAPTERS__
   __CALL__
   <section class="journey"><div class="wrap">
@@ -761,7 +787,7 @@ PAGE = """<!DOCTYPE html>
 def build():
     html = (PAGE.replace("__CSS__", CSS).replace("__JS__", JS).replace("__ARROW__", ARROW)
             .replace("__LOGO_NAV__", logo("world")).replace("__PROLOGUE__", prologue()).replace("__CHAPTERS__", "\n".join(CH))
-            .replace("__FINALE__", finale()).replace("__TIMELINE__", timeline()).replace("__CALL__", interlude("call")).replace("__LESSONS__", lessons()).replace("__L_TEST__", logo("test", size=44)).replace("__L_RESET__", logo("reset", size=44)).replace("__L_VAULT__", logo("vault", size=44)))
+            .replace("__FINALE__", finale()).replace("__CAST__", cast()).replace("__TIMELINE__", timeline()).replace("__CALL__", interlude("call")).replace("__LESSONS__", lessons()).replace("__L_TEST__", logo("test", size=44)).replace("__L_RESET__", logo("reset", size=44)).replace("__L_VAULT__", logo("vault", size=44)))
     assert "__" not in re.sub(r"<script>.*?</script>", "", html, flags=re.S).replace("__proto__", ""), "unfilled placeholder"
     os.makedirs(os.path.join(OUT, "story"), exist_ok=True)
     html = html.replace("</style>", transitions.CSS + "</style>", 1).replace("</head>", transitions.HEAD + "\n</head>", 1)
