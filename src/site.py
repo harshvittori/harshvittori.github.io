@@ -417,16 +417,20 @@ html{overflow-x:clip}
 .final{background:#FFFFFF}
 .factband{background:#F2F3F7;display:flow-root}
 .lib{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.lrow{display:grid;grid-template-columns:repeat(5,1fr);gap:0 14px}
-.lcat{grid-column:span var(--n);display:grid;grid-template-columns:subgrid;grid-template-rows:auto 1fr;row-gap:0}
-.lcat .lch{grid-column:1/-1}
-.lcat+.lcat .lch{border-left:0}
-@media (max-width:980px){.lrow{grid-template-columns:1fr 1fr;row-gap:36px}.lcat{grid-column:1/-1;grid-template-columns:1fr 1fr;grid-template-rows:none;gap:14px}.lcat .lch{margin:0}}
-@media (max-width:560px){.lrow{grid-template-columns:1fr}.lcat{grid-template-columns:1fr}}
+.lrow{display:flex;gap:18px;align-items:stretch}
+.lcat{--gc:#127A4F;--gt:rgba(18,122,79,.045);flex:var(--n) 1 0;min-width:0;display:flex;flex-direction:column;border:2px dotted var(--gc);border-radius:26px;background:var(--gt);padding:16px 16px 18px}
+.lcat.ai{--gc:#6D4FD6;--gt:rgba(109,79,214,.06);background:var(--gt) radial-gradient(rgba(109,79,214,.16) 1px,transparent 1.4px) 0 0/14px 14px}
+.lcat .lch{color:var(--gc);margin:2px 4px 14px;flex-wrap:wrap;row-gap:2px;white-space:nowrap}
+.lcat.ai{flex:1.25 1 0}
+.lcards{flex:1;display:grid;grid-template-columns:repeat(var(--n),1fr);gap:12px}
+.lcat.ai .lc .lb{background:#ECE7FB;color:#5B3FC4}
+.lcat.ai .lc h3{color:#2E2359}
+@media (max-width:980px){.lrow{flex-direction:column}.lcards{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.lcards{grid-template-columns:1fr}}
 .lch{display:flex;align-items:baseline;gap:10px;font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--pc);margin:0 0 14px}
 .lch span{font-size:13px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--faint)}
 .lc{position:relative;background:#fff;border:1.5px solid var(--pc);border-radius:20px;padding:24px 22px;box-shadow:0 18px 40px -28px rgba(20,30,60,.35)}
-.lc.soon{border:1px dashed #C9CDD8;box-shadow:none;background:rgba(255,255,255,.6)}
+.lc.soon{border:1px solid #E3E6EE;box-shadow:none;background:#FFFFFF}
 .lc .lb{display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.04em;padding:4px 11px;border-radius:999px;color:#fff;background:var(--pc);margin-bottom:14px}
 .lc.soon .lb{color:var(--soft);background:#EDEFF4}
 .lc h3{font-size:19px;font-weight:700;letter-spacing:-.02em;margin-bottom:6px}.lc p{color:var(--soft);font-size:15.5px;line-height:1.45}
@@ -695,7 +699,7 @@ def app_page(key):
         groups = {}
         for t, st, d, c in a["library"]:
             groups.setdefault(c, []).append('<div class="lc%s"><span class="lb">%s</span><h3>%s</h3><p>%s</p></div>' % ("" if st == "Live now" else " soon", st, t, d))
-        cards = '<div class="lrow">' + "".join('<div class="lcat" style="--n:%d"><h3 class="lch">%s<span>%d test%s</span></h3>%s</div>' % (len(v), c, len(v), "" if len(v) == 1 else "s", "".join(v)) for c, v in groups.items()) + '</div>'
+        cards = '<div class="lrow">' + "".join('<div class="lcat%s" style="--n:%d"><h3 class="lch">%s<span>%d test%s</span></h3><div class="lcards">%s</div></div>' % (" ai" if "AI" in c else "", len(v), c, len(v), "" if len(v) == 1 else "s", "".join(v)) for c, v in groups.items()) + '</div>'
         lib = ('<section class="pp-sec" id="tests"><div class="wrap"><div class="head rv"><p class="label">The tests</p><h2>Five ways to understand yourself.</h2>'
                '<p>Each test looks at a different side of you. The Maturity Assessment is live now, and four more are on the way.</p></div><div class="rv">%s</div></div></section>') % cards
     show = ""
