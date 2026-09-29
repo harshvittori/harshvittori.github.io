@@ -463,7 +463,7 @@ header.hid:focus-within{transform:none}
 .worries{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
 .worries span{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:980px;background:var(--gray);font-size:15px;font-weight:500}
 .worries i{width:10px;height:10px;border-radius:50%;display:inline-block}
-.scroll-hint{display:inline-flex;align-items:center;gap:8px;margin-top:28px;font-size:17px}
+.scroll-hint{display:inline-flex;align-items:center;gap:8px;margin-top:28px;font-size:16px;color:var(--faint)}
 .scroll-hint svg{width:18px;height:18px}
 @media (prefers-reduced-motion:no-preference){.scroll-hint svg{animation:bob 1.8s ease-in-out infinite}}
 @media (max-width:880px){.hero{grid-template-columns:1fr;gap:28px;padding:40px 0 56px}.hero .art-box{order:-1}}
@@ -788,7 +788,7 @@ PAGE = """<!DOCTYPE html>
       <h1>This is Riya. She's 25.</h1>
       <p class="lead">Jaipur. B.Tech. Two years since graduation, and still no job. Three certificates on her resume, but she fails the companies' skill tests and goes blank when they ask about her strengths. <b>Comfortable at home, and quietly stuck. What now?</b></p>
       <div class="worries"><span><i style="background:#127A4F"></i>What am I actually good at?</span><span><i style="background:#4A72C8"></i>Why can't I stay consistent?</span><span><i style="background:#A87A22"></i>Where did my applications go?</span></div>
-      <a class="scroll-hint" href="#test">Follow her story __ARROW__</a>
+      <p class="scroll-hint" aria-hidden="true">Scroll to read __ARROW__</p>
     </div>
     <div class="art-box rv">__PROLOGUE__</div>
   </div></section>
