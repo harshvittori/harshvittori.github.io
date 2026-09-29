@@ -405,6 +405,8 @@ CH = [
 
 TIMELINE = [("Week 1", "Two honest tests. Communication 46, SQL 38. Ouch.", "#127A4F"),
             ("Week 2", "A timed daily plan. Misses two days, restarts.", "#4A72C8"),
+            ("Week 3", "Back on the clock. No missed days. First mock interview: 5/10.", "#4A72C8"),
+            ("Week 4", "SQL practice test 62%, up from 38%. Still nervous, but improving.", "#4A72C8"),
             ("Week 5", "SQL 81%, mock interview 8/10, 78% of tasks on time.", "#4A72C8"),
             ("Week 6", "Interview prep and applying join the daily plan.", "#4A72C8"),
             ("Week 7", "Every application tracked in one place.", "#A87A22"),
