@@ -194,7 +194,7 @@ def prologue():
              '<rect x="362" y="270" width="52" height="5" rx="2.5" fill="#FFFFFF" opacity=".8"/><rect x="362" y="281" width="68" height="4" rx="2" fill="#FFFFFF" opacity=".5"/><rect x="362" y="291" width="40" height="4" rx="2" fill="#FFFFFF" opacity=".5"/></g>'
              '<g><rect x="468" y="298" width="22" height="24" rx="5" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="2"/><path class="steam" d="M479,292 q-4,-6 0,-12 q4,-6 0,-12" fill="none" stroke="#C7C7CC" stroke-width="2.5" stroke-linecap="round"/></g>' +
              thought(376, 70, 176, 68, icons, hx=318, hy=184))
-    return scene(inner, "Riya, 22, at her desk late at night: certificates on the wall, sticky notes, too many browser tabs, and three worries: what she's good at, where her days go, and her job search", "#F2F3F8")
+    return scene(inner, "Riya, 25, at her desk late at night: certificates on the wall, sticky notes, too many browser tabs, and three worries: what she's good at, where her days go, and her job search", "#F2F3F8")
 
 def ch_test():
     q = lambda y, on=False, cls="": ('<g class="%s"><rect x="378" y="%g" width="150" height="26" rx="8" fill="%s" stroke="%s" stroke-width="1.5"/><circle cx="394" cy="%g" r="6" fill="%s" stroke="%s" stroke-width="1.5"/><rect x="408" y="%g" width="%d" height="6" rx="3" fill="%s"/></g>') % (
@@ -287,7 +287,7 @@ def finale():
 # (icon letter, icon colour, app, title, body, meta, side)  side: "" notification, "me" her own message, "them" a reply
 INTER = {
  "night": dict(face=("s", "scroll", "#26305E"), mood="another rejection, can't sleep", dark=True, time="Sunday · 11:48 PM", title="The night it all piles up.",
-   text="Riya should be asleep. Instead she's reading the same email again. Another skill test failed, another interview gone wrong. She has the degree. She has the certificates. So why does every test feel like a language she only half knows, and why does she go blank the moment someone asks about her?",
+   text="Riya should be asleep. Two years since college, and she's still at home: comfortable, safe, and quietly stuck. Tonight she's reading the same email again. Another skill test failed, another interview gone wrong. She has the degree. She has the certificates. So why does every test feel like a language she only half knows, and why does she go blank the moment someone asks about her?",
    items=[("@mom", "", "WhatsApp", "Mom", "Beta, Sharma aunty ki beti ki job lag gayi 😊 Tera kab hoga?", "11:31 PM", ""),
           ("@ananya", "", "LinkedIn", "Ananya, your batchmate", "started a new position at a top startup. Say congrats!", "11:40 PM", ""),
           ("M", "#EA4335", "Mail", "Online skill test result", "You scored 41%. The cut-off was 65%. We won't be moving ahead.", "9:14 PM", ""),
@@ -384,7 +384,7 @@ CH = [
         '<a href="https://harshvittori.github.io/hv-tests/">HV Test</a>, free: a strengths assessment and a skills test.'),
     chapter("reset", 2, "Show up daily", "Why can't I stay consistent?",
         "Skills and confidence aren't things you finish, like a certificate. You practise them until the test and the hard question stop scaring you. This is the step where most people stop.", ch_reset(), [
-        ("The problem", "Big plans. Lost days.", "No college, no office, no routine. She wakes at 10, gets stuck on SQL question 3 at 11, records one answer, hates how she sounds, checks her phone at 11:05, and suddenly it's evening. Again."),
+        ("The problem", "Big plans. Lost days.", "Two years of no college, no office, no routine. Her comfort zone is very comfortable. She wakes at 10, gets stuck on SQL question 3 at 11, records one answer, hates how she sounds, checks her phone at 11:05, and suddenly it's evening. Again."),
         ("What she did", "She makes every day simple.", "Each night she picks tomorrow's one or two important tasks, with a time for each. She used HV Reset, typing &ldquo;Roz 9 baje SQL, 2 baje speaking practice&rdquo; to HV AI to set the day. One task at a time, nothing else."),
         ("Week 2 · A setback", "She misses two days. She doesn't quit.", "A cold, a family function, a lost weekend. Instead of starting over on Monday, she shifts today's plan, keeps the one core task, and goes again. The streak resets. The progress doesn't."),
         ("Week 6 · The change", "Now it's just what she does.", "300 SQL problems and 42 recordings. Her timed SQL test: 38% five weeks ago, 81% today. Her answers: three minutes of rambling then, 60 seconds with a real example now. Neha ma'am, her old college teacher, does a mock interview with her: &ldquo;Now I believe you.&rdquo; Looking back at her hours, she can see it: she really is getting better.")],
@@ -754,7 +754,7 @@ PAGE = """<!DOCTYPE html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>From stuck to hired in 11 weeks: Riya's story</title>
-<meta name="description" content="Riya is 22, skilled but stuck. Follow her 11 weeks from unsure and inconsistent to skilled, organised and hired.">
+<meta name="description" content="Riya is 25, skilled but stuck. Follow her 11 weeks from unsure and inconsistent to skilled, organised and hired.">
 <link rel="canonical" href="https://harshvittori.github.io/story/">
 <meta name="theme-color" content="#FFFFFF">
 <meta property="og:type" content="article">
@@ -779,16 +779,16 @@ PAGE = """<!DOCTYPE html>
   <section id="top"><div class="wrap hero">
     <div class="rv">
       <p class="eyebrow">An 11-week story</p>
-      <h1>This is Riya. She's 22.</h1>
-      <p class="lead">Jaipur. A B.Tech, three online certificates. A fresher from the 2025 batch, still without a job. On paper, she's ready. But she fails the companies' skill tests, and goes blank when they ask about her strengths. <b>So why does she keep getting rejected?</b></p>
-      <div class="worries"><span><i style="background:#127A4F"></i>What are my real strengths?</span><span><i style="background:#4A72C8"></i>Why can't I stay consistent?</span><span><i style="background:#A87A22"></i>Where did my applications go?</span></div>
+      <h1>This is Riya. She's 25.</h1>
+      <p class="lead">Jaipur. B.Tech, 2023 batch. Then two years preparing for a government job: two attempts, no selection. Now she's trying private jobs with three online certificates, but she fails their skill tests and goes blank when they ask about her strengths. <b>Two years at home, comfortable and quietly stuck. What now?</b></p>
+      <div class="worries"><span><i style="background:#127A4F"></i>What am I actually good at?</span><span><i style="background:#4A72C8"></i>Why can't I stay consistent?</span><span><i style="background:#A87A22"></i>Where did my applications go?</span></div>
       <a class="scroll-hint" href="#test">Follow her story __ARROW__</a>
     </div>
     <div class="art-box rv">__PROLOGUE__</div>
   </div></section>
   <section class="before"><div class="wrap">
     <p class="label rv">Riya, before</p>
-    <div class="stats rv"><div><b>3</b><span>certificates on her resume</span></div><div><b>5</b><span>company skill tests failed</span></div><div><b>4</b><span>interviews, 4 rejections</span></div><div><b>0</b><span>idea what her real strengths are</span></div></div>
+    <div class="stats rv"><div><b>2</b><span>years since college, still no job</span></div><div><b>2</b><span>government exam attempts, no selection</span></div><div><b>5</b><span>private company skill tests failed</span></div><div><b>0</b><span>idea what her real strengths are</span></div></div>
     <p class="note rv">Sound familiar? This is her story: the bad nights, the restarts, and what finally changed.</p>
   </div></section>
   <section class="cast"><div class="wrap">
