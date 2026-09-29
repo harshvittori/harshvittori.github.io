@@ -8,6 +8,7 @@ import os, re, sys, base64
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import story                                   # Riya's illustration comes from the story page itself
+import people                                  # and the people in her story
 
 _k = [0]
 def svg(name, size, rot=0, shadow=True):
@@ -80,11 +81,18 @@ RIYA = ('<div class="bleed"><div class="riya">%s</div>'
         '<div class="pchip" style="left:-10px;bottom:34px;transform:rotate(-2deg);--c:#A0721C;--b:#FBF1DC">%s<span>Where did my applications go?</span></div></div>') % (
         story.prologue(), svg("logo-test", 34, 0, False), svg("logo-reset", 34, 0, False), svg("logo-vault", 34, 0, False))
 
+def ntf(av, app, title, body, style):
+    return '<div class="ntf" style="%s"><span class="av">%s</span><div><em>%s</em><b>%s</b><p>%s</p></div></div>' % (style, av, app, title, body)
+# the story card: a sad Riya, Mom's WhatsApp and a batchmate's new-job post
+STORY_ART = ('<div class="bleed"><div class="por" style="left:330px;top:50px;transform:rotate(3deg)">%s</div>' % story.portrait("s", "scroll", "#26305E") +
+    ntf(people.head(people.CAST["mom"], 44), "WhatsApp", "Mom", "Beta, Sharma aunty ki beti ki job lag gayi 😊 Tera kab hoga?", "left:20px;top:250px;transform:rotate(-2deg)") +
+    ntf(people.head(people.CAST["ananya"], 44), "LinkedIn", "Ananya, your batchmate", "started a new position. Say congrats!", "left:70px;top:420px;transform:rotate(1.5deg)") + '</div>')
+
 CARDS = [  # out, brand logo, brand word, accent, dark, tint, circle, eyebrow, headline, sub, cta, art
     ("og.jpg", "world", "WORLD", "#2E43A6", "#233489", "#F4F5FB", "#E2E7F8", "3 free apps · 1 AI",
      "Stop guessing.<br>Start growing.", "Know your strengths. Run a calm day.<br>Never miss a follow-up.", "Explore HV World &nbsp;→", HOME_ART2),
-    ("story/og.jpg", "world", "WORLD", "#2E43A6", "#233489", "#F4F5FB", "#E2E7F8", "An illustrated story",
-     "From stuck to hired in 11 weeks.", "Riya is 25, skilled but stuck. See how she turned it around, one honest week at a time.", "Read her story &nbsp;→", RIYA),
+    ("story/og.jpg", "world", "WORLD", "#1F7A55", "#155E41", "#F2F8F4", "#D8EEE1", "Riya's story",
+     "Everyone's moving ahead.<br>Except you?", "Mom's asking. Friends are posting new jobs. Riya felt it too, until she found her own way forward.", "Read her story &nbsp;→", STORY_ART),
     ("test/og.jpg", "logo-test", "TEST", "#127A4F", "#0D5E3C", "#F4F8F5", "#DDEFE4", "Tests for how you think and grow",
      "You think you know yourself. Prove it.", "Traits, thinking, skills and growth. Start with the free Maturity Assessment.", "Take a test &nbsp;→",
      TEST_ART),
@@ -185,6 +193,11 @@ h1{margin-top:12px;font-weight:700;font-size:64px;line-height:1.02;letter-spacin
 .trdur{position:absolute;right:28px;bottom:26px;font-weight:700;font-size:26px;color:#fff;background:rgba(0,0,0,.85);padding:6px 14px;border-radius:8px;z-index:7}
 .riya{position:absolute;left:40px;top:50%;width:560px;transform:translateY(-50%) rotate(2deg);border-radius:26px;overflow:hidden;box-shadow:0 40px 80px -30px rgba(20,30,60,.55)}
 .riya svg{display:block;width:100%;height:auto}
+.ntf{position:absolute;z-index:4;display:flex;gap:14px;width:430px;background:#fff;border-radius:22px;padding:16px 18px;box-shadow:0 26px 50px -22px rgba(20,30,60,.5)}
+.ntf .av{flex:none;width:44px;height:44px;border-radius:50%;overflow:hidden}.ntf .av svg{display:block;width:44px;height:44px}
+.ntf em{display:block;font-style:normal;font-size:14px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#86868B}
+.ntf b{display:block;font-size:20px;margin-top:2px;color:#16212B}.ntf p{font-size:19px;line-height:1.3;color:#3D4A55;margin:2px 0 0}
+.por{position:absolute;z-index:3;width:250px;height:250px;border-radius:44px;overflow:hidden;box-shadow:0 40px 80px -30px rgba(20,30,60,.55)}.por svg{display:block;width:100%;height:100%}
 """
 html = "<!DOCTYPE html><html><head><meta charset='utf-8'><style>%s</style></head><body>" % CSS
 for out, lg, word, acc, dark, tint, circ, eye, h1, sub, cta, art in CARDS:

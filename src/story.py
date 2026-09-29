@@ -744,15 +744,15 @@ PAGE = """<!DOCTYPE html>
 <link rel="canonical" href="https://harshvittori.github.io/story/">
 <meta name="theme-color" content="#FFFFFF">
 <meta property="og:type" content="website"><meta property="og:site_name" content="HV World">
-<meta property="og:title" content="From stuck to hired in 11 weeks: Riya's story | HV World">
-<meta property="og:description" content="Riya is 25, skilled but stuck. An illustrated story of her 11 weeks from unsure to hired.">
-<meta property="og:url" content="https://harshvittori.github.io/story/"><meta property="og:image" content="https://harshvittori.github.io/story/og.jpg">
+<meta property="og:title" content="Everyone's moving ahead except you? Meet Riya.">
+<meta property="og:description" content="For students, job seekers and anyone restarting. A 3-minute illustrated story: consistency is the key, with the right direction and tools.">
+<meta property="og:url" content="https://harshvittori.github.io/story/"><meta property="og:image" content="https://harshvittori.github.io/story/og.jpg?v=2">
 <meta property="og:image:type" content="image/jpeg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Hard work, no progress? Meet Riya: a 1-minute illustrated story from HV World.">
+<meta property="og:image:alt" content="Everyone's moving ahead. Except you? Riya's story from HV World, with her mom's WhatsApp and a batchmate's new-job post.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="From stuck to hired in 11 weeks: Riya's story | HV World">
-<meta name="twitter:description" content="Riya is 25, skilled but stuck. An illustrated story of her 11 weeks from unsure to hired.">
-<meta name="twitter:image" content="https://harshvittori.github.io/story/og.jpg">
+<meta name="twitter:title" content="Everyone's moving ahead except you? Meet Riya.">
+<meta name="twitter:description" content="For students, job seekers and anyone restarting. A 3-minute illustrated story: consistency is the key, with the right direction and tools.">
+<meta name="twitter:image" content="https://harshvittori.github.io/story/og.jpg?v=2">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"HV World","url":"https://harshvittori.github.io/"}</script>
 <style>__CSS__</style>
