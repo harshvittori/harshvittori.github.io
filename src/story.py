@@ -273,7 +273,7 @@ def ch_vault():
              '<rect x="318" y="312" width="258" height="40" rx="14" fill="%s"/><text x="334" y="337" font-size="13.5" font-weight="600" fill="#FFFFFF">Kal 4 baje Zomato interview</text>' % "#2E43A6" +
              '<rect x="318" y="360" width="200" height="40" rx="14" fill="#FFFFFF" stroke="#E5E5EA"/><text x="334" y="385" font-size="13.5" font-weight="600" fill="%s">📅 Tue · 4:00 PM ✓</text></g>' % INK +
              '<g class="t v4"><g class="envelope"><rect x="360" y="316" width="150" height="92" rx="10" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="2"/><path d="M360,322 l75,50 l75,-50" fill="none" stroke="#D2D2D7" stroke-width="2"/>'
-             '<rect class="letter" x="378" y="300" width="114" height="60" rx="6" fill="#F6EEDC"/><text class="letter" x="435" y="336" text-anchor="middle" font-size="16" font-weight="800" fill="#A87A22">OFFER</text><text class="letter" x="435" y="352" text-anchor="middle" font-size="10.5" font-weight="600" fill="#7C5712">Business Analyst</text></g>' + confetti + '</g>')
+             '<rect class="letter" x="378" y="300" width="114" height="60" rx="6" fill="#F6EEDC"/><text class="letter" x="435" y="336" text-anchor="middle" font-size="16" font-weight="800" fill="#A87A22">OFFER</text><text class="letter" x="435" y="352" text-anchor="middle" font-size="10.5" font-weight="600" fill="#7C5712">Product Analyst</text></g>' + confetti + '</g>')
     return scene(inner, "Riya's scattered job links, then HV Vault holding 34 applications on one board, a follow-up and an interview on the calendar, and finally an offer letter")
 
 def finale():
@@ -320,7 +320,7 @@ INTER = {
  "call": dict(face=("j", "ear", "#FFE3C4"), mood="happy tears", dark=False, time="Week 11 · Thursday, 4:12 PM", title="The call.",
    text="Two weeks after the rejection that almost broke her streak, her phone rings. Unknown number. She almost lets it go. Then she picks up.",
    items=[("@kavya", "", "Phone", "Incoming call", "Kavya, Talent team", "4:12 PM", ""),
-          ("M", "#EA4335", "Mail", "Offer letter: Business Analyst", "We're delighted to offer you the role. Please find the details attached.", "4:31 PM", ""),
+          ("M", "#EA4335", "Mail", "Offer letter: Product Analyst", "We're delighted to offer you the role. Please find the details attached.", "4:31 PM", ""),
           ("", "", "", "", "Maa, job lag gayi!! 🎉🎉", "4:33 PM", "me"),
           ("@mom", "", "", "Mom", "Mujhe pata tha ❤️ Sharma aunty ko main bataungi 😄", "4:34 PM", "them")],
    voice="Not luck. Consistency: eleven weeks of small, honest, slightly boring days.",
@@ -399,7 +399,7 @@ CH = [
         ("The problem", "Skills ready. Offers still missing.", "Her technical and communication skills are finally where they should be, and she clears most tests now. But offers don't come. She applies on five job sites, links sit in WhatsApp, she applied to one company twice, and she can't remember whom to follow up with."),
         ("Week 7 · What she did", "Every job in one place.", "Saved, applied, interview: every job in one place, updated the same day. She used HV Vault, a free job tracker. No more applying twice or losing a link: 34 applications over four weeks, each with its status, and three final interviews."),
         ("Follow-ups", "The follow-ups actually happen.", "After every application she sets a reminder to follow up. One quiet application turns into an interview because of it. She adds the interview to her calendar the moment it's fixed: &ldquo;Kal 4 baje&rdquo;, done."),
-        ("Week 11 · The outcome", "A no. Then the yes.", "A final round says no, and it hurts. She notes what went wrong, preps with her real stories, and two weeks later signs the offer she wanted: Business Analyst.")],
+        ("Week 11 · The outcome", "A no. Then the yes.", "A final round says no, and it hurts. She notes what went wrong, preps with her real stories, and two weeks later signs the offer she wanted: Product Analyst.")],
         '<a href="https://harshvittori.github.io/hv-vault-web/">HV Vault</a>, free: one board for her applications and follow-ups.'),
 ]
 
@@ -411,7 +411,7 @@ TIMELINE = [("Week 1", "Takes a strengths test and a skills test. Communication 
             ("Week 8", "Ananya, the batchmate she used to envy, sends an opening at a friend's startup. Riya adds it to her list and applies that evening.", "#A87A22"),
             ("Week 9", "34 applications, 4 of 5 skill tests cleared, 3 final interviews. A follow-up revives a quiet lead.", "#A87A22"),
             ("Week 10", "Rejected after a final round. Writes down why, and preps again.", "#86868B"),
-            ("Week 11", "Offer: Business Analyst. The role she was aiming for.", "#2E43A6")]
+            ("Week 11", "Offer: Product Analyst. The role she was aiming for.", "#2E43A6")]
 def timeline():
     return "".join('<li class="rv"><span class="dot" style="background:%s"></span><b>%s</b><p>%s</p></li>' % (c, w, t) for w, t, c in TIMELINE)
 
