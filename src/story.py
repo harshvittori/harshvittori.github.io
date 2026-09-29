@@ -780,7 +780,7 @@ PAGE = """<!DOCTYPE html>
     <div class="rv">
       <p class="eyebrow">An 11-week story</p>
       <h1>This is Riya. She's 25.</h1>
-      <p class="lead">Jaipur. B.Tech, 2023 batch. Then two years preparing for a government job: two attempts, no selection. Now she's trying private jobs with three online certificates, but she fails their skill tests and goes blank when they ask about her strengths. <b>Two years at home, comfortable and quietly stuck. What now?</b></p>
+      <p class="lead">Jaipur. B.Tech. Two years since graduation, and still no job. Three certificates on her resume, but she fails the companies' skill tests and goes blank when they ask about her strengths. <b>Comfortable at home, and quietly stuck. What now?</b></p>
       <div class="worries"><span><i style="background:#127A4F"></i>What am I actually good at?</span><span><i style="background:#4A72C8"></i>Why can't I stay consistent?</span><span><i style="background:#A87A22"></i>Where did my applications go?</span></div>
       <a class="scroll-hint" href="#test">Follow her story __ARROW__</a>
     </div>
@@ -788,7 +788,7 @@ PAGE = """<!DOCTYPE html>
   </div></section>
   <section class="before"><div class="wrap">
     <p class="label rv">Riya, before</p>
-    <div class="stats rv"><div><b>2</b><span>years since college, still no job</span></div><div><b>2</b><span>government exam attempts, no selection</span></div><div><b>5</b><span>private company skill tests failed</span></div><div><b>0</b><span>idea what her real strengths are</span></div></div>
+    <div class="stats rv"><div><b>2</b><span>years since graduation, still no job</span></div><div><b>3</b><span>certificates on her resume</span></div><div><b>5</b><span>company skill tests failed</span></div><div><b>0</b><span>idea what her real strengths are</span></div></div>
     <p class="note rv">Sound familiar? This is her story: the bad nights, the restarts, and what finally changed.</p>
   </div></section>
   <section class="cast"><div class="wrap">
