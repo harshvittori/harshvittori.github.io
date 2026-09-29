@@ -634,7 +634,7 @@ __TOGGLES__
 .nsteps{list-style:none;padding:0;margin:28px 0 0;display:grid;gap:12px}
 .nsteps li{display:flex;gap:14px;align-items:flex-start;background:#fff;border:1px solid #E4E5EA;border-radius:18px;padding:16px 18px}
 .nsteps span{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:15px}
-.nsteps b{display:block;font-size:17.5px}.nsteps em{display:block;font-style:normal;color:var(--soft);font-size:15.5px;margin-top:2px}
+.nsteps small{display:block;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--faint)}.nsteps b{display:block;font-size:17.5px}.nsteps em{display:block;font-style:normal;color:var(--soft);font-size:15.5px;margin-top:2px}
 .ncta{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}.ncta .btn{margin:0}
 .nfor{color:var(--faint);font-size:15px;margin-top:18px}
 @media (max-width:880px){.ngrid{grid-template-columns:1fr;gap:28px}.nart svg{max-width:340px}}
@@ -816,7 +816,7 @@ PAGE = """<!DOCTYPE html>
     <p class="label rv">What Riya would tell you</p>
     <h2 class="rv">Four things that actually worked.</h2>
     <div class="lgrid">__LESSONS__</div>
-    <p class="yourturn rv">Your turn: start with step 1.</p>
+    <p class="yourturn rv"><a href="#you">Take the 11-week challenge ↓</a></p>
   </div></section>
   <section class="key" id="key"><div class="wrap">
     <p class="label rv">The whole point</p>
@@ -845,15 +845,15 @@ PAGE = """<!DOCTYPE html>
   <section class="next" id="you"><div class="wrap ngrid">
     <div class="nart rv">__NEXT_ART__</div>
     <div class="ntxt">
-      <p class="label rv">Your turn</p>
+      <p class="label rv">The 11-week challenge</p>
       <h2 class="rv">You could be the next Riya.</h2>
-      <p class="sub rv">Different city, different dream, same stuck feeling. Start today.</p>
+      <p class="sub rv">Take the same 11 weeks. Three steps, in order, a little every day. See where you are by week 11.</p>
       <ol class="nsteps rv">
-        <li><span style="background:#127A4F">1</span><div><b>Know where you stand</b><em>Test your strengths and skills honestly. Riya used HV Test.</em></div></li>
-        <li><span style="background:#4A72C8">2</span><div><b>Plan just today</b><em>Give each task a fixed time. Riya used HV Reset.</em></div></li>
-        <li><span style="background:#A87A22">3</span><div><b>Track every chance</b><em>Track every application. Riya used HV Vault.</em></div></li>
+        <li><span style="background:#127A4F">1</span><div><small>Week 1</small><b>Know where you stand</b><em>Test your strengths and skills. Make a 30-day plan. Riya used HV Test.</em></div></li>
+        <li><span style="background:#4A72C8">2</span><div><small>Weeks 2 to 6</small><b>Show up daily</b><em>Give every task a fixed time. Don't wait for Monday. Riya used HV Reset.</em></div></li>
+        <li><span style="background:#A87A22">3</span><div><small>Weeks 7 to 11</small><b>Apply with a system</b><em>Track every application and follow up. Riya used HV Vault.</em></div></li>
       </ol>
-      <div class="ncta rv"><a class="btn" href="#test">Go through the steps again</a><a class="btn ghost" href="#products">See the tools Riya used</a></div>
+      <div class="ncta rv"><a class="btn" href="https://harshvittori.github.io/hv-tests/">Start week 1 today</a><a class="btn ghost" href="#test">Read the steps again</a></div>
       <p class="nfor rv">For students, job seekers and anyone starting again.</p>
     </div>
   </div></section>
