@@ -62,24 +62,21 @@ header{position:sticky;top:0;z-index:50;background:rgba(249,249,251,.85);-webkit
 .ctas{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
 .note{margin-top:18px;font-size:14px;color:var(--faint)}
 .orbit{position:relative;aspect-ratio:1;max-width:440px;margin:0 auto;width:100%}
+.orbit::before{content:"";position:absolute;inset:-4%;border-radius:50%;background:radial-gradient(circle,rgba(91,99,214,.16) 0%,rgba(91,99,214,.06) 45%,transparent 70%);pointer-events:none}
 .orbit .ring{position:absolute;inset:8%;border-radius:50%;border:1.5px dashed #D2D2D7}
 .orbit .ring.r2{inset:25%}
 .orbit .core{position:absolute;inset:37%}
 .orbit .core svg{width:100%;height:100%;border-radius:26%;box-shadow:0 24px 50px -22px rgba(30,40,110,.55)}
 .planet{position:absolute;width:23%;text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:10px;transition:transform .35s cubic-bezier(.22,1,.36,1)}
 .planet svg{width:100%;aspect-ratio:1;border-radius:24%;box-shadow:0 16px 34px -18px rgba(20,30,70,.5)}
-.planet span{font-weight:600;font-size:13.5px;white-space:nowrap}
+.planet span{font-weight:600;font-size:13.5px;white-space:nowrap;background:#fff;padding:5px 12px;border-radius:999px;border:1px solid var(--line);box-shadow:0 8px 18px -12px rgba(20,30,70,.45)}
 .planet:hover{transform:translateY(-5px)}
 .planet.p1{left:38.5%;top:-3%}.planet.p2{left:-1%;top:56%}.planet.p3{right:-1%;top:56%}
 @media (prefers-reduced-motion:no-preference){.orbit .ring{animation:spin 90s linear infinite}.orbit .ring.r2{animation-duration:60s;animation-direction:reverse}.planet{animation:float 7s ease-in-out infinite}.planet.p2{animation-delay:-2.3s}.planet.p3{animation-delay:-4.6s}}
 @keyframes spin{to{transform:rotate(360deg)}}@keyframes float{50%{translate:0 -8px}}
 @media (max-width:880px){.hero{grid-template-columns:1fr;padding:48px 0 40px;gap:36px}.orbit{max-width:320px}}
 /* strip */
-.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:72px}
-.strip div{padding:22px 22px;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 14px 30px -24px rgba(20,30,60,.35)}
-.strip b{display:block;font-size:24px;font-weight:700;letter-spacing:-.03em}
-.strip span{font-size:14.5px;color:var(--soft)}
-@media (max-width:720px){.strip{grid-template-columns:1fr 1fr;gap:12px}.strip div{padding:16px;border-radius:16px}.strip b{font-size:19px;line-height:1.25;margin-bottom:4px}.strip span{font-size:13.5px;line-height:1.4;display:block}}
+.strip{--pc:var(--accent);--pline:#DADDF2;margin-bottom:72px}
 /* section heads */
 section{scroll-margin-top:72px}
 .head{max-width:680px;margin:0 auto 44px;text-align:center}
@@ -327,7 +324,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
 @media (max-width:560px){.fgrid{grid-template-columns:1fr}.wt{grid-template-columns:1fr;gap:4px;padding:18px 2px}.wt b{font-size:19px}.wt span{font-size:16px}.ft{padding:22px 20px}}
 /* phones: pictures first and smaller, compact rows */
 @media (max-width:880px){
-  .hero{padding:36px 0 28px;gap:28px}.orbit{max-width:250px}.planet span{font-size:12px}
+  .hero{padding:36px 0 28px;gap:44px}.orbit{max-width:290px}.planet span{font-size:12px;padding:4px 10px}
   .strip{margin-bottom:64px}
   .head{margin-bottom:28px}.head h2,.sec-h{font-size:32px}.head p:not(.label){font-size:17px}
   .products{gap:28px;margin-bottom:72px}
@@ -459,11 +456,11 @@ html:active-view-transition-type(back)::view-transition-new(page){animation:vt-i
     </div>
   </section>
 
-  <div class="wrap strip rv">
-    <div><b>3 apps</b><span>One world, one sign-in</span></div>
-    <div><b>For everyone</b><span>Free to use, HV AI included</span></div>
-    <div><b>HV AI</b><span>Type or talk, your language</span></div>
-    <div><b>Any device</b><span>Phone and laptop</span></div>
+  <div class="wrap strip facts rv">
+    <div><b>3 apps</b><span>know yourself, plan your day, land the job</span></div>
+    <div><b>Free</b><span>for everyone, HV AI included</span></div>
+    <div><b>Just talk</b><span>type or speak, in your language</span></div>
+    <div><b>Any device</b><span>phone and laptop, one sign&#8209;in</span></div>
   </div>
 
   <section id="film" class="wrap film band band-w">
