@@ -328,7 +328,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
   .strip{margin-bottom:64px}
   .head{margin-bottom:28px}.head h2,.sec-h{font-size:32px}.head p:not(.label){font-size:17px}
   .products{gap:28px;margin-bottom:72px}
-  .product .right{order:-1;padding:52px 18px 46px;border-top:0!important;border-bottom:1px solid var(--pline)}
+  .product .right{padding:52px 18px 46px}
   .product .left{padding:22px 20px 24px;gap:14px}
   .product .top svg{width:48px;height:48px;border-radius:13px}.product h3{font-size:24px}
   .product .pitch{font-size:16.5px}.product li{font-size:15px}.product ul{gap:9px}
@@ -343,7 +343,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
   .together{gap:10px;margin-bottom:72px}
   .feat{display:grid;grid-template-columns:40px 1fr;column-gap:14px;padding:18px;border-radius:18px}
   .feat .ic{grid-row:span 2;width:40px;height:40px;margin:0}.feat h3{font-size:17px;margin-bottom:4px}.feat p{font-size:15px}
-  .ai-sec,.two{margin-bottom:72px}.ai-sec .r{order:-1;border-left:0;border-bottom:1px solid #DCE0F2;padding:20px 16px}
+  .ai-sec,.two{margin-bottom:72px}.ai-sec .r{border-left:0;padding:24px 16px}
   .sep{margin-bottom:64px}.faq{margin-bottom:72px}.faq summary{font-size:16.5px;padding:18px 2px}
   .final{padding:60px 16px}
   .phero .wrap{padding:28px 0 36px;gap:24px}.pname svg{width:60px;height:60px;border-radius:16px}.pname{gap:14px}
@@ -394,6 +394,24 @@ html{overflow-x:clip}
 @media (max-width:880px){.band{padding:64px 0}}
 /* reveal */
 @media (prefers-reduced-motion:no-preference){.rv{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s cubic-bezier(.22,1,.36,1)}.rv.in{opacity:1;transform:none}}
+
+/* phones: heading and a short line first, then the picture, then the points and buttons */
+@media (max-width:880px){
+  .product{display:flex;flex-direction:column}
+  .product .left,.product.flip .left{display:contents}
+  .product .top{order:1;padding:24px 20px 0}
+  .product .pitch{order:2;padding:12px 20px 22px}
+  .product .right,.product.flip .right{order:3;border-top:1px solid var(--pline);border-bottom:1px solid var(--pline)}
+  .product ul{order:4;padding:22px 20px 0}
+  .product .acts{order:5;padding:18px 20px 26px;margin-top:0}
+  .ai-sec{display:flex;flex-direction:column}
+  .ai-sec .l{display:contents}
+  .ai-sec .l>.label{order:1;padding:26px 20px 0}
+  .ai-sec .l>h2{order:2;padding:0 20px}
+  .ai-sec .l>p:not(.label){order:3;padding:0 20px 22px}
+  .ai-sec .r{order:4;border-top:1px solid #DCE0F2;border-bottom:1px solid #DCE0F2}
+  .ai-sec .l>ul{order:5;padding:20px 20px 26px;margin:0}
+}
 
 @view-transition{navigation:auto}
 header{view-transition-name:site-header}
@@ -477,7 +495,7 @@ html:active-view-transition-type(back)::view-transition-new(page){animation:vt-i
   <div class="left">
     <div class="top"><svg aria-hidden="true" focusable="false" viewBox="0 0 48 48"><rect width="48" height="48" rx="12" fill="#127A4F"/><circle cx="16.5" cy="16.5" r="5.5" stroke="#FFFFFF" stroke-width="3" fill="none"/><circle cx="31.5" cy="16.5" r="5.5" stroke="#FFFFFF" stroke-width="3" fill="none"/><circle cx="16.5" cy="31.5" r="5.5" stroke="#FFFFFF" stroke-width="3" fill="none"/><circle cx="31.5" cy="31.5" r="7.5" fill="#FFC54D"/><path d="M28 31.6l2.5 2.5 4.8-5" stroke="#17231C" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div><h3>HV Test</h3><p class="tag">Know yourself</p></div></div>
     <p class="pitch">Tests that show how you think, learn, act and grow, so you know where you stand and what to work on next.</p>
-    <ul><li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span><b>A growing library of tests.</b> Traits, thinking, skills and personal growth. The Maturity Assessment is live now.</span></li><li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span><b>An honest score.</b> See where you're strong and where to grow, not just a number.</span></li><li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span><b>Two PDFs to keep.</b> A full report and a personal 30-day plan.</span></li><li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span><b>Private by design.</b> No login. Your answers never leave your browser.</span></li></ul>
+    <ul><li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span><b>A growing library of tests.</b> Traits, thinking, skills and personal growth. The Maturity Assessment is live now.</span></li><li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span><b>An honest score.</b> See where you're strong and where to grow, not just a number.</span></li><li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span><b>A checkable scorecard.</b> Your score and skill marks with a unique ID and QR, plus a full report and a 30-day plan.</span></li><li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg><span><b>Private by design.</b> No login. Your answers never leave your browser.</span></li></ul>
     <div class="acts"><a class="btn" href="https://harshvittori.github.io/hv-tests/" target="_blank" rel="noopener">Take a test <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn ghost" href="/test/">Learn more</a></div>
   </div>
   <div class="right"><div class="stage"><div class="mock q">
@@ -563,7 +581,7 @@ html:active-view-transition-type(back)::view-transition-new(page){animation:vt-i
   </section>
 
   <section id="access" class="wrap band band-w"><div class="two">
-    <div class="rv"><p class="label">Privacy</p><h3>Your data is yours.</h3><p>HV Vault saves everything to your own private space, linked to your Google account. Only you can read it. HV Test never stores your answers: everything happens in your browser.</p></div>
+    <div class="rv"><p class="label">Privacy</p><h3>Your data is yours.</h3><p>HV Vault saves everything to your own private space, linked to your Google account. Only you can read it. HV Test never stores your answers: they stay in your browser. Only a short scorecard summary is saved, if you ask for one.</p></div>
     <div class="rv"><p class="label">Open to all</p><h3>Made for everyone.</h3><p>All three apps and HV AI are free for everyone. Open them in any browser, with nothing to install and no ads in your way.</p></div>
   </div></section>
 
