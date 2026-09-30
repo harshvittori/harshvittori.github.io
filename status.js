@@ -83,7 +83,7 @@
       if (!stopper) { stopper = true; ["pointerdown", "mousedown", "click", "touchstart", "keydown", "keyup"].forEach(function (t) { window.addEventListener(t, block, true); }); }
       if (!host) { host = document.createElement("div"); host.id = "hvMaint"; host.setAttribute("role", "dialog"); host.setAttribute("aria-live", "polite"); (host.attachShadow ? host.attachShadow({ mode: "open" }) : host); document.body.appendChild(host); }
       var root = host.shadowRoot || host, until = num(m.until);
-      var msg = m.message || "We're making a few improvements. Please check back soon.";
+      var msg = m.message || "Sorry for the inconvenience. We're working on a better experience for you and will be back shortly.";
       root.innerHTML = '<style>' + BASE + THEME[SITE] + '</style><div class="w">' + (preview ? '<span class="pv">Preview: this is what visitors see</span>' : '') + '<div class="g">' + head() + '<span class="n"><i></i>Maintenance</span><h1>' + title() + '</h1><p class="m">' + esc(msg) + '</p>' +
         (until ? '<p class="k">Back in</p><p class="c" role="timer"></p><p class="d">' + esc(new Date(until).toLocaleString("en-IN", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" })) + '</p>' : '') + '</div></div>';
       clearTimeout(tickT);
