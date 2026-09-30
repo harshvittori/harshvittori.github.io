@@ -92,7 +92,7 @@
     var hideMaint = function () { d.classList.remove("hvmaint"); clearTimeout(tickT); if (host) { host.remove(); host = null; } };
     var st = document.createElement("style");
     st.textContent = "html.hvmaint,html.hvmaint body{overflow:hidden!important}html.hvmaint body>*:not(#hvMaint){visibility:hidden!important}html.hvmaint body>#hvMaint#hvMaint{position:fixed!important;inset:0!important;z-index:2147483647!important;display:block!important;visibility:visible!important}" +
-      "#hvAdminPill{position:fixed;left:12px;bottom:12px;z-index:2147483646;font:600 12px/1 system-ui,sans-serif;color:#8A5A00;background:#FFF3D6;border:1px solid #F5DDA6;padding:8px 11px;border-radius:999px;box-shadow:0 8px 20px -10px rgba(0,0,0,.3)}";
+      "html body>a#hvAdminPill#hvAdminPill{position:fixed!important;left:50%;bottom:16px;transform:translateX(-50%);z-index:2147483647!important;visibility:visible!important;display:block!important;max-width:calc(100vw - 24px);font:600 13px/1.35 system-ui,sans-serif;text-align:center;text-decoration:none;color:#8A5A00;background:#FFF3D6;border:1px solid #F5DDA6;padding:10px 14px;border-radius:14px;box-shadow:0 12px 28px -12px rgba(0,0,0,.35)}";
     (document.head || d).appendChild(st);
 
     /* ---------- announcement banner ---------- */
@@ -113,13 +113,25 @@
       (bar.shadowRoot || bar).querySelector("button").onclick = function () { try { sessionStorage.setItem(id, "1"); } catch (e) {} bar.remove(); bar = null; };
     };
 
+    // on the admin's own device the real site shows instead of the maintenance screen; this notice says so (and links to the preview)
+    var adminPill = function (on) {
+      if (!document.body) { document.addEventListener("DOMContentLoaded", function () { adminPill(on); }); return; }
+      var pill = document.getElementById("hvAdminPill");
+      if (!on) { if (pill) pill.remove(); return; }
+      if (!pill) { pill = document.createElement("a"); pill.id = "hvAdminPill"; document.body.appendChild(pill); }
+      pill.href = location.pathname + (location.search ? location.search + "&" : "?") + "hvpreview=maintenance";
+      pill.textContent = "Maintenance is ON for visitors · you're signed in as admin, so you see the site · See what visitors see →";
+      // keep it last in the page so it stays above other full-screen layers (like the premiere screen)
+      var last = function () { if (pill.isConnected && document.body.lastElementChild !== pill) document.body.appendChild(pill); };
+      setTimeout(last, 0); addEventListener("load", last);
+    };
+    // the premiere gate on the apps swallows clicks; open the preview ourselves (this listener is added before the gate's)
+    window.addEventListener("click", function (e) { var a = e.target && e.target.closest && e.target.closest("#hvAdminPill"); if (a) { e.preventDefault(); e.stopImmediatePropagation(); location.href = a.href; } }, true);
     var apply = function (c) {
       window.HVStatus.cfg = c || {};
       var m = maint(c);
       if (m && !(admin && !preview)) showMaint(m); else hideMaint();
-      var pill = document.getElementById("hvAdminPill");
-      if (m && admin && !preview) { if (!pill && document.body) { pill = document.createElement("div"); pill.id = "hvAdminPill"; pill.textContent = "Maintenance is on · you see the site as admin"; document.body.appendChild(pill); } }
-      else if (pill) pill.remove();
+      adminPill(!!(m && admin && !preview));
       banner(c);
       try { window.dispatchEvent(new CustomEvent("hvstatus", { detail: c || {} })); } catch (e) {}
     };
