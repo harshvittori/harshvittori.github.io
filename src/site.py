@@ -1111,7 +1111,7 @@ def shell(path, title, desc, og, body, active):
 <meta name="twitter:image" content="%s">
 <style>%s</style>
 </head>
-<body>
+<body data-spa="hv">
 <a class="skip" href="#main">Skip to content</a>
 <header><div class="wrap nav"><a class="brand" href="/">%sHV World</a>
 <nav aria-label="Main">%s<a class="ic" aria-label="Riya's story" href="/story/"><svg class="ni" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5C10 5 7 4.5 3.5 5v13c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5z"/><path d="M12 6.5v13"/></svg><span class="nt"><span class="d">Riya's </span>Story</span></a></nav></div></header>
@@ -1119,7 +1119,82 @@ def shell(path, title, desc, og, body, active):
 <footer><div class="wrap row"><span>© <span id="yr">2026</span> HV World · Built by Harsh Goyal</span>
 <nav aria-label="Footer"><a href="/">Home</a><a href="/watch/">Watch</a><a href="/story/">Riya's story</a><a href="/test/">HV Test</a><a href="/reset/">HV Reset</a><a href="/vault/">HV Vault</a><a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/harshvittori" target="_blank" rel="noopener">GitHub</a><a href="/terms/">Terms</a><a href="/privacy/">Privacy</a></nav></div></footer>
 <script>
+// In-page navigation between the HV World pages that share this layout: a click fetches the next page, swaps only
+// <main> (plus title, meta tags and page styles) and updates the URL, so the header stays put and nothing reloads.
+// Pages outside this layout (Riya's story, the apps) and anything unusual fall back to a normal page load.
 (function () {
+  if (!window.fetch || !window.DOMParser || !history.pushState) return;
+  var ROUTES = ["/", "/test/", "/reset/", "/vault/", "/watch/", "/terms/", "/privacy/"], ORDER = ["/", "/test/", "/reset/", "/vault/", "/watch/", "/story/"];
+  var cache = {}, busy = 0, cur = location.pathname.replace(/index\.html$/, "");
+  var path = function (u) { return u.pathname.replace(/index\.html$/, ""); };
+  var ok = function (u) { return u.origin === location.origin && ROUTES.indexOf(path(u)) > -1; };
+  var get = function (u) {
+    var k = path(u);
+    if (!cache[k]) cache[k] = fetch(k, { credentials: "same-origin" }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); }).catch(function (e) { delete cache[k]; throw e; });
+    return cache[k];
+  };
+  var save = function () { try { history.replaceState(Object.assign({}, history.state, { hv: 1, y: Math.round(scrollY) }), ""); } catch (e) {} };
+  var HEAD = ['meta[name="description"]', 'link[rel="canonical"]', 'meta[property="og:title"]', 'meta[property="og:description"]', 'meta[property="og:url"]', 'meta[property="og:image"]', 'meta[property="og:image:alt"]', 'meta[name="twitter:title"]', 'meta[name="twitter:description"]', 'meta[name="twitter:image"]'];
+  var swap = function (doc, u, y) {
+    document.title = doc.title;
+    HEAD.forEach(function (sel) { var a = document.head.querySelector(sel), b = doc.head.querySelector(sel); if (!a || !b) return; var at = a.hasAttribute("content") ? "content" : "href"; a.setAttribute(at, b.getAttribute(at)); });
+    var sa = document.head.querySelector("style"), sb = doc.head.querySelector("style");
+    if (sa && sb && sa.textContent !== sb.textContent) sa.textContent = sb.textContent;
+    var m = document.getElementById("main"), n = doc.getElementById("main");
+    m.replaceWith(document.adoptNode(n));
+    var p = path(u);
+    document.querySelectorAll('header nav[aria-label="Main"] a').forEach(function (a) { var h = new URL(a.href, location.href); if (path(h) === p) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+    if (typeof y === "number") scrollTo({ top: y, left: 0, behavior: "instant" });
+    else if (u.hash && document.getElementById(u.hash.slice(1))) document.getElementById(u.hash.slice(1)).scrollIntoView({ behavior: "instant" });
+    else scrollTo({ top: 0, left: 0, behavior: "instant" });
+    cur = p;
+    if (window.hvPage) window.hvPage();
+    m = document.getElementById("main"); if (m) { m.setAttribute("tabindex", "-1"); m.style.outline = "none"; m.focus({ preventScroll: true }); }
+  };
+  var go = function (u, push, y) {
+    var me = ++busy, from = ORDER.indexOf(location.pathname), to = ORDER.indexOf(path(u));
+    return get(u).then(function (html) {
+      if (me !== busy) return;
+      var doc = new DOMParser().parseFromString(html, "text/html");
+      if (!doc.body || doc.body.getAttribute("data-spa") !== "hv" || !doc.getElementById("main")) { location.href = u.href; return; }
+      if (push) { save(); history.pushState({ hv: 1, y: 0 }, "", u.href); }
+      var run = function () { swap(doc, u, y); };
+      var still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (document.startViewTransition && !still) {
+        var type = from > -1 && to > -1 && from !== to ? (to > from ? "forward" : "back") : null;
+        var vt; try { vt = document.startViewTransition({ update: run, types: type ? [type] : [] }); } catch (e) { vt = document.startViewTransition(run); }
+      } else run();
+    }).catch(function () { location.href = u.href; });
+  };
+  document.addEventListener("click", function (e) {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var a = e.target.closest && e.target.closest("a[href]");
+    if (!a || a.target && a.target !== "_self" || a.hasAttribute("download") || a.getAttribute("rel") === "external") return;
+    var u = new URL(a.href, location.href);
+    if (!ok(u)) return;
+    if (path(u) === path(location) && u.search === location.search) { if (u.hash) return; e.preventDefault(); scrollTo({ top: 0, behavior: "smooth" }); return; }
+    e.preventDefault(); go(u, true);
+  });
+  window.addEventListener("popstate", function (e) {
+    var u = new URL(location.href);
+    if (!ok(u)) { location.reload(); return; }
+    if (path(u) === cur) return;   // only the #hash changed: the browser handles it
+    go(u, false, e.state && typeof e.state.y === "number" ? e.state.y : 0);
+  });
+  // warm the cache: on hover/touch of a link, and the menu pages once the browser is idle
+  var warm = function (e) { var a = e.target.closest && e.target.closest("a[href]"); if (!a) return; var u = new URL(a.href, location.href); if (ok(u) && path(u) !== path(location)) get(u).catch(function () {}); };
+  document.addEventListener("pointerover", warm, { passive: true }); document.addEventListener("touchstart", warm, { passive: true }); document.addEventListener("focusin", warm);
+  addEventListener("load", function () { setTimeout(function () { ROUTES.slice(0, 5).forEach(function (r, i) { if (r !== location.pathname) setTimeout(function () { get(new URL(r, location.href)).catch(function () {}); }, 300 * i); }); }, 1200); });
+  save();
+})();
+</script>
+<script>
+// everything a page sets up for itself; runs on first load and again after each in-page navigation.
+// Timers from a previous page stop on their own (each run gets a new generation).
+window.hvPage = function () {
+  var GEN = (window.__hvGen = (window.__hvGen || 0) + 1);
+  var setTimeout = function (f, t) { return window.setTimeout(function () { if (GEN === window.__hvGen) f(); }, t); };
+  var setInterval = function (f, t) { var id = window.setInterval(function () { if (GEN === window.__hvGen) f(); else clearInterval(id); }, t); return id; };
   document.getElementById("yr").textContent = new Date().getFullYear();
   // dashboard showcase: pointing at a highlight enlarges its number on the picture
   document.querySelectorAll(".sc-pts li").forEach(function (li) {
@@ -1373,7 +1448,8 @@ def shell(path, title, desc, og, body, active):
   if (!("IntersectionObserver" in window)) { els.forEach(function (e) { e.classList.add("in"); }); return; }
   var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }); }, { rootMargin: "0px 0px -8%% 0px" });
   els.forEach(function (e) { if (e.getBoundingClientRect().top < innerHeight) { e.classList.add("now", "in"); } else io.observe(e); });
-})();
+};
+hvPage();
 </script>
 </body>
 </html>
