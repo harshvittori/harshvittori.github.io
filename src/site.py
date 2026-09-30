@@ -923,7 +923,7 @@ FILM_MAIN = """<main id="main" class="filmpage">
   <section class="wrap fp">
     <p class="label">HV World in action</p>
     <h1>See all 3 apps in action.</h1>
-    <div class="fpv"><button type="button" class="again" id="fpAgain" hidden aria-label="Watch again"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg><span>Watch again</span></button><button type="button" class="unmute" id="fpUnmute" hidden>🔊&nbsp; Tap for sound</button><div class="prem" id="fpPrem" hidden><div class="pin"><p class="pk">World premiere</p><p class="pd">1 October 2026 · 12:00 PM IST</p><p class="pc" id="fpCount" role="timer" aria-live="off"></p><p class="ps">Same time on YouTube.</p></div></div><video id="fpVid" playsinline preload="metadata" poster="/watch/premiere.jpg" data-src="/media/hv-world-launch.mp4"></video></div>
+    <div class="fpv" data-yt="SaSfRrtvrTg"><button type="button" class="again" id="fpAgain" hidden aria-label="Watch again"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg><span>Watch again</span></button><button type="button" class="unmute" id="fpUnmute" hidden>🔊&nbsp; Tap for sound</button><div class="prem" id="fpPrem" hidden><div class="pin"><p class="pk">World premiere</p><p class="pd">1 October 2026 · 12:00 PM IST</p><p class="pc" id="fpCount" role="timer" aria-live="off"></p><p class="ps">Same time on YouTube.</p></div></div><div class="yt" id="fpYT" hidden><div id="fpYTp"></div></div><button type="button" class="ytgo" id="fpGo" hidden aria-label="Play the film"><span class="pb"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg></span><span>Watch the film</span></button><div class="ytc" id="fpCtl" hidden><button type="button" id="fpPlay" aria-label="Pause"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/><path class="i-play" d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg></button><span class="tm" id="fpCur">0:00</span><input type="range" id="fpSeek" min="0" max="1000" value="0" step="1" aria-label="Seek"><span class="tm" id="fpDur">0:00</span><button type="button" id="fpMute" aria-label="Mute"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path class="i-on" d="M15 8.5a5 5 0 0 1 0 7M17.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path class="i-off" d="M15.5 9.5l5 5M20.5 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button><button type="button" id="fpFull" aria-label="Full screen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><video id="fpVid" playsinline preload="metadata" poster="/watch/premiere.jpg" data-src="/media/hv-world-launch.mp4"></video></div>
     <p class="fpsub">Real screens from HV Test, HV Reset and HV Vault.</p>
     <div class="ctas"><a class="btn" href="/">Explore HV World __ARROW__</a><a class="btn ghost" href="/story/">Read Riya's story</a></div>
     <div class="fpapps"><a href="__U_TEST__">__LOGO_TEST__HV Test</a><a href="__U_RESET__">__LOGO_RESET__HV Reset</a><a href="__U_VAULT__">__LOGO_VAULT__HV Vault</a></div>
@@ -936,6 +936,30 @@ FILM_CSS = """
 .fp h1{font-size:clamp(34px,5vw,60px);font-weight:700;letter-spacing:-.045em;line-height:1.05;margin:6px 0 30px}
 .fpv{position:relative;max-width:1040px;margin:0 auto;border-radius:22px;overflow:hidden;border:1px solid #232A45;box-shadow:0 50px 100px -40px rgba(0,0,0,.9)}
 .fpv video{display:block;width:100%;aspect-ratio:16/9;background:#000}
+.fpv video[hidden],.prem[hidden]{display:none}
+.yt{position:relative;aspect-ratio:16/9;background:#070B18 url(/watch/premiere.jpg) center/cover}.yt[hidden],.ytgo[hidden],.ytc[hidden]{display:none}
+.yt iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.ytend .yt iframe{visibility:hidden}
+.ytgo{position:absolute;inset:0;z-index:2;display:flex;align-items:flex-end;justify-content:center;gap:12px;padding:0 0 9%;border:0;cursor:pointer;background:#070B18 url(/watch/premiere.jpg) center/cover;font:600 17px/1 inherit;color:#1D1D1F}
+.ytgo>span:last-child{background:rgba(255,255,255,.62);-webkit-backdrop-filter:blur(14px) saturate(1.6);backdrop-filter:blur(14px) saturate(1.6);border:1px solid rgba(255,255,255,.85);padding:10px 20px 10px 10px;border-radius:999px;display:inline-flex;align-items:center;gap:10px;box-shadow:0 18px 40px -16px rgba(46,67,166,.55),inset 0 1px 0 #fff;transition:transform .25s}
+.ytgo .pb{display:none}
+.ytgo>span:last-child::before{content:"";width:34px;height:34px;border-radius:50%;background:#2E43A6 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 6.5v11l9-5.5z' fill='white'/%3E%3C/svg%3E") center/18px no-repeat}
+.ytgo:hover>span:last-child,.ytgo:focus-visible>span:last-child{transform:scale(1.05)}
+.ytc{position:absolute;left:14px;right:14px;bottom:14px;z-index:3;display:flex;align-items:center;gap:10px;padding:6px 12px 6px 6px;border-radius:999px;color:#fff;background:rgba(14,18,38,.5);-webkit-backdrop-filter:blur(16px) saturate(1.5);backdrop-filter:blur(16px) saturate(1.5);border:1px solid rgba(255,255,255,.18);box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 16px 36px -18px rgba(0,0,0,.8);transition:opacity .35s,transform .35s}
+.ytc.dim{opacity:0;transform:translateY(8px);pointer-events:none}
+.ytc button{flex:none;width:36px;height:36px;border:0;border-radius:50%;background:transparent;color:#fff;cursor:pointer;display:grid;place-items:center}
+.ytc button:hover,.ytc button:focus-visible{background:rgba(255,255,255,.16)}
+.ytc svg{width:20px;height:20px}
+.ytc #fpPlay{background:rgba(255,255,255,.92);color:#1D1D1F}
+.ytc .i-play,.ytc.paused .i-pause,.ytc .i-off,.ytc.muted .i-on{display:none}.ytc.paused .i-play,.ytc.muted .i-off{display:inline}
+.ytc .tm{flex:none;font-size:13px;font-variant-numeric:tabular-nums;color:#DDE2FF;min-width:34px;text-align:center}
+.ytc input{flex:1;min-width:40px;height:4px;margin:0;-webkit-appearance:none;appearance:none;border-radius:4px;background:linear-gradient(90deg,#9AA7FF var(--p,0%),rgba(255,255,255,.25) var(--p,0%));cursor:pointer}
+.ytc input::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.4)}
+.ytc input::-moz-range-thumb{width:14px;height:14px;border:0;border-radius:50%;background:#fff}
+.ytc.live .tm,.ytc.live input{visibility:hidden}
+.fpv:fullscreen{border-radius:0;border:0;display:flex;align-items:center;justify-content:center;background:#000}
+.fpv:fullscreen .yt{width:min(100vw,177.78vh)}
+@media (max-width:560px){.ytgo{font-size:14px;padding-bottom:6%}.ytgo>span:last-child{padding:6px 14px 6px 6px}.ytgo>span:last-child::before{width:26px;height:26px;background-size:14px}.ytc{left:8px;right:8px;bottom:8px;gap:4px;padding:3px 8px 3px 3px}.ytc button{width:30px;height:30px}.ytc svg{width:17px;height:17px}.ytc .tm{font-size:11px;min-width:28px}}
 .prem{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;padding:0 20px;background:rgba(7,11,24,.66);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
 .prem .pin{text-align:center}.prem p{margin:0}
 .prem .pk{font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#C9D0FF}
@@ -1037,18 +1061,69 @@ def shell(path, title, desc, og, body, active):
     var pad = function (n) { return (n < 10 ? "0" : "") + n; };
     var tick = function () {
       var ms = PREM - Date.now();
-      if (ms <= 0) { prem.hidden = true; go(); return; }
+      if (ms <= 0) { prem.hidden = true; goYT(); return; }
       var t = Math.floor(ms / 1000), d = Math.floor(t / 86400), h = Math.floor(t %% 86400 / 3600), m = Math.floor(t %% 3600 / 60), x = t %% 60;
       cnt.textContent = (d ? d + "d " : "") + pad(h) + ":" + pad(m) + ":" + pad(x);
       setTimeout(tick, 1000 - Date.now() %% 1000 + 5);
     };
-    var begin = function () { if (Date.now() >= PREM) go(); else { prem.hidden = false; tick(); } };
+    // after the premiere the film plays from YouTube (so every play counts as a YouTube view) inside our own cover and glass controls;
+    // if YouTube can't load (blocked, offline, embedding off), the page falls back to the film file on this site
+    var box = fv.parentNode, ytId = box.dataset.yt, P = null, ytOk = false, want = false, played = false, ytTimer = 0, idleT = 0;
+    var yt = document.getElementById("fpYT"), cover = document.getElementById("fpGo"), ctl = document.getElementById("fpCtl");
+    var bPlay = document.getElementById("fpPlay"), bMute = document.getElementById("fpMute"), bFull = document.getElementById("fpFull");
+    var seek = document.getElementById("fpSeek"), tCur = document.getElementById("fpCur"), tDur = document.getElementById("fpDur");
+    var fmt = function (v) { v = Math.max(0, Math.floor(v || 0)); return Math.floor(v / 60) + ":" + pad(v - 60 * Math.floor(v / 60)); };
+    var fallback = function () { if (played) return; clearTimeout(ytTimer); try { if (P && P.destroy) P.destroy(); } catch (e) {} P = null; ytOk = false; yt.hidden = true; cover.hidden = true; ctl.hidden = true; fv.hidden = false; go(); };
+    var paint = function () {
+      if (!P || !ytOk) return;
+      var cur = P.getCurrentTime() || 0, dur = P.getDuration() || 0;
+      ctl.classList.toggle("live", !(dur > 0));
+      if (dur > 0 && document.activeElement !== seek) { seek.value = Math.round(cur / dur * 1000); }
+      seek.style.setProperty("--p", (seek.value / 10) + "%%");
+      tCur.textContent = fmt(cur); tDur.textContent = fmt(dur);
+    };
+    setInterval(function () { if (P && ytOk && P.getPlayerState && P.getPlayerState() === 1) paint(); }, 250);
+    var idle = function () { clearTimeout(idleT); ctl.classList.remove("dim"); idleT = setTimeout(function () { if (P && P.getPlayerState() === 1 && !(matchMedia("(hover:hover)").matches && ctl.matches(":hover")) && !ctl.querySelector(":focus-visible")) ctl.classList.add("dim"); }, 2800); };
+    var syncMute = function () { var m = P.isMuted(); ctl.classList.toggle("muted", m); bMute.setAttribute("aria-label", m ? "Unmute" : "Mute"); };
+    var onState = function (e) {
+      var st = e.data;
+      if (st === 1) { played = true; clearTimeout(ytTimer); cover.hidden = true; ctl.hidden = false; box.classList.remove("ytend"); again.hidden = true; ctl.classList.remove("paused"); bPlay.setAttribute("aria-label", "Pause"); syncMute(); paint(); idle(); }
+      else if (st === 2) { ctl.classList.add("paused"); bPlay.setAttribute("aria-label", "Play"); clearTimeout(idleT); ctl.classList.remove("dim"); paint(); }
+      else if (st === 0) { ctl.hidden = true; box.classList.add("ytend"); again.hidden = false; }
+    };
+    var ytPlay = function () { want = true; if (!ytOk) return; if (P.isMuted()) P.unMute(); P.playVideo(); };
+    var goYT = function () {
+      if (!ytId) { go(); return; }
+      fv.hidden = true; yt.hidden = false; cover.hidden = false;
+      ytTimer = setTimeout(function () { if (!ytOk) fallback(); }, 12000);
+      var mk = function () {
+        P = new YT.Player("fpYTp", { videoId: ytId, host: "https://www.youtube.com", playerVars: { controls: 0, rel: 0, playsinline: 1, iv_load_policy: 3, fs: 0, enablejsapi: 1, origin: location.origin },
+          events: { onReady: function () { ytOk = true; clearTimeout(ytTimer); P.getIframe().title = "HV World launch film"; paint(); if (want) ytPlay(); }, onStateChange: onState, onError: fallback } });
+      };
+      if (window.YT && YT.Player) { mk(); return; }
+      var prev = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = function () { if (prev) prev(); mk(); };
+      var sc = document.createElement("script"); sc.src = "https://www.youtube.com/iframe_api"; sc.async = true; sc.onerror = fallback; document.head.appendChild(sc);
+    };
+    cover.addEventListener("click", function () { cover.hidden = true; ytPlay(); });
+    bPlay.addEventListener("click", function () { if (P.getPlayerState() === 1) P.pauseVideo(); else ytPlay(); });
+    bMute.addEventListener("click", function () { if (P.isMuted()) P.unMute(); else P.mute(); setTimeout(syncMute, 60); ctl.classList.toggle("muted"); });
+    seek.addEventListener("input", function () { var dur = P.getDuration() || 0; seek.style.setProperty("--p", (seek.value / 10) + "%%"); if (dur > 0) { P.seekTo(seek.value / 1000 * dur, true); tCur.textContent = fmt(seek.value / 1000 * dur); } });
+    seek.addEventListener("change", function () { seek.blur(); });
+    var fsIn = box.requestFullscreen || box.webkitRequestFullscreen;
+    if (!fsIn) bFull.hidden = true;
+    bFull.addEventListener("click", function () {
+      if (document.fullscreenElement || document.webkitFullscreenElement) (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+      else fsIn.call(box);
+    });
+    box.addEventListener("mouseenter", idle); box.addEventListener("mousemove", idle); ctl.addEventListener("pointerdown", idle); ctl.addEventListener("focusin", idle);
+    var begin = function () { if (Date.now() >= PREM) goYT(); else { prem.hidden = false; tick(); } };
     if (document.prerendering) document.addEventListener("prerenderingchange", begin, { once: true }); else begin();
     ub.addEventListener("click", function (e) { e.stopPropagation(); unmute(); });
     fv.addEventListener("volumechange", function () { if (!fv.muted) { ub.hidden = true; off(); } });
     // when the film ends: hide the player controls and rest on the HV World logo frame (just before it fades); a tap brings the controls back and plays again
     var again = document.getElementById("fpAgain");
-    var replay = function () { again.hidden = true; fv.controls = true; fv.currentTime = 0; fv.play().catch(function () {}); };
+    var replay = function () { if (P && ytOk) { again.hidden = true; box.classList.remove("ytend"); P.seekTo(0, true); ytPlay(); return; } again.hidden = true; fv.controls = true; fv.currentTime = 0; fv.play().catch(function () {}); };
     fv.addEventListener("ended", function () { fv.controls = false; if (isFinite(fv.duration)) fv.currentTime = Math.max(0, fv.duration - 1.2); again.hidden = false; ub.hidden = true; off(); });
     again.addEventListener("click", replay);
     fv.addEventListener("click", function () { if (!fv.controls && fv.currentSrc) replay(); });
