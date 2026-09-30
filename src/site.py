@@ -216,6 +216,33 @@ section{scroll-margin-top:72px}
 .filmpage .btn.grlock{background:rgba(255,255,255,.1);color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.25)}
 .grtoast{position:fixed;left:50%;bottom:24px;width:max-content;z-index:1000;transform:translate(-50%,20px);opacity:0;pointer-events:none;max-width:calc(100vw - 32px);font-size:15px;font-weight:500;color:#1D1D1F;background:rgba(255,255,255,.82);-webkit-backdrop-filter:blur(16px) saturate(1.6);backdrop-filter:blur(16px) saturate(1.6);border:1px solid rgba(255,255,255,.95);padding:12px 18px;border-radius:16px;box-shadow:0 18px 40px -14px rgba(20,30,90,.45);transition:opacity .25s,transform .25s;text-align:center}
 .grtoast.on{opacity:1;transform:translate(-50%,0)}
+.ldlg{padding:0;border:0;background:transparent;width:min(560px,calc(100vw - 32px));max-width:none;overflow:visible;color:var(--ink)}
+.ldlg::backdrop{background:rgba(236,238,248,.55);-webkit-backdrop-filter:blur(10px) saturate(1.2);backdrop-filter:blur(10px) saturate(1.2)}
+.ldlg[open]{animation:lin .5s cubic-bezier(.2,.8,.2,1)}@keyframes lin{from{opacity:0;transform:translateY(14px) scale(.97)}}
+.lcard{position:relative;overflow:hidden;text-align:center;padding:40px 30px 30px;border-radius:30px;background:radial-gradient(70% 60% at 0% 0%,rgba(174,184,245,.55),transparent 70%),radial-gradient(60% 60% at 100% 100%,rgba(205,185,244,.55),transparent 70%),rgba(255,255,255,.78);-webkit-backdrop-filter:blur(24px) saturate(1.6);backdrop-filter:blur(24px) saturate(1.6);border:1px solid rgba(255,255,255,.95);box-shadow:0 40px 90px -30px rgba(46,67,166,.5),inset 0 1px 0 #fff}
+.lx{position:absolute;top:14px;right:14px;z-index:2;width:36px;height:36px;border:0;border-radius:50%;background:rgba(255,255,255,.7);color:#3A3F63;font-size:24px;line-height:1;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(46,67,166,.12)}.lx:hover{background:#fff}
+.lic svg,.lic img{width:64px;height:64px;border-radius:18px;box-shadow:0 16px 30px -14px rgba(46,67,166,.6)}
+.lpill{display:inline-flex;align-items:center;gap:8px;margin-top:18px;font:600 12px/1 inherit;letter-spacing:.12em;text-transform:uppercase;color:#2E43A6;background:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.95);padding:8px 13px;border-radius:999px}
+.lpill i{width:7px;height:7px;border-radius:50%;background:#2E43A6;box-shadow:0 0 0 4px rgba(46,67,166,.15);animation:grp 1.8s ease-in-out infinite}
+.lpill.live{color:#16794C}.lpill.live i{background:#1FA463;box-shadow:0 0 0 4px rgba(31,164,99,.18)}
+.ldlg h2{font-family:HVSora,var(--font);font-size:clamp(26px,5vw,34px);font-weight:600;letter-spacing:-.03em;line-height:1.15;margin:14px 0 0}
+.lsub{color:var(--soft);font-size:16px;line-height:1.5;margin:10px auto 0;max-width:420px}
+.lk{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#4B55A8;margin:24px 0 0}
+.lcnt{font-family:HVSora,var(--font);font-size:clamp(36px,8vw,52px);font-weight:600;letter-spacing:-.04em;font-variant-numeric:tabular-nums;line-height:1.1;margin:4px 0 0}
+.ld{color:var(--soft);font-size:15px;margin:6px 0 0}
+.lbtns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:24px}.lbtns .btn{cursor:pointer;border:0;font:inherit;font-weight:500}
+.lbtns .btn.ghost{background:rgba(255,255,255,.75);color:var(--accent);box-shadow:inset 0 0 0 1px rgba(46,67,166,.2)}
+.lapps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px}
+.lapps a{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 8px;border-radius:18px;text-decoration:none;color:var(--ink);background:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.95);box-shadow:0 10px 24px -16px rgba(46,67,166,.45);transition:transform .2s}
+.lapps a:hover{transform:translateY(-2px)}.lapps svg,.lapps img{width:40px;height:40px;border-radius:11px}
+.lapps span{font-size:12.5px;color:var(--soft);line-height:1.3}.lapps b{display:block;font-size:14.5px;color:var(--ink);font-weight:600}
+.lconf{position:absolute;inset:0;pointer-events:none}
+.lcard:focus{outline:none}.lx:focus:not(:focus-visible){outline:none}
+.lpill{white-space:nowrap}
+.lconf i{position:absolute;top:-12px;width:8px;height:12px;border-radius:2px;opacity:0;animation:lfall 2.6s cubic-bezier(.3,.6,.4,1) forwards}
+@keyframes lfall{0%{opacity:1;transform:translateY(0) rotate(0)}100%{opacity:0;transform:translateY(560px) rotate(540deg)}}
+@media (prefers-reduced-motion:reduce){.ldlg[open],.lconf i,.lpill i{animation:none}}
+@media (max-width:560px){.lpill{letter-spacing:.06em;font-size:11px}.lcard{padding:34px 18px 22px;border-radius:24px}.lapps{gap:6px}.lapps a{padding:12px 4px}.lapps span{font-size:11px}.lapps b{font-size:13px}}
 .product .btn{align-self:flex-start;margin-top:6px}
 .product .right{background:var(--tint,var(--gray));border-left:1px solid var(--pline,var(--line));padding:56px 48px;display:flex;align-items:center;justify-content:center;min-height:460px;overflow:hidden}
 .product.flip .left{order:2}.product.flip .right{border-left:0;border-right:1px solid var(--pline)}
@@ -626,6 +653,29 @@ OVERVIEW_MAIN = """<main id="main">
       <p class="builder">Designed and built by Harsh Goyal · <a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">Connect on LinkedIn</a></p>
     </div>
   </section>
+  <dialog id="launchDlg" class="ldlg" aria-labelledby="ldT">
+    <div class="lcard" tabindex="-1" autofocus>
+      <button type="button" class="lx" id="launchX" aria-label="Close">×</button>
+      <div class="lconf" aria-hidden="true"></div>
+      <div class="lic">__LOGO_WORLD__</div>
+      <div class="lpre">
+        <span class="lpill"><i></i>Global launch</span>
+        <h2 id="ldT">HV World launches worldwide.</h2>
+        <p class="lsub">Three free apps and one AI, live for everyone at the same moment.</p>
+        <p class="lk">Launching in</p>
+        <p class="lcnt" id="launchCount" role="timer" aria-live="off"></p>
+        <p class="ld">1 October 2026 · 12:00 PM IST</p>
+        <div class="lbtns"><a class="btn" href="/watch/">See the premiere __ARROW__</a><button type="button" class="btn ghost" data-close>Explore the site</button></div>
+      </div>
+      <div class="lpost" hidden>
+        <span class="lpill live"><i></i>Launched today · 1 Oct</span>
+        <h2>Welcome to HV World.</h2>
+        <p class="lsub">Three free apps that help you know yourself, plan your day and land the job. Just talk to HV AI.</p>
+        <div class="lapps"><a href="__U_TEST__">__LOGO_TEST__<span><b>HV Test</b>Know yourself</span></a><a href="__U_RESET__">__LOGO_RESET__<span><b>HV Reset</b>Plan your day</span></a><a href="__U_VAULT__">__LOGO_VAULT__<span><b>HV Vault</b>Track every job</span></a></div>
+        <div class="lbtns"><a class="btn" href="/watch/">Watch the reveal __ARROW__</a><button type="button" class="btn ghost" data-close>Start exploring</button></div>
+      </div>
+    </div>
+  </dialog>
   <dialog id="filmDlg" class="filmdlg" aria-label="HV World in action">
     <button type="button" class="x" id="filmClose" aria-label="Close the video">×</button>
     __PLAYER__
@@ -1163,6 +1213,33 @@ def shell(path, title, desc, og, body, active):
     setTimeout(function () {
       soon.forEach(function (a) { a.setAttribute("href", a.dataset.href); a.classList.remove("grlock"); a.removeAttribute("role"); a.removeAttribute("aria-disabled"); a.removeAttribute("tabindex"); if (a.dataset.label) a.innerHTML = a.dataset.label; });
     }, Math.min(PREM - Date.now() + 500, 2147483000));
+  }
+  // home: a global-launch card with the countdown before the premiere (once per visit), and a welcome card on launch week
+  // (once per visitor); if the card is open at 12:00 PM IST it turns into the welcome
+  var ldlg = document.getElementById("launchDlg");
+  if (ldlg && ldlg.showModal) {
+    var WEEK = Date.parse("2026-10-08T00:00:00+05:30"), lpre = ldlg.querySelector(".lpre"), lpost = ldlg.querySelector(".lpost"), lcnt = document.getElementById("launchCount");
+    var seen = function (store, k) { try { return store.getItem(k) === "1"; } catch (e) { return false; } };
+    var mark = function (store, k) { try { store.setItem(k, "1"); } catch (e) {} };
+    var confetti = function () {
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      var box = ldlg.querySelector(".lconf"), cols = ["#2E43A6", "#8E9BF0", "#C9A7F5", "#F2B84B", "#1FA463", "#fff"];
+      for (var i = 0; i < 42; i++) { var c = document.createElement("i"); c.style.left = (Math.random() * 100) + "%%"; c.style.background = cols[i %% cols.length]; c.style.animationDelay = (Math.random() * .7) + "s"; c.style.transform = "rotate(" + (Math.random() * 180) + "deg)"; box.appendChild(c); }
+      setTimeout(function () { box.innerHTML = ""; }, 3600);
+    };
+    var welcome = function () { if (Date.now() >= Date.parse("2026-10-02T00:00:00+05:30")) ldlg.querySelector(".lpill.live").lastChild.textContent = "Just launched · 1 Oct"; lpre.hidden = true; lpost.hidden = false; mark(localStorage, "hvwelcome"); confetti(); };
+    var ltick = function () {
+      var ms = PREM - Date.now();
+      if (ms <= 0) { if (ldlg.open) welcome(); return; }
+      var t = Math.floor(ms / 1000), d = Math.floor(t / 86400), h = Math.floor(t %% 86400 / 3600), m = Math.floor(t %% 3600 / 60), x = t %% 60;
+      lcnt.textContent = (d ? d + "d " : "") + (d || h ? (h < 10 ? "0" : "") + h + "h " : "") + (m < 10 ? "0" : "") + m + "m " + (x < 10 ? "0" : "") + x + "s";
+      setTimeout(ltick, 1000 - Date.now() %% 1000 + 5);
+    };
+    var lopen = function () { try { ldlg.showModal(); } catch (e) {} };
+    ldlg.addEventListener("click", function (e) { if (e.target === ldlg || e.target.closest("[data-close]") || e.target.id === "launchX") ldlg.close(); });
+    var now = Date.now();
+    if (now < PREM) { if (!seen(sessionStorage, "hvlaunch")) { mark(sessionStorage, "hvlaunch"); ltick(); setTimeout(lopen, 700); } }
+    else if (now < WEEK && !seen(localStorage, "hvwelcome")) { setTimeout(function () { lopen(); welcome(); }, 500); }
   }
   var wbox = document.querySelector(".filmpage .fpv");
   if (wbox) {
