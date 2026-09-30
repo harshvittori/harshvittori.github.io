@@ -7,7 +7,7 @@
 <meta name="description" content="The terms for using HV World, HV Test, HV Reset, HV Vault and HV AI.">
 <meta name="theme-color" content="#F9F9FB">
 <link rel="canonical" href="https://harshvittori.github.io/terms/">
-<link rel="icon" href="/icons/hv-world.svg" type="image/svg+xml"><link rel="icon" href="/icons/hv-world-32.png" type="image/png" sizes="32x32"><link rel="apple-touch-icon" href="/icons/hv-world-180.png" sizes="180x180"><link rel="manifest" href="/site.webmanifest">
+<link rel="preload" href="/media/fonts/Sora-SemiBold.ttf" as="font" type="font/ttf" crossorigin><link rel="preload" href="/media/fonts/Sora-Regular.ttf" as="font" type="font/ttf" crossorigin><link rel="icon" href="/icons/hv-world.svg" type="image/svg+xml"><link rel="icon" href="/icons/hv-world-32.png" type="image/png" sizes="32x32"><link rel="apple-touch-icon" href="/icons/hv-world-180.png" sizes="180x180"><link rel="manifest" href="/site.webmanifest">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="HV World">
 <meta property="og:title" content="Terms and Conditions | HV World">
@@ -506,18 +506,12 @@ main{view-transition-name:page}
 ::view-transition-group(site-header){animation:none}
 ::view-transition-old(site-header){display:none}
 ::view-transition-new(site-header){animation:none}
-::view-transition-old(page){animation:vt-fade-out .16s ease both}
-::view-transition-new(page){animation:vt-rise-in .3s cubic-bezier(.2,.8,.2,1) both}
-html:active-view-transition-type(forward)::view-transition-old(page){animation:vt-out-left .2s cubic-bezier(.4,0,.2,1) both}
-html:active-view-transition-type(forward)::view-transition-new(page){animation:vt-in-right .32s cubic-bezier(.2,.8,.2,1) both}
-html:active-view-transition-type(back)::view-transition-old(page){animation:vt-out-right .2s cubic-bezier(.4,0,.2,1) both}
-html:active-view-transition-type(back)::view-transition-new(page){animation:vt-in-left .32s cubic-bezier(.2,.8,.2,1) both}
+/* page switch: a quick, quiet crossfade, no sliding (the content should feel like it simply changes) */
+::view-transition-group(page){animation-duration:.14s}
+::view-transition-old(page){animation:vt-fade-out .09s linear both}
+::view-transition-new(page){animation:vt-fade-in .14s ease-out both}
 @keyframes vt-fade-out{to{opacity:0}}
-@keyframes vt-rise-in{from{opacity:0;transform:translateY(8px)}}
-@keyframes vt-out-left{to{opacity:0;transform:translateX(-20px)}}
-@keyframes vt-in-right{from{opacity:0;transform:translateX(28px)}}
-@keyframes vt-out-right{to{opacity:0;transform:translateX(20px)}}
-@keyframes vt-in-left{from{opacity:0;transform:translateX(-28px)}}
+@keyframes vt-fade-in{from{opacity:0}}
 @media (prefers-reduced-motion:reduce){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}}
 html{background:#F9F9FB}
 /* the top of every page shows at once (no fade-in), so switching pages never flashes an empty screen */
@@ -719,8 +713,18 @@ main>:first-child .rv,main>.rv:first-child,.hcar .rv,.rv.now{opacity:1!important
   var ok = function (u) { return u.origin === location.origin && ROUTES.indexOf(path(u)) > -1; };
   var get = function (u) {
     var k = path(u);
-    if (!cache[k]) cache[k] = fetch(k, { credentials: "same-origin" }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); }).catch(function (e) { delete cache[k]; throw e; });
+    if (!cache[k]) cache[k] = fetch(k, { credentials: "same-origin" }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); }).then(function (html) { pics(html); return html; }).catch(function (e) { delete cache[k]; throw e; });
     return cache[k];
+  };
+  var seen = {};
+  var pics = function (html) {
+    var m = html.match(/<main[\s\S]*?<\/main>/); if (!m) return;
+    var re = /(?:<img[^>]+src|poster)="([^"]+)"/g, r, n = 0;
+    while ((r = re.exec(m[0])) && n < 6) { if (!seen[r[1]]) { seen[r[1]] = 1; var i = new Image(); i.decoding = "async"; i.src = r[1]; } n++; }
+  };
+  var ready = function (doc) {
+    var imgs = [].slice.call(doc.querySelectorAll("#main img")).slice(0, 3).map(function (im) { var i = new Image(); i.src = im.getAttribute("src"); return i.decode ? i.decode().catch(function () {}) : null; });
+    return Promise.race([Promise.all(imgs), new Promise(function (r) { setTimeout(r, 160); })]);
   };
   var save = function () { try { history.replaceState(Object.assign({}, history.state, { hv: 1, y: Math.round(scrollY) }), ""); } catch (e) {} };
   var HEAD = ['meta[name="description"]', 'link[rel="canonical"]', 'meta[property="og:title"]', 'meta[property="og:description"]', 'meta[property="og:url"]', 'meta[property="og:image"]', 'meta[property="og:image:alt"]', 'meta[name="twitter:title"]', 'meta[name="twitter:description"]', 'meta[name="twitter:image"]'];
@@ -746,6 +750,8 @@ main>:first-child .rv,main>.rv:first-child,.hcar .rv,.rv.now{opacity:1!important
       if (me !== busy) return;
       var doc = new DOMParser().parseFromString(html, "text/html");
       if (!doc.body || doc.body.getAttribute("data-spa") !== "hv" || !doc.getElementById("main")) { location.href = u.href; return; }
+      return ready(doc).then(function () {
+      if (me !== busy) return;
       if (push) { save(); history.pushState({ hv: 1, y: 0 }, "", u.href); }
       var run = function () { swap(doc, u, y); };
       var still = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -753,6 +759,7 @@ main>:first-child .rv,main>.rv:first-child,.hcar .rv,.rv.now{opacity:1!important
         var type = from > -1 && to > -1 && from !== to ? (to > from ? "forward" : "back") : null;
         var vt; try { vt = document.startViewTransition({ update: run, types: type ? [type] : [] }); } catch (e) { vt = document.startViewTransition(run); }
       } else run();
+      });
     }).catch(function () { location.href = u.href; });
   };
   document.addEventListener("click", function (e) {

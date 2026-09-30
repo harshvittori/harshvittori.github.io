@@ -1096,7 +1096,7 @@ def shell(path, title, desc, og, body, active):
 <meta name="description" content="%s">
 <meta name="theme-color" content="#F9F9FB">
 <link rel="canonical" href="%s">
-<link rel="icon" href="/icons/hv-world.svg" type="image/svg+xml"><link rel="icon" href="/icons/hv-world-32.png" type="image/png" sizes="32x32"><link rel="apple-touch-icon" href="/icons/hv-world-180.png" sizes="180x180"><link rel="manifest" href="/site.webmanifest">
+<link rel="preload" href="/media/fonts/Sora-SemiBold.ttf" as="font" type="font/ttf" crossorigin><link rel="preload" href="/media/fonts/Sora-Regular.ttf" as="font" type="font/ttf" crossorigin><link rel="icon" href="/icons/hv-world.svg" type="image/svg+xml"><link rel="icon" href="/icons/hv-world-32.png" type="image/png" sizes="32x32"><link rel="apple-touch-icon" href="/icons/hv-world-180.png" sizes="180x180"><link rel="manifest" href="/site.webmanifest">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="HV World">
 <meta property="og:title" content="%s">
@@ -1130,8 +1130,18 @@ def shell(path, title, desc, og, body, active):
   var ok = function (u) { return u.origin === location.origin && ROUTES.indexOf(path(u)) > -1; };
   var get = function (u) {
     var k = path(u);
-    if (!cache[k]) cache[k] = fetch(k, { credentials: "same-origin" }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); }).catch(function (e) { delete cache[k]; throw e; });
+    if (!cache[k]) cache[k] = fetch(k, { credentials: "same-origin" }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); }).then(function (html) { pics(html); return html; }).catch(function (e) { delete cache[k]; throw e; });
     return cache[k];
+  };
+  var seen = {};
+  var pics = function (html) {
+    var m = html.match(/<main[\s\S]*?<\/main>/); if (!m) return;
+    var re = /(?:<img[^>]+src|poster)="([^"]+)"/g, r, n = 0;
+    while ((r = re.exec(m[0])) && n < 6) { if (!seen[r[1]]) { seen[r[1]] = 1; var i = new Image(); i.decoding = "async"; i.src = r[1]; } n++; }
+  };
+  var ready = function (doc) {
+    var imgs = [].slice.call(doc.querySelectorAll("#main img")).slice(0, 3).map(function (im) { var i = new Image(); i.src = im.getAttribute("src"); return i.decode ? i.decode().catch(function () {}) : null; });
+    return Promise.race([Promise.all(imgs), new Promise(function (r) { setTimeout(r, 160); })]);
   };
   var save = function () { try { history.replaceState(Object.assign({}, history.state, { hv: 1, y: Math.round(scrollY) }), ""); } catch (e) {} };
   var HEAD = ['meta[name="description"]', 'link[rel="canonical"]', 'meta[property="og:title"]', 'meta[property="og:description"]', 'meta[property="og:url"]', 'meta[property="og:image"]', 'meta[property="og:image:alt"]', 'meta[name="twitter:title"]', 'meta[name="twitter:description"]', 'meta[name="twitter:image"]'];
@@ -1157,6 +1167,8 @@ def shell(path, title, desc, og, body, active):
       if (me !== busy) return;
       var doc = new DOMParser().parseFromString(html, "text/html");
       if (!doc.body || doc.body.getAttribute("data-spa") !== "hv" || !doc.getElementById("main")) { location.href = u.href; return; }
+      return ready(doc).then(function () {
+      if (me !== busy) return;
       if (push) { save(); history.pushState({ hv: 1, y: 0 }, "", u.href); }
       var run = function () { swap(doc, u, y); };
       var still = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1164,6 +1176,7 @@ def shell(path, title, desc, og, body, active):
         var type = from > -1 && to > -1 && from !== to ? (to > from ? "forward" : "back") : null;
         var vt; try { vt = document.startViewTransition({ update: run, types: type ? [type] : [] }); } catch (e) { vt = document.startViewTransition(run); }
       } else run();
+      });
     }).catch(function () { location.href = u.href; });
   };
   document.addEventListener("click", function (e) {
