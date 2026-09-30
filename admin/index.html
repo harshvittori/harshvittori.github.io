@@ -194,7 +194,13 @@ ol.steps{text-align:left;color:var(--soft);line-height:1.6;padding-left:20px}
       var r = await fetch(DOCS + "/config/site?key=" + CFG.apiKey, { cache: "no-store" });
       if (r.ok) { var d = await r.json(); var s = d.fields && d.fields.json && d.fields.json.stringValue; if (s) c = merge(c, JSON.parse(s)); }
     } catch (e) {}
-    saved = clone(c); cfg = clone(c);
+    expire(c); saved = clone(c); cfg = clone(c);
+  }
+  // a maintenance window whose end time has passed is over: show its switch as off
+  function expire(c) {
+    var ch = false, now = Date.now();
+    SITES.forEach(function (s) { var m = c.sites[s.k].maintenance; if (m.on && m.until && Date.parse(m.until) <= now) { m.on = false; m.from = ""; m.until = ""; ch = true; } });
+    return ch;
   }
   function merge(base, x) {
     Object.keys(x || {}).forEach(function (k) { if (x[k] && typeof x[k] === "object" && !Array.isArray(x[k]) && base[k] && typeof base[k] === "object") merge(base[k], x[k]); else base[k] = x[k]; });
@@ -316,7 +322,11 @@ ol.steps{text-align:left;color:var(--soft);line-height:1.6;padding-left:20px}
   }
   $("publish").onclick = function () { publish(false); };
   // keep the status pills honest as time passes (a timer ending, a scheduled start)
-  setInterval(function () { if (!$("dash").hidden && !document.querySelector(".site :focus")) { var d = dirty(); if (!d) render(); } }, 30000);
+  setInterval(function () {
+    if ($("dash").hidden || document.querySelector(".site :focus")) return;
+    var a = expire(saved), b = expire(cfg);
+    if (a || b || !dirty()) render();
+  }, 15000);
 })();
 </script>
 </body>
