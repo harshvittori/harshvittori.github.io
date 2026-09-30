@@ -69,11 +69,12 @@ header{position:sticky;top:0;z-index:50;background:rgba(249,249,251,.85);-webkit
 .hl-count div{min-width:78px;text-align:center;padding:12px 10px 10px;border-radius:18px;background:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.95);box-shadow:0 14px 30px -20px rgba(46,67,166,.6),inset 0 1px 0 #fff}
 .hl-count b{display:block;font-family:HVSora,var(--font);font-size:32px;font-weight:600;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1.1}
 .hl-count span{font-size:12px;color:var(--soft);text-transform:uppercase;letter-spacing:.1em}
+.btn.live .lv-dot{width:9px;height:9px;border-radius:50%;background:#5EF0A0;box-shadow:0 0 0 4px rgba(94,240,160,.25);animation:grp 1.6s ease-in-out infinite;margin-right:2px}
 .hl-vis{position:relative;display:block;border-radius:28px;overflow:hidden;border:1px solid rgba(255,255,255,.95);box-shadow:0 40px 80px -36px rgba(46,67,166,.6),0 0 0 8px rgba(255,255,255,.4);transition:transform .35s}
 .hl-vis:hover{transform:translateY(-3px)}.hl-count div[hidden]{display:none}.hl-vis img{display:block;width:100%;height:auto;aspect-ratio:16/9}
 .hl-play{position:absolute;right:16px;bottom:16px;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;color:#fff;background:#2E43A6;box-shadow:0 14px 30px -10px rgba(46,67,166,.9),0 0 0 8px rgba(255,255,255,.5)}.hl-play svg{width:24px;height:24px;margin-left:3px}
 .hl-tag{position:absolute;left:14px;top:14px;font-size:13px;font-weight:600;color:#1D1D1F;background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.95);padding:7px 12px;border-radius:999px}
-.hcar>.hs{align-content:start}@keyframes hcin{from{opacity:0;transform:translateX(16px)}}
+.hcar>.hs{align-content:center}@keyframes hcin{from{opacity:0;transform:translateX(16px)}}
 @media (max-width:880px){
   .hero.hlaunch{gap:0;row-gap:0;align-content:start;align-items:start}.hlaunch>div:first-child{display:contents}
   .hlaunch .hl-pill{order:1;justify-self:start;margin-bottom:14px}.hlaunch h1{order:2}.hlaunch .lead{order:3;margin:16px 0 20px}
@@ -837,13 +838,11 @@ html:active-view-transition-type(back)::view-transition-new(page){animation:vt-i
     if (now < PREM) { if (!seen(sessionStorage, "hvlaunch")) { mark(sessionStorage, "hvlaunch"); ltick(); setTimeout(lopen, 700); } }
     else if (now < WEEK && !seen(localStorage, "hvwelcome")) { setTimeout(function () { lopen(); welcome(); }, 500); }
   }
-  // home hero carousel: slide 1 is the global launch (countdown before 12:00 PM IST on 1 Oct 2026, "live" after, gone after launch week),
+  // home hero carousel: slide 1 is the global launch (countdown before 12:00 PM IST on 1 Oct 2026, "Live now" after; remove the slide by hand when the launch is old news),
   // slide 2 is the usual hero; it moves on by itself every 7 s and pauses on hover, focus or when the tab is hidden
   var car = document.getElementById("heroCar");
   if (car) {
-    var LWEEK = Date.parse("2026-10-08T00:00:00+05:30"), hl = document.getElementById("heroLaunch");
-    if (Date.now() >= LWEEK) { hl.remove(); document.getElementById("hcNav").remove(); }
-    else {
+    {
       var slides = [].slice.call(car.querySelectorAll(".hs")), dots = [].slice.call(car.querySelectorAll(".hc-dots button")), cur = 0, autoT = 0, hold = false;
       var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
       var show = function (i) {
@@ -869,7 +868,7 @@ html:active-view-transition-type(back)::view-transition-new(page){animation:vt-i
         document.getElementById("hlCount").hidden = true;
         var pill = document.getElementById("hlPill"); pill.textContent = Date.now() >= Date.parse("2026-10-02T00:00:00+05:30") ? "Live worldwide · launched 1 Oct" : "Live worldwide · launched today"; pill.parentNode.classList.add("live");
         document.getElementById("hlLead").textContent = "Three free apps and one AI, now live for everyone. One system for your growth, your day and your job search.";
-        document.getElementById("hlCta").firstChild.textContent = "Watch the reveal ";
+        var cta = document.getElementById("hlCta"); cta.classList.add("live"); cta.innerHTML = '<span class="lv-dot"></span>Live now ' + cta.innerHTML.slice(cta.innerHTML.indexOf("<svg")); cta.setAttribute("aria-label", "Live now: watch the reveal");
         document.getElementById("hlTag").textContent = "Now live · Watch the reveal";
       };
       var htick = function () {
