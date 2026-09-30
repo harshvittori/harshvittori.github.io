@@ -136,8 +136,46 @@
       try { window.dispatchEvent(new CustomEvent("hvstatus", { detail: c || {} })); } catch (e) {}
     };
     if (cfg) apply(cfg);
+    /* App Check: once Firestore requires it, a request without a valid token is refused (401/403).
+       A token saved from an earlier page goes along if there is one. Otherwise, only when a request is
+       refused, get one: HV Vault and HV Reset share their own (HVCloud), HV Test pages share the
+       scorecard's (HVScorecard), and pages with no Firebase at all load App Check themselves. This file
+       never loads Firebase on a page that brings its own, so their sign-in is untouched. */
+    var ACK = "hvac:v1", SDK = "https://www.gstatic.com/firebasejs/10.12.2/";
+    var acSaved = function () { try { var o = JSON.parse(localStorage.getItem(ACK) || "null"); if (o && o.exp > Date.now() + 60000) return o.t; } catch (e) {} return null; };
+    var acSave = function (t) { try { var j = JSON.parse(atob(t.split(".")[1].replace(/-/g, "+").replace(/_/g, "/"))); localStorage.setItem(ACK, JSON.stringify({ t: t, exp: j.exp * 1000 })); } catch (e) {} };
+    var until = function (test, ms) { return new Promise(function (res) { var t0 = Date.now(); (function tick() { var v = test(); if (v || Date.now() - t0 > ms) res(v || null); else setTimeout(tick, 150); })(); }); };
+    var script = function (src) { return new Promise(function (res, rej) { var el = document.createElement("script"); el.src = src; el.onload = res; el.onerror = rej; document.head.appendChild(el); }); };
+    var ownAc = null;
+    var acFresh = function () {
+      if (location.hostname !== "harshvittori.github.io") return Promise.resolve(null);   // the reCAPTCHA key only works on the live site
+      var ready = new Promise(function (res) { if (document.readyState !== "loading") res(); else document.addEventListener("DOMContentLoaded", function () { res(); }); });
+      return ready.then(function () {
+        if (SITE === "vault" || SITE === "reset")
+          return until(function () { return window.HVCloud && window.HVCloud.appCheckOn && window.HVCloud; }, 10000).then(function (c) { return c ? c.appCheckToken() : null; });
+        return until(function () { return window.HVScorecard; }, SITE === "test" ? 1500 : 0).then(function (sc) {
+          if (sc) return sc.appCheckToken();
+          if (window.firebase && !ownAc) return null;                                   // the page has its own Firebase: leave it alone
+          if (!ownAc) ownAc = script(SDK + "firebase-app-compat.js").then(function () { return script(SDK + "firebase-app-check-compat.js"); }).then(function () {
+            var app = window.firebase.apps.length ? window.firebase.app() : window.firebase.initializeApp({ apiKey: "AIzaSyDggasAVdqpvamkn1xeex2NmPUqG9JiZJ4", authDomain: "harsh-reset.firebaseapp.com", projectId: "harsh-reset", appId: "1:592094409539:web:57d3aa494464b867bbf5f6" });
+            var ac = window.firebase.appCheck(app);
+            ac.activate(new window.firebase.appCheck.ReCaptchaEnterpriseProvider("6LdZltEtAAAAANC5e-PJFqs2YrM1ubR3CKv0sOhl"), true);
+            return ac;
+          });
+          return ownAc.then(function (ac) { return ac.getToken(false).then(function (r) { return r && r.token; }); });
+        });
+      }).then(function (t) { if (t) acSave(t); return t || null; }, function () { return null; });
+    };
+    var get = function (t) { return fetch(URL_, { cache: "no-store", headers: t ? { "X-Firebase-AppCheck": t } : {} }); };
+    var fetchCfg = function () {
+      return get(acSaved()).then(function (r) {
+        if (r.status !== 401 && r.status !== 403) return r;
+        try { localStorage.removeItem(ACK); } catch (e) {}
+        return acFresh().then(function (t) { return t ? get(t) : r; });
+      });
+    };
     var load = function () {
-      fetch(URL_, { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (doc) {
+      fetchCfg().then(function (r) { return r.ok ? r.json() : null; }).then(function (doc) {
         var s = doc && doc.fields && doc.fields.json && doc.fields.json.stringValue; if (!s) return;
         var c = JSON.parse(s); try { localStorage.setItem(KEY, s); } catch (e) {}
         cfg = c; window.HVStatus.loaded = true; apply(c);
