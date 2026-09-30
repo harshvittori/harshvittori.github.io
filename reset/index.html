@@ -73,6 +73,13 @@ header{position:sticky;top:0;z-index:50;background:rgba(249,249,251,.85);-webkit
 .hl-vis:hover{transform:translateY(-3px)}.hl-count div[hidden]{display:none}.hl-vis img{display:block;width:100%;height:auto;aspect-ratio:16/9}
 .hl-play{position:absolute;right:16px;bottom:16px;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;color:#fff;background:#2E43A6;box-shadow:0 14px 30px -10px rgba(46,67,166,.9),0 0 0 8px rgba(255,255,255,.5)}.hl-play svg{width:24px;height:24px;margin-left:3px}
 .hl-tag{position:absolute;left:14px;top:14px;font-size:13px;font-weight:600;color:#1D1D1F;background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.95);padding:7px 12px;border-radius:999px}
+.hcar>.hs{align-content:start}@keyframes hcin{from{opacity:0;transform:translateX(16px)}}
+@media (max-width:880px){
+  .hero.hlaunch{gap:0;row-gap:0;align-content:start;align-items:start}.hlaunch>div:first-child{display:contents}
+  .hlaunch .hl-pill{order:1;justify-self:start;margin-bottom:14px}.hlaunch h1{order:2}.hlaunch .lead{order:3;margin:16px 0 20px}
+  .hcar.on>.hs:not(.cur){display:none}.hcar.on>.hs.cur{animation:hcin .5s ease}
+  .hlaunch .hl-vis{order:4;margin:0 0 20px;border-radius:22px}.hlaunch .hl-count{order:5;margin:0 0 20px}.hlaunch .ctas{order:6}
+}
 @media (max-width:880px){.hlaunch::before{inset:10px -12px}.hl-count div{min-width:64px;padding:10px 6px 8px}.hl-count b{font-size:26px}.hc-nav{margin-top:0}}
 @media (max-width:560px){.hl-pill{font-size:11px;letter-spacing:.08em}.hl-count{gap:6px}.hl-count div{min-width:0;flex:1}.hl-count b{font-size:22px}.hl-count span{font-size:10px}.hl-play{width:46px;height:46px}}
 @media (prefers-reduced-motion:reduce){.hcar>.hs,.hcar.on>.hs.cur{transition:none;transform:none}.hl-pill i{animation:none}}
@@ -769,7 +776,9 @@ html:active-view-transition-type(back)::view-transition-new(page){animation:vt-i
         dots.forEach(function (d, k) { d.setAttribute("aria-current", k === cur ? "true" : "false"); });
         if (cur === 1) slides[1].querySelectorAll(".rv").forEach(function (e) { e.classList.add("in"); });
       };
-      var auto = function () { clearTimeout(autoT); if (!reduce) autoT = setTimeout(function () { if (!hold && !document.hidden) show(cur + 1); auto(); }, 7000); };
+      var inView = true;
+      if ("IntersectionObserver" in window) new IntersectionObserver(function (es) { inView = es[0].isIntersecting; }, { threshold: .35 }).observe(car);
+      var auto = function () { clearTimeout(autoT); if (!reduce) autoT = setTimeout(function () { if (!hold && inView && !document.hidden) show(cur + 1); auto(); }, 7000); };
       car.classList.add("on"); show(0); auto();
       car.querySelectorAll("[data-go]").forEach(function (b) { b.addEventListener("click", function () { show(cur + (+b.dataset.go)); auto(); }); });
       dots.forEach(function (d, k) { d.addEventListener("click", function () { show(k); auto(); }); });
