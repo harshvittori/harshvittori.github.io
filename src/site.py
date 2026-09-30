@@ -1216,6 +1216,7 @@ def shell(path, title, desc, og, body, active):
 // Timers from a previous page stop on their own (each run gets a new generation).
 window.hvPage = function () {
   var GEN = (window.__hvGen = (window.__hvGen || 0) + 1);
+  document.querySelectorAll(".grtoast").forEach(function (t) { t.remove(); });
   var setTimeout = function (f, t) { return window.setTimeout(function () { if (GEN === window.__hvGen) f(); }, t); };
   var setInterval = function (f, t) { var id = window.setInterval(function () { if (GEN === window.__hvGen) f(); else clearInterval(id); }, t); return id; };
   document.getElementById("yr").textContent = new Date().getFullYear();
@@ -1351,6 +1352,7 @@ window.hvPage = function () {
       if (a.classList.contains("btn")) { a.dataset.label = a.innerHTML; a.innerHTML = '<span class="gr-dot"></span>Global release · 1 Oct, 12 PM IST'; }
     });
     var toast = null, toastT = 0;
+    document.querySelectorAll(".grtoast").forEach(function (t) { t.remove(); });   // a message left over from the previous page
     var tell = function (a) {
       var m = a.dataset.href.match(/github\.io\/([^\/]+)\//), n = (m && APPN[m[1]]) || "HV World";
       if (!toast) { toast = document.createElement("div"); toast.className = "grtoast"; toast.setAttribute("role", "status"); document.body.appendChild(toast); }
