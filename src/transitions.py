@@ -81,7 +81,7 @@ NAV_CSS = """
   .nav nav a.mn[aria-current] .mi.col,.nav nav a.mn:active .mi.col{display:block}
   .nav nav a.mn .mi svg{display:block;width:30px;height:30px;border-radius:8.5px;box-shadow:0 4px 10px -6px rgba(20,30,90,.6)}
   .nav nav a.mn .mi.line svg,.nav nav a.mn.ic .ni{width:24px;height:24px;border-radius:0;box-shadow:none;margin:0}
-  .nav nav a.mn .mi.mono svg{width:25px;height:25px}
+  .nav nav a.mn .mi.mono svg{width:26px;height:26px}
   .nav nav a.mn[aria-current]{background:#E8ECFB;box-shadow:inset 0 0 0 1px rgba(46,67,166,.16)}
   .nav nav a.mn::after{display:block}
   .nav nav a.mn:nth-last-child(-n+2)::after{left:auto;right:0;transform:translate(0,-4px)}
@@ -111,10 +111,10 @@ NAV_JS = """<script>
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", go); else go();
 })();
 </script>"""
-MONO = {
-    "test": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="7.5" r="3.5"/><circle cx="16.5" cy="7.5" r="3.5"/><circle cx="7.5" cy="16.5" r="3.5"/><path d="M13.2 16.6l2.3 2.3 4.3-4.6"/></svg>',
-    "reset": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19.3 9A8 8 0 1 0 20 13"/><path d="M20 4.5V9h-4.5"/><circle cx="12" cy="12" r="2.6" fill="currentColor" stroke="none"/></svg>',
-    "vault": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.6 3.3a9 9 0 1 0 4.8 0"/><path d="M10.3 7.3a5 5 0 1 0 3.4 0"/><path d="M12 2.5v6"/><circle cx="12" cy="12.2" r="1.7" fill="currentColor" stroke="none"/></svg>',
+MONO = {   # the three app logos traced exactly, without the coloured tile: same shapes, one colour
+    "test": '<svg viewBox="9 9 31 31"><defs><mask id="hvtm"><rect x="0" y="0" width="48" height="48" fill="#fff"/><path d="M28 31.6l2.5 2.5 4.8-5" stroke="#000" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></mask></defs><circle cx="16.5" cy="16.5" r="5.5" stroke="currentColor" stroke-width="3" fill="none"/><circle cx="31.5" cy="16.5" r="5.5" stroke="currentColor" stroke-width="3" fill="none"/><circle cx="16.5" cy="31.5" r="5.5" stroke="currentColor" stroke-width="3" fill="none"/><circle cx="31.5" cy="31.5" r="7.5" fill="currentColor" mask="url(#hvtm)"/></svg>',
+    "reset": '<svg viewBox="160 150 715 715"><circle cx="512" cy="530" r="138" fill="currentColor"/><path d="M704 318A292 292 0 1 1 452 244" fill="none" stroke="currentColor" stroke-width="62" stroke-linecap="round"/><path d="M548 225L454 318L424 176Z" fill="currentColor" stroke="currentColor" stroke-width="30" stroke-linejoin="round"/></svg>',
+    "vault": '<svg viewBox="140 140 744 744"><path d="M 608.00 360.68 A 179.2 179.2 0 1 1 416.00 360.68" fill="none" stroke="currentColor" stroke-width="96" stroke-linecap="round"/><path d="M 608.00 206.74 A 320 320 0 1 1 416.00 206.74" fill="none" stroke="currentColor" stroke-width="83.2" stroke-linecap="round"/><circle cx="512" cy="512" r="96" fill="currentColor"/></svg>',
 }
 HOME_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h5v-6h4v6h5V9.5"/></svg>'
 
