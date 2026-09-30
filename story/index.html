@@ -364,18 +364,12 @@ main{view-transition-name:page}
 ::view-transition-group(site-header){animation:none}
 ::view-transition-old(site-header){display:none}
 ::view-transition-new(site-header){animation:none}
-::view-transition-old(page){animation:vt-fade-out .16s ease both}
-::view-transition-new(page){animation:vt-rise-in .3s cubic-bezier(.2,.8,.2,1) both}
-html:active-view-transition-type(forward)::view-transition-old(page){animation:vt-out-left .2s cubic-bezier(.4,0,.2,1) both}
-html:active-view-transition-type(forward)::view-transition-new(page){animation:vt-in-right .32s cubic-bezier(.2,.8,.2,1) both}
-html:active-view-transition-type(back)::view-transition-old(page){animation:vt-out-right .2s cubic-bezier(.4,0,.2,1) both}
-html:active-view-transition-type(back)::view-transition-new(page){animation:vt-in-left .32s cubic-bezier(.2,.8,.2,1) both}
+/* page switch: a quick, quiet crossfade, no sliding (the content should feel like it simply changes) */
+::view-transition-group(page){animation-duration:.14s}
+::view-transition-old(page){animation:vt-fade-out .09s linear both}
+::view-transition-new(page){animation:vt-fade-in .14s ease-out both}
 @keyframes vt-fade-out{to{opacity:0}}
-@keyframes vt-rise-in{from{opacity:0;transform:translateY(8px)}}
-@keyframes vt-out-left{to{opacity:0;transform:translateX(-20px)}}
-@keyframes vt-in-right{from{opacity:0;transform:translateX(28px)}}
-@keyframes vt-out-right{to{opacity:0;transform:translateX(20px)}}
-@keyframes vt-in-left{from{opacity:0;transform:translateX(-28px)}}
+@keyframes vt-fade-in{from{opacity:0}}
 @media (prefers-reduced-motion:reduce){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}}
 html{background:#F9F9FB}
 /* the top of every page shows at once (no fade-in), so switching pages never flashes an empty screen */
