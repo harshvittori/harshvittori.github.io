@@ -511,6 +511,14 @@ html{overflow-x:clip}
 @media (max-width:560px){.ytgo{font-size:14px;padding-bottom:6%}.ytgo>span:last-child{padding:6px 14px 6px 6px}.ytgo>span:last-child::before{width:26px;height:26px;background-size:14px}.ytc{left:8px;right:8px;bottom:8px;gap:4px;padding:3px 8px 3px 3px}.ytc button{width:30px;height:30px}.ytc svg{width:17px;height:17px}.ytc .tm{font-size:11px;min-width:28px}}
 .prem{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;padding:0 20px;background:rgba(7,11,24,.66);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
 .prem .pin{text-align:center;color:#fff}.prem p{margin:0}
+.prem{overflow:hidden;isolation:isolate}
+/* slow, drifting colour glow behind the frosted countdown (brand blues, violet, a touch of warm) */
+.prem::before,.prem::after{content:"";position:absolute;z-index:-1;inset:-40%;pointer-events:none;will-change:transform}
+.prem::before{background:radial-gradient(30% 34% at 30% 35%,rgba(92,110,245,.55),transparent 70%),radial-gradient(28% 30% at 72% 62%,rgba(164,112,236,.5),transparent 70%),radial-gradient(22% 24% at 55% 25%,rgba(80,196,230,.35),transparent 70%);animation:premdrift 16s ease-in-out infinite alternate}
+.prem::after{background:radial-gradient(26% 28% at 38% 72%,rgba(242,167,126,.32),transparent 70%),radial-gradient(24% 26% at 78% 30%,rgba(120,140,255,.4),transparent 70%);animation:premdrift2 21s ease-in-out infinite alternate}
+@keyframes premdrift{0%{transform:translate(-6%,-4%) rotate(0deg) scale(1)}50%{transform:translate(5%,3%) rotate(25deg) scale(1.08)}100%{transform:translate(-2%,6%) rotate(-15deg) scale(.96)}}
+@keyframes premdrift2{0%{transform:translate(6%,4%) rotate(0deg)}50%{transform:translate(-5%,-3%) rotate(-30deg) scale(1.1)}100%{transform:translate(3%,-6%) rotate(20deg)}}
+@media (prefers-reduced-motion:reduce){.prem::before,.prem::after{animation:none}}
 .prem .pk{font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#C9D0FF}
 .prem .pd{font-size:clamp(16px,2vw,20px);font-weight:500;color:#AEB6D6;margin-top:10px}
 .prem .pc{font-size:clamp(34px,6vw,64px);font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1.1;margin-top:6px}
