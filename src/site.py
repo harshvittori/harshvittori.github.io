@@ -923,7 +923,7 @@ FILM_MAIN = """<main id="main" class="filmpage">
   <section class="wrap fp">
     <p class="label">HV World in action</p>
     <h1>See all 3 apps in action.</h1>
-    <div class="fpv" data-yt="SaSfRrtvrTg"><button type="button" class="again" id="fpAgain" hidden aria-label="Watch again"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg><span>Watch again</span></button><button type="button" class="unmute" id="fpUnmute" hidden>🔊&nbsp; Tap for sound</button><div class="prem" id="fpPrem" hidden><div class="pin"><p class="pk">World premiere</p><p class="pd">1 October 2026 · 12:00 PM IST</p><p class="pc" id="fpCount" role="timer" aria-live="off"></p><p class="ps">Same time on YouTube.</p></div></div><div class="yt" id="fpYT" hidden><div id="fpYTp"></div></div><button type="button" class="ytgo" id="fpGo" hidden aria-label="Play the film"><span class="pb"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg></span><span>Watch the film</span></button><div class="ytc" id="fpCtl" hidden><button type="button" id="fpPlay" aria-label="Pause"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/><path class="i-play" d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg></button><span class="tm" id="fpCur">0:00</span><input type="range" id="fpSeek" min="0" max="1000" value="0" step="1" aria-label="Seek"><span class="tm" id="fpDur">0:00</span><button type="button" id="fpMute" aria-label="Mute"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path class="i-on" d="M15 8.5a5 5 0 0 1 0 7M17.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path class="i-off" d="M15.5 9.5l5 5M20.5 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button><button type="button" id="fpFull" aria-label="Full screen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><video id="fpVid" playsinline preload="metadata" poster="/watch/premiere.jpg" data-src="/media/hv-world-launch.mp4"></video></div>
+    <div class="fpv" data-yt="SaSfRrtvrTg"><button type="button" class="again" id="fpAgain" hidden aria-label="Watch again"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg><span>Watch again</span></button><button type="button" class="unmute" id="fpUnmute" hidden>🔊&nbsp; Tap for sound</button><div class="prem" id="fpPrem" hidden><div class="pin"><p class="pk">Premieres in</p><p class="pc" id="fpCount" role="timer" aria-live="off"></p><p class="pd">1 October 2026 · 12:00 PM IST</p></div></div><div class="yt" id="fpYT" hidden><div id="fpYTp"></div></div><button type="button" class="ytgo" id="fpGo" hidden aria-label="Play the film"><span class="pb"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg></span><span>Watch the film</span></button><div class="ytc" id="fpCtl" hidden><button type="button" id="fpPlay" aria-label="Pause"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/><path class="i-play" d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg></button><span class="tm" id="fpCur">0:00</span><input type="range" id="fpSeek" min="0" max="1000" value="0" step="1" aria-label="Seek"><span class="tm" id="fpDur">0:00</span><button type="button" id="fpMute" aria-label="Mute"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path class="i-on" d="M15 8.5a5 5 0 0 1 0 7M17.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path class="i-off" d="M15.5 9.5l5 5M20.5 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button><button type="button" id="fpFull" aria-label="Full screen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><video id="fpVid" playsinline preload="metadata" poster="/watch/premiere.jpg" data-src="/media/hv-world-launch.mp4"></video></div>
     <p class="fpsub">Real screens from HV Test, HV Reset and HV Vault.</p>
     <div class="ctas"><a class="btn" href="/">Explore HV World __ARROW__</a><a class="btn ghost" href="/story/">Read Riya's story</a></div>
     <div class="fpapps"><a href="__U_TEST__">__LOGO_TEST__HV Test</a><a href="__U_RESET__">__LOGO_RESET__HV Reset</a><a href="__U_VAULT__">__LOGO_VAULT__HV Vault</a></div>
@@ -963,10 +963,9 @@ FILM_CSS = """
 .prem{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;padding:0 20px;background:rgba(7,11,24,.66);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
 .prem .pin{text-align:center}.prem p{margin:0}
 .prem .pk{font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#C9D0FF}
-.prem .pd{font-size:clamp(18px,2.4vw,24px);font-weight:600;margin-top:6px}
+.prem .pd{font-size:clamp(16px,2vw,20px);font-weight:500;color:#AEB6D6;margin-top:10px}
 .prem .pc{font-size:clamp(34px,6vw,64px);font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1.1;margin-top:6px}
-.prem .ps{color:#AEB6D6;font-size:15px;margin-top:6px}
-@media (max-width:560px){.prem .pk{font-size:11px}.prem .pd{font-size:16px}.prem .pc{font-size:40px}.prem .ps{font-size:13px}}
+@media (max-width:560px){.prem .pk{font-size:11px}.prem .pd{font-size:14px;margin-top:6px}.prem .pc{font-size:36px}}
 .unmute{position:absolute;left:50%;top:18px;transform:translateX(-50%);z-index:3;border:0;cursor:pointer;font:600 17px/1 inherit;color:#1D1D1F;background:#fff;padding:13px 22px;border-radius:999px;box-shadow:0 14px 34px -10px rgba(0,0,0,.7);animation:unpulse 1.6s ease-in-out infinite}
 @keyframes unpulse{50%{transform:translateX(-50%) scale(1.06)}}
 @media (prefers-reduced-motion:reduce){.unmute{animation:none}}
@@ -1040,7 +1039,7 @@ def shell(path, title, desc, og, body, active):
   var fv = document.getElementById("fpVid");
   if (fv) {
     // the launch film premieres on 1 October 2026 at 12:00 PM IST; until then the page shows a countdown and no video is loaded
-    var PREM = Date.parse("2026-09-30T00:00:00+05:30"); // timer paused for a public check; premiere time is 2026-10-01T12:00:00+05:30
+    var PREM = Date.parse("2026-10-01T12:00:00+05:30");
     // start playing with sound; if the browser blocks sound, play muted and offer one tap to unmute
     var ub = document.getElementById("fpUnmute");
     var unmute = function () { fv.muted = false; fv.volume = 1; ub.hidden = true; fv.play().catch(function () {}); off(); };
@@ -1063,7 +1062,7 @@ def shell(path, title, desc, og, body, active):
       var ms = PREM - Date.now();
       if (ms <= 0) { prem.hidden = true; goYT(); return; }
       var t = Math.floor(ms / 1000), d = Math.floor(t / 86400), h = Math.floor(t %% 86400 / 3600), m = Math.floor(t %% 3600 / 60), x = t %% 60;
-      cnt.textContent = (d ? d + "d " : "") + pad(h) + ":" + pad(m) + ":" + pad(x);
+      cnt.textContent = (d ? d + "d " : "") + (d || h ? pad(h) + "h " : "") + pad(m) + "m " + pad(x) + "s";
       setTimeout(tick, 1000 - Date.now() %% 1000 + 5);
     };
     // after the premiere the film plays from YouTube (so every play counts as a YouTube view) inside our own cover and glass controls;

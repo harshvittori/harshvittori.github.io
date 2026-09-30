@@ -544,7 +544,7 @@ html:active-view-transition-type(back)::view-transition-new(page){animation:vt-i
   var fv = document.getElementById("fpVid");
   if (fv) {
     // the launch film premieres on 1 October 2026 at 12:00 PM IST; until then the page shows a countdown and no video is loaded
-    var PREM = Date.parse("2026-09-30T00:00:00+05:30"); // timer paused for a public check; premiere time is 2026-10-01T12:00:00+05:30
+    var PREM = Date.parse("2026-10-01T12:00:00+05:30");
     // start playing with sound; if the browser blocks sound, play muted and offer one tap to unmute
     var ub = document.getElementById("fpUnmute");
     var unmute = function () { fv.muted = false; fv.volume = 1; ub.hidden = true; fv.play().catch(function () {}); off(); };
@@ -567,7 +567,7 @@ html:active-view-transition-type(back)::view-transition-new(page){animation:vt-i
       var ms = PREM - Date.now();
       if (ms <= 0) { prem.hidden = true; goYT(); return; }
       var t = Math.floor(ms / 1000), d = Math.floor(t / 86400), h = Math.floor(t % 86400 / 3600), m = Math.floor(t % 3600 / 60), x = t % 60;
-      cnt.textContent = (d ? d + "d " : "") + pad(h) + ":" + pad(m) + ":" + pad(x);
+      cnt.textContent = (d ? d + "d " : "") + (d || h ? pad(h) + "h " : "") + pad(m) + "m " + pad(x) + "s";
       setTimeout(tick, 1000 - Date.now() % 1000 + 5);
     };
     // after the premiere the film plays from YouTube (so every play counts as a YouTube view) inside our own cover and glass controls;
