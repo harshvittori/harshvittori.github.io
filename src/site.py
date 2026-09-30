@@ -923,7 +923,7 @@ FILM_MAIN = """<main id="main" class="filmpage">
   <section class="wrap fp">
     <p class="label">HV World in action</p>
     <h1>See all 3 apps in action.</h1>
-    <div class="fpv"><button type="button" class="again" id="fpAgain" hidden aria-label="Watch again"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg><span>Watch again</span></button><button type="button" class="unmute" id="fpUnmute" hidden>🔊&nbsp; Tap for sound</button><video id="fpVid" controls playsinline autoplay preload="auto" poster="/watch/poster.jpg"><source src="/media/hv-world-film.mp4" type="video/mp4"><source src="/media/hv-world-film.webm" type="video/webm"></video></div>
+    <div class="fpv"><button type="button" class="again" id="fpAgain" hidden aria-label="Watch again"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg><span>Watch again</span></button><button type="button" class="unmute" id="fpUnmute" hidden>🔊&nbsp; Tap for sound</button><div class="prem" id="fpPrem" hidden><div class="pin"><p class="pk">World premiere</p><p class="pd">1 October 2026 · 12:00 PM IST</p><p class="pc" id="fpCount" role="timer" aria-live="off"></p><p class="ps">Same time on YouTube.</p></div></div><video id="fpVid" playsinline preload="metadata" poster="/watch/premiere.jpg" data-src="/media/hv-world-launch.mp4"></video></div>
     <p class="fpsub">Real screens from HV Test, HV Reset and HV Vault.</p>
     <div class="ctas"><a class="btn" href="/">Explore HV World __ARROW__</a><a class="btn ghost" href="/story/">Read Riya's story</a></div>
     <div class="fpapps"><a href="__U_TEST__">__LOGO_TEST__HV Test</a><a href="__U_RESET__">__LOGO_RESET__HV Reset</a><a href="__U_VAULT__">__LOGO_VAULT__HV Vault</a></div>
@@ -936,6 +936,13 @@ FILM_CSS = """
 .fp h1{font-size:clamp(34px,5vw,60px);font-weight:700;letter-spacing:-.045em;line-height:1.05;margin:6px 0 30px}
 .fpv{position:relative;max-width:1040px;margin:0 auto;border-radius:22px;overflow:hidden;border:1px solid #232A45;box-shadow:0 50px 100px -40px rgba(0,0,0,.9)}
 .fpv video{display:block;width:100%;aspect-ratio:16/9;background:#000}
+.prem{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;padding:0 20px;background:rgba(7,11,24,.66);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.prem .pin{text-align:center}.prem p{margin:0}
+.prem .pk{font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#C9D0FF}
+.prem .pd{font-size:clamp(18px,2.4vw,24px);font-weight:600;margin-top:6px}
+.prem .pc{font-size:clamp(34px,6vw,64px);font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1.1;margin-top:6px}
+.prem .ps{color:#AEB6D6;font-size:15px;margin-top:6px}
+@media (max-width:560px){.prem .pk{font-size:11px}.prem .pd{font-size:16px}.prem .pc{font-size:40px}.prem .ps{font-size:13px}}
 .unmute{position:absolute;left:50%;top:18px;transform:translateX(-50%);z-index:3;border:0;cursor:pointer;font:600 17px/1 inherit;color:#1D1D1F;background:#fff;padding:13px 22px;border-radius:999px;box-shadow:0 14px 34px -10px rgba(0,0,0,.7);animation:unpulse 1.6s ease-in-out infinite}
 @keyframes unpulse{50%{transform:translateX(-50%) scale(1.06)}}
 @media (prefers-reduced-motion:reduce){.unmute{animation:none}}
@@ -1008,6 +1015,8 @@ def shell(path, title, desc, og, body, active):
   }
   var fv = document.getElementById("fpVid");
   if (fv) {
+    // the launch film premieres on 1 October 2026 at 12:00 PM IST; until then the page shows a countdown and no video is loaded
+    var PREM = Date.parse("2026-10-01T12:00:00+05:30");
     // start playing with sound; if the browser blocks sound, play muted and offer one tap to unmute
     var ub = document.getElementById("fpUnmute");
     var unmute = function () { fv.muted = false; fv.volume = 1; ub.hidden = true; fv.play().catch(function () {}); off(); };
@@ -1023,7 +1032,18 @@ def shell(path, title, desc, og, body, active):
       document.addEventListener("keydown", onTap, true);
     });
     };
-    if (document.prerendering) document.addEventListener("prerenderingchange", start, { once: true }); else start();
+    var go = function () { fv.src = fv.dataset.src; fv.preload = "auto"; fv.controls = true; start(); };
+    var prem = document.getElementById("fpPrem"), cnt = document.getElementById("fpCount");
+    var pad = function (n) { return (n < 10 ? "0" : "") + n; };
+    var tick = function () {
+      var ms = PREM - Date.now();
+      if (ms <= 0) { prem.hidden = true; go(); return; }
+      var t = Math.floor(ms / 1000), d = Math.floor(t / 86400), h = Math.floor(t %% 86400 / 3600), m = Math.floor(t %% 3600 / 60), x = t %% 60;
+      cnt.textContent = (d ? d + "d " : "") + pad(h) + ":" + pad(m) + ":" + pad(x);
+      setTimeout(tick, 1000 - Date.now() %% 1000 + 5);
+    };
+    var begin = function () { if (Date.now() >= PREM) go(); else { prem.hidden = false; tick(); } };
+    if (document.prerendering) document.addEventListener("prerenderingchange", begin, { once: true }); else begin();
     ub.addEventListener("click", function (e) { e.stopPropagation(); unmute(); });
     fv.addEventListener("volumechange", function () { if (!fv.muted) { ub.hidden = true; off(); } });
     // when the film ends: hide the player controls and rest on the HV World logo frame (just before it fades); a tap brings the controls back and plays again
@@ -1031,7 +1051,7 @@ def shell(path, title, desc, og, body, active):
     var replay = function () { again.hidden = true; fv.controls = true; fv.currentTime = 0; fv.play().catch(function () {}); };
     fv.addEventListener("ended", function () { fv.controls = false; if (isFinite(fv.duration)) fv.currentTime = Math.max(0, fv.duration - 1.2); again.hidden = false; ub.hidden = true; off(); });
     again.addEventListener("click", replay);
-    fv.addEventListener("click", function () { if (!fv.controls) replay(); });
+    fv.addEventListener("click", function () { if (!fv.controls && fv.currentSrc) replay(); });
   }
   var fo = document.getElementById("filmOpen");
   if (fo) {

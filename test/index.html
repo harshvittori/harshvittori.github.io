@@ -571,6 +571,8 @@ html:active-view-transition-type(back)::view-transition-new(page){animation:vt-i
   }
   var fv = document.getElementById("fpVid");
   if (fv) {
+    // the launch film premieres on 1 October 2026 at 12:00 PM IST; until then the page shows a countdown and no video is loaded
+    var PREM = Date.parse("2026-10-01T12:00:00+05:30");
     // start playing with sound; if the browser blocks sound, play muted and offer one tap to unmute
     var ub = document.getElementById("fpUnmute");
     var unmute = function () { fv.muted = false; fv.volume = 1; ub.hidden = true; fv.play().catch(function () {}); off(); };
@@ -586,7 +588,18 @@ html:active-view-transition-type(back)::view-transition-new(page){animation:vt-i
       document.addEventListener("keydown", onTap, true);
     });
     };
-    if (document.prerendering) document.addEventListener("prerenderingchange", start, { once: true }); else start();
+    var go = function () { fv.src = fv.dataset.src; fv.preload = "auto"; fv.controls = true; start(); };
+    var prem = document.getElementById("fpPrem"), cnt = document.getElementById("fpCount");
+    var pad = function (n) { return (n < 10 ? "0" : "") + n; };
+    var tick = function () {
+      var ms = PREM - Date.now();
+      if (ms <= 0) { prem.hidden = true; go(); return; }
+      var t = Math.floor(ms / 1000), d = Math.floor(t / 86400), h = Math.floor(t % 86400 / 3600), m = Math.floor(t % 3600 / 60), x = t % 60;
+      cnt.textContent = (d ? d + "d " : "") + pad(h) + ":" + pad(m) + ":" + pad(x);
+      setTimeout(tick, 1000 - Date.now() % 1000 + 5);
+    };
+    var begin = function () { if (Date.now() >= PREM) go(); else { prem.hidden = false; tick(); } };
+    if (document.prerendering) document.addEventListener("prerenderingchange", begin, { once: true }); else begin();
     ub.addEventListener("click", function (e) { e.stopPropagation(); unmute(); });
     fv.addEventListener("volumechange", function () { if (!fv.muted) { ub.hidden = true; off(); } });
     // when the film ends: hide the player controls and rest on the HV World logo frame (just before it fades); a tap brings the controls back and plays again
@@ -594,7 +607,7 @@ html:active-view-transition-type(back)::view-transition-new(page){animation:vt-i
     var replay = function () { again.hidden = true; fv.controls = true; fv.currentTime = 0; fv.play().catch(function () {}); };
     fv.addEventListener("ended", function () { fv.controls = false; if (isFinite(fv.duration)) fv.currentTime = Math.max(0, fv.duration - 1.2); again.hidden = false; ub.hidden = true; off(); });
     again.addEventListener("click", replay);
-    fv.addEventListener("click", function () { if (!fv.controls) replay(); });
+    fv.addEventListener("click", function () { if (!fv.controls && fv.currentSrc) replay(); });
   }
   var fo = document.getElementById("filmOpen");
   if (fo) {
