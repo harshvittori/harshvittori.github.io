@@ -140,6 +140,7 @@ ol.steps{text-align:left;color:var(--soft);line-height:1.6;padding-left:20px}
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-check-compat.js"></script>
 <script>
 /* HV World admin. Settings live in one Firestore document (config/site) as JSON; every page of the four sites reads it
    through /status.js. Only the admin account can write it: that's enforced by the Firestore rules, not by this page. */
@@ -154,7 +155,7 @@ ol.steps{text-align:left;color:var(--soft);line-height:1.6;padding-left:20px}
     { k: "vault", n: "HV Vault", u: "/hv-vault-web/", logo: '<svg aria-hidden="true" focusable="false" viewBox="0 0 1024 1024" aria-hidden="true"><defs><linearGradient id="hvaimk-4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1B3157"/><stop offset=".5" stop-color="#152647"/><stop offset="1" stop-color="#0C1830"/></linearGradient></defs><rect width="1024" height="1024" rx="230" fill="url(#hvaimk-4)"/><path d="M 608.00 360.68 A 179.2 179.2 0 1 1 416.00 360.68" fill="none" stroke="#DFC18A" stroke-width="96" stroke-linecap="round"/><path d="M 608.00 206.74 A 320 320 0 1 1 416.00 206.74" fill="none" stroke="#C9A45E" stroke-width="83.2" stroke-linecap="round"/><circle cx="512" cy="512" r="96" fill="#EAD9B0"/></svg>' }];
   var DEF_MSG = "Sorry for the inconvenience. We're working on a better experience for you and will be back shortly.";
   var DURS = [["15 min", 15], ["30 min", 30], ["1 hour", 60], ["2 hours", 120], ["6 hours", 360], ["Until I turn it off", 0], ["Pick a time", -1]];
-  var RULES = "    // HV World live settings (maintenance, banner, home page switches): anyone can read, only the admin can change\n    match /config/{doc} {\n      allow read: if true;\n      allow write: if isAdmin() && doc == 'site'\n        && request.resource.data.keys().hasOnly(['json', 'updatedAt', 'by'])\n        && request.resource.data.json is string && request.resource.data.json.size() < 100000;\n    }";
+  var RULES = "    // HV World live settings (maintenance, banner, home page switches): anyone can read, only the admin can change\n    match /config/{doc} {\n      allow get: if doc == 'site';\n      allow list: if false;\n      allow write: if isAdmin() && doc == 'site'\n        && request.resource.data.keys().hasOnly(['json', 'updatedAt', 'by'])\n        && request.resource.data.json is string && request.resource.data.json.size() < 100000;\n    }";
   var $ = function (id) { return document.getElementById(id); };
   var esc = function (s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
   var clone = function (o) { return JSON.parse(JSON.stringify(o)); };
@@ -162,6 +163,15 @@ ol.steps{text-align:left;color:var(--soft);line-height:1.6;padding-left:20px}
   var saved = null, cfg = null, user = null, ui = {};
 
   firebase.initializeApp(CFG);
+  // App Check (reCAPTCHA Enterprise; the key only works on the live site) so Firestore still answers once it requires App Check
+  var appCheck = null;
+  if (location.hostname === "harshvittori.github.io") {
+    try { appCheck = firebase.appCheck(); appCheck.activate(new firebase.appCheck.ReCaptchaEnterpriseProvider("6LdZltEtAAAAANC5e-PJFqs2YrM1ubR3CKv0sOhl"), true); } catch (e) { appCheck = null; }
+  }
+  async function withAppCheck(h) {
+    if (appCheck) { try { var t = await appCheck.getToken(false); if (t && t.token) h["X-Firebase-AppCheck"] = t.token; } catch (e) {} }
+    return h;
+  }
   var auth = firebase.auth();
 
   function show(id) { ["gate", "nope", "setup", "dash"].forEach(function (s) { $(s).hidden = s !== id; }); }
@@ -170,6 +180,7 @@ ol.steps{text-align:left;color:var(--soft);line-height:1.6;padding-left:20px}
     opts = opts || {};
     var h = { Authorization: "Bearer " + (await user.getIdToken()) };
     if (opts.body) h["Content-Type"] = "application/json";
+    await withAppCheck(h);
     var r = await fetch(DOCS + path + (path.indexOf("?") < 0 ? "?" : "&") + "key=" + CFG.apiKey, { method: opts.method || (opts.body ? "POST" : "GET"), headers: h, body: opts.body ? JSON.stringify(opts.body) : undefined, cache: "no-store" });
     if (!r.ok) { var e = new Error("HTTP " + r.status); e.status = r.status; throw e; }
     return r.status === 204 ? null : r.json();
@@ -195,7 +206,7 @@ ol.steps{text-align:left;color:var(--soft);line-height:1.6;padding-left:20px}
   async function loadCfg() {
     var c = blank();
     try {
-      var r = await fetch(DOCS + "/config/site?key=" + CFG.apiKey, { cache: "no-store" });
+      var r = await fetch(DOCS + "/config/site?key=" + CFG.apiKey, { cache: "no-store", headers: await withAppCheck({}) });
       if (r.ok) { var d = await r.json(); var s = d.fields && d.fields.json && d.fields.json.stringValue; if (s) c = merge(c, JSON.parse(s)); }
     } catch (e) {}
     expire(c); saved = clone(c); cfg = clone(c);
