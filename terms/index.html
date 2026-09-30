@@ -56,6 +56,7 @@ header{position:sticky;top:0;z-index:50;background:rgba(249,249,251,.85);-webkit
 /* hero */
 .hero{padding:88px 0 56px;display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
 .hcar{display:grid;position:relative}.hcar>.hs{grid-area:1/1;transition:opacity .6s ease,transform .6s ease,visibility 0s .6s}
+.hcar:not(.on)>.hs~.hs{display:none}/* before the script runs, only the first slide shows (no overlap while the page loads) */
 .hcar.on>.hs{opacity:0;visibility:hidden;transform:translateX(24px)}.hcar.on>.hs.cur{opacity:1;visibility:visible;transform:none;transition:opacity .6s ease,transform .6s ease,visibility 0s}
 .hcar.on>.hs.prev{transform:translateX(-24px)}
 .hc-nav{grid-area:2/1;display:none;align-items:center;justify-content:center;gap:14px;margin-top:-18px;padding-bottom:18px}.hcar.on .hc-nav{display:flex}
@@ -65,7 +66,7 @@ header{position:sticky;top:0;z-index:50;background:rgba(249,249,251,.85);-webkit
 .hl-pill{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.95);box-shadow:0 8px 22px -14px rgba(46,67,166,.5);padding:8px 14px;border-radius:999px;margin-bottom:18px}
 .hl-pill i{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(46,67,166,.15);animation:grp 1.8s ease-in-out infinite}
 .hl-pill.live{color:#16794C}.hl-pill.live i{background:#1FA463;box-shadow:0 0 0 4px rgba(31,164,99,.18)}
-.hl-count{display:flex;gap:10px;margin:-6px 0 28px}.hl-count[hidden]{display:none}
+.hl-count{display:flex;gap:10px;margin:-6px 0 28px}.hl-count:not(.ready){visibility:hidden}.hl-count[hidden]{display:none}
 .hl-count div{min-width:78px;text-align:center;padding:12px 10px 10px;border-radius:18px;background:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.95);box-shadow:0 14px 30px -20px rgba(46,67,166,.6),inset 0 1px 0 #fff}
 .hl-count b{display:block;font-family:HVSora,var(--font);font-size:32px;font-weight:600;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1.1}
 .hl-count span{font-size:12px;color:var(--soft);text-transform:uppercase;letter-spacing:.1em}
@@ -1008,6 +1009,7 @@ window.hvPage = function () {
         var t = Math.floor(ms / 1000), v = [Math.floor(t / 86400), Math.floor(t % 86400 / 3600), Math.floor(t % 3600 / 60), t % 60];
         cells.forEach(function (c, k) { c.textContent = (v[k] < 10 ? "0" : "") + v[k]; });
         cells[0].parentNode.hidden = v[0] === 0;
+        document.getElementById("hlCount").classList.add("ready");
         setTimeout(htick, 1000 - Date.now() % 1000 + 5);
       };
       htick();
