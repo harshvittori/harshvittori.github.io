@@ -901,6 +901,7 @@ def build():
     assert "__" not in re.sub(r"<script>.*?</script>", "", html, flags=re.S).replace("__proto__", ""), "unfilled placeholder"
     os.makedirs(os.path.join(OUT, "story"), exist_ok=True)
     html = html.replace("</style>", transitions.CSS + "</style>", 1).replace("</head>", transitions.HEAD + "\n</head>", 1)
+    html = transitions.nav_icons(html, logo)
     open(os.path.join(OUT, "story", "index.html"), "w").write(app_links_new_tab(html))
     open(os.path.join(OUT, "favicon.svg"), "w").write(read("world.svg") + "\n")
     print("ok", len(html), "bytes")

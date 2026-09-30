@@ -517,6 +517,28 @@ html:active-view-transition-type(back)::view-transition-new(page){animation:vt-i
 @keyframes vt-out-right{to{opacity:0;transform:translateX(48px)}}
 @keyframes vt-in-left{from{opacity:0;transform:translateX(-64px)}}
 @media (prefers-reduced-motion:reduce){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}}
+
+.nav nav a .mi{display:none}
+.nav nav a.mn::after{content:attr(data-tip);position:absolute;top:calc(100% + 8px);left:50%;transform:translate(-50%,-4px);z-index:60;white-space:nowrap;font-size:13px;font-weight:600;line-height:1;color:#fff;background:#1D1D1F;padding:7px 10px;border-radius:9px;opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;display:none}
+@media (max-width:720px){
+  .nav{height:58px}
+  .nav nav{gap:2px}
+  .nav nav a.mn,.nav nav a.opt.mn{display:grid;place-items:center;width:42px;height:42px;padding:0;line-height:0;border-radius:14px;font-size:0;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+  .nav nav a.mn .mt{display:none}
+  .nav nav a.mn .mi{display:block}
+  .nav nav a.mn .mi svg{display:block;width:30px;height:30px;border-radius:8.5px;box-shadow:0 4px 10px -6px rgba(20,30,90,.6)}
+  .nav nav a.mn .mi.line svg,.nav nav a.mn.ic .ni{width:24px;height:24px;border-radius:0;box-shadow:none;margin:0}
+  .nav nav a.mn[aria-current]{background:#E8ECFB;box-shadow:inset 0 0 0 1px rgba(46,67,166,.16)}
+  .nav nav a.mn::after{display:block}
+  .nav nav a.mn:nth-last-child(-n+2)::after{left:auto;right:0;transform:translate(0,-4px)}
+  .nav nav a.mn.tipon::after{opacity:1;transform:translate(-50%,0)}
+  .nav nav a.mn.tipon:nth-last-child(-n+2)::after{transform:none}
+}
+@media (max-width:720px) and (hover:hover){
+  .nav nav a.mn:hover::after{opacity:1;transform:translate(-50%,0)}
+  .nav nav a.mn:nth-last-child(-n+2):hover::after{transform:none}
+}
+@media (max-width:360px){.nav nav a.mn,.nav nav a.opt.mn{width:38px}.nav nav a.mn .mi svg{width:28px;height:28px}}
 </style>
 <script type="speculationrules">{"prerender":[{"urls":["/", "/test/", "/reset/", "/vault/", "/watch/", "/story/"],"eagerness":"moderate"}]}</script>
 <script>
@@ -555,8 +577,8 @@ html:active-view-transition-type(back)::view-transition-new(page){animation:vt-i
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header><div class="wrap nav"><a class="brand" href="/"><svg aria-hidden="true" focusable="false" viewBox="0 0 48 48"><defs><linearGradient id="hvw-45" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1C2A6B"/><stop offset=".6" stop-color="#4A46C9"/><stop offset="1" stop-color="#7C5CE0"/></linearGradient><radialGradient id="hvwc-45" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#C9D3FF"/></radialGradient></defs><rect width="48" height="48" rx="12" fill="url(#hvw-45)"/><ellipse cx="24" cy="24" rx="16.5" ry="7.5" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.8" transform="rotate(-24 24 24)"/><circle cx="24" cy="24" r="6.2" fill="url(#hvwc-45)"/><circle cx="37.6" cy="17.9" r="3.3" fill="#F2C063"/><circle cx="10.4" cy="30.1" r="3.3" fill="#34C77B"/><circle cx="17.4" cy="14.6" r="2.6" fill="#F2A77E"/></svg>HV World</a>
-<nav aria-label="Main"><a class="opt" href="/">Home</a><a class="" href="/test/"><span class="d">HV </span>Test</a><a class="" href="/reset/"><span class="d">HV </span>Reset</a><a class="" href="/vault/"><span class="d">HV </span>Vault</a><a class="ic" aria-label="Watch" href="/watch/"><svg class="ni" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 8.3v7.4l6-3.7z" fill="currentColor"/></svg><span class="nt">Watch</span></a><a class="ic" aria-label="Riya's story" href="/story/"><svg class="ni" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5C10 5 7 4.5 3.5 5v13c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5z"/><path d="M12 6.5v13"/></svg><span class="nt"><span class="d">Riya's </span>Story</span></a></nav></div></header>
+<header><div class="wrap nav"><a class="brand" href="/"><svg aria-hidden="true" focusable="false" viewBox="0 0 48 48"><defs><linearGradient id="hvw-60" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1C2A6B"/><stop offset=".6" stop-color="#4A46C9"/><stop offset="1" stop-color="#7C5CE0"/></linearGradient><radialGradient id="hvwc-60" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#C9D3FF"/></radialGradient></defs><rect width="48" height="48" rx="12" fill="url(#hvw-60)"/><ellipse cx="24" cy="24" rx="16.5" ry="7.5" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.8" transform="rotate(-24 24 24)"/><circle cx="24" cy="24" r="6.2" fill="url(#hvwc-60)"/><circle cx="37.6" cy="17.9" r="3.3" fill="#F2C063"/><circle cx="10.4" cy="30.1" r="3.3" fill="#34C77B"/><circle cx="17.4" cy="14.6" r="2.6" fill="#F2A77E"/></svg>HV World</a>
+<nav aria-label="Main"><a aria-label="Home" data-tip="Home" class="opt mn" href="/"><span class="mt">Home</span><span class="mi line" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h5v-6h4v6h5V9.5"/></svg></span></a><a aria-label="HV Test" data-tip="HV Test" class=" mn" href="/test/"><span class="mt"><span class="d">HV </span>Test</span><span class="mi" aria-hidden="true"><svg aria-hidden="true" focusable="false" viewBox="0 0 48 48"><rect width="48" height="48" rx="12" fill="#127A4F"/><circle cx="16.5" cy="16.5" r="5.5" stroke="#FFFFFF" stroke-width="3" fill="none"/><circle cx="31.5" cy="16.5" r="5.5" stroke="#FFFFFF" stroke-width="3" fill="none"/><circle cx="16.5" cy="31.5" r="5.5" stroke="#FFFFFF" stroke-width="3" fill="none"/><circle cx="31.5" cy="31.5" r="7.5" fill="#FFC54D"/><path d="M28 31.6l2.5 2.5 4.8-5" stroke="#17231C" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a><a aria-label="HV Reset" data-tip="HV Reset" class=" mn" href="/reset/"><span class="mt"><span class="d">HV </span>Reset</span><span class="mi" aria-hidden="true"><svg aria-hidden="true" focusable="false" viewBox="0 0 1024 1024"><defs><linearGradient id="hvrbg-65" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5B86D6"/><stop offset=".55" stop-color="#9C8BDA"/><stop offset="1" stop-color="#F2A77E"/></linearGradient><radialGradient id="hvrsun-65" cx=".5" cy=".42" r=".6"><stop offset="0" stop-color="#FFF6DA"/><stop offset=".6" stop-color="#FFD58F"/><stop offset="1" stop-color="#FFB066"/></radialGradient><radialGradient id="hvrglow-65" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFE9B8" stop-opacity=".75"/><stop offset="1" stop-color="#FFE9B8" stop-opacity="0"/></radialGradient></defs><rect width="1024" height="1024" rx="232" fill="url(#hvrbg-65)"/><circle cx="512" cy="530" r="300" fill="url(#hvrglow-65)"/><circle cx="512" cy="530" r="138" fill="url(#hvrsun-65)"/><path d="M704 318A292 292 0 1 1 452 244" fill="none" stroke="#fff" stroke-width="62" stroke-linecap="round"/><path d="M548 225L454 318L424 176Z" fill="#fff" stroke="#fff" stroke-width="30" stroke-linejoin="round"/></svg></span></a><a aria-label="HV Vault" data-tip="HV Vault" class=" mn" href="/vault/"><span class="mt"><span class="d">HV </span>Vault</span><span class="mi" aria-hidden="true"><svg aria-hidden="true" focusable="false" viewBox="0 0 1024 1024" aria-hidden="true"><defs><linearGradient id="hvaimk-66" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1B3157"/><stop offset=".5" stop-color="#152647"/><stop offset="1" stop-color="#0C1830"/></linearGradient></defs><rect width="1024" height="1024" rx="230" fill="url(#hvaimk-66)"/><path d="M 608.00 360.68 A 179.2 179.2 0 1 1 416.00 360.68" fill="none" stroke="#DFC18A" stroke-width="96" stroke-linecap="round"/><path d="M 608.00 206.74 A 320 320 0 1 1 416.00 206.74" fill="none" stroke="#C9A45E" stroke-width="83.2" stroke-linecap="round"/><circle cx="512" cy="512" r="96" fill="#EAD9B0"/></svg></span></a><a aria-label="Watch" data-tip="Watch" class="ic mn" href="/watch/"><svg class="ni" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 8.3v7.4l6-3.7z" fill="currentColor"/></svg><span class="nt">Watch</span></a><a aria-label="Riya's story" data-tip="Riya's story" class="ic mn" href="/story/"><svg class="ni" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5C10 5 7 4.5 3.5 5v13c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5z"/><path d="M12 6.5v13"/></svg><span class="nt"><span class="d">Riya's </span>Story</span></a></nav></div></header>
 <main id="main" class="legal">
   <div class="wrap lg">
     <p class="crumb"><a href="/">HV World</a> <span>/</span> Terms and Conditions</p>
@@ -926,6 +948,23 @@ html:active-view-transition-type(back)::view-transition-new(page){animation:vt-i
   if (!("IntersectionObserver" in window)) { els.forEach(function (e) { e.classList.add("in"); }); return; }
   var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }); }, { rootMargin: "0px 0px -8% 0px" });
   els.forEach(function (e) { io.observe(e); });
+})();
+</script>
+<script>
+// phone menu: a long press shows the page name instead of opening the page
+(function () {
+  var go = function () {
+    document.querySelectorAll(".nav nav a.mn").forEach(function (a) {
+      var t = 0, long = false, hide = 0;
+      var tip = function () { long = true; a.classList.add("tipon"); clearTimeout(hide); hide = setTimeout(function () { a.classList.remove("tipon"); }, 1600); };
+      a.addEventListener("touchstart", function () { long = false; clearTimeout(t); t = setTimeout(tip, 450); }, { passive: true });
+      a.addEventListener("touchmove", function () { clearTimeout(t); }, { passive: true });
+      a.addEventListener("touchend", function (e) { clearTimeout(t); if (long) e.preventDefault(); });
+      a.addEventListener("click", function (e) { if (long) { e.preventDefault(); long = false; } });
+      a.addEventListener("contextmenu", function (e) { e.preventDefault(); });
+    });
+  };
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", go); else go();
 })();
 </script>
 </body>

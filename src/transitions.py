@@ -62,3 +62,74 @@ HEAD = ("""<script type="speculationrules">{"prerender":[{"urls":%s,"eagerness":
   });
 })();
 </script>""") % (str(ORDER).replace("'", '"'), str(ORDER).replace("'", '"'))
+
+
+# ---------------------------------------------------------------- phone menu: app icons instead of words
+# On screens up to 720px the main menu shows icons: Home, the three app logos, Watch and Riya's story. The page you
+# are on sits in a soft blue pill; a long press (phones) or hover (devices with a pointer) shows the name, and every
+# icon keeps its name for screen readers. Wider screens keep the words.
+NAV_CSS = """
+.nav nav a .mi{display:none}
+.nav nav a.mn::after{content:attr(data-tip);position:absolute;top:calc(100% + 8px);left:50%;transform:translate(-50%,-4px);z-index:60;white-space:nowrap;font-size:13px;font-weight:600;line-height:1;color:#fff;background:#1D1D1F;padding:7px 10px;border-radius:9px;opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;display:none}
+@media (max-width:720px){
+  .nav{height:58px}
+  .nav nav{gap:2px}
+  .nav nav a.mn,.nav nav a.opt.mn{display:grid;place-items:center;width:42px;height:42px;padding:0;line-height:0;border-radius:14px;font-size:0;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+  .nav nav a.mn .mt{display:none}
+  .nav nav a.mn .mi{display:block}
+  .nav nav a.mn .mi svg{display:block;width:30px;height:30px;border-radius:8.5px;box-shadow:0 4px 10px -6px rgba(20,30,90,.6)}
+  .nav nav a.mn .mi.line svg,.nav nav a.mn.ic .ni{width:24px;height:24px;border-radius:0;box-shadow:none;margin:0}
+  .nav nav a.mn[aria-current]{background:#E8ECFB;box-shadow:inset 0 0 0 1px rgba(46,67,166,.16)}
+  .nav nav a.mn::after{display:block}
+  .nav nav a.mn:nth-last-child(-n+2)::after{left:auto;right:0;transform:translate(0,-4px)}
+  .nav nav a.mn.tipon::after{opacity:1;transform:translate(-50%,0)}
+  .nav nav a.mn.tipon:nth-last-child(-n+2)::after{transform:none}
+}
+@media (max-width:720px) and (hover:hover){
+  .nav nav a.mn:hover::after{opacity:1;transform:translate(-50%,0)}
+  .nav nav a.mn:nth-last-child(-n+2):hover::after{transform:none}
+}
+@media (max-width:360px){.nav nav a.mn,.nav nav a.opt.mn{width:38px}.nav nav a.mn .mi svg{width:28px;height:28px}}
+"""
+NAV_JS = """<script>
+// phone menu: a long press shows the page name instead of opening the page
+(function () {
+  var go = function () {
+    document.querySelectorAll(".nav nav a.mn").forEach(function (a) {
+      var t = 0, long = false, hide = 0;
+      var tip = function () { long = true; a.classList.add("tipon"); clearTimeout(hide); hide = setTimeout(function () { a.classList.remove("tipon"); }, 1600); };
+      a.addEventListener("touchstart", function () { long = false; clearTimeout(t); t = setTimeout(tip, 450); }, { passive: true });
+      a.addEventListener("touchmove", function () { clearTimeout(t); }, { passive: true });
+      a.addEventListener("touchend", function (e) { clearTimeout(t); if (long) e.preventDefault(); });
+      a.addEventListener("click", function (e) { if (long) { e.preventDefault(); long = false; } });
+      a.addEventListener("contextmenu", function (e) { e.preventDefault(); });
+    });
+  };
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", go); else go();
+})();
+</script>"""
+HOME_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h5v-6h4v6h5V9.5"/></svg>'
+
+def nav_icons(page, logo):
+    import re
+    m = re.search(r'<nav aria-label="Main">(.*?)</nav>', page, re.S)
+    if not m:
+        return page
+    names = {"/": ("Home", None), "/test/": ("HV Test", "test"), "/reset/": ("HV Reset", "reset"), "/vault/": ("HV Vault", "vault"),
+             "/watch/": ("Watch", None), "/story/": ("Riya's story", None)}
+    def fix(a):
+        tag, inner = a.group(1), a.group(2)
+        h = re.search(r'href="([^"]+)"', tag)
+        if not h or h.group(1) not in names:
+            return a.group(0)
+        name, app = names[h.group(1)]
+        tag = re.sub(r'class="([^"]*)"', lambda c: 'class="%s mn"' % c.group(1), tag) if 'class="' in tag else tag.replace("<a ", '<a class="mn" ', 1)
+        tag = re.sub(r' aria-label="[^"]*"', "", tag)
+        tag = tag.replace("<a ", '<a aria-label="%s" data-tip="%s" ' % (name, name), 1)
+        if h.group(1) in ("/watch/", "/story/"):
+            return tag + inner + "</a>"
+        icon = logo(app) if app else HOME_ICON
+        return tag + '<span class="mt">' + inner + '</span><span class="mi%s" aria-hidden="true">%s</span></a>' % ("" if app else " line", icon)
+    navhtml = re.sub(r'(<a [^>]*>)(.*?)</a>', fix, m.group(1), flags=re.S)
+    page = page[:m.start(1)] + navhtml + page[m.end(1):]
+    return page.replace("</style>", NAV_CSS + "</style>", 1).replace("</body>", NAV_JS + "\n</body>", 1)

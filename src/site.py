@@ -1395,6 +1395,7 @@ def write(path, page):
     d = os.path.join(ROOT, path.strip("/"))
     os.makedirs(d, exist_ok=True)
     page = page.replace("</style>", transitions.CSS + "</style>", 1).replace("</head>", transitions.HEAD + "\n</head>", 1)
+    page = transitions.nav_icons(page, logo)
     open(os.path.join(d, "index.html"), "w").write(app_links_new_tab(page))
     print("ok", path, len(page), "bytes")
 
