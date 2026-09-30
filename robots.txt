@@ -1,4 +1,36 @@
+# HV World: everyone (search engines and AI assistants) is welcome to read the public pages.
 User-agent: *
 Allow: /
 Disallow: /admin/
+
+# AI assistants and AI search (named so they know they're welcome)
+User-agent: GPTBot
+Allow: /
+Disallow: /admin/
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /admin/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /admin/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /admin/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /admin/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /admin/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /admin/
+
 Sitemap: https://harshvittori.github.io/sitemap.xml
+Sitemap: https://harshvittori.github.io/hv-tests/sitemap.xml
