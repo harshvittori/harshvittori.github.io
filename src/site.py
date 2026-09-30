@@ -1093,8 +1093,7 @@ def shell(path, title, desc, og, body, active):
 <meta name="description" content="%s">
 <meta name="theme-color" content="#F9F9FB">
 <link rel="canonical" href="%s">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/icons/hv-world.svg" type="image/svg+xml"><link rel="icon" href="/icons/hv-world-32.png" type="image/png" sizes="32x32"><link rel="apple-touch-icon" href="/icons/hv-world-180.png" sizes="180x180"><link rel="manifest" href="/site.webmanifest">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="HV World">
 <meta property="og:title" content="%s">
