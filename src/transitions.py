@@ -13,19 +13,22 @@ main{view-transition-name:page}
 ::view-transition-group(site-header){animation:none}
 ::view-transition-old(site-header){display:none}
 ::view-transition-new(site-header){animation:none}
-::view-transition-old(page){animation:vt-fade-out .2s cubic-bezier(.4,0,1,1) both}
-::view-transition-new(page){animation:vt-rise-in .42s cubic-bezier(.2,.8,.2,1) both}
-html:active-view-transition-type(forward)::view-transition-old(page){animation:vt-out-left .28s cubic-bezier(.4,0,.2,1) both}
-html:active-view-transition-type(forward)::view-transition-new(page){animation:vt-in-right .42s cubic-bezier(.2,.8,.2,1) both}
-html:active-view-transition-type(back)::view-transition-old(page){animation:vt-out-right .28s cubic-bezier(.4,0,.2,1) both}
-html:active-view-transition-type(back)::view-transition-new(page){animation:vt-in-left .42s cubic-bezier(.2,.8,.2,1) both}
+::view-transition-old(page){animation:vt-fade-out .16s ease both}
+::view-transition-new(page){animation:vt-rise-in .3s cubic-bezier(.2,.8,.2,1) both}
+html:active-view-transition-type(forward)::view-transition-old(page){animation:vt-out-left .2s cubic-bezier(.4,0,.2,1) both}
+html:active-view-transition-type(forward)::view-transition-new(page){animation:vt-in-right .32s cubic-bezier(.2,.8,.2,1) both}
+html:active-view-transition-type(back)::view-transition-old(page){animation:vt-out-right .2s cubic-bezier(.4,0,.2,1) both}
+html:active-view-transition-type(back)::view-transition-new(page){animation:vt-in-left .32s cubic-bezier(.2,.8,.2,1) both}
 @keyframes vt-fade-out{to{opacity:0}}
-@keyframes vt-rise-in{from{opacity:0;transform:translateY(16px)}}
-@keyframes vt-out-left{to{opacity:0;transform:translateX(-48px)}}
-@keyframes vt-in-right{from{opacity:0;transform:translateX(64px)}}
-@keyframes vt-out-right{to{opacity:0;transform:translateX(48px)}}
-@keyframes vt-in-left{from{opacity:0;transform:translateX(-64px)}}
+@keyframes vt-rise-in{from{opacity:0;transform:translateY(8px)}}
+@keyframes vt-out-left{to{opacity:0;transform:translateX(-20px)}}
+@keyframes vt-in-right{from{opacity:0;transform:translateX(28px)}}
+@keyframes vt-out-right{to{opacity:0;transform:translateX(20px)}}
+@keyframes vt-in-left{from{opacity:0;transform:translateX(-28px)}}
 @media (prefers-reduced-motion:reduce){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}}
+html{background:#F9F9FB}
+/* the top of every page shows at once (no fade-in), so switching pages never flashes an empty screen */
+main>:first-child .rv,main>.rv:first-child,.hcar .rv,.rv.now{opacity:1!important;transform:none!important;transition:none!important}
 """
 
 HEAD = ("""<script type="speculationrules">{"prerender":[{"urls":%s,"eagerness":"moderate"}]}</script>
@@ -48,6 +51,11 @@ HEAD = ("""<script type="speculationrules">{"prerender":[{"urls":%s,"eagerness":
 })();
 (function () {
   var ORDER = %s;
+  var warm = function () {
+    if (navigator.connection && navigator.connection.saveData) return;
+    ORDER.forEach(function (u, i) { if (u !== location.pathname) setTimeout(function () { fetch(u, { credentials: "same-origin" }).catch(function () {}); }, 400 * i); });
+  };
+  addEventListener("load", function () { setTimeout(function () { if (window.requestIdleCallback) requestIdleCallback(warm, { timeout: 3000 }); else warm(); }, 1500); });
   function idx(u) { try { var p = new URL(u, location.href).pathname; return ORDER.indexOf(p); } catch (e) { return -1; } }
   // tell the transition which way to slide: along the menu order, like switching tabs
   window.addEventListener("pageswap", function (e) {
