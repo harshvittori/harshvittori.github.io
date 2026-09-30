@@ -31,7 +31,7 @@ html{background:#F9F9FB}
 main>:first-child .rv,main>.rv:first-child,.hcar .rv,.rv.now{opacity:1!important;transform:none!important;transition:none!important}
 """
 
-HEAD = ("""<script type="speculationrules">{"prerender":[{"urls":%s,"eagerness":"moderate"}]}</script>
+HEAD = ("""<script type="speculationrules">{"prerender":[{"urls":["/story/"],"eagerness":"moderate"}]}</script><!-- %s: the other pages open in place, see site.py -->
 <script>
 // reload keeps the reader exactly where they were: the browser's own restore can land a little lower each time
 // (smooth scrolling plus content settling above), so the page saves its position and puts it back instantly
@@ -53,6 +53,7 @@ HEAD = ("""<script type="speculationrules">{"prerender":[{"urls":%s,"eagerness":
   var ORDER = %s;
   var warm = function () {
     if (navigator.connection && navigator.connection.saveData) return;
+    if (document.body && document.body.getAttribute("data-spa")) return;   // pages with in-page navigation warm their own cache
     ORDER.forEach(function (u, i) { if (u !== location.pathname) setTimeout(function () { fetch(u, { credentials: "same-origin" }).catch(function () {}); }, 400 * i); });
   };
   addEventListener("load", function () { setTimeout(function () { if (window.requestIdleCallback) requestIdleCallback(warm, { timeout: 3000 }); else warm(); }, 1500); });
