@@ -1040,7 +1040,7 @@ def shell(path, title, desc, og, body, active):
   var fv = document.getElementById("fpVid");
   if (fv) {
     // the launch film premieres on 1 October 2026 at 12:00 PM IST; until then the page shows a countdown and no video is loaded
-    var PREM = Date.parse("2026-10-01T12:00:00+05:30");
+    var PREM = Date.parse("2026-09-30T00:00:00+05:30"); // timer paused for a public check; premiere time is 2026-10-01T12:00:00+05:30
     // start playing with sound; if the browser blocks sound, play muted and offer one tap to unmute
     var ub = document.getElementById("fpUnmute");
     var unmute = function () { fv.muted = false; fv.volume = 1; ub.hidden = true; fv.play().catch(function () {}); off(); };
