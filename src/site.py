@@ -193,9 +193,9 @@ header{position:sticky;top:0;z-index:50;background:rgba(249,249,251,.85);-webkit
   .hero.hlaunch{gap:0;row-gap:0;align-content:start;align-items:start}.hlaunch>div:first-child{display:contents}
   .hlaunch .hl-pill{order:1;justify-self:start;margin-bottom:14px}.hlaunch h1{order:2}.hlaunch .lead{order:3;margin:14px 0 18px;font-size:17px}
   .hcar.on>.hs:not(.cur){display:none}.hcar.on>.hs.cur{animation:hcin .5s ease}
-  #top.hero{gap:0;row-gap:0;align-content:start;align-items:start}#top>div:first-child{display:contents}
-  #top .eyebrow{order:1;margin-bottom:12px}#top h1{order:2}#top .lead{order:3;margin:14px 0 16px;font-size:17px}
-  #top .orbit{order:4;max-width:280px;margin:18px auto 26px}#top .ctas{order:5}#top .note{order:6;margin-top:14px}
+  .hcar #top.hero{gap:0;row-gap:0;align-content:start;align-items:start}.hcar #top>div:first-child{display:contents}
+  .hcar #top .eyebrow{order:1;margin-bottom:12px}.hcar #top h1{order:2}.hcar #top .lead{order:3;margin:14px 0 16px;font-size:17px}
+  .hcar #top .orbit{order:4;max-width:280px;margin:18px auto 26px}.hcar #top .ctas{order:5}.hcar #top .note{order:6;margin-top:14px}
   .hlaunch .hl-vis{order:4;margin:0 0 20px;border-radius:22px}.hlaunch .hl-count{order:5;margin:0 0 20px}.hlaunch .ctas{order:6}
 }
 @media (max-width:880px){.hlaunch::before{inset:10px -12px}.hl-count div{min-width:64px;padding:10px 6px 8px}.hl-count b{font-size:26px}.hc-nav{margin-top:0}}
@@ -1372,7 +1372,7 @@ def shell(path, title, desc, og, body, active):
   var els = document.querySelectorAll(".rv");
   if (!("IntersectionObserver" in window)) { els.forEach(function (e) { e.classList.add("in"); }); return; }
   var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }); }, { rootMargin: "0px 0px -8%% 0px" });
-  els.forEach(function (e) { io.observe(e); });
+  els.forEach(function (e) { if (e.getBoundingClientRect().top < innerHeight) { e.classList.add("now", "in"); } else io.observe(e); });
 })();
 </script>
 </body>
