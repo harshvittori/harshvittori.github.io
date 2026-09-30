@@ -563,6 +563,7 @@ OVERVIEW_MAIN = """<main id="main">
     <button type="button" class="filmbox rv" id="filmOpen" aria-label="Play the HV World video">
       <video id="loopVid" poster="/media/hv-world-loop-poster.jpg" muted loop playsinline autoplay preload="auto" aria-hidden="true" tabindex="-1"><source src="/media/hv-world-loop.mp4" type="video/mp4"><source src="/media/hv-world-loop.webm" type="video/webm"></video>
       <span class="play"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg></i></span>
+      <span class="ptag" id="filmTag" hidden>New film · Premieres 1 Oct, 12:00 PM IST</span>
     </button>
   </section>
 
@@ -622,8 +623,7 @@ OVERVIEW_MAIN = """<main id="main">
   </section>
   <dialog id="filmDlg" class="filmdlg" aria-label="HV World in action">
     <button type="button" class="x" id="filmClose" aria-label="Close the video">×</button>
-    <div class="fdv"><button type="button" class="again" id="filmAgain" hidden aria-label="Watch again"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg><span>Watch again</span></button>
-    <video id="filmVid" controls playsinline preload="none" poster="/media/hv-world-poster.jpg"><source src="/media/hv-world-film.mp4" type="video/mp4"><source src="/media/hv-world-film.webm" type="video/webm"></video></div>
+    __PLAYER__
   </dialog>
 </main>"""
 
@@ -923,17 +923,14 @@ FILM_MAIN = """<main id="main" class="filmpage">
   <section class="wrap fp">
     <p class="label">HV World in action</p>
     <h1>See all 3 apps in action.</h1>
-    <div class="fpv" data-yt="SaSfRrtvrTg"><button type="button" class="again" id="fpAgain" hidden aria-label="Watch again"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg><span>Watch again</span></button><button type="button" class="unmute" id="fpUnmute" hidden>🔊&nbsp; Tap for sound</button><div class="prem" id="fpPrem" hidden><div class="pin"><p class="pk">Premieres in</p><p class="pc" id="fpCount" role="timer" aria-live="off"></p><p class="pd">1 October 2026 · 12:00 PM IST</p></div></div><div class="yt" id="fpYT" hidden><div id="fpYTp"></div></div><button type="button" class="ytgo" id="fpGo" hidden aria-label="Play the film"><span class="pb"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg></span><span>Watch the film</span></button><div class="ytc" id="fpCtl" hidden><button type="button" id="fpPlay" aria-label="Pause"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/><path class="i-play" d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg></button><span class="tm" id="fpCur">0:00</span><input type="range" id="fpSeek" min="0" max="1000" value="0" step="1" aria-label="Seek"><span class="tm" id="fpDur">0:00</span><button type="button" id="fpMute" aria-label="Mute"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path class="i-on" d="M15 8.5a5 5 0 0 1 0 7M17.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path class="i-off" d="M15.5 9.5l5 5M20.5 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button><button type="button" id="fpFull" aria-label="Full screen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><video id="fpVid" playsinline preload="metadata" poster="/watch/premiere.jpg" data-src="/media/hv-world-launch.mp4"></video></div>
+    __PLAYER__
     <p class="fpsub">Real screens from HV Test, HV Reset and HV Vault.</p>
     <div class="ctas"><a class="btn" href="/">Explore HV World __ARROW__</a><a class="btn ghost" href="/story/">Read Riya's story</a></div>
     <div class="fpapps"><a href="__U_TEST__">__LOGO_TEST__HV Test</a><a href="__U_RESET__">__LOGO_RESET__HV Reset</a><a href="__U_VAULT__">__LOGO_VAULT__HV Vault</a></div>
   </section>
 </main>"""
-FILM_CSS = """
-.filmpage{background:#070B18;color:#fff;border-bottom:1px solid #1B2138}
-.fp{padding:56px 0 72px;text-align:center}
-.fp .label{color:#9AA7FF}
-.fp h1{font-size:clamp(34px,5vw,60px);font-weight:700;letter-spacing:-.045em;line-height:1.05;margin:6px 0 30px}
+PLAYER_HTML = '<div class="fpv" data-yt="SaSfRrtvrTg"><button type="button" class="again" hidden aria-label="Watch again"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg><span>Watch again</span></button><button type="button" class="unmute" hidden>🔊&nbsp; Tap for sound</button><div class="prem" hidden><div class="pin"><p class="pk">Premieres in</p><p class="pc" role="timer" aria-live="off"></p><p class="pd">1 October 2026 · 12:00 PM IST</p></div></div><div class="yt" hidden><div class="ytp"></div></div><button type="button" class="ytgo" hidden aria-label="Play the film"><span>Watch the film</span></button><div class="ytc" hidden><button type="button" class="yp" aria-label="Pause"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/><path class="i-play" d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg></button><span class="tm yc">0:00</span><input type="range" min="0" max="1000" value="0" step="1" aria-label="Seek"><span class="tm yd">0:00</span><button type="button" class="ym" aria-label="Mute"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path class="i-on" d="M15 8.5a5 5 0 0 1 0 7M17.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path class="i-off" d="M15.5 9.5l5 5M20.5 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button><button type="button" class="yf" aria-label="Full screen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><video playsinline preload="none" poster="/watch/premiere.jpg" data-src="/media/hv-world-launch.mp4"></video></div>'
+PLAYER_CSS = """
 .fpv{position:relative;max-width:1040px;margin:0 auto;border-radius:22px;overflow:hidden;border:1px solid #232A45;box-shadow:0 50px 100px -40px rgba(0,0,0,.9)}
 .fpv video{display:block;width:100%;aspect-ratio:16/9;background:#000}
 .fpv video[hidden],.prem[hidden]{display:none}
@@ -950,7 +947,7 @@ FILM_CSS = """
 .ytc button{flex:none;width:36px;height:36px;border:0;border-radius:50%;background:transparent;color:#fff;cursor:pointer;display:grid;place-items:center}
 .ytc button:hover,.ytc button:focus-visible{background:rgba(255,255,255,.16)}
 .ytc svg{width:20px;height:20px}
-.ytc #fpPlay{background:rgba(255,255,255,.92);color:#1D1D1F}
+.ytc .yp{background:rgba(255,255,255,.92);color:#1D1D1F}
 .ytc .i-play,.ytc.paused .i-pause,.ytc .i-off,.ytc.muted .i-on{display:none}.ytc.paused .i-play,.ytc.muted .i-off{display:inline}
 .ytc .tm{flex:none;font-size:13px;font-variant-numeric:tabular-nums;color:#DDE2FF;min-width:34px;text-align:center}
 .ytc input{flex:1;min-width:40px;height:4px;margin:0;-webkit-appearance:none;appearance:none;border-radius:4px;background:linear-gradient(90deg,#9AA7FF var(--p,0%),rgba(255,255,255,.25) var(--p,0%));cursor:pointer}
@@ -961,7 +958,7 @@ FILM_CSS = """
 .fpv:fullscreen .yt{width:min(100vw,177.78vh)}
 @media (max-width:560px){.ytgo{font-size:14px;padding-bottom:6%}.ytgo>span:last-child{padding:6px 14px 6px 6px}.ytgo>span:last-child::before{width:26px;height:26px;background-size:14px}.ytc{left:8px;right:8px;bottom:8px;gap:4px;padding:3px 8px 3px 3px}.ytc button{width:30px;height:30px}.ytc svg{width:17px;height:17px}.ytc .tm{font-size:11px;min-width:28px}}
 .prem{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;padding:0 20px;background:rgba(7,11,24,.66);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
-.prem .pin{text-align:center}.prem p{margin:0}
+.prem .pin{text-align:center;color:#fff}.prem p{margin:0}
 .prem .pk{font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#C9D0FF}
 .prem .pd{font-size:clamp(16px,2vw,20px);font-weight:500;color:#AEB6D6;margin-top:10px}
 .prem .pc{font-size:clamp(34px,6vw,64px);font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1.1;margin-top:6px}
@@ -969,6 +966,15 @@ FILM_CSS = """
 .unmute{position:absolute;left:50%;top:18px;transform:translateX(-50%);z-index:3;border:0;cursor:pointer;font:600 17px/1 inherit;color:#1D1D1F;background:#fff;padding:13px 22px;border-radius:999px;box-shadow:0 14px 34px -10px rgba(0,0,0,.7);animation:unpulse 1.6s ease-in-out infinite}
 @keyframes unpulse{50%{transform:translateX(-50%) scale(1.06)}}
 @media (prefers-reduced-motion:reduce){.unmute{animation:none}}
+.filmdlg .fpv{max-width:none;border-radius:18px;border-color:rgba(255,255,255,.12)}
+.ptag{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);white-space:nowrap;z-index:2;font:600 13px/1 inherit;color:#1D1D1F;background:rgba(255,255,255,.66);-webkit-backdrop-filter:blur(14px) saturate(1.6);backdrop-filter:blur(14px) saturate(1.6);border:1px solid rgba(255,255,255,.85);padding:9px 14px;border-radius:999px;box-shadow:0 12px 30px -14px rgba(20,30,90,.5)}.ptag[hidden]{display:none}
+@media (max-width:560px){.ptag{bottom:10px;font-size:11px;padding:7px 10px}}
+"""
+FILM_CSS = """
+.filmpage{background:#070B18;color:#fff;border-bottom:1px solid #1B2138}
+.fp{padding:56px 0 72px;text-align:center}
+.fp .label{color:#9AA7FF}
+.fp h1{font-size:clamp(34px,5vw,60px);font-weight:700;letter-spacing:-.045em;line-height:1.05;margin:6px 0 30px}
 .fpsub{color:#AEB6D6;font-size:18px;margin:22px 0 22px}
 .fp .ctas{justify-content:center}.fp .btn.ghost{color:#B9C3FF}
 .fpapps{display:flex;flex-wrap:wrap;gap:10px 22px;justify-content:center;margin-top:30px}
@@ -1036,52 +1042,38 @@ def shell(path, title, desc, og, body, active):
       box.addEventListener("pointerleave", function () { st.style.setProperty("--px", 0); st.style.setProperty("--py", 0); });
     });
   }
-  var fv = document.getElementById("fpVid");
-  if (fv) {
-    // the launch film premieres on 1 October 2026 at 12:00 PM IST; until then the page shows a countdown and no video is loaded
-    var PREM = Date.parse("2026-10-01T12:00:00+05:30");
-    // start playing with sound; if the browser blocks sound, play muted and offer one tap to unmute
-    var ub = document.getElementById("fpUnmute");
-    var unmute = function () { fv.muted = false; fv.volume = 1; ub.hidden = true; fv.play().catch(function () {}); off(); };
-    var onTap = function (e) { if (fv.muted) unmute(); };
-    var off = function () { document.removeEventListener("pointerdown", onTap, true); document.removeEventListener("keydown", onTap, true); };
-    var start = function () {
-    fv.muted = false;
-    fv.play().catch(function () {
-      fv.muted = true;
-      fv.play().catch(function () {});
-      ub.hidden = false;
-      document.addEventListener("pointerdown", onTap, true);
-      document.addEventListener("keydown", onTap, true);
-    });
-    };
-    var go = function () { fv.src = fv.dataset.src; fv.preload = "auto"; fv.controls = true; start(); };
-    var prem = document.getElementById("fpPrem"), cnt = document.getElementById("fpCount");
+  // the launch film premieres on 1 October 2026 at 12:00 PM IST; until then its players show a countdown and no video is loaded
+  var PREM = Date.parse("2026-10-01T12:00:00+05:30");
+  // after the premiere the film plays from YouTube (so every play counts as a YouTube view) inside our own cover and glass controls;
+  // if YouTube can't load (blocked, offline, embedding off), it falls back to the film file on this site
+  var hvPlayer = function (box) {
+    var q = function (c) { return box.querySelector(c); };
+    var fv = q("video"), ub = q(".unmute"), again = q(".again"), prem = q(".prem"), cnt = q(".pc");
+    var yt = q(".yt"), cover = q(".ytgo"), ctl = q(".ytc"), bPlay = q(".yp"), bMute = q(".ym"), bFull = q(".yf");
+    var seek = q(".ytc input"), tCur = q(".yc"), tDur = q(".yd"), ytId = box.dataset.yt;
+    var P = null, ytOk = false, want = false, played = false, mode = "", ytTimer = 0, idleT = 0;
     var pad = function (n) { return (n < 10 ? "0" : "") + n; };
-    var tick = function () {
-      var ms = PREM - Date.now();
-      if (ms <= 0) { prem.hidden = true; goYT(); return; }
-      var t = Math.floor(ms / 1000), d = Math.floor(t / 86400), h = Math.floor(t %% 86400 / 3600), m = Math.floor(t %% 3600 / 60), x = t %% 60;
-      cnt.textContent = (d ? d + "d " : "") + (d || h ? pad(h) + "h " : "") + pad(m) + "m " + pad(x) + "s";
-      setTimeout(tick, 1000 - Date.now() %% 1000 + 5);
-    };
-    // after the premiere the film plays from YouTube (so every play counts as a YouTube view) inside our own cover and glass controls;
-    // if YouTube can't load (blocked, offline, embedding off), the page falls back to the film file on this site
-    var box = fv.parentNode, ytId = box.dataset.yt, P = null, ytOk = false, want = false, played = false, ytTimer = 0, idleT = 0;
-    var yt = document.getElementById("fpYT"), cover = document.getElementById("fpGo"), ctl = document.getElementById("fpCtl");
-    var bPlay = document.getElementById("fpPlay"), bMute = document.getElementById("fpMute"), bFull = document.getElementById("fpFull");
-    var seek = document.getElementById("fpSeek"), tCur = document.getElementById("fpCur"), tDur = document.getElementById("fpDur");
     var fmt = function (v) { v = Math.max(0, Math.floor(v || 0)); return Math.floor(v / 60) + ":" + pad(v - 60 * Math.floor(v / 60)); };
-    var fallback = function () { if (played) return; clearTimeout(ytTimer); try { if (P && P.destroy) P.destroy(); } catch (e) {} P = null; ytOk = false; yt.hidden = true; cover.hidden = true; ctl.hidden = true; fv.hidden = false; go(); };
+    // film file on this site: start with sound; if the browser blocks sound, play muted and offer one tap to unmute
+    var onTap = function () { if (fv.muted) unmute(); };
+    var off = function () { document.removeEventListener("pointerdown", onTap, true); document.removeEventListener("keydown", onTap, true); };
+    var unmute = function () { fv.muted = false; fv.volume = 1; ub.hidden = true; fv.play().catch(function () {}); off(); };
+    var go = function () {
+      mode = "file"; fv.hidden = false; fv.src = fv.dataset.src; fv.preload = "auto"; fv.controls = true; fv.muted = false;
+      fv.play().catch(function () {
+        fv.muted = true; fv.play().catch(function () {}); ub.hidden = false;
+        document.addEventListener("pointerdown", onTap, true); document.addEventListener("keydown", onTap, true);
+      });
+    };
+    var fallback = function () { if (played) return; clearTimeout(ytTimer); try { if (P && P.destroy) P.destroy(); } catch (e) {} P = null; ytOk = false; yt.hidden = true; cover.hidden = true; ctl.hidden = true; go(); };
     var paint = function () {
       if (!P || !ytOk) return;
       var cur = P.getCurrentTime() || 0, dur = P.getDuration() || 0;
       ctl.classList.toggle("live", !(dur > 0));
-      if (dur > 0 && document.activeElement !== seek) { seek.value = Math.round(cur / dur * 1000); }
+      if (dur > 0 && document.activeElement !== seek) seek.value = Math.round(cur / dur * 1000);
       seek.style.setProperty("--p", (seek.value / 10) + "%%");
       tCur.textContent = fmt(cur); tDur.textContent = fmt(dur);
     };
-    setInterval(function () { if (P && ytOk && P.getPlayerState && P.getPlayerState() === 1) paint(); }, 250);
     var idle = function () { clearTimeout(idleT); ctl.classList.remove("dim"); idleT = setTimeout(function () { if (P && P.getPlayerState() === 1 && !(matchMedia("(hover:hover)").matches && ctl.matches(":hover")) && !ctl.querySelector(":focus-visible")) ctl.classList.add("dim"); }, 2800); };
     var syncMute = function () { var m = P.isMuted(); ctl.classList.toggle("muted", m); bMute.setAttribute("aria-label", m ? "Unmute" : "Mute"); };
     var onState = function (e) {
@@ -1093,20 +1085,27 @@ def shell(path, title, desc, og, body, active):
     var ytPlay = function () { want = true; if (!ytOk) return; if (P.isMuted()) P.unMute(); P.playVideo(); };
     var goYT = function () {
       if (!ytId) { go(); return; }
-      fv.hidden = true; yt.hidden = false; cover.hidden = false;
+      mode = "yt"; fv.hidden = true; yt.hidden = false; cover.hidden = false;
       ytTimer = setTimeout(function () { if (!ytOk) fallback(); }, 12000);
       var mk = function () {
-        P = new YT.Player("fpYTp", { videoId: ytId, host: "https://www.youtube.com", playerVars: { controls: 0, rel: 0, playsinline: 1, iv_load_policy: 3, fs: 0, enablejsapi: 1, origin: location.origin },
+        P = new YT.Player(q(".ytp"), { videoId: ytId, host: "https://www.youtube.com", playerVars: { controls: 0, rel: 0, playsinline: 1, iv_load_policy: 3, fs: 0, enablejsapi: 1, origin: location.origin },
           events: { onReady: function () { ytOk = true; clearTimeout(ytTimer); P.getIframe().title = "HV World launch film"; paint(); if (want) ytPlay(); }, onStateChange: onState, onError: fallback } });
       };
       if (window.YT && YT.Player) { mk(); return; }
       var prev = window.onYouTubeIframeAPIReady;
       window.onYouTubeIframeAPIReady = function () { if (prev) prev(); mk(); };
-      var sc = document.createElement("script"); sc.src = "https://www.youtube.com/iframe_api"; sc.async = true; sc.onerror = fallback; document.head.appendChild(sc);
+      if (!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) { var sc = document.createElement("script"); sc.src = "https://www.youtube.com/iframe_api"; sc.async = true; sc.onerror = fallback; document.head.appendChild(sc); }
+    };
+    var tick = function () {
+      var ms = PREM - Date.now();
+      if (ms <= 0) { prem.hidden = true; goYT(); return; }
+      var t = Math.floor(ms / 1000), d = Math.floor(t / 86400), h = Math.floor(t %% 86400 / 3600), m = Math.floor(t %% 3600 / 60), x = t %% 60;
+      cnt.textContent = (d ? d + "d " : "") + (d || h ? pad(h) + "h " : "") + pad(m) + "m " + pad(x) + "s";
+      setTimeout(tick, 1000 - Date.now() %% 1000 + 5);
     };
     cover.addEventListener("click", function () { cover.hidden = true; ytPlay(); });
     bPlay.addEventListener("click", function () { if (P.getPlayerState() === 1) P.pauseVideo(); else ytPlay(); });
-    bMute.addEventListener("click", function () { if (P.isMuted()) P.unMute(); else P.mute(); setTimeout(syncMute, 60); ctl.classList.toggle("muted"); });
+    bMute.addEventListener("click", function () { if (P.isMuted()) P.unMute(); else P.mute(); ctl.classList.toggle("muted"); setTimeout(syncMute, 60); });
     seek.addEventListener("input", function () { var dur = P.getDuration() || 0; seek.style.setProperty("--p", (seek.value / 10) + "%%"); if (dur > 0) { P.seekTo(seek.value / 1000 * dur, true); tCur.textContent = fmt(seek.value / 1000 * dur); } });
     seek.addEventListener("change", function () { seek.blur(); });
     var fsIn = box.requestFullscreen || box.webkitRequestFullscreen;
@@ -1116,39 +1115,47 @@ def shell(path, title, desc, og, body, active):
       else fsIn.call(box);
     });
     box.addEventListener("mouseenter", idle); box.addEventListener("mousemove", idle); ctl.addEventListener("pointerdown", idle); ctl.addEventListener("focusin", idle);
-    var begin = function () { if (Date.now() >= PREM) goYT(); else { prem.hidden = false; tick(); } };
-    if (document.prerendering) document.addEventListener("prerenderingchange", begin, { once: true }); else begin();
     ub.addEventListener("click", function (e) { e.stopPropagation(); unmute(); });
     fv.addEventListener("volumechange", function () { if (!fv.muted) { ub.hidden = true; off(); } });
-    // when the film ends: hide the player controls and rest on the HV World logo frame (just before it fades); a tap brings the controls back and plays again
-    var again = document.getElementById("fpAgain");
-    var replay = function () { if (P && ytOk) { again.hidden = true; box.classList.remove("ytend"); P.seekTo(0, true); ytPlay(); return; } again.hidden = true; fv.controls = true; fv.currentTime = 0; fv.play().catch(function () {}); };
+    // when the film ends: rest on the end frame with a Watch again button
+    var replay = function () {
+      again.hidden = true;
+      if (P && ytOk) { box.classList.remove("ytend"); P.seekTo(0, true); ytPlay(); return; }
+      fv.controls = true; fv.currentTime = 0; fv.play().catch(function () {});
+    };
     fv.addEventListener("ended", function () { fv.controls = false; if (isFinite(fv.duration)) fv.currentTime = Math.max(0, fv.duration - 1.2); again.hidden = false; ub.hidden = true; off(); });
     again.addEventListener("click", replay);
     fv.addEventListener("click", function () { if (!fv.controls && fv.currentSrc) replay(); });
+    return {
+      // start: countdown before the premiere, the film after it; autoplay asks it to play as soon as it can
+      begin: function (autoplay) { if (autoplay) want = true; if (Date.now() >= PREM) goYT(); else { prem.hidden = false; tick(); } },
+      resume: function () { if (mode === "yt") ytPlay(); else if (mode === "file" && !fv.ended) fv.play().catch(function () {}); },
+      pause: function () { want = false; if (P && ytOk && P.getPlayerState() === 1) P.pauseVideo(); if (mode === "file") fv.pause(); }
+    };
+  };
+  var wbox = document.querySelector(".filmpage .fpv");
+  if (wbox) {
+    var wp = hvPlayer(wbox);
+    if (document.prerendering) document.addEventListener("prerenderingchange", function () { wp.begin(); }, { once: true }); else wp.begin();
   }
   var fo = document.getElementById("filmOpen");
   if (fo) {
-    var dlg = document.getElementById("filmDlg"), film = document.getElementById("filmVid"), loopv = document.getElementById("loopVid");
+    var dlg = document.getElementById("filmDlg"), loopv = document.getElementById("loopVid");
     var still = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (still) { loopv.removeAttribute("autoplay"); loopv.pause(); }
     else if ("IntersectionObserver" in window) {
       new IntersectionObserver(function (es) { es.forEach(function (e) { if (dlg.open) return; e.isIntersecting ? loopv.play().catch(function () {}) : loopv.pause(); }); }).observe(loopv);
     }
+    var hp = null, tag = document.getElementById("filmTag");
+    if (Date.now() < PREM) { tag.hidden = false; setTimeout(function () { tag.hidden = true; }, Math.min(PREM - Date.now(), 2147483000)); }
     fo.addEventListener("click", function () {
       loopv.pause();
       if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
-      fagain.hidden = true; film.controls = true; film.currentTime = 0; film.play().catch(function () {});
+      if (!hp) { hp = hvPlayer(dlg.querySelector(".fpv")); hp.begin(true); } else hp.resume();
     });
-    // when the film ends: hide the controls and rest on the logo frame; a tap plays it again
-    var fagain = document.getElementById("filmAgain");
-    var freplay = function () { fagain.hidden = true; film.controls = true; film.currentTime = 0; film.play().catch(function () {}); };
-    film.addEventListener("ended", function () { film.controls = false; if (isFinite(film.duration)) film.currentTime = Math.max(0, film.duration - 1.2); fagain.hidden = false; });
-    fagain.addEventListener("click", freplay);
-    film.addEventListener("click", function () { if (!film.controls) freplay(); });
     document.getElementById("filmClose").addEventListener("click", function () { dlg.close(); });
     dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); });
-    dlg.addEventListener("close", function () { film.pause(); if (!still) loopv.play().catch(function () {}); });
+    dlg.addEventListener("close", function () { if (hp) hp.pause(); if (!still) loopv.play().catch(function () {}); });
   }
   var els = document.querySelectorAll(".rv");
   if (!("IntersectionObserver" in window)) { els.forEach(function (e) { e.classList.add("in"); }); return; }
@@ -1169,6 +1176,7 @@ def fill(page):
     for k in ("TEST", "RESET", "VAULT"):
         page = page.replace("__U_%s__" % k, URL[k.lower()])
     page = re.sub(r"__LOGO_(AI|WORLD|TEST|RESET|VAULT)(_P)?__", lambda m: logo(m.group(1).lower()), page)
+    page = page.replace("__PLAYER__", PLAYER_HTML)
     left = re.findall(r"__[A-Z_]+__", page)
     assert not left, left
     return page
@@ -1183,14 +1191,14 @@ def write(path, page):
 def build():
     write("/", fill(shell("/", "Stop guessing. Start growing. | HV World",
           "3 free apps that show your strengths, plan your day and chase your follow-ups for you. Just talk to the AI.",
-          "https://harshvittori.github.io/og.jpg", OVERVIEW_MAIN, "overview")))
+          "https://harshvittori.github.io/og.jpg", OVERVIEW_MAIN, "overview")).replace("</style>", PLAYER_CSS + "</style>", 1))
     film = fill(shell("/watch/", "3 apps. 1 AI. One calm day. | HV World", "See HV Test, HV Reset and HV Vault in action. Three free apps, one AI.",
                       "https://harshvittori.github.io/watch/og.jpg", FILM_MAIN, "watch"))
     film = film.replace('<meta property="og:type" content="website">', '<meta property="og:type" content="video.other">'
         '<meta property="og:video" content="https://harshvittori.github.io/media/hv-world-film.mp4">'
         '<meta property="og:video:secure_url" content="https://harshvittori.github.io/media/hv-world-film.mp4">'
         '<meta property="og:video:type" content="video/mp4"><meta property="og:video:width" content="1920"><meta property="og:video:height" content="1080">'
-        '<meta property="video:duration" content="109">', 1).replace("</style>", FILM_CSS + "</style>", 1)
+        '<meta property="video:duration" content="109">', 1).replace("</style>", PLAYER_CSS + FILM_CSS + "</style>", 1)
     write("/watch/", film)
     for k in ORDER:
         a = APPS[k]
