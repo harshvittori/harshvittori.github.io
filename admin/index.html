@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin | HV World</title>
+<link rel="icon" href="/icons/hv-world.svg" type="image/svg+xml">
+<style>
+@font-face{font-family:HVSora;src:url(/media/fonts/Sora-Regular.ttf) format("truetype");font-weight:400;font-display:swap}
+@font-face{font-family:HVSora;src:url(/media/fonts/Sora-SemiBold.ttf) format("truetype");font-weight:600 700;font-display:swap}
+:root{--ink:#1D1D1F;--soft:#5E6273;--faint:#8A8FA3;--line:#E3E5EE;--accent:#2E43A6;--accent2:#24378C;--ok:#16794C;--okbg:#E7F7EE;--warn:#8A5A00;--warnbg:#FFF3D6;--bad:#B42318;--badbg:#FDECEA;--font:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial,sans-serif}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:var(--font);color:var(--ink);min-height:100vh;background:radial-gradient(50% 40% at 0% 0%,rgba(174,184,245,.45),transparent 70%),radial-gradient(45% 40% at 100% 100%,rgba(205,185,244,.4),transparent 70%),#F4F5FA;background-attachment:fixed}
+h1,h2,h3{font-family:HVSora,var(--font);letter-spacing:-.02em;margin:0}
+button,input,textarea,select{font:inherit;color:inherit}
+a{color:var(--accent)}
+.wrap{width:min(1120px,100% - 32px);margin:0 auto}
+.top{position:sticky;top:0;z-index:20;background:rgba(244,245,250,.8);-webkit-backdrop-filter:blur(16px) saturate(1.6);backdrop-filter:blur(16px) saturate(1.6);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:14px;height:62px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-family:HVSora,var(--font);font-size:17px}.brand svg{width:32px;height:32px;border-radius:9px}
+.brand small{font:600 11px/1 var(--font);letter-spacing:.1em;text-transform:uppercase;color:var(--accent);background:#E8ECFB;padding:5px 8px;border-radius:999px}
+.me{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:14px;color:var(--soft)}.me img{width:30px;height:30px;border-radius:50%}
+.glass{background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(18px) saturate(1.5);backdrop-filter:blur(18px) saturate(1.5);border:1px solid rgba(255,255,255,.95);border-radius:22px;box-shadow:0 18px 40px -28px rgba(30,40,110,.45),inset 0 1px 0 #fff}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:9px 16px;border-radius:999px;border:0;cursor:pointer;background:var(--accent);color:#fff;font-weight:600;font-size:14px;text-decoration:none;white-space:nowrap}
+.btn:hover{background:var(--accent2)}.btn:disabled{opacity:.5;cursor:default}
+.btn.ghost{background:rgba(255,255,255,.8);color:var(--accent);box-shadow:inset 0 0 0 1px rgba(46,67,166,.2)}.btn.ghost:hover{background:#fff}
+.btn.warn{background:#C7810F}.btn.warn:hover{background:#A96C08}
+.btn.sm{min-height:32px;padding:6px 12px;font-size:13px}
+main{padding:28px 0 120px}
+.hello{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:22px}
+.hello h1{font-size:clamp(24px,4vw,32px)}.hello p{margin:6px 0 0;color:var(--soft)}
+.sum{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;padding:8px 14px;border-radius:999px}
+.sum i{width:8px;height:8px;border-radius:50%;background:currentColor}
+.sum.ok{color:var(--ok);background:var(--okbg)}.sum.warn{color:var(--warn);background:var(--warnbg)}
+.sec{margin-top:26px}.sec>h2{font-size:19px;margin-bottom:4px}.sec>p.sub{margin:0 0 14px;color:var(--soft);font-size:14px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.sites{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.site{padding:18px;display:flex;flex-direction:column;gap:12px}
+.site .hd{display:flex;align-items:center;gap:12px}.site .hd svg{width:42px;height:42px;border-radius:12px;flex:none}
+.site h3{font-size:16px}.site .url{font-size:12.5px;color:var(--faint)}
+.pill{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;padding:6px 10px;border-radius:999px;align-self:flex-start}
+.pill i{width:7px;height:7px;border-radius:50%;background:currentColor}
+.pill.live{color:var(--ok);background:var(--okbg)}.pill.maint{color:var(--warn);background:var(--warnbg)}.pill.sched{color:#1D4ED8;background:#E6EEFF}
+.sw{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:14px;font-weight:600}
+.tg{position:relative;width:46px;height:28px;flex:none}.tg input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer;z-index:1}
+.tg span{position:absolute;inset:0;border-radius:999px;background:#D5D8E3;transition:background .2s}.tg span::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.2);transition:transform .2s}
+.tg input:checked+span{background:#C7810F}.tg input:checked+span::after{transform:translateX(18px)}.tg input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
+.tg.blue input:checked+span{background:var(--accent)}
+.opts{display:none;flex-direction:column;gap:10px;padding-top:4px;border-top:1px dashed var(--line)}.site.on .opts{display:flex}
+.lbl{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:0;cursor:pointer;font-size:13px;font-weight:600;padding:7px 11px;border-radius:999px;background:#EEF0F7;color:var(--soft)}
+.chip[aria-pressed="true"]{background:var(--accent);color:#fff}
+input[type=text],input[type=url],input[type=datetime-local],textarea,select{width:100%;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:#fff;font-size:14px}
+textarea{min-height:70px;resize:vertical;line-height:1.45}
+input:focus,textarea:focus,select:focus{outline:2px solid rgba(46,67,166,.35);outline-offset:0;border-color:var(--accent)}
+.hint{font-size:12.5px;color:var(--faint);margin:0}
+.panel{padding:20px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field{display:flex;flex-direction:column;gap:6px}
+.checks{display:flex;flex-wrap:wrap;gap:8px}.checks label{display:inline-flex;align-items:center;gap:6px;font-size:14px;background:#EEF0F7;padding:7px 11px;border-radius:999px;cursor:pointer}
+.bprev{margin-top:8px;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;font-size:14px;border:1px solid rgba(255,255,255,.95);box-shadow:0 10px 24px -16px rgba(20,30,90,.45)}
+.bprev i{width:8px;height:8px;border-radius:50%;flex:none}
+.set{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}.set:last-child{border-bottom:0}
+.set b{display:block;font-size:15px}.set span{font-size:13px;color:var(--soft)}
+.yt{display:flex;gap:12px;align-items:center}.yt img{width:120px;aspect-ratio:16/9;object-fit:cover;border-radius:10px;background:#E3E5EE;flex:none}
+.log{list-style:none;margin:0;padding:0}.log li{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}.log li:last-child{border-bottom:0}
+.log time{flex:none;width:130px;color:var(--faint);font-size:13px}
+.bar{position:fixed;left:50%;bottom:16px;transform:translate(-50%,140%);z-index:30;display:flex;align-items:center;gap:14px;padding:10px 10px 10px 18px;border-radius:999px;background:#1D1D1F;color:#fff;box-shadow:0 20px 40px -14px rgba(0,0,0,.5);transition:transform .3s cubic-bezier(.2,.8,.2,1);max-width:calc(100vw - 24px)}
+.bar.show{transform:translate(-50%,0)}.bar span{font-size:14px}.bar .btn.ghost{background:rgba(255,255,255,.12);color:#fff;box-shadow:none}
+.toast{position:fixed;left:50%;top:76px;transform:translate(-50%,-10px);opacity:0;z-index:40;padding:10px 16px;border-radius:14px;font-size:14px;font-weight:600;background:var(--okbg);color:var(--ok);box-shadow:0 14px 30px -14px rgba(0,0,0,.3);transition:opacity .25s,transform .25s;pointer-events:none}
+.toast.show{opacity:1;transform:translate(-50%,0)}.toast.err{background:var(--badbg);color:var(--bad)}
+.gate{min-height:calc(100vh - 62px);display:grid;place-items:center;padding:24px}
+.gate .glass{max-width:460px;width:100%;padding:34px 28px;text-align:center}
+.gate h1{font-size:26px;margin-top:14px}.gate p{color:var(--soft);line-height:1.5}
+.gate svg.lg{width:60px;height:60px;border-radius:16px}
+pre{white-space:pre-wrap;word-break:break-word;background:#0F1220;color:#D7DBF2;padding:14px;border-radius:14px;font-size:12.5px;line-height:1.5;text-align:left;max-height:320px;overflow:auto}
+ol.steps{text-align:left;color:var(--soft);line-height:1.6;padding-left:20px}
+[hidden]{display:none!important}
+@media (max-width:720px){.grid2{grid-template-columns:1fr}.me span{display:none}.log time{width:96px}.yt{flex-direction:column;align-items:flex-start}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap"><div class="brand"><svg aria-hidden="true" focusable="false" viewBox="0 0 48 48"><defs><linearGradient id="hvw-1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1C2A6B"/><stop offset=".6" stop-color="#4A46C9"/><stop offset="1" stop-color="#7C5CE0"/></linearGradient><radialGradient id="hvwc-1" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#C9D3FF"/></radialGradient></defs><rect width="48" height="48" rx="12" fill="url(#hvw-1)"/><ellipse cx="24" cy="24" rx="16.5" ry="7.5" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.8" transform="rotate(-24 24 24)"/><circle cx="24" cy="24" r="6.2" fill="url(#hvwc-1)"/><circle cx="37.6" cy="17.9" r="3.3" fill="#F2C063"/><circle cx="10.4" cy="30.1" r="3.3" fill="#34C77B"/><circle cx="17.4" cy="14.6" r="2.6" fill="#F2A77E"/></svg>HV World <small>Admin</small></div><div class="me" id="me" hidden><img id="mePic" alt=""><span id="meName"></span><button class="btn ghost sm" id="signOut" type="button">Sign out</button></div></div></div>
+
+<section class="gate" id="gate"><div class="glass"><svg class="lg" aria-hidden="true" focusable="false" viewBox="0 0 48 48"><defs><linearGradient id="hvw-1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1C2A6B"/><stop offset=".6" stop-color="#4A46C9"/><stop offset="1" stop-color="#7C5CE0"/></linearGradient><radialGradient id="hvwc-1" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#C9D3FF"/></radialGradient></defs><rect width="48" height="48" rx="12" fill="url(#hvw-1)"/><ellipse cx="24" cy="24" rx="16.5" ry="7.5" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.8" transform="rotate(-24 24 24)"/><circle cx="24" cy="24" r="6.2" fill="url(#hvwc-1)"/><circle cx="37.6" cy="17.9" r="3.3" fill="#F2C063"/><circle cx="10.4" cy="30.1" r="3.3" fill="#34C77B"/><circle cx="17.4" cy="14.6" r="2.6" fill="#F2A77E"/></svg><h1>HV World Admin</h1><p>Sign in with the admin Google account to run the websites: maintenance, announcements and home page settings.</p><button class="btn" id="signIn" type="button">Sign in with Google</button><p class="hint" id="gateMsg" style="margin-top:12px"></p></div></section>
+
+<section class="gate" id="nope" hidden><div class="glass"><svg class="lg" aria-hidden="true" focusable="false" viewBox="0 0 48 48"><defs><linearGradient id="hvw-1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1C2A6B"/><stop offset=".6" stop-color="#4A46C9"/><stop offset="1" stop-color="#7C5CE0"/></linearGradient><radialGradient id="hvwc-1" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#C9D3FF"/></radialGradient></defs><rect width="48" height="48" rx="12" fill="url(#hvw-1)"/><ellipse cx="24" cy="24" rx="16.5" ry="7.5" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.8" transform="rotate(-24 24 24)"/><circle cx="24" cy="24" r="6.2" fill="url(#hvwc-1)"/><circle cx="37.6" cy="17.9" r="3.3" fill="#F2C063"/><circle cx="10.4" cy="30.1" r="3.3" fill="#34C77B"/><circle cx="17.4" cy="14.6" r="2.6" fill="#F2A77E"/></svg><h1>Access denied</h1><p><b id="nopeWho"></b> isn't the admin account.</p><button class="btn ghost" id="nopeOut" type="button">Use another account</button></div></section>
+
+<section class="gate" id="setup" hidden><div class="glass" style="max-width:640px"><h1>One-time setup</h1>
+<p>You're signed in as the admin, but Firebase doesn't let this page save settings yet. Add this block to your Firestore rules once:</p>
+<ol class="steps"><li>Open <a href="https://console.firebase.google.com/project/harsh-reset/firestore/rules" target="_blank" rel="noopener">Firebase console → Firestore → Rules</a>.</li><li>Paste the block below just above the last two <code>}</code> lines, next to the other <code>match</code> blocks.</li><li>Click <b>Publish</b>, then come back and press <b>Try again</b>.</li></ol>
+<pre id="rulesSnippet"></pre><div class="row" style="justify-content:center"><button class="btn ghost" id="copyRules" type="button">Copy block</button><button class="btn" id="retry" type="button">Try again</button></div><p class="hint" id="setupMsg" style="margin-top:10px"></p></div></section>
+
+<main id="dash" hidden><div class="wrap">
+  <div class="hello"><div><h1>Control centre</h1><p>Changes go live when you press <b>Publish</b>. Open pages pick them up within a minute; new visitors see them right away.</p></div><span class="sum ok" id="sum"><i></i>All sites live</span></div>
+
+  <section class="sec"><h2>Websites</h2><p class="sub">Turn on maintenance to pause a site. Visitors see a calm "be right back" screen with a countdown; you still see the real site on this device.</p>
+    <div class="row" style="margin-bottom:14px"><button class="btn warn sm" id="allOn" type="button">Put all sites in maintenance</button><button class="btn ghost sm" id="allOff" type="button">Bring all sites back</button></div>
+    <div class="sites" id="sites"></div>
+  </section>
+
+  <section class="sec"><h2>Announcement banner</h2><p class="sub">A small message at the bottom of the page. Visitors can close it.</p>
+    <div class="glass panel">
+      <div class="sw" style="margin-bottom:14px"><span>Show the banner</span><label class="tg blue"><input type="checkbox" id="bOn" aria-label="Show the banner"><span></span></label></div>
+      <div class="field"><label class="lbl" for="bText">Message</label><input type="text" id="bText" maxlength="160" placeholder="e.g. HV Vault now reads your resume in seconds."></div>
+      <div class="grid2" style="margin-top:12px">
+        <div class="field"><label class="lbl" for="bLink">Link (optional)</label><input type="url" id="bLink" placeholder="/watch/ or https://…"></div>
+        <div class="field"><label class="lbl" for="bLinkText">Link text</label><input type="text" id="bLinkText" maxlength="30" placeholder="Learn more"></div>
+        <div class="field"><label class="lbl" for="bTone">Style</label><select id="bTone"><option value="info">Info (blue)</option><option value="success">Good news (green)</option><option value="warning">Heads-up (amber)</option></select></div>
+        <div class="field"><label class="lbl" for="bUntil">Hide automatically after (optional)</label><input type="datetime-local" id="bUntil"></div>
+      </div>
+      <div class="field" style="margin-top:12px"><span class="lbl">Show on</span><div class="checks" id="bSites"></div></div>
+      <div class="field" style="margin-top:12px"><span class="lbl">Preview</span><div class="bprev" id="bPrev"><i></i><span></span></div></div>
+    </div>
+  </section>
+
+  <section class="sec"><h2>HV World home page</h2><p class="sub">Switch launch features on or off without touching code.</p>
+    <div class="glass panel">
+      <div class="set"><div><b>Launch slide on the home page</b><span>"Say hello to HV World" slide with the premiere timer / Live now button.</span></div><label class="tg blue"><input type="checkbox" id="wSlide" aria-label="Launch slide"><span></span></label></div>
+      <div class="set"><div><b>Launch &amp; welcome popup</b><span>The card that opens on the home page (countdown before launch, welcome after).</span></div><label class="tg blue"><input type="checkbox" id="wWelcome" aria-label="Welcome popup"><span></span></label></div>
+      <div class="set" style="display:block"><div style="margin-bottom:10px"><b>Watch page video</b><span>Paste a YouTube link or video ID. Leave empty to keep the launch film.</span></div>
+        <div class="yt"><img id="ytThumb" alt=""><div class="field" style="flex:1;width:100%"><input type="text" id="wYt" placeholder="https://youtu.be/… or SaSfRrtvrTg"><p class="hint" id="ytHint"></p></div></div></div>
+    </div>
+  </section>
+
+  <section class="sec"><h2>Activity</h2><p class="sub">The last changes published from this page.</p><div class="glass panel"><ul class="log" id="log"></ul></div></section>
+
+  <section class="sec"><h2>Other admin pages</h2><div class="row"><a class="btn ghost sm" href="/hv-tests/admin/" target="_blank" rel="noopener">HV Test numbers &amp; scorecards</a><a class="btn ghost sm" href="https://console.firebase.google.com/project/harsh-reset" target="_blank" rel="noopener">Firebase console</a><a class="btn ghost sm" href="https://github.com/harshvittori" target="_blank" rel="noopener">GitHub</a></div></section>
+</div></main>
+
+<div class="bar" id="bar" role="region" aria-label="Unsaved changes"><span id="barTxt">You have unsaved changes</span><button class="btn ghost sm" id="discard" type="button">Discard</button><button class="btn sm" id="publish" type="button">Publish</button></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script>
+/* HV World admin. Settings live in one Firestore document (config/site) as JSON; every page of the four sites reads it
+   through /status.js. Only the admin account can write it: that's enforced by the Firestore rules, not by this page. */
+(function () {
+  "use strict";
+  var CFG = { apiKey: "AIzaSyDggasAVdqpvamkn1xeex2NmPUqG9JiZJ4", authDomain: "harsh-reset.firebaseapp.com", projectId: "harsh-reset", appId: "1:592094409539:web:57d3aa494464b867bbf5f6" };
+  var DOCS = "https://firestore.googleapis.com/v1/projects/harsh-reset/databases/(default)/documents";
+  var SITES = [
+    { k: "world", n: "HV World", u: "/", logo: '<svg aria-hidden="true" focusable="false" viewBox="0 0 48 48"><defs><linearGradient id="hvw-1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1C2A6B"/><stop offset=".6" stop-color="#4A46C9"/><stop offset="1" stop-color="#7C5CE0"/></linearGradient><radialGradient id="hvwc-1" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#C9D3FF"/></radialGradient></defs><rect width="48" height="48" rx="12" fill="url(#hvw-1)"/><ellipse cx="24" cy="24" rx="16.5" ry="7.5" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.8" transform="rotate(-24 24 24)"/><circle cx="24" cy="24" r="6.2" fill="url(#hvwc-1)"/><circle cx="37.6" cy="17.9" r="3.3" fill="#F2C063"/><circle cx="10.4" cy="30.1" r="3.3" fill="#34C77B"/><circle cx="17.4" cy="14.6" r="2.6" fill="#F2A77E"/></svg>' },
+    { k: "test", n: "HV Test", u: "/hv-tests/", logo: '<svg aria-hidden="true" focusable="false" viewBox="0 0 48 48"><rect width="48" height="48" rx="12" fill="#127A4F"/><circle cx="16.5" cy="16.5" r="5.5" stroke="#FFFFFF" stroke-width="3" fill="none"/><circle cx="31.5" cy="16.5" r="5.5" stroke="#FFFFFF" stroke-width="3" fill="none"/><circle cx="16.5" cy="31.5" r="5.5" stroke="#FFFFFF" stroke-width="3" fill="none"/><circle cx="31.5" cy="31.5" r="7.5" fill="#FFC54D"/><path d="M28 31.6l2.5 2.5 4.8-5" stroke="#17231C" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>' },
+    { k: "reset", n: "HV Reset", u: "/hv-reset/", logo: '<svg aria-hidden="true" focusable="false" viewBox="0 0 1024 1024"><defs><linearGradient id="hvrbg-3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5B86D6"/><stop offset=".55" stop-color="#9C8BDA"/><stop offset="1" stop-color="#F2A77E"/></linearGradient><radialGradient id="hvrsun-3" cx=".5" cy=".42" r=".6"><stop offset="0" stop-color="#FFF6DA"/><stop offset=".6" stop-color="#FFD58F"/><stop offset="1" stop-color="#FFB066"/></radialGradient><radialGradient id="hvrglow-3" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFE9B8" stop-opacity=".75"/><stop offset="1" stop-color="#FFE9B8" stop-opacity="0"/></radialGradient></defs><rect width="1024" height="1024" rx="232" fill="url(#hvrbg-3)"/><circle cx="512" cy="530" r="300" fill="url(#hvrglow-3)"/><circle cx="512" cy="530" r="138" fill="url(#hvrsun-3)"/><path d="M704 318A292 292 0 1 1 452 244" fill="none" stroke="#fff" stroke-width="62" stroke-linecap="round"/><path d="M548 225L454 318L424 176Z" fill="#fff" stroke="#fff" stroke-width="30" stroke-linejoin="round"/></svg>' },
+    { k: "vault", n: "HV Vault", u: "/hv-vault-web/", logo: '<svg aria-hidden="true" focusable="false" viewBox="0 0 1024 1024" aria-hidden="true"><defs><linearGradient id="hvaimk-4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1B3157"/><stop offset=".5" stop-color="#152647"/><stop offset="1" stop-color="#0C1830"/></linearGradient></defs><rect width="1024" height="1024" rx="230" fill="url(#hvaimk-4)"/><path d="M 608.00 360.68 A 179.2 179.2 0 1 1 416.00 360.68" fill="none" stroke="#DFC18A" stroke-width="96" stroke-linecap="round"/><path d="M 608.00 206.74 A 320 320 0 1 1 416.00 206.74" fill="none" stroke="#C9A45E" stroke-width="83.2" stroke-linecap="round"/><circle cx="512" cy="512" r="96" fill="#EAD9B0"/></svg>' }];
+  var DEF_MSG = "We're making a few improvements. Please check back soon.";
+  var DURS = [["15 min", 15], ["30 min", 30], ["1 hour", 60], ["2 hours", 120], ["6 hours", 360], ["Until I turn it off", 0], ["Pick a time", -1]];
+  var RULES = "    // HV World live settings (maintenance, banner, home page switches): anyone can read, only the admin can change\n    match /config/{doc} {\n      allow read: if true;\n      allow write: if isAdmin() && doc == 'site'\n        && request.resource.data.keys().hasOnly(['json', 'updatedAt', 'by'])\n        && request.resource.data.json is string && request.resource.data.json.size() < 100000;\n    }";
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
+  var clone = function (o) { return JSON.parse(JSON.stringify(o)); };
+  var blank = function () { var c = { v: 1, sites: {}, banner: { on: false, text: "", link: "", linkText: "", tone: "info", sites: ["world", "test", "reset", "vault"], until: "" }, world: { launchSlide: true, welcome: true, youtubeId: "" }, log: [] }; SITES.forEach(function (s) { c.sites[s.k] = { maintenance: { on: false, from: "", until: "", message: "", dur: 60 } }; }); return c; };
+  var saved = null, cfg = null, user = null, ui = {};
+
+  firebase.initializeApp(CFG);
+  var auth = firebase.auth();
+
+  function show(id) { ["gate", "nope", "setup", "dash"].forEach(function (s) { $(s).hidden = s !== id; }); }
+  function toast(t, err) { var e = $("toast"); e.textContent = t; e.classList.toggle("err", !!err); e.classList.add("show"); clearTimeout(toast.t); toast.t = setTimeout(function () { e.classList.remove("show"); }, 2600); }
+  async function api(path, opts) {
+    opts = opts || {};
+    var h = { Authorization: "Bearer " + (await user.getIdToken()) };
+    if (opts.body) h["Content-Type"] = "application/json";
+    var r = await fetch(DOCS + path + (path.indexOf("?") < 0 ? "?" : "&") + "key=" + CFG.apiKey, { method: opts.method || (opts.body ? "POST" : "GET"), headers: h, body: opts.body ? JSON.stringify(opts.body) : undefined, cache: "no-store" });
+    if (!r.ok) { var e = new Error("HTTP " + r.status); e.status = r.status; throw e; }
+    return r.status === 204 ? null : r.json();
+  }
+
+  $("signIn").onclick = async function () { $("gateMsg").textContent = "Opening Google sign-in…"; try { await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()); } catch (e) { $("gateMsg").textContent = e && e.code === "auth/popup-closed-by-user" ? "" : "Couldn't sign in. Please try again."; } };
+  [$("signOut"), $("nopeOut")].forEach(function (b) { b.onclick = function () { try { localStorage.removeItem("hvadmin"); } catch (e) {} auth.signOut(); }; });
+  $("retry").onclick = function () { publish(true); };
+  $("copyRules").onclick = async function () { try { await navigator.clipboard.writeText(RULES); $("setupMsg").textContent = "Copied."; } catch (e) { $("setupMsg").textContent = "Select the text and copy it."; } };
+  $("rulesSnippet").textContent = RULES;
+
+  auth.onAuthStateChanged(async function (u) {
+    user = u;
+    if (!u) { show("gate"); $("me").hidden = true; return; }
+    $("me").hidden = false; $("meName").textContent = u.email || u.displayName || ""; if (u.photoURL) $("mePic").src = u.photoURL; else $("mePic").hidden = true;
+    $("gateMsg").textContent = "Checking access…";
+    try { await api("/stats?pageSize=1"); }          // an admin-only read: tells us if this account is the admin
+    catch (e) { if (e.status === 403) { show("nope"); $("nopeWho").textContent = u.email || "This account"; try { localStorage.removeItem("hvadmin"); } catch (x) {} return; } $("gateMsg").textContent = "Couldn't reach Firebase. Check your connection and reload."; return; }
+    try { localStorage.setItem("hvadmin", "1"); } catch (e) {}     // lets you see the real sites while they're in maintenance
+    await loadCfg(); show("dash"); render();
+  });
+
+  async function loadCfg() {
+    var c = blank();
+    try {
+      var r = await fetch(DOCS + "/config/site?key=" + CFG.apiKey, { cache: "no-store" });
+      if (r.ok) { var d = await r.json(); var s = d.fields && d.fields.json && d.fields.json.stringValue; if (s) c = merge(c, JSON.parse(s)); }
+    } catch (e) {}
+    saved = clone(c); cfg = clone(c);
+  }
+  function merge(base, x) {
+    Object.keys(x || {}).forEach(function (k) { if (x[k] && typeof x[k] === "object" && !Array.isArray(x[k]) && base[k] && typeof base[k] === "object") merge(base[k], x[k]); else base[k] = x[k]; });
+    return base;
+  }
+
+  /* ---------- time helpers ---------- */
+  var pad = function (n) { return (n < 10 ? "0" : "") + n; };
+  var toLocal = function (iso) { if (!iso) return ""; var d = new Date(iso); return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()) + "T" + pad(d.getHours()) + ":" + pad(d.getMinutes()); };
+  var fromLocal = function (v) { if (!v) return ""; var d = new Date(v); return isNaN(d) ? "" : d.toISOString(); };
+  var when = function (iso) { var d = new Date(iso); return d.toLocaleString("en-IN", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" }); };
+  function state(m) {
+    var now = Date.now(), from = m.from ? Date.parse(m.from) : 0, until = m.until ? Date.parse(m.until) : 0;
+    if (!m.on || (until && now >= until)) return { k: "live", t: "Live" };
+    if (from && now < from) return { k: "sched", t: "Maintenance from " + when(m.from) };
+    return { k: "maint", t: until ? "Maintenance until " + when(m.until) : "In maintenance" };
+  }
+
+  /* ---------- render ---------- */
+  function render() {
+    $("sites").innerHTML = SITES.map(function (s) {
+      var m = cfg.sites[s.k].maintenance, st = state(m), changed = JSON.stringify(m) !== JSON.stringify(saved.sites[s.k].maintenance);
+      if (changed) st.t += " · not published yet";
+      return '<div class="glass site' + (m.on ? " on" : "") + '" data-k="' + s.k + '"><div class="hd">' + s.logo + '<div><h3>' + s.n + '</h3><div class="url">harshvittori.github.io' + s.u + '</div></div></div>' +
+        '<span class="pill ' + st.k + '"><i></i>' + esc(st.t) + '</span>' +
+        '<div class="sw"><span>Maintenance mode</span><label class="tg"><input type="checkbox" data-a="on"' + (m.on ? " checked" : "") + ' aria-label="Maintenance mode for ' + s.n + '"><span></span></label></div>' +
+        '<div class="opts"><span class="lbl">How long</span><div class="chips">' + DURS.map(function (d) { return '<button type="button" class="chip" data-a="dur" data-v="' + d[1] + '" aria-pressed="' + (m.dur === d[1]) + '">' + d[0] + '</button>'; }).join("") + '</div>' +
+        '<div class="field"' + (m.dur === -1 ? "" : " hidden") + '><label class="lbl">Back at</label><input type="datetime-local" data-a="until" value="' + toLocal(m.until) + '"></div>' +
+        '<div class="field"><label class="lbl">Start</label><div class="chips"><button type="button" class="chip" data-a="start" data-v="now" aria-pressed="' + !m.from + '">Now</button><button type="button" class="chip" data-a="start" data-v="later" aria-pressed="' + !!m.from + '">Later</button></div><input type="datetime-local" data-a="from" value="' + toLocal(m.from) + '"' + (m.from ? "" : " hidden") + '></div>' +
+        '<div class="field"><label class="lbl">Message for visitors</label><textarea data-a="msg" maxlength="300" placeholder="' + esc(DEF_MSG) + '">' + esc(m.message) + '</textarea></div>' +
+        '<p class="hint">' + (m.dur > 0 ? "Ends by itself " + m.dur + " min after you publish (or after the start time)." : m.dur === 0 ? "Stays on until you switch it off." : "Ends at the time you pick.") + '</p></div>' +
+        '<div class="row"><a class="btn ghost sm" href="' + s.u + '" target="_blank" rel="noopener">Open site</a><a class="btn ghost sm" href="' + s.u + '?hvpreview=maintenance" target="_blank" rel="noopener">Preview maintenance</a></div></div>';
+    }).join("");
+    var n = SITES.filter(function (s) { return state(saved.sites[s.k].maintenance).k === "maint"; }).length;
+    $("sum").className = "sum " + (n ? "warn" : "ok"); $("sum").innerHTML = "<i></i>" + (n ? n + (n > 1 ? " sites" : " site") + " in maintenance" : "All sites live");
+    var b = cfg.banner;
+    $("bOn").checked = !!b.on; $("bText").value = b.text || ""; $("bLink").value = b.link || ""; $("bLinkText").value = b.linkText || ""; $("bTone").value = b.tone || "info"; $("bUntil").value = toLocal(b.until);
+    $("bSites").innerHTML = SITES.map(function (s) { return '<label><input type="checkbox" value="' + s.k + '"' + ((b.sites || []).indexOf(s.k) > -1 ? " checked" : "") + '> ' + s.n + '</label>'; }).join("");
+    $("wSlide").checked = cfg.world.launchSlide !== false; $("wWelcome").checked = cfg.world.welcome !== false; $("wYt").value = cfg.world.youtubeId || "";
+    ytPreview(); bannerPreview();
+    $("log").innerHTML = (saved.log || []).length ? saved.log.slice().reverse().map(function (l) { return '<li><time>' + esc(when(l.at)) + '</time><span>' + esc(l.what) + '</span></li>'; }).join("") : '<li><span class="hint">Nothing published yet.</span></li>';
+    dirty();
+  }
+  function bannerPreview() {
+    var tones = { info: ["#1D2B72", "rgba(255,255,255,.9)", "#2E43A6"], success: ["#0F5C3A", "#ECFAF3", "#1FA463"], warning: ["#7A4B00", "#FFF7E4", "#E0A21A"] }, t = tones[$("bTone").value] || tones.info, p = $("bPrev");
+    p.style.color = t[0]; p.style.background = t[1]; p.querySelector("i").style.background = t[2];
+    p.querySelector("span").innerHTML = esc($("bText").value || "Your message appears here.") + ($("bLink").value ? ' <b style="text-decoration:underline">' + esc($("bLinkText").value || "Learn more") + ' &rarr;</b>' : "");
+  }
+  var ytId = function (v) { v = (v || "").trim(); var m = v.match(/(?:youtu\.be\/|v=|\/shorts\/|\/embed\/|\/live\/)([A-Za-z0-9_-]{11})/); if (m) return m[1]; return /^[A-Za-z0-9_-]{11}$/.test(v) ? v : ""; };
+  function ytPreview() {
+    var raw = $("wYt").value.trim(), id = ytId(raw);
+    $("ytThumb").src = id ? "https://i.ytimg.com/vi/" + id + "/hqdefault.jpg" : "/watch/premiere.jpg";
+    $("ytHint").textContent = !raw ? "Using the launch film (SaSfRrtvrTg)." : id ? "Video ID: " + id : "That doesn't look like a YouTube link.";
+  }
+
+  /* ---------- editing ---------- */
+  $("sites").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-a]"); if (!b || b.tagName === "INPUT" || b.tagName === "TEXTAREA") return;
+    var k = b.closest(".site").dataset.k, m = cfg.sites[k].maintenance;
+    if (b.dataset.a === "dur") { m.dur = +b.dataset.v; if (m.dur !== -1) m.until = ""; }
+    if (b.dataset.a === "start") { if (b.dataset.v === "now") m.from = ""; else if (!m.from) m.from = new Date(Date.now() + 3600e3).toISOString(); }
+    render();
+  });
+  $("sites").addEventListener("change", function (e) {
+    var el = e.target, a = el.dataset.a; if (!a) return;
+    var k = el.closest(".site").dataset.k, m = cfg.sites[k].maintenance;
+    if (a === "on") { m.on = el.checked; if (m.on && !m.dur && m.dur !== 0) m.dur = 60; }
+    if (a === "until") m.until = fromLocal(el.value);
+    if (a === "from") m.from = fromLocal(el.value);
+    render();
+  });
+  $("sites").addEventListener("input", function (e) { if (e.target.dataset.a === "msg") { cfg.sites[e.target.closest(".site").dataset.k].maintenance.message = e.target.value; dirty(); } });
+  ["bOn", "bText", "bLink", "bLinkText", "bTone", "bUntil"].forEach(function (id) { $(id).addEventListener("input", readBanner); $(id).addEventListener("change", readBanner); });
+  $("bSites").addEventListener("change", readBanner);
+  function readBanner() { var b = cfg.banner; b.on = $("bOn").checked; b.text = $("bText").value.trim(); b.link = $("bLink").value.trim(); b.linkText = $("bLinkText").value.trim(); b.tone = $("bTone").value; b.until = fromLocal($("bUntil").value); b.sites = [].map.call($("bSites").querySelectorAll("input:checked"), function (i) { return i.value; }); bannerPreview(); dirty(); }
+  ["wSlide", "wWelcome"].forEach(function (id) { $(id).addEventListener("change", function () { cfg.world.launchSlide = $("wSlide").checked; cfg.world.welcome = $("wWelcome").checked; dirty(); }); });
+  $("wYt").addEventListener("input", function () { ytPreview(); var id = ytId($("wYt").value); cfg.world.youtubeId = $("wYt").value.trim() ? id : ""; dirty(); });
+  $("allOn").onclick = function () { SITES.forEach(function (s) { var m = cfg.sites[s.k].maintenance; m.on = true; m.from = ""; if (m.dur == null || m.dur === -1 && !m.until) m.dur = 60; }); render(); };
+  $("allOff").onclick = function () { SITES.forEach(function (s) { cfg.sites[s.k].maintenance.on = false; }); render(); };
+  $("discard").onclick = function () { cfg = clone(saved); render(); };
+
+  var strip = function (c) { var x = clone(c); delete x.log; delete x.updatedAt; return JSON.stringify(x); };
+  function dirty() { var d = saved && cfg && strip(saved) !== strip(cfg); $("bar").classList.toggle("show", !!d); return d; }
+  window.addEventListener("beforeunload", function (e) { if (dirty()) { e.preventDefault(); e.returnValue = ""; } });
+
+  function describe(a, b) {
+    var out = [];
+    SITES.forEach(function (s) {
+      var x = a.sites[s.k].maintenance, y = b.sites[s.k].maintenance;
+      if (!x.on && y.on) out.push(s.n + ": maintenance on" + (y.until ? " until " + when(y.until) : y.dur === 0 ? " (until turned off)" : ""));
+      else if (x.on && !y.on) out.push(s.n + ": back live");
+      else if (y.on && JSON.stringify(x) !== JSON.stringify(y)) out.push(s.n + ": maintenance updated");
+    });
+    if (JSON.stringify(a.banner) !== JSON.stringify(b.banner)) out.push(b.banner.on ? "Banner: “" + b.banner.text.slice(0, 50) + "”" : "Banner off");
+    if (a.world.launchSlide !== b.world.launchSlide) out.push("Launch slide " + (b.world.launchSlide ? "on" : "off"));
+    if (a.world.welcome !== b.world.welcome) out.push("Welcome popup " + (b.world.welcome ? "on" : "off"));
+    if (a.world.youtubeId !== b.world.youtubeId) out.push("Watch video: " + (b.world.youtubeId || "launch film"));
+    return out.join(" · ") || "Settings saved";
+  }
+  async function publish(retry) {
+    var c = clone(cfg), now = new Date();
+    // turn "how long" into an exact end time, counted from the start (now, or the scheduled start)
+    SITES.forEach(function (s) { var m = c.sites[s.k].maintenance; if (m.on && m.dur > 0) { var st = m.from ? Date.parse(m.from) : now.getTime(); var prev = saved.sites[s.k].maintenance; m.until = prev.on && prev.dur === m.dur && prev.from === m.from && prev.until ? prev.until : new Date(st + m.dur * 60e3).toISOString(); } if (m.on && m.dur === 0) m.until = ""; if (!m.on) { m.from = ""; } });
+    if (c.banner.on && !c.banner.text) { toast("Add a message for the banner, or switch it off.", true); return; }
+    for (var i = 0; i < SITES.length; i++) { var m = c.sites[SITES[i].k].maintenance; if (m.on && m.dur === -1 && !m.until) { toast("Pick a “Back at” time for " + SITES[i].n + ".", true); return; } if (m.on && m.until && Date.parse(m.until) <= Date.now()) { toast(SITES[i].n + ": the end time is already in the past.", true); return; } }
+    c.banner.id = c.banner.text ? String(c.banner.text.length) + ":" + c.banner.text.slice(0, 40) : "";
+    c.log = (saved.log || []).concat([{ at: now.toISOString(), what: describe(saved, c) }]).slice(-30);
+    c.updatedAt = now.toISOString();
+    $("publish").disabled = true; $("barTxt").textContent = "Publishing…";
+    try {
+      await api("/config/site?updateMask.fieldPaths=json&updateMask.fieldPaths=updatedAt&updateMask.fieldPaths=by", { method: "PATCH", body: { fields: { json: { stringValue: JSON.stringify(c) }, updatedAt: { timestampValue: now.toISOString() }, by: { stringValue: user.email || user.uid } } } });
+      saved = clone(c); cfg = clone(c);
+      try { localStorage.setItem("hvstatus:v1", JSON.stringify(c)); } catch (e) {}
+      show("dash"); render(); toast("Published. Live on the sites now.");
+    } catch (e) {
+      if (e.status === 403) { show("setup"); if (retry) $("setupMsg").textContent = "Still blocked. Make sure the rules were published."; }
+      else toast("Couldn't publish (" + e.message + "). Try again.", true);
+    } finally { $("publish").disabled = false; $("barTxt").textContent = "You have unsaved changes"; }
+  }
+  $("publish").onclick = function () { publish(false); };
+  // keep the status pills honest as time passes (a timer ending, a scheduled start)
+  setInterval(function () { if (!$("dash").hidden && !document.querySelector(".site :focus")) { var d = dirty(); if (!d) render(); } }, 30000);
+})();
+</script>
+</body>
+</html>
