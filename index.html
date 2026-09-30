@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<script src="/status.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Stop guessing. Start growing. | HV World</title>
 <meta name="description" content="3 free apps that show your strengths, plan your day and chase your follow-ups for you. Just talk to the AI.">
@@ -912,6 +913,14 @@ window.hvPage = function () {
   var PREM = Date.parse("2026-10-01T12:00:00+05:30");
   // after the premiere the film plays from YouTube (so every play counts as a YouTube view) inside our own cover and glass controls;
   // if YouTube can't load (blocked, offline, embedding off), it falls back to the film file on this site
+  // live settings from /admin/ (see /status.js); anything missing means "as built"
+  var HS = function () { return (window.HVStatus && window.HVStatus.cfg && window.HVStatus.cfg.world) || {}; };
+  // run fn once the live settings have arrived (or after 1.5 s without them), so first-time visitors get the right switches
+  var afterStatus = function (fn) {
+    if (!window.HVStatus || window.HVStatus.loaded) { fn(); return; }
+    var done = false, go = function () { if (!done && GEN === window.__hvGen) { done = true; fn(); } };
+    addEventListener("hvstatus", go, { once: true }); setTimeout(go, 1500);
+  };
   var hvPlayer = function (box) {
     var q = function (c) { return box.querySelector(c); };
     var fv = q("video"), ub = q(".unmute"), again = q(".again"), prem = q(".prem"), cnt = q(".pc");
@@ -950,6 +959,7 @@ window.hvPage = function () {
     };
     var ytPlay = function () { want = true; if (!ytOk) return; if (P.isMuted()) P.unMute(); P.playVideo(); };
     var goYT = function () {
+      if (/^[A-Za-z0-9_-]{11}$/.test(HS().youtubeId || "")) ytId = HS().youtubeId;   // a video chosen in /admin/
       if (!ytId) { go(); return; }
       mode = "yt"; fv.hidden = true; yt.hidden = false; cover.hidden = false;
       ytTimer = setTimeout(function () { if (!ytOk) fallback(); }, 12000);
@@ -1046,15 +1056,18 @@ window.hvPage = function () {
       lcnt.textContent = (d ? d + "d " : "") + (d || h ? (h < 10 ? "0" : "") + h + "h " : "") + (m < 10 ? "0" : "") + m + "m " + (x < 10 ? "0" : "") + x + "s";
       setTimeout(ltick, 1000 - Date.now() % 1000 + 5);
     };
-    var lopen = function () { try { ldlg.showModal(); } catch (e) {} };
+    var lopen = function (then) { afterStatus(function () { if (HS().welcome === false) return; try { ldlg.showModal(); } catch (e) { return; } if (then) then(); }); };
     ldlg.addEventListener("click", function (e) { if (e.target === ldlg || e.target.closest("[data-close]") || e.target.id === "launchX") ldlg.close(); });
     var now = Date.now();
     if (now < PREM) { if (!seen(sessionStorage, "hvlaunch")) { mark(sessionStorage, "hvlaunch"); ltick(); setTimeout(lopen, 700); } }
-    else if (now < WEEK && !seen(localStorage, "hvwelcome")) { setTimeout(function () { lopen(); welcome(); }, 500); }
+    else if (now < WEEK && !seen(localStorage, "hvwelcome")) { setTimeout(function () { lopen(welcome); }, 500); }
   }
   // home hero carousel: slide 1 is the global launch (countdown before 12:00 PM IST on 1 Oct 2026, "Live now" after; remove the slide by hand when the launch is old news),
   // slide 2 is the usual hero; it moves on by itself every 7 s and pauses on hover, focus or when the tab is hidden
   var car = document.getElementById("heroCar");
+  var noLaunch = function () { var hl = document.getElementById("heroLaunch"), nv = document.getElementById("hcNav"); if (!hl) return false; hl.remove(); if (nv) nv.remove(); car.classList.remove("on"); var t = document.getElementById("top"); if (t) { t.classList.add("cur"); t.removeAttribute("aria-hidden"); t.inert = false; t.querySelectorAll(".rv").forEach(function (e) { e.classList.add("in", "now"); }); } return true; };
+  if (car && HS().launchSlide === false) { noLaunch(); car = null; }
+  if (car) addEventListener("hvstatus", function () { if (GEN === window.__hvGen && HS().launchSlide === false) noLaunch(); });
   if (car) {
     {
       var slides = [].slice.call(car.querySelectorAll(".hs")), dots = [].slice.call(car.querySelectorAll(".hc-dots button")), cur = 0, autoT = 0, hold = false;
@@ -1067,7 +1080,7 @@ window.hvPage = function () {
       };
       var inView = true;
       if ("IntersectionObserver" in window) new IntersectionObserver(function (es) { inView = es[0].isIntersecting; }, { threshold: .35 }).observe(car);
-      var auto = function () { clearTimeout(autoT); if (!reduce) autoT = setTimeout(function () { if (!hold && inView && !document.hidden) show(cur + 1); auto(); }, 7000); };
+      var auto = function () { clearTimeout(autoT); if (!reduce) autoT = setTimeout(function () { if (!hold && inView && !document.hidden && document.getElementById("heroLaunch")) show(cur + 1); auto(); }, 7000); };
       car.classList.add("on"); show(0); auto();
       car.querySelectorAll("[data-go]").forEach(function (b) { b.addEventListener("click", function () { show(cur + (+b.dataset.go)); auto(); }); });
       dots.forEach(function (d, k) { d.addEventListener("click", function () { show(k); auto(); }); });
