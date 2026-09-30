@@ -568,7 +568,7 @@ html{overflow-x:clip}
 OVERVIEW_MAIN = """<main id="main">
   <section id="top" class="wrap hero">
     <div class="rv">
-      <p class="eyebrow">Free for everyone</p>
+      <p class="eyebrow">A system for everyone</p>
       <h1>Your work, your day, your growth. <span>One calm world.</span></h1>
       <p class="lead">Consistency is the key, and it's easier with the right direction and the right tools. Know yourself with HV Test, stay consistent with HV Reset, and keep every opportunity in HV Vault. Just tell HV AI what you need.</p>
       <div class="ctas"><a class="btn" href="#apps">Explore the apps</a><a class="btn ghost" href="/story/">Watch Riya's story __ARROW__</a></div>
@@ -585,7 +585,7 @@ OVERVIEW_MAIN = """<main id="main">
 
   <div class="wrap strip facts rv">
     <div><b>3 apps</b><span>know yourself, plan your day, land the job</span></div>
-    <div><b>Free</b><span>for everyone, HV AI included</span></div>
+    <div><b>1 system</b><span>for everyone, free with HV AI</span></div>
     <div><b>Just talk</b><span>type or speak, in your language</span></div>
     <div><b>Any device</b><span>phone and laptop, one sign&#8209;in</span></div>
   </div>
