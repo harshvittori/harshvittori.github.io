@@ -48,7 +48,7 @@ def watch():
 def simple(name, url):
     return ld(ORG, crumbs(("HV World", "/"), (name, url)))
 
-ROBOTS = '<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"><meta property="og:locale" content="en_IN"><meta name="author" content="Harsh Goyal">'
+ROBOTS = '<meta name="google-site-verification" content="WtGtopvZbrat3GShsNNNpzE-VJOm1a9s4dlH3la4MPE" /><meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"><meta property="og:locale" content="en_IN"><meta name="author" content="Harsh Goyal">'
 
 def add(page, block):
     return page.replace("</head>", ROBOTS + block + "\n</head>", 1)
