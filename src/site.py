@@ -315,7 +315,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
 .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:92px;height:92px;border-radius:50%;background:rgba(255,255,255,.95);box-shadow:0 0 0 10px rgba(255,255,255,.18),0 20px 44px -12px rgba(0,0,0,.6);transition:transform .25s}
 .play i{display:grid;place-items:center}.play svg{width:34px;height:34px;fill:var(--accent);margin-left:5px}
 .filmbox:hover .play{transform:translate(-50%,-50%) scale(1.06)}
-.filmdlg{padding:0;border:0;background:transparent;width:min(1200px,94vw);max-width:none;overflow:visible}
+.filmdlg{padding:0;border:0;background:transparent;width:min(1200px,94vw,calc((100vh - 150px) * 16 / 9));width:min(1200px,94vw,calc((100dvh - 150px) * 16 / 9));max-width:none;overflow:visible}
 .filmdlg::backdrop{background:rgba(6,9,19,.9)}
 .filmdlg video{width:100%;display:block;border-radius:18px;background:#000;aspect-ratio:16/9}
 .fdv{position:relative}
@@ -561,9 +561,9 @@ OVERVIEW_MAIN = """<main id="main">
   <section id="film" class="wrap film band band-w">
     <div class="head rv"><p class="label">The product</p><h2>See HV World in action.</h2><p>Real screens from all three apps.</p></div>
     <button type="button" class="filmbox rv" id="filmOpen" aria-label="Play the HV World video">
-      <video id="loopVid" poster="/media/hv-world-loop-poster.jpg" muted loop playsinline autoplay preload="auto" aria-hidden="true" tabindex="-1"><source src="/media/hv-world-loop.mp4" type="video/mp4"><source src="/media/hv-world-loop.webm" type="video/webm"></video>
+      <video id="loopVid" poster="/watch/premiere.jpg" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" data-poster="/media/hv-launch-loop-poster.jpg" data-mp4="/media/hv-launch-loop.mp4" data-webm="/media/hv-launch-loop.webm"></video>
       <span class="play"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg></i></span>
-      <span class="ptag" id="filmTag" hidden>New film · Premieres 1 Oct, 12:00 PM IST</span>
+      <span class="prem bprem" id="filmPrem" hidden><span class="pin"><span class="pk">Premieres in</span><span class="pc" id="filmCount"></span><span class="pd">1 October 2026 · 12:00 PM IST</span></span></span>
     </button>
   </section>
 
@@ -929,7 +929,7 @@ FILM_MAIN = """<main id="main" class="filmpage">
     <div class="fpapps"><a href="__U_TEST__">__LOGO_TEST__HV Test</a><a href="__U_RESET__">__LOGO_RESET__HV Reset</a><a href="__U_VAULT__">__LOGO_VAULT__HV Vault</a></div>
   </section>
 </main>"""
-PLAYER_HTML = '<div class="fpv" data-yt="SaSfRrtvrTg"><button type="button" class="again" hidden aria-label="Watch again"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg><span>Watch again</span></button><button type="button" class="unmute" hidden>🔊&nbsp; Tap for sound</button><div class="prem" hidden><div class="pin"><p class="pk">Premieres in</p><p class="pc" role="timer" aria-live="off"></p><p class="pd">1 October 2026 · 12:00 PM IST</p></div></div><div class="yt" hidden><div class="ytp"></div></div><button type="button" class="ytgo" hidden aria-label="Play the film"><span>Watch the film</span></button><div class="ytc" hidden><button type="button" class="yp" aria-label="Pause"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/><path class="i-play" d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg></button><span class="tm yc">0:00</span><input type="range" min="0" max="1000" value="0" step="1" aria-label="Seek"><span class="tm yd">0:00</span><button type="button" class="ym" aria-label="Mute"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path class="i-on" d="M15 8.5a5 5 0 0 1 0 7M17.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path class="i-off" d="M15.5 9.5l5 5M20.5 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button><button type="button" class="yf" aria-label="Full screen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><video playsinline preload="none" poster="/watch/premiere.jpg" data-src="/media/hv-world-launch.mp4"></video></div>'
+PLAYER_HTML = '<div class="fpv" data-yt="SaSfRrtvrTg"><button type="button" class="again" hidden aria-label="Watch again"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg><span>Watch again</span></button><button type="button" class="unmute" hidden>🔊&nbsp; Tap for sound</button><div class="prem" hidden><div class="pin"><p class="pk">Premieres in</p><p class="pc" role="timer" aria-live="off"></p><p class="pd">1 October 2026 · 12:00 PM IST</p></div></div><div class="yt" hidden><div class="ytp"></div></div><button type="button" class="ytgo" hidden aria-label="Play the video"><span>Watch the reveal</span></button><div class="ytc" hidden><button type="button" class="yp" aria-label="Pause"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/><path class="i-play" d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg></button><span class="tm yc">0:00</span><input type="range" min="0" max="1000" value="0" step="1" aria-label="Seek"><span class="tm yd">0:00</span><button type="button" class="ym" aria-label="Mute"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path class="i-on" d="M15 8.5a5 5 0 0 1 0 7M17.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path class="i-off" d="M15.5 9.5l5 5M20.5 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button><button type="button" class="yf" aria-label="Full screen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><video playsinline preload="none" poster="/watch/premiere.jpg" data-src="/media/hv-world-launch.mp4"></video></div>'
 PLAYER_CSS = """
 .fpv{position:relative;max-width:1040px;margin:0 auto;border-radius:22px;overflow:hidden;border:1px solid #232A45;box-shadow:0 50px 100px -40px rgba(0,0,0,.9)}
 .fpv video{display:block;width:100%;aspect-ratio:16/9;background:#000}
@@ -967,8 +967,8 @@ PLAYER_CSS = """
 @keyframes unpulse{50%{transform:translateX(-50%) scale(1.06)}}
 @media (prefers-reduced-motion:reduce){.unmute{animation:none}}
 .filmdlg .fpv{max-width:none;border-radius:18px;border-color:rgba(255,255,255,.12)}
-.ptag{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);white-space:nowrap;z-index:2;font:600 13px/1 inherit;color:#1D1D1F;background:rgba(255,255,255,.66);-webkit-backdrop-filter:blur(14px) saturate(1.6);backdrop-filter:blur(14px) saturate(1.6);border:1px solid rgba(255,255,255,.85);padding:9px 14px;border-radius:999px;box-shadow:0 12px 30px -14px rgba(20,30,90,.5)}.ptag[hidden]{display:none}
-@media (max-width:560px){.ptag{bottom:10px;font-size:11px;padding:7px 10px}}
+.bprem .pk,.bprem .pc,.bprem .pd{display:block}.bprem{z-index:3}
+.pre-prem .play{display:none}
 """
 FILM_CSS = """
 .filmpage{background:#070B18;color:#fff;border-bottom:1px solid #1B2138}
@@ -1089,7 +1089,7 @@ def shell(path, title, desc, og, body, active):
       ytTimer = setTimeout(function () { if (!ytOk) fallback(); }, 12000);
       var mk = function () {
         P = new YT.Player(q(".ytp"), { videoId: ytId, host: "https://www.youtube.com", playerVars: { controls: 0, rel: 0, playsinline: 1, iv_load_policy: 3, fs: 0, enablejsapi: 1, origin: location.origin },
-          events: { onReady: function () { ytOk = true; clearTimeout(ytTimer); P.getIframe().title = "HV World launch film"; paint(); if (want) ytPlay(); }, onStateChange: onState, onError: fallback } });
+          events: { onReady: function () { ytOk = true; clearTimeout(ytTimer); P.getIframe().title = "HV World reveal"; paint(); if (want) ytPlay(); }, onStateChange: onState, onError: fallback } });
       };
       if (window.YT && YT.Player) { mk(); return; }
       var prev = window.onYouTubeIframeAPIReady;
@@ -1144,10 +1144,26 @@ def shell(path, title, desc, og, body, active):
     var still = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (still) { loopv.removeAttribute("autoplay"); loopv.pause(); }
     else if ("IntersectionObserver" in window) {
-      new IntersectionObserver(function (es) { es.forEach(function (e) { if (dlg.open) return; e.isIntersecting ? loopv.play().catch(function () {}) : loopv.pause(); }); }).observe(loopv);
+      new IntersectionObserver(function (es) { es.forEach(function (e) { if (dlg.open) return; if (!live) return; e.isIntersecting ? loopv.play().catch(function () {}) : loopv.pause(); }); }).observe(loopv);
     }
-    var hp = null, tag = document.getElementById("filmTag");
-    if (Date.now() < PREM) { tag.hidden = false; setTimeout(function () { tag.hidden = true; }, Math.min(PREM - Date.now(), 2147483000)); }
+    // until the premiere the box shows the launch thumbnail with the countdown; after it, the preview loop of the new video plays
+    var hp = null, bprem = document.getElementById("filmPrem"), bcnt = document.getElementById("filmCount"), live = false;
+    var p2 = function (n) { return (n < 10 ? "0" : "") + n; };
+    var goLoop = function () {
+      live = true; bprem.hidden = true; fo.classList.remove("pre-prem");
+      loopv.poster = loopv.dataset.poster;
+      loopv.innerHTML = '<source src="' + loopv.dataset.mp4 + '" type="video/mp4"><source src="' + loopv.dataset.webm + '" type="video/webm">';
+      loopv.preload = "auto"; loopv.load();
+      if (!still && !dlg.open) loopv.play().catch(function () {});
+    };
+    var btick = function () {
+      var ms = PREM - Date.now();
+      if (ms <= 0) { goLoop(); return; }
+      var t = Math.floor(ms / 1000), d = Math.floor(t / 86400), h = Math.floor(t %% 86400 / 3600), m = Math.floor(t %% 3600 / 60), x = t %% 60;
+      bcnt.textContent = (d ? d + "d " : "") + (d || h ? p2(h) + "h " : "") + p2(m) + "m " + p2(x) + "s";
+      setTimeout(btick, 1000 - Date.now() %% 1000 + 5);
+    };
+    if (Date.now() < PREM) { fo.classList.add("pre-prem"); bprem.hidden = false; btick(); } else goLoop();
     fo.addEventListener("click", function () {
       loopv.pause();
       if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
@@ -1155,7 +1171,7 @@ def shell(path, title, desc, og, body, active):
     });
     document.getElementById("filmClose").addEventListener("click", function () { dlg.close(); });
     dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); });
-    dlg.addEventListener("close", function () { if (hp) hp.pause(); if (!still) loopv.play().catch(function () {}); });
+    dlg.addEventListener("close", function () { if (hp) hp.pause(); if (!still && live) loopv.play().catch(function () {}); });
   }
   var els = document.querySelectorAll(".rv");
   if (!("IntersectionObserver" in window)) { els.forEach(function (e) { e.classList.add("in"); }); return; }
