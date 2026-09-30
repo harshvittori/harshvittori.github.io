@@ -1316,13 +1316,9 @@ def build():
     write("/", fill(shell("/", "Stop guessing. Start growing. | HV World",
           "3 free apps that show your strengths, plan your day and chase your follow-ups for you. Just talk to the AI.",
           "https://harshvittori.github.io/og.jpg", OVERVIEW_MAIN, "overview")).replace("</style>", PLAYER_CSS + "</style>", 1))
-    film = fill(shell("/watch/", "3 apps. 1 AI. One calm day. | HV World", "See HV Test, HV Reset and HV Vault in action. Three free apps, one AI.",
-                      "https://harshvittori.github.io/watch/og.jpg", FILM_MAIN, "watch"))
-    film = film.replace('<meta property="og:type" content="website">', '<meta property="og:type" content="video.other">'
-        '<meta property="og:video" content="https://harshvittori.github.io/media/hv-world-film.mp4">'
-        '<meta property="og:video:secure_url" content="https://harshvittori.github.io/media/hv-world-film.mp4">'
-        '<meta property="og:video:type" content="video/mp4"><meta property="og:video:width" content="1920"><meta property="og:video:height" content="1080">'
-        '<meta property="video:duration" content="109">', 1).replace("</style>", PLAYER_CSS + FILM_CSS + "</style>", 1)
+    film = fill(shell("/watch/", "Say hello to HV World | Watch the reveal", "Watch the HV World reveal: three free apps and one AI to know yourself, plan your day and land the job.",
+                      "https://harshvittori.github.io/watch/og-reveal.jpg", FILM_MAIN, "watch"))
+    film = film.replace("</style>", PLAYER_CSS + FILM_CSS + "</style>", 1)
     write("/watch/", film)
     for k in ORDER:
         a = APPS[k]
