@@ -939,7 +939,9 @@ window.hvPage = function () {
       };
       var inView = true;
       if ("IntersectionObserver" in window) new IntersectionObserver(function (es) { inView = es[0].isIntersecting; }, { threshold: .35 }).observe(car);
-      var auto = function () { clearTimeout(autoT); if (!reduce) autoT = setTimeout(function () { if (!hold && inView && !document.hidden && document.getElementById("heroLaunch")) show(cur + 1); auto(); }, 7000); };
+      // launch days: the launch slide stays put (no auto-advance) until 4 Oct 2026; arrows, dots and swipe still work
+      var HOLD_UNTIL = Date.parse("2026-10-04T00:00:00+05:30");
+      var auto = function () { clearTimeout(autoT); if (!reduce && Date.now() >= HOLD_UNTIL) autoT = setTimeout(function () { if (!hold && inView && !document.hidden && document.getElementById("heroLaunch")) show(cur + 1); auto(); }, 7000); };
       car.classList.add("on"); show(0); auto();
       car.querySelectorAll("[data-go]").forEach(function (b) { b.addEventListener("click", function () { show(cur + (+b.dataset.go)); auto(); }); });
       dots.forEach(function (d, k) { d.addEventListener("click", function () { show(k); auto(); }); });
