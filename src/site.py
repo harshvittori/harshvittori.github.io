@@ -169,6 +169,27 @@ header{position:sticky;top:0;z-index:50;background:rgba(249,249,251,.85);-webkit
 .btn.ghost{background:transparent;color:var(--accent);padding-left:6px;padding-right:6px}.btn.ghost:hover{background:transparent;text-decoration:underline}
 /* hero */
 .hero{padding:88px 0 56px;display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.hcar{display:grid;position:relative}.hcar>.hs{grid-area:1/1;transition:opacity .6s ease,transform .6s ease,visibility 0s .6s}
+.hcar.on>.hs{opacity:0;visibility:hidden;transform:translateX(24px)}.hcar.on>.hs.cur{opacity:1;visibility:visible;transform:none;transition:opacity .6s ease,transform .6s ease,visibility 0s}
+.hcar.on>.hs.prev{transform:translateX(-24px)}
+.hc-nav{grid-area:2/1;display:none;align-items:center;justify-content:center;gap:14px;margin-top:-18px;padding-bottom:18px}.hcar.on .hc-nav{display:flex}
+.hc-arr{width:38px;height:38px;border-radius:50%;border:0;cursor:pointer;display:grid;place-items:center;color:var(--accent);background:rgba(255,255,255,.75);box-shadow:inset 0 0 0 1px rgba(46,67,166,.16),0 8px 20px -12px rgba(46,67,166,.5)}.hc-arr:hover{background:#fff}.hc-arr svg{width:18px;height:18px}
+.hc-dots{display:flex;gap:8px}.hc-dots button{width:8px;height:8px;padding:0;border:0;border-radius:99px;background:rgba(46,67,166,.25);cursor:pointer;transition:width .3s,background .3s}.hc-dots button[aria-current="true"]{width:26px;background:var(--accent)}
+.hlaunch{position:relative}.hlaunch::before{content:"";position:absolute;inset:24px -40px;z-index:-1;border-radius:40px;background:radial-gradient(45% 60% at 10% 20%,rgba(174,184,245,.45),transparent 70%),radial-gradient(40% 55% at 95% 90%,rgba(205,185,244,.45),transparent 70%)}
+.hl-pill{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.95);box-shadow:0 8px 22px -14px rgba(46,67,166,.5);padding:8px 14px;border-radius:999px;margin-bottom:18px}
+.hl-pill i{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(46,67,166,.15);animation:grp 1.8s ease-in-out infinite}
+.hl-pill.live{color:#16794C}.hl-pill.live i{background:#1FA463;box-shadow:0 0 0 4px rgba(31,164,99,.18)}
+.hl-count{display:flex;gap:10px;margin:-6px 0 28px}.hl-count[hidden]{display:none}
+.hl-count div{min-width:78px;text-align:center;padding:12px 10px 10px;border-radius:18px;background:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.95);box-shadow:0 14px 30px -20px rgba(46,67,166,.6),inset 0 1px 0 #fff}
+.hl-count b{display:block;font-family:HVSora,var(--font);font-size:32px;font-weight:600;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1.1}
+.hl-count span{font-size:12px;color:var(--soft);text-transform:uppercase;letter-spacing:.1em}
+.hl-vis{position:relative;display:block;border-radius:28px;overflow:hidden;border:1px solid rgba(255,255,255,.95);box-shadow:0 40px 80px -36px rgba(46,67,166,.6),0 0 0 8px rgba(255,255,255,.4);transition:transform .35s}
+.hl-vis:hover{transform:translateY(-3px)}.hl-count div[hidden]{display:none}.hl-vis img{display:block;width:100%;height:auto;aspect-ratio:16/9}
+.hl-play{position:absolute;right:16px;bottom:16px;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;color:#fff;background:#2E43A6;box-shadow:0 14px 30px -10px rgba(46,67,166,.9),0 0 0 8px rgba(255,255,255,.5)}.hl-play svg{width:24px;height:24px;margin-left:3px}
+.hl-tag{position:absolute;left:14px;top:14px;font-size:13px;font-weight:600;color:#1D1D1F;background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.95);padding:7px 12px;border-radius:999px}
+@media (max-width:880px){.hlaunch::before{inset:10px -12px}.hl-count div{min-width:64px;padding:10px 6px 8px}.hl-count b{font-size:26px}.hc-nav{margin-top:0}}
+@media (max-width:560px){.hl-pill{font-size:11px;letter-spacing:.08em}.hl-count{gap:6px}.hl-count div{min-width:0;flex:1}.hl-count b{font-size:22px}.hl-count span{font-size:10px}.hl-play{width:46px;height:46px}}
+@media (prefers-reduced-motion:reduce){.hcar>.hs,.hcar.on>.hs.cur{transition:none;transform:none}.hl-pill i{animation:none}}
 .eyebrow{font-size:15px;font-weight:600;color:var(--soft);margin-bottom:14px}
 .hero h1{font-size:clamp(42px,6vw,72px);font-weight:700;letter-spacing:-.045em;line-height:1.03}
 .hero h1 span{color:var(--accent)}
@@ -566,7 +587,18 @@ html{overflow-x:clip}
 """
 
 OVERVIEW_MAIN = """<main id="main">
-  <section id="top" class="wrap hero">
+ <div class="hcar" id="heroCar" aria-roledescription="carousel" aria-label="HV World highlights">
+  <section class="wrap hero hs hlaunch" id="heroLaunch" aria-roledescription="slide" aria-label="Global launch">
+    <div>
+      <p class="hl-pill"><i></i><span id="hlPill">Global launch · 1 Oct 2026</span></p>
+      <h1>Say hello to <span>HV World.</span></h1>
+      <p class="lead" id="hlLead">Three free apps and one AI. One system for your growth, your day and your job search, launching worldwide at 12:00 PM IST.</p>
+      <div class="hl-count" id="hlCount" role="timer" aria-label="Time left to launch"><div><b>00</b><span>days</span></div><div><b>00</b><span>hours</span></div><div><b>00</b><span>min</span></div><div><b>00</b><span>sec</span></div></div>
+      <div class="ctas"><a class="btn" href="/watch/" id="hlCta">See the premiere __ARROW__</a><a class="btn ghost" href="#apps">Explore the apps</a></div>
+    </div>
+    <a class="hl-vis" href="/watch/" aria-label="Go to the Watch page"><img src="/watch/premiere.jpg" alt="Say hello to HV World" width="1920" height="1080" loading="eager"><span class="hl-play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg></span><span class="hl-tag" id="hlTag">Premieres 1 Oct · 12:00 PM IST</span></a>
+  </section>
+  <section id="top" class="wrap hero hs" aria-roledescription="slide" aria-label="HV World">
     <div class="rv">
       <p class="eyebrow">A system for everyone</p>
       <h1>Your work, your day, your growth. <span>One calm world.</span></h1>
@@ -582,6 +614,8 @@ OVERVIEW_MAIN = """<main id="main">
       <a class="planet p3" href="/vault/" tabindex="-1">__LOGO_VAULT__<span>HV Vault</span></a>
     </div>
   </section>
+  <div class="hc-nav wrap" id="hcNav"><button type="button" class="hc-arr" data-go="-1" aria-label="Previous slide"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span class="hc-dots"><button type="button" aria-label="Slide 1: Global launch"></button><button type="button" aria-label="Slide 2: HV World"></button></span><button type="button" class="hc-arr" data-go="1" aria-label="Next slide"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+ </div>
 
   <div class="wrap strip facts rv">
     <div><b>3 apps</b><span>know yourself, plan your day, land the job</span></div>
@@ -1240,6 +1274,50 @@ def shell(path, title, desc, og, body, active):
     var now = Date.now();
     if (now < PREM) { if (!seen(sessionStorage, "hvlaunch")) { mark(sessionStorage, "hvlaunch"); ltick(); setTimeout(lopen, 700); } }
     else if (now < WEEK && !seen(localStorage, "hvwelcome")) { setTimeout(function () { lopen(); welcome(); }, 500); }
+  }
+  // home hero carousel: slide 1 is the global launch (countdown before 12:00 PM IST on 1 Oct 2026, "live" after, gone after launch week),
+  // slide 2 is the usual hero; it moves on by itself every 7 s and pauses on hover, focus or when the tab is hidden
+  var car = document.getElementById("heroCar");
+  if (car) {
+    var LWEEK = Date.parse("2026-10-08T00:00:00+05:30"), hl = document.getElementById("heroLaunch");
+    if (Date.now() >= LWEEK) { hl.remove(); document.getElementById("hcNav").remove(); }
+    else {
+      var slides = [].slice.call(car.querySelectorAll(".hs")), dots = [].slice.call(car.querySelectorAll(".hc-dots button")), cur = 0, autoT = 0, hold = false;
+      var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var show = function (i) {
+        var prev = cur; cur = (i + slides.length) %% slides.length;
+        slides.forEach(function (sl, k) { sl.classList.toggle("cur", k === cur); sl.classList.toggle("prev", k === prev && k !== cur); sl.setAttribute("aria-hidden", k === cur ? "false" : "true"); if ("inert" in sl) sl.inert = k !== cur; });
+        dots.forEach(function (d, k) { d.setAttribute("aria-current", k === cur ? "true" : "false"); });
+        if (cur === 1) slides[1].querySelectorAll(".rv").forEach(function (e) { e.classList.add("in"); });
+      };
+      var auto = function () { clearTimeout(autoT); if (!reduce) autoT = setTimeout(function () { if (!hold && !document.hidden) show(cur + 1); auto(); }, 7000); };
+      car.classList.add("on"); show(0); auto();
+      car.querySelectorAll("[data-go]").forEach(function (b) { b.addEventListener("click", function () { show(cur + (+b.dataset.go)); auto(); }); });
+      dots.forEach(function (d, k) { d.addEventListener("click", function () { show(k); auto(); }); });
+      car.addEventListener("mouseenter", function () { hold = true; }); car.addEventListener("mouseleave", function () { hold = false; });
+      car.addEventListener("focusin", function () { hold = true; }); car.addEventListener("focusout", function () { hold = false; });
+      var sx = null;
+      car.addEventListener("touchstart", function (e) { sx = e.touches[0].clientX; }, { passive: true });
+      car.addEventListener("touchend", function (e) { if (sx === null) return; var dx = e.changedTouches[0].clientX - sx; sx = null; if (Math.abs(dx) > 50) { show(cur + (dx < 0 ? 1 : -1)); auto(); } });
+      // countdown, then the live state
+      var cells = [].slice.call(document.querySelectorAll("#hlCount b"));
+      var golive = function () {
+        document.getElementById("hlCount").hidden = true;
+        var pill = document.getElementById("hlPill"); pill.textContent = Date.now() >= Date.parse("2026-10-02T00:00:00+05:30") ? "Live worldwide · launched 1 Oct" : "Live worldwide · launched today"; pill.parentNode.classList.add("live");
+        document.getElementById("hlLead").textContent = "Three free apps and one AI, now live for everyone. One system for your growth, your day and your job search.";
+        document.getElementById("hlCta").firstChild.textContent = "Watch the reveal ";
+        document.getElementById("hlTag").textContent = "Now live · Watch the reveal";
+      };
+      var htick = function () {
+        var ms = PREM - Date.now();
+        if (ms <= 0) { golive(); return; }
+        var t = Math.floor(ms / 1000), v = [Math.floor(t / 86400), Math.floor(t %% 86400 / 3600), Math.floor(t %% 3600 / 60), t %% 60];
+        cells.forEach(function (c, k) { c.textContent = (v[k] < 10 ? "0" : "") + v[k]; });
+        cells[0].parentNode.hidden = v[0] === 0;
+        setTimeout(htick, 1000 - Date.now() %% 1000 + 5);
+      };
+      htick();
+    }
   }
   var wbox = document.querySelector(".filmpage .fpv");
   if (wbox) {
