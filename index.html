@@ -76,10 +76,10 @@ header{position:sticky;top:0;z-index:50;background:rgba(249,249,251,.85);-webkit
 .hcar>.hs{align-content:center}@keyframes hcin{from{opacity:0;transform:translateX(16px)}}
 @media (max-width:880px){
   .hero.hlaunch{gap:0;row-gap:0;align-content:start;align-items:start}.hlaunch>div:first-child{display:contents}
-  .hlaunch .hl-pill{order:1;justify-self:start;margin-bottom:14px}.hlaunch h1{order:2}.hlaunch .lead{order:3;margin:16px 0 20px}
+  .hlaunch .hl-pill{order:1;justify-self:start;margin-bottom:14px}.hlaunch h1{order:2}.hlaunch .lead{order:3;margin:14px 0 18px;font-size:17px}
   .hcar.on>.hs:not(.cur){display:none}.hcar.on>.hs.cur{animation:hcin .5s ease}
   #top.hero{gap:0;row-gap:0;align-content:start;align-items:start}#top>div:first-child{display:contents}
-  #top .eyebrow{order:1;margin-bottom:12px}#top h1{order:2}#top .lead{order:3;margin:16px 0 18px}
+  #top .eyebrow{order:1;margin-bottom:12px}#top h1{order:2}#top .lead{order:3;margin:14px 0 16px;font-size:17px}
   #top .orbit{order:4;max-width:280px;margin:18px auto 26px}#top .ctas{order:5}#top .note{order:6;margin-top:14px}
   .hlaunch .hl-vis{order:4;margin:0 0 20px;border-radius:22px}.hlaunch .hl-count{order:5;margin:0 0 20px}.hlaunch .ctas{order:6}
 }
@@ -607,7 +607,7 @@ html:active-view-transition-type(back)::view-transition-new(page){animation:vt-i
     <div>
       <p class="hl-pill"><i></i><span id="hlPill">Global launch · 1 Oct 2026</span></p>
       <h1>Say hello to <span>HV World.</span></h1>
-      <p class="lead" id="hlLead">Three free apps and one AI. One system for your growth, your day and your job search, launching worldwide at 12:00 PM IST.</p>
+      <p class="lead" id="hlLead">Three free apps. One AI. Launching worldwide at 12:00 PM IST.</p>
       <div class="hl-count" id="hlCount" role="timer" aria-label="Time left to launch"><div><b>00</b><span>days</span></div><div><b>00</b><span>hours</span></div><div><b>00</b><span>min</span></div><div><b>00</b><span>sec</span></div></div>
       <div class="ctas"><a class="btn" href="/watch/" id="hlCta">See the premiere <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn ghost" href="#apps">Explore the apps</a></div>
     </div>
@@ -617,7 +617,7 @@ html:active-view-transition-type(back)::view-transition-new(page){animation:vt-i
     <div class="rv">
       <p class="eyebrow">A system for everyone</p>
       <h1>Your work, your day, your growth. <span>One calm world.</span></h1>
-      <p class="lead">Consistency is the key, and it's easier with the right direction and the right tools. Know yourself with HV Test, stay consistent with HV Reset, and keep every opportunity in HV Vault. Just tell HV AI what you need.</p>
+      <p class="lead">Know yourself, plan your day and track every job. Just tell HV AI what you need.</p>
       <div class="ctas"><a class="btn" href="#apps">Explore the apps</a><a class="btn ghost" href="/story/">Watch Riya's story <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
       <p class="note">Nothing to install. Works on your phone and laptop.</p>
     </div>
@@ -987,7 +987,7 @@ html:active-view-transition-type(back)::view-transition-new(page){animation:vt-i
       var golive = function () {
         document.getElementById("hlCount").hidden = true;
         var pill = document.getElementById("hlPill"); pill.textContent = Date.now() >= Date.parse("2026-10-02T00:00:00+05:30") ? "Live worldwide · launched 1 Oct" : "Live worldwide · launched today"; pill.parentNode.classList.add("live");
-        document.getElementById("hlLead").textContent = "Three free apps and one AI, now live for everyone. One system for your growth, your day and your job search.";
+        document.getElementById("hlLead").textContent = "Three free apps. One AI. Now live for everyone.";
         var cta = document.getElementById("hlCta"); cta.classList.add("live"); cta.innerHTML = '<span class="lv-dot"></span>Live now ' + cta.innerHTML.slice(cta.innerHTML.indexOf("<svg")); cta.setAttribute("aria-label", "Live now: watch the reveal");
         document.getElementById("hlTag").textContent = "Now live · Watch the reveal";
       };
