@@ -785,7 +785,7 @@ PAGE = """<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<script src="/status.js"></script>
+<script src="/status.js?v=2"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>From stuck to hired in 11 weeks: Riya's story</title>
 <meta name="description" content="Riya is 25, skilled but stuck. Follow her 11 weeks from unsure and inconsistent to skilled, organised and hired.">
