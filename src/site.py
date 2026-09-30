@@ -7,6 +7,7 @@ import os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import transitions
 import legal
+import seo
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -198,7 +199,7 @@ header{position:sticky;top:0;z-index:50;background:rgba(249,249,251,.85);-webkit
 .hcar>.hs{align-content:center}@keyframes hcin{from{opacity:0;transform:translateX(16px)}}
 @media (max-width:880px){
   .hero.hlaunch{gap:0;row-gap:0;align-content:start;align-items:start}.hlaunch>div:first-child{display:contents}
-  .hlaunch .hl-pill{order:1;justify-self:start;margin-bottom:14px}.hlaunch h1{order:2}.hlaunch .lead{order:3;margin:14px 0 18px;font-size:17px}
+  .hlaunch .hl-pill{order:1;justify-self:start;margin-bottom:14px}.hlaunch .hx{order:2}.hlaunch .lead{order:3;margin:14px 0 18px;font-size:17px}
   .hcar.on>.hs:not(.cur){display:none}.hcar.on>.hs.cur{animation:hcin .5s ease}
   .hcar #top.hero{gap:0;row-gap:0;align-content:start;align-items:start}.hcar #top>div:first-child{display:contents}
   .hcar #top .eyebrow{order:1;margin-bottom:12px}.hcar #top h1{order:2}.hcar #top .lead{order:3;margin:14px 0 16px;font-size:17px}
@@ -209,8 +210,8 @@ header{position:sticky;top:0;z-index:50;background:rgba(249,249,251,.85);-webkit
 @media (max-width:560px){.hl-pill{font-size:11px;letter-spacing:.08em}.hl-count{gap:6px}.hl-count div{min-width:0;flex:1}.hl-count b{font-size:22px}.hl-count span{font-size:10px}.hl-play{width:46px;height:46px}}
 @media (prefers-reduced-motion:reduce){.hcar>.hs,.hcar.on>.hs.cur{transition:none;transform:none}.hl-pill i{animation:none}}
 .eyebrow{font-size:15px;font-weight:600;color:var(--soft);margin-bottom:14px}
-.hero h1{font-size:clamp(42px,6vw,72px);font-weight:700;letter-spacing:-.045em;line-height:1.03}
-.hero h1 span{color:var(--accent)}
+.hero h1,.hero .hx{font-size:clamp(42px,6vw,72px);font-weight:700;letter-spacing:-.045em;line-height:1.03;margin:0}
+.hero h1 span,.hero .hx span{color:var(--accent)}
 .lead{font-size:clamp(18px,2vw,21px);color:var(--soft);margin:22px 0 30px;max-width:540px;line-height:1.45}
 .ctas{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
 .note{margin-top:18px;font-size:14px;color:var(--faint)}
@@ -609,7 +610,7 @@ OVERVIEW_MAIN = """<main id="main">
   <section class="wrap hero hs hlaunch" id="heroLaunch" aria-roledescription="slide" aria-label="Global launch">
     <div>
       <p class="hl-pill"><i></i><span id="hlPill">Global launch · 1 Oct 2026</span></p>
-      <h1>Say hello to <span>HV World.</span></h1>
+      <h2 class="hx">Say hello to <span>HV World.</span></h2>
       <p class="lead" id="hlLead">Three free apps. One AI. Launching worldwide at 12:00 PM IST.</p>
       <div class="hl-count" id="hlCount" role="timer" aria-label="Time left to launch"><div><b>00</b><span>days</span></div><div><b>00</b><span>hours</span></div><div><b>00</b><span>min</span></div><div><b>00</b><span>sec</span></div></div>
       <div class="ctas"><a class="btn" href="/watch/" id="hlCta">See the premiere __ARROW__</a><a class="btn ghost" href="#apps">Explore the apps</a></div>
@@ -824,7 +825,7 @@ APPS = {
              (3.6, 93.6, "Honest by design", "Issued by HV Test. A self-assessment, not an accredited certification.")]),
    after_show=VERIFY_HTML,
    before_faq=PARTNER_HTML,
-   title="How well do you really know yourself? | HV Test",
+   title="HV Test: free maturity assessment with a scorecard and 30-day plan",
    desc="Tests for how you think, learn, act and grow. Start with the free Maturity Assessment: an honest score, a checkable scorecard, a full report and a 30-day plan. No login.",
    lead="One place to understand yourself: how you handle life, your real strengths, how you communicate, how consistent you are, and how well you use AI. Take a test, see where you stand, and keep growing.",
    facts=[("10 min", "real-life situations, no right answers"), ("10 skills", "each scored out of 10"), ("Checkable", "scorecard with a unique ID and QR"), ("Free", "no login, answers stay on your device")],
@@ -876,7 +877,7 @@ APPS = {
              (17.9, 85.3, "Worth a look", "One timely alert and one tip from your own patterns, never judgement."),
              (8.5, 80.0, "15 deeper views", "Time, focus, punctuality, calendar, goals, reports and more, one tap away.")],
      more=["Time tracking", "Focus", "Punctuality & delays", "Day timeline", "Trends", "Calendar heatmap", "Workload", "Goals & habits", "Daily, weekly, monthly reports", "Timer history"]),
-   title="Plan your day and see where your time goes | HV Reset",
+   title="HV Reset: free daily planner and personal productivity dashboard",
    desc="One task at a time, a day that moves when you're late, and a personal dashboard for your time, focus, streaks and progress. Free, in your browser.",
    lead="Plan your day, do one task at a time, and see what you really did. Your own dashboard shows where your time goes and whether you're getting better.",
    facts=[("1 sentence", "and HV AI plans your whole day"), ("1 tap", "shifts your day when you're late"), ("Dashboard", "time, focus, streaks and score"), ("Free", "in your browser, nothing to install")],
@@ -910,8 +911,8 @@ APPS = {
         ("Does it work with HV Vault?", "Yes, if you use both. HV Reset works fully on its own. If you also use HV Vault with the same Google account, HV Reset shows your follow-ups due and this week's numbers from it, and HV AI knows about them."),
         ("Who can use it?", "Everyone. It's free for everyone, HV AI included, and runs right in your browser.")]),
  "vault": dict(name="HV Vault", verb="Act on every opportunity", color="#A87A22", tint="#F8F3E8", pline="#EADDC2", mock=MOCK_VAULT, cta="Open HV Vault", story="/#vault",
-   title="Stop losing job leads in WhatsApp chats | HV Vault",
-   desc="Every job, recruiter and interview on one board. Follow-ups set themselves. Just tell the AI what happened.",
+   title="HV Vault: free job application tracker with AI follow-ups",
+   desc="Track every job application, recruiter, follow-up and interview on one board. Follow-ups set themselves. Free, with HV AI: just tell it what happened.",
    lead="Every job, company, follow-up and interview in one calm place, so nothing slips. Just tell HV AI what happened.",
    facts=[("1 board", "every job, Saved to Offer"), ("Auto", "follow-ups set the day you apply"), ("Just say it", "HV AI adds interviews and updates"), ("Any device", "synced, with Excel export")],
    problem=("“Did I ever follow up?”", "Links in chats, five versions of a resume, sticky notes everywhere. The good opportunities go quiet."),
@@ -1546,22 +1547,23 @@ def write(path, page):
     print("ok", path, len(page), "bytes")
 
 def build():
-    write("/", fill(shell("/", "Stop guessing. Start growing. | HV World",
-          "3 free apps that show your strengths, plan your day and chase your follow-ups for you. Just talk to the AI.",
-          "https://harshvittori.github.io/og.jpg", OVERVIEW_MAIN, "overview")).replace("</style>", PLAYER_CSS + "</style>", 1))
+    write("/", seo.add(fill(shell("/", "HV World | Free AI apps to know yourself, plan your day and land the job",
+          "HV World: 3 free AI-powered apps. HV Test shows your strengths, HV Reset plans your day, HV Vault tracks every job and follow-up. Just talk to HV AI.",
+          "https://harshvittori.github.io/og.jpg", OVERVIEW_MAIN, "overview")).replace("</style>", PLAYER_CSS + "</style>", 1), seo.home(FAQ)))
     film = fill(shell("/watch/", "Say hello to HV World | Watch the reveal", "Watch the HV World reveal: three free apps and one AI to know yourself, plan your day and land the job.",
                       "https://harshvittori.github.io/watch/og-reveal.jpg", FILM_MAIN, "watch"))
     film = film.replace("</style>", PLAYER_CSS + FILM_CSS + "</style>", 1)
-    write("/watch/", film)
+    write("/watch/", seo.add(film, seo.watch()))
     for k in ORDER:
         a = APPS[k]
-        write("/%s/" % k, fill(shell("/%s/" % k, a["title"], a["desc"], "https://harshvittori.github.io/%s/og.jpg" % k, app_page(k), k)))
+        write("/%s/" % k, seo.add(fill(shell("/%s/" % k, a["title"], a["desc"], "https://harshvittori.github.io/%s/og.jpg" % k, app_page(k), k)), seo.app_page(k, a["faq"])))
     for path, title, desc, kind, lead, secs in [
         ("/terms/", "Terms and Conditions | HV World", "The terms for using HV World, HV Test, HV Reset, HV Vault and HV AI.", "terms", legal.TERMS_LEAD, legal.TERMS),
         ("/privacy/", "Privacy Policy | HV World", "What data HV World, HV Test, HV Reset, HV Vault and HV AI collect, why, and your rights.", "privacy", legal.PRIVACY_LEAD, legal.PRIVACY)]:
         name = "Terms and Conditions" if kind == "terms" else "Privacy Policy"
         page = shell(path, title, desc, "https://harshvittori.github.io/og.jpg", legal.page(kind, name, lead, secs), kind)
-        write(path, fill(page.replace("</style>", legal.CSS + "</style>", 1)))
+        write(path, seo.add(fill(page.replace("</style>", legal.CSS + "</style>", 1)), seo.simple(name, path)))
+    seo.sitemap(ROOT)
 
 if __name__ == "__main__":
     build()
