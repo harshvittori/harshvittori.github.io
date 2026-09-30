@@ -800,7 +800,7 @@ PAGE = """<!DOCTYPE html>
 <meta name="twitter:title" content="Everyone's moving ahead except you? Meet Riya.">
 <meta name="twitter:description" content="Riya felt stuck too. A 3-minute story of how she turned it around.">
 <meta name="twitter:image" content="https://harshvittori.github.io/story/og.jpg?v=4">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/icons/hv-world.svg" type="image/svg+xml"><link rel="icon" href="/icons/hv-world-32.png" type="image/png" sizes="32x32"><link rel="apple-touch-icon" href="/icons/hv-world-180.png" sizes="180x180"><link rel="manifest" href="/site.webmanifest">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"HV World","url":"https://harshvittori.github.io/"}</script>
 <style>__CSS__</style>
 </head>
@@ -904,6 +904,7 @@ def build():
     html = transitions.nav_icons(html, logo)
     open(os.path.join(OUT, "story", "index.html"), "w").write(app_links_new_tab(html))
     open(os.path.join(OUT, "favicon.svg"), "w").write(read("world.svg") + "\n")
+    open(os.path.join(OUT, "icons", "hv-world.svg"), "w").write(read("world.svg") + "\n")
     print("ok", len(html), "bytes")
 
 if __name__ == "__main__":
