@@ -493,6 +493,22 @@ html:active-view-transition-type(back)::view-transition-new(page){animation:vt-i
 </style>
 <script type="speculationrules">{"prerender":[{"urls":["/", "/test/", "/reset/", "/vault/", "/watch/", "/story/"],"eagerness":"moderate"}]}</script>
 <script>
+// reload keeps the reader exactly where they were: the browser's own restore can land a little lower each time
+// (smooth scrolling plus content settling above), so the page saves its position and puts it back instantly
+(function () {
+  if (!("scrollRestoration" in history)) return;
+  history.scrollRestoration = "manual";
+  var K = "hvscroll:" + location.pathname, nav = performance.getEntriesByType && performance.getEntriesByType("navigation")[0];
+  var type = nav ? nav.type : "", y = null;
+  try { if (type === "reload" || type === "back_forward") y = +sessionStorage.getItem(K); } catch (e) {}
+  addEventListener("pagehide", function () { try { sessionStorage.setItem(K, String(Math.round(scrollY))); } catch (e) {} });
+  if (location.hash || !(y > 0)) return;
+  var put = function () { if (Math.abs(scrollY - y) > 2) scrollTo({ top: y, left: 0, behavior: "instant" }); };
+  addEventListener("DOMContentLoaded", put); addEventListener("load", function () { put(); setTimeout(put, 120); });
+  // stop restoring once the reader scrolls on their own
+  var stop = function () { put = function () {}; };
+  addEventListener("wheel", stop, { passive: true, once: true }); addEventListener("touchstart", stop, { passive: true, once: true }); addEventListener("keydown", stop, { once: true });
+})();
 (function () {
   var ORDER = ["/", "/test/", "/reset/", "/vault/", "/watch/", "/story/"];
   function idx(u) { try { var p = new URL(u, location.href).pathname; return ORDER.indexOf(p); } catch (e) { return -1; } }
