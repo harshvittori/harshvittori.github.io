@@ -888,7 +888,7 @@ window.hvPage = function () {
       lcnt.textContent = (d ? d + "d " : "") + (d || h ? (h < 10 ? "0" : "") + h + "h " : "") + (m < 10 ? "0" : "") + m + "m " + (x < 10 ? "0" : "") + x + "s";
       setTimeout(ltick, 1000 - Date.now() % 1000 + 5);
     };
-    var lopen = function (then) { afterStatus(function () { if (HS().welcome === false) return; try { ldlg.showModal(); } catch (e) { return; } if (then) then(); }); };
+    var lopen = function (then) { afterStatus(function () { if (HS().welcome === false || document.documentElement.classList.contains("hvmaint")) return; try { ldlg.showModal(); } catch (e) { return; } if (then) then(); }); };
     ldlg.addEventListener("click", function (e) { if (e.target === ldlg || e.target.closest("[data-close]") || e.target.id === "launchX") ldlg.close(); });
     var now = Date.now();
     if (now < PREM) { if (!seen(sessionStorage, "hvlaunch")) { mark(sessionStorage, "hvlaunch"); ltick(); setTimeout(lopen, 700); } }
@@ -973,6 +973,7 @@ window.hvPage = function () {
     };
     if (Date.now() < PREM) { fo.classList.add("pre-prem"); bprem.hidden = false; btick(); } else goLoop();
     fo.addEventListener("click", function () {
+      if (document.documentElement.classList.contains("hvmaint")) return;
       loopv.pause();
       if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
       if (!hp) { hp = hvPlayer(dlg.querySelector(".fpv")); hp.begin(true); } else hp.resume();
