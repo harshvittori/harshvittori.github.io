@@ -1046,6 +1046,12 @@ FILM_MAIN = """<main id="main" class="filmpage">
     <div class="ctas"><a class="btn" href="/">Explore HV World __ARROW__</a><a class="btn ghost" href="/story/">Read Riya's story</a></div>
     <div class="fpapps"><a href="__U_TEST__">__LOGO_TEST__HV Test</a><a href="__U_RESET__">__LOGO_RESET__HV Reset</a><a href="__U_VAULT__">__LOGO_VAULT__HV Vault</a></div>
   </section>
+  <section class="wrap fp fpsec secv" id="secVid" hidden>
+    <p class="label">Security</p>
+    <h2>How we secure your logins and data.</h2>
+    <p class="fpsub">Follow your data step by step, from sign-in to safe storage. 2 minutes.</p>
+    <button type="button" class="filmbox" id="secPlay" aria-label="Play the video: How we secure your logins and data"><img src="/media/hv-security-thumb.jpg" alt="" width="1280" height="720" loading="lazy" decoding="async"><span class="play"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg></i></span></button>
+  </section>
 </main>"""
 PLAYER_HTML = '<div class="fpv" data-yt="SaSfRrtvrTg"><button type="button" class="again" hidden aria-label="Watch again"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg><span>Watch again</span></button><button type="button" class="unmute" hidden>🔊&nbsp; Tap for sound</button><div class="prem" hidden><div class="pin"><p class="pk">Premieres in</p><p class="pc" role="timer" aria-live="off"></p><p class="pd">1 October 2026 · 12:00 PM IST</p></div></div><div class="yt" hidden><div class="ytp"></div></div><button type="button" class="ytgo" hidden aria-label="Play the video"><span>Watch the reveal</span></button><div class="ytc" hidden><button type="button" class="yp" aria-label="Pause"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/><path class="i-play" d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg></button><span class="tm yc">0:00</span><input type="range" min="0" max="1000" value="0" step="1" aria-label="Seek"><span class="tm yd">0:00</span><button type="button" class="ym" aria-label="Mute"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path class="i-on" d="M15 8.5a5 5 0 0 1 0 7M17.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path class="i-off" d="M15.5 9.5l5 5M20.5 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button><button type="button" class="yf" aria-label="Full screen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><video playsinline preload="none" poster="/watch/premiere.jpg" data-src="/media/hv-world-launch.mp4"></video></div>'
 PLAYER_CSS = """
@@ -1105,6 +1111,7 @@ FILM_CSS = """
 .fp .ctas{justify-content:center}.fp .btn.ghost{color:#B9C3FF}
 .fpapps{display:flex;flex-wrap:wrap;gap:10px 22px;justify-content:center;margin-top:30px}
 .fpapps a{display:inline-flex;align-items:center;gap:9px;color:#DDE2F5;text-decoration:none;font-weight:600;font-size:15px}.fpapps svg{width:26px;height:26px;border-radius:7px}
+.fpsec{border-top:1px solid #1B2138;margin-bottom:0}.fpsec h2{font-size:clamp(28px,4vw,44px);font-weight:700;letter-spacing:-.04em;line-height:1.08;margin:6px 0 0}.fpsec .fpsub{margin:14px 0 30px}.fpsec .filmbox{border-color:#232A45;box-shadow:0 50px 100px -40px rgba(0,0,0,.9)}
 @media (max-width:880px){.fp{padding:32px 0 48px}.fpv{border-radius:14px}}
 """
 # ---------------------------------------------------------------- shared page shell
