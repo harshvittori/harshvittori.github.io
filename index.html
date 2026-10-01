@@ -269,6 +269,11 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
 .film{margin-bottom:112px}
 .filmbox{display:block;position:relative;width:100%;max-width:1040px;margin:0 auto;padding:0;border:1px solid var(--line);border-radius:28px;overflow:hidden;background:#0A0F24;cursor:pointer;aspect-ratio:16/9;box-shadow:0 40px 80px -40px rgba(20,30,60,.45);font:inherit}
 .filmbox video{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.filmbox img,.filmbox iframe{width:100%;height:100%;object-fit:cover;display:block;border:0}
+.secv{margin-bottom:56px}.secv[hidden]{display:none}
+.secv .play{left:84.4%;top:63%}
+@media (max-width:560px){.secv .play{width:50px;height:50px;top:70%;box-shadow:0 0 0 6px rgba(255,255,255,.25),0 12px 26px -10px rgba(0,0,0,.5)}.secv .play svg{width:19px;height:19px;margin-left:3px}}
+@media (max-width:880px){.secv{margin-bottom:40px}}
 .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:92px;height:92px;border-radius:50%;background:rgba(255,255,255,.95);box-shadow:0 0 0 10px rgba(255,255,255,.18),0 20px 44px -12px rgba(0,0,0,.6);transition:transform .25s}
 .play i{display:grid;place-items:center}.play svg{width:34px;height:34px;fill:var(--accent);margin-left:5px}
 .filmbox:hover .play{transform:translate(-50%,-50%) scale(1.06)}
@@ -762,7 +767,12 @@ main>:first-child .rv,main>.rv:first-child,.hcar .rv,.rv.now{opacity:1!important
     </div>
   </section>
 
-  <section id="access" class="wrap band band-w"><div class="two">
+  <section id="access" class="wrap band band-w">
+    <div class="secv" id="secVid" hidden>
+      <div class="head"><p class="label">Security</p><h2>How we secure your logins and data.</h2><p>Follow your data step by step, from sign-in to safe storage. 2 minutes.</p></div>
+      <button type="button" class="filmbox" id="secPlay" aria-label="Play the video: How we secure your logins and data"><img src="/media/hv-security-thumb.jpg" alt="" width="1280" height="720" loading="lazy" decoding="async"><span class="play"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg></i></span></button>
+    </div>
+    <div class="two">
     <div class="rv"><p class="label">Privacy</p><h3>Your data is yours.</h3><p>HV Vault saves everything to your own private space, linked to your Google account. Only you can read it. HV Test never stores your answers: they stay in your browser. Only a short scorecard summary is saved, if you ask for one.</p></div>
     <div class="rv"><p class="label">Open to all</p><h3>Made for everyone.</h3><p>All three apps and HV AI are free for everyone. Open them in any browser, with nothing to install and no ads in your way.</p></div>
   </div></section>
@@ -925,6 +935,24 @@ window.hvPage = function () {
   var setTimeout = function (f, t) { return window.setTimeout(function () { if (GEN === window.__hvGen) f(); }, t); };
   var setInterval = function (f, t) { var id = window.setInterval(function () { if (GEN === window.__hvGen) f(); else clearInterval(id); }, t); return id; };
   var yr = document.getElementById("yr"); if (yr) yr.textContent = new Date().getFullYear();
+  // home: the security video section appears at 1:00 PM IST on 1 October 2026 (earlier only on preview devices with hvopen=1);
+  // the YouTube player loads only after a click, so nothing from YouTube runs before someone presses play
+  (function () {
+    var sv = document.getElementById("secVid"); if (!sv) return;
+    var AT = Date.parse("2026-10-01T13:00:00+05:30"), pre = false;
+    try { pre = localStorage.getItem("hvopen") === "1"; } catch (e) {}
+    var on = function () { sv.hidden = false; };
+    if (pre || Date.now() >= AT) on(); else if (AT - Date.now() < 864e5) setTimeout(on, AT - Date.now() + 300);
+    var b = document.getElementById("secPlay");
+    b.addEventListener("click", function () {
+      var box = document.createElement("div"); box.className = "filmbox";
+      var f = document.createElement("iframe");
+      f.src = "https://www.youtube-nocookie.com/embed/E5QN_YngR0s?autoplay=1&rel=0&playsinline=1&modestbranding=1";
+      f.title = "How we secure your logins and data"; f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen"; f.allowFullscreen = true;
+      box.appendChild(f); b.replaceWith(box);
+      if (window.hva) hva("event", "security_video_play");
+    });
+  })();
   // Riya's story: the header stays hidden until the first chapter, and each chapter's scene follows the step in the
   // middle of the screen. Listeners from a previous visit to the story are removed first.
   (function () {
