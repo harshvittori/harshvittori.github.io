@@ -10,6 +10,9 @@
     var SITE = /^\/hv-tests(\/|$)/.test(p) ? "test" : /^\/(hv-reset|harsh-reset)(\/|$)/.test(p) ? "reset" : /^\/hv-vault-web(\/|$)/.test(p) ? "vault" : "world";
     var NAMES = { world: "HV World", test: "HV Test", reset: "HV Reset", vault: "HV Vault" };
     if (/^\/admin(\/|$)/.test(p)) return;                                   // the admin page itself is never blocked
+    // first-party, aggregate-only usage counts (see /a.js). Calls made before it loads are queued.
+    window.hva = window.hva || function () { (window.hva.q = window.hva.q || []).push(arguments); };
+    try { var hs = document.createElement("script"); hs.src = "/a.js?v=1"; hs.async = true; (document.head || document.documentElement).appendChild(hs); } catch (e) {}
     var qs = location.search, preview = /[?&]hvpreview=maintenance\b/.test(qs);
     var admin = false; try { admin = localStorage.getItem("hvadmin") === "1"; } catch (e) {}
     var cfg = null; try { cfg = JSON.parse(localStorage.getItem(KEY) || "null"); } catch (e) {}

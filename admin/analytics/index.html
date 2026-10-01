@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'">
+<script>/* Admin pages never run inside another site's frame (clickjacking). GitHub Pages can't send frame headers, so this does it. */
+if (window.top !== window.self) { document.documentElement.style.display = "none"; try { window.top.location = window.self.location.href; } catch (e) {} }</script>
+<title>Analytics | HV World</title>
+<link rel="icon" href="/icons/hv-world.svg" type="image/svg+xml">
+<style>
+@font-face{font-family:HVSora;src:url(/media/fonts/Sora-Regular.ttf) format("truetype");font-weight:400;font-display:swap}
+@font-face{font-family:HVSora;src:url(/media/fonts/Sora-SemiBold.ttf) format("truetype");font-weight:600 700;font-display:swap}
+:root{--ink:#1D1D1F;--soft:#5E6273;--faint:#8A8FA3;--line:#E3E5EE;--accent:#2E43A6;--accent2:#24378C;--ok:#16794C;--okbg:#E7F7EE;--warn:#8A5A00;--warnbg:#FFF3D6;--bad:#B42318;--badbg:#FDECEA;--font:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial,sans-serif}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:var(--font);color:var(--ink);min-height:100vh;background:radial-gradient(50% 40% at 0% 0%,rgba(174,184,245,.45),transparent 70%),radial-gradient(45% 40% at 100% 100%,rgba(205,185,244,.4),transparent 70%),#F4F5FA;background-attachment:fixed}
+h1,h2,h3{font-family:HVSora,var(--font);letter-spacing:-.02em;margin:0}
+button,input,textarea,select{font:inherit;color:inherit}
+a{color:var(--accent)}
+.wrap{width:min(1120px,100% - 32px);margin:0 auto}
+.top{position:sticky;top:0;z-index:20;background:rgba(244,245,250,.8);-webkit-backdrop-filter:blur(16px) saturate(1.6);backdrop-filter:blur(16px) saturate(1.6);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:14px;height:62px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-family:HVSora,var(--font);font-size:17px}.brand svg{width:32px;height:32px;border-radius:9px}
+.brand small{font:600 11px/1 var(--font);letter-spacing:.1em;text-transform:uppercase;color:var(--accent);background:#E8ECFB;padding:5px 8px;border-radius:999px}
+.me{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:14px;color:var(--soft)}.me img{width:30px;height:30px;border-radius:50%}
+.glass{background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(18px) saturate(1.5);backdrop-filter:blur(18px) saturate(1.5);border:1px solid rgba(255,255,255,.95);border-radius:22px;box-shadow:0 18px 40px -28px rgba(30,40,110,.45),inset 0 1px 0 #fff}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:9px 16px;border-radius:999px;border:0;cursor:pointer;background:var(--accent);color:#fff;font-weight:600;font-size:14px;text-decoration:none;white-space:nowrap}
+.btn:hover{background:var(--accent2)}.btn:disabled{opacity:.5;cursor:default}
+.btn.ghost{background:rgba(255,255,255,.8);color:var(--accent);box-shadow:inset 0 0 0 1px rgba(46,67,166,.2)}.btn.ghost:hover{background:#fff}
+.btn.warn{background:#C7810F}.btn.warn:hover{background:#A96C08}
+.btn.sm{min-height:32px;padding:6px 12px;font-size:13px}
+main{padding:28px 0 120px}
+.hello{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:22px}
+.hello h1{font-size:clamp(24px,4vw,32px)}.hello p{margin:6px 0 0;color:var(--soft)}
+.sum{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;padding:8px 14px;border-radius:999px}
+.sum i{width:8px;height:8px;border-radius:50%;background:currentColor}
+.sum.ok{color:var(--ok);background:var(--okbg)}.sum.warn{color:var(--warn);background:var(--warnbg)}
+.sec{margin-top:26px}.sec>h2{font-size:19px;margin-bottom:4px}.sec>p.sub{margin:0 0 14px;color:var(--soft);font-size:14px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.sites{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.site{padding:18px;display:flex;flex-direction:column;gap:12px}
+.site .hd{display:flex;align-items:center;gap:12px}.site .hd svg{width:42px;height:42px;border-radius:12px;flex:none}
+.site h3{font-size:16px}.site .url{font-size:12.5px;color:var(--faint)}
+.pill{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;padding:6px 10px;border-radius:999px;align-self:flex-start}
+.pill i{width:7px;height:7px;border-radius:50%;background:currentColor}
+.pill.live{color:var(--ok);background:var(--okbg)}.pill.maint{color:var(--warn);background:var(--warnbg)}.pill.sched{color:#1D4ED8;background:#E6EEFF}
+.sw{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:14px;font-weight:600}
+.tg{position:relative;width:46px;height:28px;flex:none}.tg input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer;z-index:1}
+.tg span{position:absolute;inset:0;border-radius:999px;background:#D5D8E3;transition:background .2s}.tg span::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.2);transition:transform .2s}
+.tg input:checked+span{background:#C7810F}.tg input:checked+span::after{transform:translateX(18px)}.tg input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
+.tg.blue input:checked+span{background:var(--accent)}
+.opts{display:none;flex-direction:column;gap:10px;padding-top:4px;border-top:1px dashed var(--line)}.site.on .opts{display:flex}
+.lbl{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:0;cursor:pointer;font-size:13px;font-weight:600;padding:7px 11px;border-radius:999px;background:#EEF0F7;color:var(--soft)}
+.chip[aria-pressed="true"]{background:var(--accent);color:#fff}
+input[type=text],input[type=url],input[type=datetime-local],textarea,select{width:100%;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:#fff;font-size:14px}
+textarea{min-height:70px;resize:vertical;line-height:1.45}
+input:focus,textarea:focus,select:focus{outline:2px solid rgba(46,67,166,.35);outline-offset:0;border-color:var(--accent)}
+.hint{font-size:12.5px;color:var(--faint);margin:0}
+.panel{padding:20px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field{display:flex;flex-direction:column;gap:6px}
+.checks{display:flex;flex-wrap:wrap;gap:8px}.checks label{display:inline-flex;align-items:center;gap:6px;font-size:14px;background:#EEF0F7;padding:7px 11px;border-radius:999px;cursor:pointer}
+.bprev{margin-top:8px;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;font-size:14px;border:1px solid rgba(255,255,255,.95);box-shadow:0 10px 24px -16px rgba(20,30,90,.45)}
+.bprev i{width:8px;height:8px;border-radius:50%;flex:none}
+.set{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}.set:last-child{border-bottom:0}
+.set b{display:block;font-size:15px}.set span{font-size:13px;color:var(--soft)}
+.yt{display:flex;gap:12px;align-items:center}.yt img{width:120px;aspect-ratio:16/9;object-fit:cover;border-radius:10px;background:#E3E5EE;flex:none}
+.log{list-style:none;margin:0;padding:0}.log li{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}.log li:last-child{border-bottom:0}
+.log time{flex:none;width:130px;color:var(--faint);font-size:13px}
+.bar{position:fixed;left:50%;bottom:16px;transform:translate(-50%,140%);z-index:30;display:flex;align-items:center;gap:14px;padding:10px 10px 10px 18px;border-radius:999px;background:#1D1D1F;color:#fff;box-shadow:0 20px 40px -14px rgba(0,0,0,.5);transition:transform .3s cubic-bezier(.2,.8,.2,1);max-width:calc(100vw - 24px)}
+.bar.show{transform:translate(-50%,0)}.bar span{font-size:14px}.bar .btn.ghost{background:rgba(255,255,255,.12);color:#fff;box-shadow:none}
+.toast{position:fixed;left:50%;top:76px;transform:translate(-50%,-10px);opacity:0;z-index:40;padding:10px 16px;border-radius:14px;font-size:14px;font-weight:600;background:var(--okbg);color:var(--ok);box-shadow:0 14px 30px -14px rgba(0,0,0,.3);transition:opacity .25s,transform .25s;pointer-events:none}
+.toast.show{opacity:1;transform:translate(-50%,0)}.toast.err{background:var(--badbg);color:var(--bad)}
+.gate{min-height:calc(100vh - 62px);display:grid;place-items:center;padding:24px}
+.gate .glass{max-width:460px;width:100%;padding:34px 28px;text-align:center}
+.gate h1{font-size:26px;margin-top:14px}.gate p{color:var(--soft);line-height:1.5}
+.gate svg.lg{width:60px;height:60px;border-radius:16px}
+pre{white-space:pre-wrap;word-break:break-word;background:#0F1220;color:#D7DBF2;padding:14px;border-radius:14px;font-size:12.5px;line-height:1.5;text-align:left;max-height:320px;overflow:auto}
+ol.steps{text-align:left;color:var(--soft);line-height:1.6;padding-left:20px}
+[hidden]{display:none!important}
+@media (max-width:720px){.grid2{grid-template-columns:1fr}.me span{display:none}.log time{width:96px}.yt{flex-direction:column;align-items:flex-start}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<style>
+.viz-root{--s-world:#2a78d6;--s-test:#eb6834;--s-reset:#1baf7a;--s-vault:#eda100;--seq:#2a78d6;--grid:#ECEEF4}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:18px 0 12px}
+.tab{border:1px solid var(--line);background:rgba(255,255,255,.7);border-radius:999px;padding:8px 14px;cursor:pointer;font-weight:600;font-size:14px;color:var(--soft)}
+.tab[aria-selected="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
+.fbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px;font-size:13px;color:var(--soft)}
+.fbar select{border:1px solid var(--line);border-radius:10px;padding:6px 10px;background:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin-bottom:14px}
+.tile{padding:14px 16px;border-radius:18px}.tile b{display:block;font:600 26px/1.1 HVSora,var(--font);letter-spacing:-.02em;margin-top:6px}
+.tile span{font-size:12.5px;color:var(--soft);font-weight:600}.tile small{display:block;font-size:12px;color:var(--faint);margin-top:4px}
+.card{padding:18px;border-radius:20px;margin-bottom:14px}.card h3{font-size:17px;margin-bottom:4px}.card p.sub{font-size:13px;color:var(--soft);margin:0 0 12px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:760px){.cols{grid-template-columns:1fr}}
+.bl{display:grid;grid-template-columns:minmax(90px,38%) 1fr 70px;gap:8px;align-items:center;font-size:13.5px;margin:6px 0}
+.bl .t{height:12px;border-radius:0 4px 4px 0;background:var(--seq);min-width:2px}.bl em{font-style:normal;text-align:right;color:var(--soft);font-variant-numeric:tabular-nums}
+.fn{display:grid;grid-template-columns:minmax(120px,34%) 1fr 120px;gap:10px;align-items:center;font-size:13.5px;margin:7px 0}
+.fn .t{height:22px;border-radius:0 4px 4px 0;background:var(--seq)}.fn em{font-style:normal;color:var(--soft);font-variant-numeric:tabular-nums;text-align:right}
+table.tb{width:100%;border-collapse:collapse;font-size:13px}table.tb th,table.tb td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums}
+table.tb th:first-child,table.tb td:first-child{text-align:left}table.tb th{color:var(--soft);font-weight:600}
+.empty{padding:26px;text-align:center;color:var(--soft);font-size:14px}
+.chart{position:relative}.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.tip{position:absolute;pointer-events:none;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:12.5px;box-shadow:0 10px 24px -12px rgba(20,28,60,.35);white-space:nowrap;display:none;z-index:3}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--soft);margin-bottom:8px}.legend i{display:inline-block;width:12px;height:3px;border-radius:2px;margin-right:6px;vertical-align:middle}
+.note{font-size:12.5px;color:var(--faint);margin-top:8px}
+details summary{cursor:pointer;font-size:13px;color:var(--accent);margin-top:8px}
+.heat td{color:#fff}.heat td.lo{color:var(--ink)}
+</style>
+<div class="top"><div class="wrap"><div class="brand"><span>HV World</span><small>Analytics</small></div><a href="/admin/" style="font-size:14px;margin-left:14px">← Control centre</a><div class="me" id="me" hidden><span id="meName"></span><button class="btn ghost" id="signOut" style="min-height:32px;padding:5px 12px">Sign out</button></div></div></div>
+<main class="wrap viz-root" id="app">
+  <section id="gate" class="card glass" style="margin-top:40px;text-align:center"><h2>Analytics</h2><p class="sub" id="gateMsg">Sign in with the admin Google account.</p><button class="btn" id="signIn">Sign in with Google</button></section>
+  <section id="nope" class="card glass" hidden style="margin-top:40px;text-align:center"><h2>Access denied</h2><p class="sub">This account can't see analytics.</p></section>
+  <section id="dash" hidden>
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <div class="fbar"><label>Range <select id="range"><option value="7">Last 7 days</option><option value="30" selected>Last 30 days</option><option value="90">Last 90 days</option></select></label>
+      <label>Attribution <select id="attr"><option value="cv">Last touch</option><option value="cf">First touch</option></select></label>
+      <span id="fresh"></span></div>
+    <div id="view"></div>
+  </section>
+</main>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-check-compat.js"></script>
+<script>
+/* HV analytics dashboard. Reads only the aggregate counter documents written by /a.js (Firestore "analytics",
+   admin-only by the rules). Every number here is a real count; when there is no data it says so. */
+(function () {
+  "use strict";
+  var CFG = { apiKey: "AIzaSyDggasAVdqpvamkn1xeex2NmPUqG9JiZJ4", authDomain: "harsh-reset.firebaseapp.com", projectId: "harsh-reset", appId: "1:592094409539:web:57d3aa494464b867bbf5f6" };
+  var DB = "projects/harsh-reset/databases/(default)/documents", API = "https://firestore.googleapis.com/v1/";
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
+  var fmt = function (n) { return n == null || isNaN(n) ? "–" : n >= 1e4 ? (n / 1e3).toFixed(1) + "k" : String(Math.round(n * 10) / 10); };
+  var pct = function (a, b) { return b ? Math.round(a / b * 1000) / 10 + "%" : "–"; };
+  var PRODUCTS = [["world", "HV World"], ["test", "HV Test"], ["reset", "HV Reset"], ["vault", "HV Vault"]];
+  var NAME = { world: "HV World", test: "HV Test", reset: "HV Reset", vault: "HV Vault" };
+  var FUNNEL = {
+    world: [["Visitors (daily unique)", "uv"], ["Saw an app link", "imp_any"], ["Opened an app", "ue_open_app"]],
+    test: [["Visitors (daily unique)", "uv"], ["Opened the test intro", "ue_test_intro"], ["Started the test", "ue_test_start"], ["Reached halfway", "ue_progress_50"], ["Completed", "ue_test_complete"], ["Saw results", "ue_results_view"], ["Saved a scorecard", "ue_scorecard"]],
+    reset: [["Visitors (daily unique)", "uv"], ["Clicked sign in", "ue_signin_start"], ["Signed in / signed up", "auth"], ["Saved a plan", "ue_plan_saved"], ["Completed a task", "ue_task_done"]],
+    vault: [["Visitors (daily unique)", "uv"], ["Clicked sign in", "ue_signin_start"], ["Signed in / signed up", "auth"], ["Added a job", "ue_job_added"], ["Moved a job to Applied", "ue_stage_applied"], ["Reached Interview", "ue_stage_interview"]]
+  };
+  var KEY_EVENTS = { world: ["open_app", "open_test", "open_reset", "open_vault", "video_play"], test: ["test_start", "test_complete", "scorecard"], reset: ["signup", "sign_in", "activation"], vault: ["signup", "sign_in", "activation"] };
+  var state = { tab: "eco", range: 30, attr: "cv", data: {}, user: null };
+  firebase.initializeApp(CFG);
+  var appCheck = null;
+  if (location.hostname === "harshvittori.github.io") { try { appCheck = firebase.appCheck(); appCheck.activate(new firebase.appCheck.ReCaptchaEnterpriseProvider("6LdZltEtAAAAANC5e-PJFqs2YrM1ubR3CKv0sOhl"), true); } catch (e) { appCheck = null; } }
+  var auth = firebase.auth();
+  function show(id) { ["gate", "nope", "dash"].forEach(function (s) { $(s).hidden = s !== id; }); }
+  function ist(d) { return d.toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" }); }
+  function days(n) { var out = [], t = Date.now(); for (var i = n - 1; i >= 0; i--) out.push(ist(new Date(t - i * 864e5))); return out; }
+  function isoWeek(s) { var a = s.split("-"), d = new Date(Date.UTC(+a[0], +a[1] - 1, +a[2])), wd = d.getUTCDay() || 7; d.setUTCDate(d.getUTCDate() + 4 - wd); var y = d.getUTCFullYear(), w = Math.ceil(((d - Date.UTC(y, 0, 1)) / 864e5 + 1) / 7); return y + "-W" + (w < 10 ? "0" : "") + w; }
+  async function batchGet(ids) {
+    var h = { "Content-Type": "application/json", Authorization: "Bearer " + (await state.user.getIdToken()) };
+    if (appCheck) { try { var t = await appCheck.getToken(false); if (t && t.token) h["X-Firebase-AppCheck"] = t.token; } catch (e) {} }
+    var out = {};
+    for (var i = 0; i < ids.length; i += 100) {
+      var r = await fetch(API + DB + ":batchGet?key=" + CFG.apiKey, { method: "POST", headers: h, body: JSON.stringify({ documents: ids.slice(i, i + 100).map(function (x) { return DB + "/analytics/" + x; }) }) });
+      if (!r.ok) { var e = new Error("HTTP " + r.status); e.status = r.status; throw e; }
+      (await r.json()).forEach(function (x) { if (x.found) { var f = {}, fs = x.found.fields || {}; Object.keys(fs).forEach(function (k) { f[k] = +(fs[k].integerValue || fs[k].doubleValue || 0); }); out[x.found.name.split("/").pop()] = f; } });
+    }
+    return out;
+  }
+  async function load() {
+    var ds = days(state.range), ids = [];
+    var weeks = {}, months = {}; ds.forEach(function (d) { weeks[isoWeek(d)] = 1; months[d.slice(0, 7)] = 1; });
+    PRODUCTS.forEach(function (p) { var k = p[0]; ds.forEach(function (d) { ids.push(k + "_d_" + d, k + "_c_" + d); }); Object.keys(weeks).forEach(function (w) { ids.push(k + "_w_" + w); }); Object.keys(months).forEach(function (m) { ids.push(k + "_m_" + m); }); });
+    $("view").innerHTML = '<div class="empty">Loading…</div>';
+    state.data = await batchGet(ids); state.days = ds; state.weeks = Object.keys(weeks); state.months = Object.keys(months);
+    render();
+  }
+  /* ---------- aggregation helpers ---------- */
+  function daily(p, f) { return state.days.map(function (d) { var x = state.data[p + "_d_" + d]; return x ? (f === "imp_any" ? (x.imp_test || 0) + (x.imp_reset || 0) + (x.imp_vault || 0) : f === "auth" ? (x.ue_sign_in || 0) + (x.ue_signup || 0) : x[f] || 0) : 0; }); }
+  function sum(p, f) { return daily(p, f).reduce(function (a, b) { return a + b; }, 0); }
+  function prefix(p, pre) { var o = {}; state.days.forEach(function (d) { var x = state.data[p + "_d_" + d] || {}; Object.keys(x).forEach(function (k) { if (k.indexOf(pre) === 0) o[k.slice(pre.length)] = (o[k.slice(pre.length)] || 0) + x[k]; }); }); return o; }
+  function lastWeek(p, f) { var w = state.weeks[state.weeks.length - 1], x = state.data[p + "_w_" + w]; return x ? x[f] || 0 : 0; }
+  function lastMonth(p) { var m = state.months[state.months.length - 1], x = state.data[p + "_m_" + m]; return x ? x.mau || 0 : 0; }
+  function hasData(p) { return state.days.some(function (d) { return state.data[p + "_d_" + d]; }); }
+  function freshness() { var last = null; state.days.forEach(function (d) { PRODUCTS.forEach(function (p) { if (state.data[p[0] + "_d_" + d]) last = d; }); }); return last; }
+  /* ---------- components ---------- */
+  function tile(label, value, note) { return '<div class="tile glass"><span>' + esc(label) + '</span><b>' + value + '</b>' + (note ? '<small>' + esc(note) + '</small>' : '') + '</div>'; }
+  function barList(obj, opts) {
+    opts = opts || {}; var ks = Object.keys(obj).filter(function (k) { return obj[k] > 0; }).sort(function (a, b) { return obj[b] - obj[a]; }).slice(0, opts.max || 12);
+    if (!ks.length) return '<div class="empty">No data yet</div>';
+    var tot = 0; Object.keys(obj).forEach(function (k) { tot += obj[k]; }); var mx = obj[ks[0]];
+    return ks.map(function (k) { return '<div class="bl" title="' + esc(k) + ': ' + obj[k] + '"><span>' + esc((opts.label || String)(k)) + '</span><div class="t" style="width:' + Math.max(1, obj[k] / mx * 100) + '%"></div><em>' + fmt(obj[k]) + ' · ' + pct(obj[k], tot) + '</em></div>'; }).join("");
+  }
+  var CH = { direct: "Direct", search: "Search engines", linkedin: "LinkedIn", instagram: "Instagram", youtube: "YouTube", whatsapp: "WhatsApp", facebook: "Facebook", x: "X / Twitter", email: "Email", community: "Communities", referral: "Other websites", paid: "Paid ads", campaign_other: "Other campaigns", ai_assistant: "AI assistants", github: "GitHub", from_world: "From HV World", from_test: "From HV Test", from_reset: "From HV Reset", from_vault: "From HV Vault", internal: "Within the product" };
+  var chName = function (k) { return CH[k] || k; };
+  function lineChart(series, labels, opts) {
+    opts = opts || {}; var W = 860, H = 240, L = 40, R = 12, T = 12, B = 26, n = labels.length;
+    var mx = 1; series.forEach(function (s) { s.v.forEach(function (v) { if (v > mx) mx = v; }); }); mx = Math.ceil(mx * 1.1);
+    var X = function (i) { return L + (n < 2 ? 0 : i * (W - L - R) / (n - 1)); }, Y = function (v) { return T + (H - T - B) * (1 - v / mx); };
+    var g = ""; for (var k = 0; k <= 4; k++) { var v = Math.round(mx * k / 4), y = Y(v); g += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + y + '" y2="' + y + '" stroke="var(--grid)"/><text x="' + (L - 6) + '" y="' + (y + 4) + '" font-size="11" fill="#8A8FA3" text-anchor="end">' + v + '</text>'; }
+    var step = Math.ceil(n / 8); labels.forEach(function (d, i) { if ((i % step === 0 && n - 1 - i >= step / 2) || i === n - 1) g += '<text x="' + X(i) + '" y="' + (H - 6) + '" font-size="11" fill="#8A8FA3" text-anchor="middle">' + d.slice(5) + '</text>'; });
+    var paths = series.map(function (s) { var d = s.v.map(function (v, i) { return (i ? "L" : "M") + X(i).toFixed(1) + "," + Y(v).toFixed(1); }).join(""); var last = s.v.length - 1; return '<path d="' + d + '" fill="none" stroke="' + s.c + '" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>' + (series.length > 1 && series.length <= 4 ? '<text x="' + (X(last) + 4) + '" y="' + (Y(s.v[last]) + 4) + '" font-size="11" fill="#5E6273">' + esc(s.n) + '</text>' : ''); }).join("");
+    var id = "c" + Math.random().toString(36).slice(2);
+    var legend = series.length > 1 ? '<div class="legend">' + series.map(function (s) { return '<span><i style="background:' + s.c + '"></i>' + esc(s.n) + '</span>'; }).join("") + '</div>' : "";
+    var table = '<details><summary>Show as table</summary><table class="tb"><tr><th>Day</th>' + series.map(function (s) { return '<th>' + esc(s.n) + '</th>'; }).join("") + '</tr>' + labels.map(function (d, i) { return '<tr><td>' + d + '</td>' + series.map(function (s) { return '<td>' + s.v[i] + '</td>'; }).join("") + '</tr>'; }).join("") + '</table></details>';
+    setTimeout(function () {
+      var box = document.getElementById(id); if (!box) return; var svg = box.querySelector("svg"), tip = box.querySelector(".tip"), cross = box.querySelector(".cross");
+      svg.addEventListener("mousemove", function (e) {
+        var r = svg.getBoundingClientRect(), x = (e.clientX - r.left) / r.width * W, i = Math.max(0, Math.min(n - 1, Math.round((x - L) / ((W - L - R) / Math.max(1, n - 1)))));
+        cross.setAttribute("x1", X(i)); cross.setAttribute("x2", X(i)); cross.style.display = "";
+        tip.innerHTML = '<b>' + labels[i] + '</b><br>' + series.map(function (s) { return '<span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:' + s.c + ';margin-right:6px"></span>' + esc(s.n) + ': ' + s.v[i]; }).join("<br>");
+        tip.style.display = "block"; var px = X(i) / W * r.width; tip.style.left = Math.min(r.width - tip.offsetWidth, px + 12) + "px"; tip.style.top = "8px";
+      });
+      svg.addEventListener("mouseleave", function () { tip.style.display = "none"; cross.style.display = "none"; });
+    }, 0);
+    return legend + '<div class="chart" id="' + id + '"><svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(opts.title || "Daily trend") + '">' + g + '<line class="cross" y1="' + T + '" y2="' + (H - B) + '" stroke="#C5C9D6" style="display:none"/>' + paths + '<rect x="' + L + '" y="' + T + '" width="' + (W - L - R) + '" height="' + (H - T - B) + '" fill="transparent"/></svg><div class="tip"></div></div>' + table;
+  }
+  function funnel(p) {
+    var steps = FUNNEL[p].map(function (s) { return [s[0], sum(p, s[1])]; }), top = steps[0][1];
+    if (!top) return '<div class="empty">No visitors in this range yet</div>';
+    return steps.map(function (s, i) { var prev = i ? steps[i - 1][1] : s[1]; return '<div class="fn"><span>' + esc(s[0]) + '</span><div class="t" style="width:' + Math.max(.5, s[1] / top * 100) + '%"></div><em>' + fmt(s[1]) + (i ? ' · ' + pct(s[1], prev) + ' step' : '') + '</em></div>'; }).join("") + '<p class="note">Each step counts devices that did it on a given day, summed over the range. A device that comes back on two days counts twice.</p>';
+  }
+  function retention(p) {
+    var today = state.days[state.days.length - 1], rows = [], agg = { n: 0 }, el = {};
+    var age = function (d) { var a = d.split("-"), b = today.split("-"); return (Date.UTC(+b[0], +b[1] - 1, +b[2]) - Date.UTC(+a[0], +a[1] - 1, +a[2])) / 864e5; };
+    state.days.forEach(function (d) { var c = state.data[p + "_c_" + d]; if (!c || !c.n) return; rows.push([d, c]); [1, 7, 14, 30].forEach(function (k) { if (age(d) >= k) { el[k] = (el[k] || 0) + c.n; agg["d" + k] = (agg["d" + k] || 0) + (c["d" + k] || 0); } }); agg.n += c.n; });
+    if (!rows.length) return '<div class="empty">No new visitors in this range yet</div>';
+    var head = '<div class="grid">' + [1, 7, 14, 30].map(function (k) { return tile("Day " + k + " retention", el[k] ? pct(agg["d" + k], el[k]) : "Not yet", el[k] ? "of " + el[k] + " new devices old enough" : "cohorts are too new"); }).join("") + '</div>';
+    var cell = function (v, n) { if (v == null) return '<td>–</td>'; var r = n ? v / n : 0; return '<td style="background:rgba(42,120,214,' + (0.08 + r * 0.85).toFixed(2) + ')" class="' + (r < .45 ? "lo" : "") + '">' + pct(v, n) + '</td>'; };
+    var tb = '<table class="tb heat"><tr><th>First visit</th><th>New</th><th>D1</th><th>D7</th><th>D14</th><th>D30</th></tr>' + rows.slice(-14).reverse().map(function (r) { var d = r[0], c = r[1]; return '<tr><td style="color:var(--ink)">' + d + '</td><td style="color:var(--ink)">' + c.n + '</td>' + [1, 7, 14, 30].map(function (k) { return age(d) >= k ? cell(c["d" + k] || 0, c.n) : '<td style="color:var(--faint)">–</td>'; }).join("") + '</tr>'; }).join("") + '</table>';
+    return head + tb + '<p class="note">Day N retention = share of new devices that came back exactly N days after their first visit. Small cohorts swing a lot; read trends, not single days.</p>';
+  }
+  function convTable(p) {
+    var evs = KEY_EVENTS[p], pre = state.attr, chans = {}, m = {};
+    evs.forEach(function (ev) { var o = prefix(p, pre + "_" + ev + "_"); m[ev] = o; Object.keys(o).forEach(function (c) { chans[c] = (chans[c] || 0) + o[c]; }); });
+    var cs = Object.keys(chans).sort(function (a, b) { return chans[b] - chans[a]; });
+    if (!cs.length) return '<div class="empty">No conversions yet</div>';
+    var ss = prefix(p, "ch_");
+    return '<table class="tb"><tr><th>Channel</th><th>Sessions</th>' + evs.map(function (e) { return '<th>' + esc(e) + '</th>'; }).join("") + '</tr>' + cs.map(function (c) { return '<tr><td>' + esc(chName(c)) + '</td><td>' + (ss[c] || 0) + '</td>' + evs.map(function (e) { return '<td>' + (m[e][c] || 0) + '</td>'; }).join("") + '</tr>'; }).join("") + '</table><p class="note">' + (pre === "cv" ? "Last touch: credited to the channel of the session where it happened." : "First touch: credited to the channel that first brought the device.") + ' This shows association, not proof that a channel caused it.</p>';
+  }
+  function productView(p) {
+    if (!hasData(p)) return '<div class="card glass"><div class="empty"><b>No data for ' + NAME[p] + ' in this range yet.</b><br>Counts appear here within a minute of the first visit on the live site.</div></div>';
+    var ss = sum(p, "ss"), uv = sum(p, "uv"), mau = lastMonth(p), dauAvg = uv / state.days.length;
+    var tiles = [tile("Visitors", fmt(uv), "daily unique devices, summed"), tile("Sessions", fmt(ss)), tile("Page views", fmt(sum(p, "pv"))), tile("New visitors", fmt(sum(p, "nu")), "first visit on a device"),
+      tile("Returning", fmt(sum(p, "ru")), "device-days"), tile("Engaged sessions", pct(sum(p, "es"), ss), "10s+ or 2+ pages or an action"), tile("Avg engaged time", ss ? Math.round(sum(p, "sec") / ss) + "s" : "–", "per session"),
+      tile("WAU", fmt(lastWeek(p, "wau")), "this week"), tile("MAU", fmt(mau), "this month"), tile("Stickiness", mau ? pct(dauAvg, mau) : "–", "avg DAU ÷ MAU"), tile("Errors", fmt(sum(p, "err")), "script errors seen")];
+    var html = '<div class="grid">' + tiles.join("") + '</div>';
+    html += '<div class="card glass"><h3>Visitors per day</h3><p class="sub">Daily unique devices</p>' + lineChart([{ n: "Visitors", v: daily(p, "uv"), c: "var(--seq)" }, ], state.days, { title: NAME[p] + " visitors per day" }) + '</div>';
+    html += '<div class="card glass"><h3>Funnel</h3><p class="sub">From visit to the actions that matter in ' + NAME[p] + '</p>' + funnel(p) + '</div>';
+    html += '<div class="cols"><div class="card glass"><h3>Where sessions come from</h3><p class="sub">Last touch, by session</p>' + barList(prefix(p, "ch_"), { label: chName }) + '</div><div class="card glass"><h3>How new visitors first arrived</h3><p class="sub">First touch</p>' + barList(prefix(p, "ft_"), { label: chName }) + '</div></div>';
+    html += '<div class="card glass"><h3>Conversions by channel</h3>' + convTable(p) + '</div>';
+    html += '<div class="cols"><div class="card glass"><h3>Campaigns</h3><p class="sub">Sessions by utm_campaign</p>' + barList(prefix(p, "cmp_")) + '</div><div class="card glass"><h3>Top pages</h3>' + barList(prefix(p, "pg_")) + '</div></div>';
+    if (p === "world") {
+      var pd = {}; ["test", "reset", "vault"].forEach(function (k) { pd[NAME[k]] = sum("world", "imp_" + k); });
+      var oc = {}; ["test", "reset", "vault"].forEach(function (k) { oc[NAME[k]] = sum("world", "ev_open_" + k); });
+      html += '<div class="cols"><div class="card glass"><h3>Product interest: seen</h3><p class="sub">App links seen on screen</p>' + barList(pd) + '</div><div class="card glass"><h3>Product interest: opened</h3><p class="sub">Clicks into each app · CTR = opened ÷ seen</p>' + barList(oc) + '<p class="note">' + ["test", "reset", "vault"].map(function (k) { return NAME[k] + " CTR " + pct(sum("world", "ev_open_" + k), sum("world", "imp_" + k)); }).join(" · ") + '</p></div></div>';
+      html += '<div class="cols"><div class="card glass"><h3>Scroll depth</h3>' + barList({ "Reached 50%": sum("world", "sd50"), "Reached 90%": sum("world", "sd90") }) + '</div><div class="card glass"><h3>Outbound clicks</h3>' + barList(prefix("world", "ev_out_")) + '</div></div>';
+    }
+    if (p === "test") html += '<div class="card glass"><h3>Time to complete</h3>' + barList({ "Under 5 min": sum("test", "ev_time_lt5"), "5–10 min": sum("test", "ev_time_5_10"), "10–20 min": sum("test", "ev_time_10_20"), "Over 20 min": sum("test", "ev_time_gt20") }) + '<p class="note">Completion rate ' + pct(sum("test", "ue_test_complete"), sum("test", "ue_test_start")) + ' · abandonment ' + (sum("test", "ue_test_start") ? pct(sum("test", "ue_test_start") - sum("test", "ue_test_complete"), sum("test", "ue_test_start")) : "–") + '</p></div>';
+    html += '<div class="card glass"><h3>Retention</h3>' + retention(p) + '</div>';
+    html += '<div class="cols"><div class="card glass"><h3>Devices</h3>' + barList(prefix(p, "dev_")) + '<h3 style="margin-top:14px">Region</h3><p class="sub">From the browser time zone, no IP lookup</p>' + barList(prefix(p, "geo_")) + '</div><div class="card glass"><h3>Browsers</h3>' + barList(prefix(p, "br_")) + '<h3 style="margin-top:14px">Operating systems</h3>' + barList(prefix(p, "os_")) + '</div></div>';
+    var ev = prefix(p, "ev_"), ue = prefix(p, "ue_"), fe = prefix(p, "fe_"), ks = Object.keys(ev).sort(function (a, b) { return ev[b] - ev[a]; });
+    html += '<div class="card glass"><h3>All events</h3>' + (ks.length ? '<table class="tb"><tr><th>Event</th><th>Count</th><th>Device-days</th><th>First time on a device</th></tr>' + ks.map(function (k) { return '<tr><td>' + esc(k) + '</td><td>' + ev[k] + '</td><td>' + (ue[k] || 0) + '</td><td>' + (fe[k] != null ? fe[k] : "–") + '</td></tr>'; }).join("") + '</table>' : '<div class="empty">No events yet</div>') + '</div>';
+    return html;
+  }
+  function ecoView() {
+    var any = PRODUCTS.some(function (p) { return hasData(p[0]); });
+    if (!any) return '<div class="card glass"><div class="empty"><b>No data in this range yet.</b><br>Counts appear within a minute of the first visit on the live site.</div></div>';
+    var rows = PRODUCTS.map(function (p) { var k = p[0], ss = sum(k, "ss"); return '<tr><td>' + p[1] + '</td><td>' + sum(k, "uv") + '</td><td>' + ss + '</td><td>' + sum(k, "nu") + '</td><td>' + pct(sum(k, "es"), ss) + '</td><td>' + (k === "world" ? "–" : sum(k, "ev_signup")) + '</td><td>' + (k === "world" ? "–" : sum(k, "fe_activation")) + '</td><td>' + (k === "world" ? "–" : sum(k, "ch_from_world")) + '</td><td>' + lastMonth(k) + '</td></tr>'; }).join("");
+    var html = '<div class="card glass"><h3>Visitors per day, by product</h3><p class="sub">Daily unique devices per product</p>' + lineChart(PRODUCTS.map(function (p) { return { n: p[1], v: daily(p[0], "uv"), c: "var(--s-" + p[0] + ")" }; }), state.days, { title: "Visitors per day by product" }) + '</div>';
+    html += '<div class="card glass"><h3>Products side by side</h3><table class="tb"><tr><th>Product</th><th>Visitors</th><th>Sessions</th><th>New</th><th>Engaged</th><th>Sign-ups</th><th>Activated</th><th>Sessions from HV World</th><th>MAU</th></tr>' + rows + '</table><p class="note">Products are counted separately: one person who uses two products counts in both. Do not add the rows to get "total people". Activation means: HV Test – completed the test; HV Reset – first task done; HV Vault – first job added (so the columns mean different things per product). HV Test has no accounts, so sign-ups do not apply.</p></div>';
+    var ch = {}; PRODUCTS.forEach(function (p) { var o = prefix(p[0], "ch_"); Object.keys(o).forEach(function (k) { if (!/^from_|internal/.test(k)) ch[k] = (ch[k] || 0) + o[k]; }); });
+    var cmp = {}; PRODUCTS.forEach(function (p) { var o = prefix(p[0], "cmp_"); Object.keys(o).forEach(function (k) { cmp[k] = (cmp[k] || 0) + o[k]; }); });
+    var disc = {}; ["test", "reset", "vault"].forEach(function (k) { disc[NAME[k]] = sum("world", "ev_open_" + k); });
+    html += '<div class="cols"><div class="card glass"><h3>Acquisition channels</h3><p class="sub">Sessions across all products (external channels only)</p>' + barList(ch, { label: chName }) + '</div><div class="card glass"><h3>Campaigns</h3><p class="sub">Sessions by utm_campaign across products</p>' + barList(cmp) + '</div></div>';
+    html += '<div class="card glass"><h3>Discovery through HV World</h3><p class="sub">Clicks from HV World into each app</p>' + barList(disc) + '</div>';
+    return html;
+  }
+  function render() {
+    var f = freshness(); $("fresh").textContent = f ? "Data up to " + f + " (live)" : "No data yet in this range";
+    $("tabs").innerHTML = [["eco", "Ecosystem"]].concat(PRODUCTS).map(function (t) { return '<button class="tab" role="tab" aria-selected="' + (state.tab === t[0]) + '" data-t="' + t[0] + '">' + t[1] + '</button>'; }).join("");
+    $("view").innerHTML = state.tab === "eco" ? ecoView() : productView(state.tab);
+  }
+  $("tabs").addEventListener("click", function (e) { var b = e.target.closest("[data-t]"); if (b) { state.tab = b.dataset.t; render(); } });
+  $("range").addEventListener("change", function () { state.range = +this.value; load().catch(fail); });
+  $("attr").addEventListener("change", function () { state.attr = this.value; render(); });
+  function fail(e) { if (e && e.status === 403) { show("nope"); return; } $("view").innerHTML = '<div class="empty">Couldn\'t load analytics (' + esc(e && e.message) + '). Check your connection and reload.</div>'; }
+  $("signIn").onclick = async function () { try { await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()); } catch (e) { $("gateMsg").textContent = "Couldn't sign in. Please try again."; } };
+  $("signOut").onclick = function () { auth.signOut(); };
+  auth.onAuthStateChanged(function (u) {
+    state.user = u; if (!u) { show("gate"); $("me").hidden = true; return; }
+    $("me").hidden = false; $("meName").textContent = u.email || "";
+    show("dash"); load().catch(fail);
+  });
+})();
+</script>
+</body>
+</html>
