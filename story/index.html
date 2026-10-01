@@ -642,6 +642,24 @@ window.hvPage = function () {
   var setTimeout = function (f, t) { return window.setTimeout(function () { if (GEN === window.__hvGen) f(); }, t); };
   var setInterval = function (f, t) { var id = window.setInterval(function () { if (GEN === window.__hvGen) f(); else clearInterval(id); }, t); return id; };
   var yr = document.getElementById("yr"); if (yr) yr.textContent = new Date().getFullYear();
+  // home: the security video section appears at 1:00 PM IST on 1 October 2026 (earlier only on preview devices with hvopen=1);
+  // the YouTube player loads only after a click, so nothing from YouTube runs before someone presses play
+  (function () {
+    var sv = document.getElementById("secVid"); if (!sv) return;
+    var AT = Date.parse("2026-10-01T13:00:00+05:30"), pre = false;
+    try { pre = localStorage.getItem("hvopen") === "1"; } catch (e) {}
+    var on = function () { sv.hidden = false; };
+    if (pre || Date.now() >= AT) on(); else if (AT - Date.now() < 864e5) setTimeout(on, AT - Date.now() + 300);
+    var b = document.getElementById("secPlay");
+    b.addEventListener("click", function () {
+      var box = document.createElement("div"); box.className = "filmbox";
+      var f = document.createElement("iframe");
+      f.src = "https://www.youtube-nocookie.com/embed/E5QN_YngR0s?autoplay=1&rel=0&playsinline=1&modestbranding=1";
+      f.title = "How we secure your logins and data"; f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen"; f.allowFullscreen = true;
+      box.appendChild(f); b.replaceWith(box);
+      if (window.hva) hva("event", "security_video_play");
+    });
+  })();
   // Riya's story: the header stays hidden until the first chapter, and each chapter's scene follows the step in the
   // middle of the screen. Listeners from a previous visit to the story are removed first.
   (function () {
