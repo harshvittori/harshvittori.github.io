@@ -74,6 +74,7 @@
         if (/^(linkedin|lnkd)/.test(s)) return "linkedin"; if (/^(instagram|ig)$/.test(s)) return "instagram"; if (/^(youtube|yt)$/.test(s)) return "youtube";
         if (/^(whatsapp|wa)$/.test(s)) return "whatsapp"; if (/^(facebook|fb)$/.test(s)) return "facebook"; if (/^(twitter|x)$/.test(s)) return "x";
         if (m === "email" || s === "email" || s === "newsletter") return "email"; if (m === "community" || m === "group") return "community";
+        if (m === "share" || s === "scorecard") return "shared";
         if (m === "referral" || m === "friend") return "referral"; if (m === "cpc" || m === "paid" || m === "ads") return "paid";
         return "campaign_other";
       }

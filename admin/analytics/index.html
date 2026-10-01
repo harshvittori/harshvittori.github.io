@@ -192,7 +192,7 @@ details summary{cursor:pointer;font-size:13px;color:var(--accent);margin-top:8px
     var tot = 0; Object.keys(obj).forEach(function (k) { tot += obj[k]; }); var mx = obj[ks[0]];
     return ks.map(function (k) { return '<div class="bl" title="' + esc(k) + ': ' + obj[k] + '"><span>' + esc((opts.label || String)(k)) + '</span><div class="t" style="width:' + Math.max(1, obj[k] / mx * 100) + '%"></div><em>' + fmt(obj[k]) + ' · ' + pct(obj[k], tot) + '</em></div>'; }).join("");
   }
-  var CH = { direct: "Direct", search: "Search engines", linkedin: "LinkedIn", instagram: "Instagram", youtube: "YouTube", whatsapp: "WhatsApp", facebook: "Facebook", x: "X / Twitter", email: "Email", community: "Communities", referral: "Other websites", paid: "Paid ads", campaign_other: "Other campaigns", ai_assistant: "AI assistants", github: "GitHub", from_world: "From HV World", from_test: "From HV Test", from_reset: "From HV Reset", from_vault: "From HV Vault", internal: "Within the product" };
+  var CH = { direct: "Direct", search: "Search engines", linkedin: "LinkedIn", instagram: "Instagram", youtube: "YouTube", whatsapp: "WhatsApp", facebook: "Facebook", x: "X / Twitter", email: "Email", community: "Communities", referral: "Other websites", paid: "Paid ads", shared: "Shared by users", campaign_other: "Other campaigns", ai_assistant: "AI assistants", github: "GitHub", from_world: "From HV World", from_test: "From HV Test", from_reset: "From HV Reset", from_vault: "From HV Vault", internal: "Within the product" };
   var chName = function (k) { return CH[k] || k; };
   function lineChart(series, labels, opts) {
     opts = opts || {}; var W = 860, H = 240, L = 40, R = 12, T = 12, B = 26, n = labels.length;
@@ -277,10 +277,35 @@ details summary{cursor:pointer;font-size:13px;color:var(--accent);margin-top:8px
     html += '<div class="card glass"><h3>Discovery through HV World</h3><p class="sub">Clicks from HV World into each app</p>' + barList(disc) + '</div>';
     return html;
   }
+  /* ---------- link maker: ready UTM links, so every shared link is counted by channel ---------- */
+  var PAGES = [["Home", "/"], ["Watch the film", "/watch/"], ["Riya's story", "/story/"], ["HV Test (page)", "/test/"], ["HV Reset (page)", "/reset/"], ["HV Vault (page)", "/vault/"], ["HV Test app", "/hv-tests/"], ["HV Reset app", "/hv-reset/"], ["HV Vault app", "/hv-vault-web/"]];
+  var CHANNELS = [["LinkedIn post", "linkedin", "social"], ["LinkedIn DM", "linkedin", "dm"], ["LinkedIn profile / bio", "linkedin", "bio"], ["Instagram bio", "instagram", "bio"], ["Instagram story", "instagram", "story"], ["Instagram DM", "instagram", "dm"], ["WhatsApp chat", "whatsapp", "dm"], ["WhatsApp / college group", "whatsapp", "community"], ["YouTube description", "youtube", "video"], ["Email", "email", "email"], ["Friend referral", "friend", "referral"], ["X / Twitter", "x", "social"]];
+  var slugU = function (x) { return String(x || "").toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, ""); };
+  var mkUrl = function (path, ch, cmp, cnt) { var q = "utm_source=" + ch[1] + "&utm_medium=" + ch[2] + "&utm_campaign=" + (slugU(cmp) || "launch"); if (cnt) q += "&utm_content=" + slugU(cnt); return "https://harshvittori.github.io" + path + "?" + q; };
+  function linksView() {
+    var month = new Date().toISOString().slice(0, 7).replace("-", "");
+    var opts = function (arr) { return arr.map(function (a, i) { return '<option value="' + i + '">' + esc(a[0]) + '</option>'; }).join(""); };
+    var html = '<div class="card glass"><h3>Link maker</h3><p class="sub">Pick what you are sharing and where. Copy the link and share it as is. Every visit is then counted under that channel and campaign.</p>' +
+      '<div class="fbar" style="flex-wrap:wrap"><label>Page <select id="lkPage">' + opts(PAGES) + '</select></label><label>Where <select id="lkCh">' + opts(CHANNELS) + '</select></label>' +
+      '<label>Campaign <input id="lkCmp" value="' + month + '_launch" style="border:1px solid var(--line);border-radius:10px;padding:6px 10px;width:170px"></label>' +
+      '<label>Post / version <input id="lkCnt" placeholder="optional, e.g. reel1" style="border:1px solid var(--line);border-radius:10px;padding:6px 10px;width:150px"></label></div>' +
+      '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><input id="lkOut" readonly style="flex:1;min-width:260px;border:1px solid var(--line);border-radius:10px;padding:9px 12px;background:#fff;font-size:13px"><button class="btn" id="lkCopy">Copy link</button></div><p class="note" id="lkMsg"></p></div>';
+    html += '<div class="card glass"><h3>Ready links for the launch</h3><p class="sub">Campaign <b>' + month + '_launch</b>. Click a link to copy it.</p><table class="tb"><tr><th>Where</th><th>Home</th><th>HV Test app</th><th>Riya\'s story</th></tr>' +
+      CHANNELS.map(function (ch) { return '<tr><td>' + esc(ch[0]) + '</td>' + ["/", "/hv-tests/", "/story/"].map(function (pth) { var u = mkUrl(pth, ch, month + "_launch"); return '<td><a href="#" data-copy="' + esc(u) + '">Copy</a></td>'; }).join("") + '</tr>'; }).join("") + '</table></div>';
+    return html;
+  }
+  function wireLinks() {
+    var upd = function () { var u = mkUrl(PAGES[+$("lkPage").value][1], CHANNELS[+$("lkCh").value], $("lkCmp").value, $("lkCnt").value); $("lkOut").value = u; };
+    ["lkPage", "lkCh", "lkCmp", "lkCnt"].forEach(function (id) { $(id).addEventListener("input", upd); $(id).addEventListener("change", upd); }); upd();
+    var copy = function (u) { (navigator.clipboard ? navigator.clipboard.writeText(u) : Promise.reject()).then(function () { $("lkMsg").textContent = "Copied: " + u; }, function () { $("lkOut").value = u; $("lkOut").select(); $("lkMsg").textContent = "Select and copy the link above."; }); };
+    $("lkCopy").addEventListener("click", function () { copy($("lkOut").value); });
+    $("view").querySelectorAll("[data-copy]").forEach(function (a) { a.addEventListener("click", function (e) { e.preventDefault(); copy(a.getAttribute("data-copy")); }); });
+  }
   function render() {
     var f = freshness(); $("fresh").textContent = f ? "Data up to " + f + " (live)" : "No data yet in this range";
-    $("tabs").innerHTML = [["eco", "Ecosystem"]].concat(PRODUCTS).map(function (t) { return '<button class="tab" role="tab" aria-selected="' + (state.tab === t[0]) + '" data-t="' + t[0] + '">' + t[1] + '</button>'; }).join("");
-    $("view").innerHTML = state.tab === "eco" ? ecoView() : productView(state.tab);
+    $("tabs").innerHTML = [["eco", "Ecosystem"]].concat(PRODUCTS).concat([["links", "Links"]]).map(function (t) { return '<button class="tab" role="tab" aria-selected="' + (state.tab === t[0]) + '" data-t="' + t[0] + '">' + t[1] + '</button>'; }).join("");
+    $("view").innerHTML = state.tab === "eco" ? ecoView() : state.tab === "links" ? linksView() : productView(state.tab);
+    if (state.tab === "links") wireLinks();
   }
   $("tabs").addEventListener("click", function (e) { var b = e.target.closest("[data-t]"); if (b) { state.tab = b.dataset.t; render(); } });
   $("range").addEventListener("change", function () { state.range = +this.value; load().catch(fail); });
