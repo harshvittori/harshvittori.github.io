@@ -116,7 +116,7 @@ details summary{cursor:pointer;font-size:13px;color:var(--accent);margin-top:8px
 <div class="top"><div class="wrap"><div class="brand"><span>HV World</span><small>Analytics</small></div><a href="/admin/" style="font-size:14px;margin-left:14px">← Control centre</a><div class="me" id="me" hidden><span id="meName"></span><button class="btn ghost" id="signOut" style="min-height:32px;padding:5px 12px">Sign out</button></div></div></div>
 <main class="wrap viz-root" id="app">
   <section id="gate" class="card glass" style="margin-top:40px;text-align:center"><h2>Analytics</h2><p class="sub" id="gateMsg">Sign in with the admin Google account.</p><button class="btn" id="signIn">Sign in with Google</button></section>
-  <section id="nope" class="card glass" hidden style="margin-top:40px;text-align:center"><h2>Access denied</h2><p class="sub">This account can't see analytics.</p></section>
+  <section id="nope" class="card glass" hidden style="margin-top:40px;text-align:center"><h2>Access denied</h2><p class="sub">This account can't see analytics.</p><p class="sub" style="max-width:520px;margin:10px auto 0">If this is the admin account: publish the latest Firestore rules first (Firebase console → Firestore → Rules → paste <code>hv-vault-web/firebase/firestore.rules</code> → Publish), then reload this page.</p></section>
   <section id="dash" hidden>
     <div class="tabs" role="tablist" id="tabs"></div>
     <div class="fbar"><label>Range <select id="range"><option value="7">Last 7 days</option><option value="30" selected>Last 30 days</option><option value="90">Last 90 days</option></select></label>
