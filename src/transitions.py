@@ -25,7 +25,7 @@ html{background:#F9F9FB}
 main>:first-child .rv,main>.rv:first-child,.hcar .rv,.rv.now{opacity:1!important;transform:none!important;transition:none!important}
 """
 
-HEAD = ("""<script type="speculationrules">{"prerender":[{"urls":["/story/"],"eagerness":"moderate"}]}</script><!-- %s: the other pages open in place, see site.py -->
+HEAD = ("""<!-- %s: pages open in place, see site.py -->
 <script>
 // reload keeps the reader exactly where they were: the browser's own restore can land a little lower each time
 // (smooth scrolling plus content settling above), so the page saves its position and puts it back instantly

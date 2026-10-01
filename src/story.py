@@ -5,8 +5,13 @@ Every picture is hand-drawn inline SVG. Scroll steps switch a scene's data-step 
 hides and animates the parts marked v1..v4. No libraries."""
 import os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import importlib.util
 import transitions
 import people
+# the shared HV World page scripts (in-page navigation + per-page setup) and footer come from src/site.py,
+# so the story opens in place like every other page. Loaded by path: "site" is also a Python stdlib module.
+_spec = importlib.util.spec_from_file_location("hvsite", os.path.join(os.path.dirname(os.path.abspath(__file__)), "site.py"))
+hvsite = importlib.util.module_from_spec(_spec); _spec.loader.exec_module(hvsite)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.dirname(HERE)
@@ -747,37 +752,8 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{color:var(--soft)}
 @media (prefers-reduced-motion:no-preference){.rv{opacity:0;transform:translateY(24px);transition:opacity .9s cubic-bezier(.2,.8,.2,1),transform .9s cubic-bezier(.2,.8,.2,1)}.rv.in{opacity:1;transform:none}}
 """.replace("__TOGGLES__", TOGGLE_CSS)
 
-JS = r"""
-(function () {
+# The story's own script (header that appears at the first chapter, scroll-driven scenes) lives in hvPage in site.py.
 
-  var hd = document.querySelector("header"), first = document.getElementById("test");
-  function bar() { hd.classList.toggle("hid", first.getBoundingClientRect().top > innerHeight * .55); }
-  addEventListener("scroll", bar, { passive: true }); addEventListener("resize", bar); bar();
-  // smooth scrolling: a section's animations run only while it's on screen
-  if ("IntersectionObserver" in window) {
-    var ao = new IntersectionObserver(function (es) { es.forEach(function (e) { e.target.classList.toggle("aoff", !e.isIntersecting); }); }, { rootMargin: "150px 0px" });
-    document.querySelectorAll("main > section, main article").forEach(function (s) { ao.observe(s); });
-  }
-  // scrollytelling: the step crossing the middle of the screen drives its chapter's scene
-  document.querySelectorAll(".scrolly").forEach(function (sc) {
-    var stage = sc.querySelector(".stage"), steps = sc.querySelectorAll(".step");
-    if (!("IntersectionObserver" in window)) { stage.setAttribute("data-step", "4"); steps.forEach(function (s) { s.classList.add("on"); }); return; }
-    var io = new IntersectionObserver(function (es) {
-      es.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        steps.forEach(function (s) { s.classList.toggle("on", s === e.target); });
-        stage.setAttribute("data-step", e.target.getAttribute("data-step"));
-      });
-    }, { rootMargin: "-45% 0px -45% 0px", threshold: 0 });
-    steps.forEach(function (s) { io.observe(s); });
-    steps[0].classList.add("on");
-  });
-  var els = document.querySelectorAll(".rv");
-  if (!("IntersectionObserver" in window)) { els.forEach(function (e) { e.classList.add("in"); }); return; }
-  var io2 = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io2.unobserve(e.target); } }); }, { rootMargin: "0px 0px -6% 0px", threshold: .05 });
-  els.forEach(function (e) { io2.observe(e); });
-})();
-"""
 
 ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>'
 
@@ -805,11 +781,11 @@ PAGE = """<!DOCTYPE html>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"HV World","url":"https://harshvittori.github.io/"}</script>
 <style>__CSS__</style>
 </head>
-<body>
+<body data-spa="hv">
 <a class="skip" href="#main">Skip to content</a>
 <header class="hid"><div class="wrap nav"><a class="brand" href="/">__LOGO_NAV__HV World</a>
 <nav aria-label="Main"><a class="opt" href="/">Home</a><a href="/test/"><span class="d">HV </span>Test</a><a href="/reset/"><span class="d">HV </span>Reset</a><a href="/vault/"><span class="d">HV </span>Vault</a><a class="ic" aria-label="Watch" href="/watch/"><svg class="ni" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 8.3v7.4l6-3.7z" fill="currentColor"/></svg><span class="nt">Watch</span></a><a class="ic" aria-current="page" aria-label="Riya's story" href="/story/"><svg class="ni" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5C10 5 7 4.5 3.5 5v13c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5z"/><path d="M12 6.5v13"/></svg><span class="nt"><span class="d">Riya's </span>Story</span></a></nav></div></header>
-<main id="main">
+<main id="main" data-page="story">
   <section id="top"><a class="homepill" href="/" aria-label="Home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5M5.5 10v9.5h13V10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Home</a><div class="wrap hero">
     <div class="rv">
       <p class="eyebrow">An 11-week story</p>
@@ -890,13 +866,14 @@ PAGE = """<!DOCTYPE html>
     <div class="ccta rv"><a class="btn" href="https://harshvittori.github.io/hv-tests/">Start week 1 today</a><a class="again" href="#test">Read the steps again &uarr;</a></div>
   </div></section>
 </main>
-<script>__JS__</script>
+__FOOTER__
+__SCRIPTS__
 </body>
 </html>
 """
 
 def build():
-    html = (PAGE.replace("__CSS__", CSS).replace("__JS__", JS).replace("__ARROW__", ARROW)
+    html = (PAGE.replace("__CSS__", CSS).replace("__FOOTER__", re.search(r"<footer>.*?</footer>", hvsite.shell("/story/", "", "", "", "", "story"), re.S).group(0)).replace("__SCRIPTS__", hvsite.PAGE_SCRIPTS).replace("__ARROW__", ARROW)
             .replace("__LOGO_NAV__", logo("world")).replace("__PROLOGUE__", prologue()).replace("__CHAPTERS__", "\n".join(CH))
             .replace("__FINALE__", finale()).replace("__NEXT_ART__", next_art()).replace("__CAST__", cast()).replace("__TIMELINE__", timeline()).replace("__CALL__", interlude("call")).replace("__LESSONS__", lessons()).replace("__L_TEST__", logo("test", size=44)).replace("__L_RESET__", logo("reset", size=44)).replace("__L_VAULT__", logo("vault", size=44)))
     assert "__" not in re.sub(r"<script>.*?</script>", "", html, flags=re.S).replace("__proto__", ""), "unfilled placeholder"

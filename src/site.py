@@ -1098,50 +1098,14 @@ FILM_CSS = """
 @media (max-width:880px){.fp{padding:32px 0 48px}.fpv{border-radius:14px}}
 """
 # ---------------------------------------------------------------- shared page shell
-def shell(path, title, desc, og, body, active):
-    nav = [("overview", "/", "Home", "opt"), ("test", "/test/", '<span class="d">HV </span>Test', ""),
-           ("reset", "/reset/", '<span class="d">HV </span>Reset', ""), ("vault", "/vault/", '<span class="d">HV </span>Vault', ""), ("watch", "/watch/", '<svg class="ni" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 8.3v7.4l6-3.7z" fill="currentColor"/></svg><span class="nt">Watch</span>', "ic")]
-    links = "".join('<a class="%s"%s%s href="%s">%s</a>' % (c, ' aria-current="page"' if k == active else "", ' aria-label="Watch"' if k == "watch" else "", h, t) for k, h, t, c in nav)
-    url = "https://harshvittori.github.io" + path
-    return '''<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<script src="/status.js?v=2"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>%s</title>
-<meta name="description" content="%s">
-<meta name="theme-color" content="#F9F9FB">
-<link rel="canonical" href="%s">
-<link rel="preload" href="/media/fonts/Sora-SemiBold.ttf" as="font" type="font/ttf" crossorigin><link rel="preload" href="/media/fonts/Sora-Regular.ttf" as="font" type="font/ttf" crossorigin><link rel="icon" href="/icons/hv-world.svg" type="image/svg+xml"><link rel="icon" href="/icons/hv-world-32.png" type="image/png" sizes="32x32"><link rel="apple-touch-icon" href="/icons/hv-world-180.png" sizes="180x180"><link rel="manifest" href="/site.webmanifest">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="HV World">
-<meta property="og:title" content="%s">
-<meta property="og:description" content="%s">
-<meta property="og:url" content="%s">
-<meta property="og:image" content="%s">
-<meta property="og:image:type" content="image/jpeg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="%s">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="%s">
-<meta name="twitter:description" content="%s">
-<meta name="twitter:image" content="%s">
-<style>%s</style>
-</head>
-<body data-spa="hv">
-<a class="skip" href="#main">Skip to content</a>
-<header><div class="wrap nav"><a class="brand" href="/">%sHV World</a>
-<nav aria-label="Main">%s<a class="ic" aria-label="Riya's story" href="/story/"><svg class="ni" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5C10 5 7 4.5 3.5 5v13c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5z"/><path d="M12 6.5v13"/></svg><span class="nt"><span class="d">Riya's </span>Story</span></a></nav></div></header>
-%s
-<footer><div class="wrap row"><span>© <span id="yr">2026</span> HV World · Built by Harsh Goyal</span>
-<nav aria-label="Footer"><a href="/">Home</a><a href="/watch/">Watch</a><a href="/story/">Riya's story</a><a href="/test/">HV Test</a><a href="/reset/">HV Reset</a><a href="/vault/">HV Vault</a><a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/harshvittori" target="_blank" rel="noopener">GitHub</a><a href="/terms/">Terms</a><a href="/privacy/">Privacy</a></nav></div></footer>
-<script>
+# Scripts shared by every HV World page (also used by src/story.py): in-page navigation and per-page setup.
+PAGE_SCRIPTS = """<script>
 // In-page navigation between the HV World pages that share this layout: a click fetches the next page, swaps only
 // <main> (plus title, meta tags and page styles) and updates the URL, so the header stays put and nothing reloads.
-// Pages outside this layout (Riya's story, the apps) and anything unusual fall back to a normal page load.
+// Pages outside this layout (the apps) and anything unusual fall back to a normal page load.
 (function () {
   if (!window.fetch || !window.DOMParser || !history.pushState) return;
-  var ROUTES = ["/", "/test/", "/reset/", "/vault/", "/watch/", "/terms/", "/privacy/"], ORDER = ["/", "/test/", "/reset/", "/vault/", "/watch/", "/story/"];
+  var ROUTES = ["/", "/test/", "/reset/", "/vault/", "/watch/", "/story/", "/terms/", "/privacy/"], ORDER = ["/", "/test/", "/reset/", "/vault/", "/watch/", "/story/"];
   var cache = {}, busy = 0, cur = location.pathname.replace(/index\.html$/, "");
   var path = function (u) { return u.pathname.replace(/index\.html$/, ""); };
   var ok = function (u) { return u.origin === location.origin && ROUTES.indexOf(path(u)) > -1; };
@@ -1226,7 +1190,27 @@ window.hvPage = function () {
   document.querySelectorAll(".grtoast").forEach(function (t) { t.remove(); });
   var setTimeout = function (f, t) { return window.setTimeout(function () { if (GEN === window.__hvGen) f(); }, t); };
   var setInterval = function (f, t) { var id = window.setInterval(function () { if (GEN === window.__hvGen) f(); else clearInterval(id); }, t); return id; };
-  document.getElementById("yr").textContent = new Date().getFullYear();
+  var yr = document.getElementById("yr"); if (yr) yr.textContent = new Date().getFullYear();
+  // Riya's story: the header stays hidden until the first chapter, and each chapter's scene follows the step in the
+  // middle of the screen. Listeners from a previous visit to the story are removed first.
+  (function () {
+    if (window.__hvStoryOff) { window.__hvStoryOff(); window.__hvStoryOff = null; }
+    var hd = document.querySelector("header"), sm = document.querySelector('#main[data-page="story"]');
+    if (!sm) { if (hd) hd.classList.remove("hid"); return; }
+    var first = document.getElementById("test"), obs = [];
+    var bar = function () { if (hd && first) hd.classList.toggle("hid", first.getBoundingClientRect().top > innerHeight * .55); };
+    addEventListener("scroll", bar, { passive: true }); addEventListener("resize", bar); bar();
+    sm.querySelectorAll(".scrolly").forEach(function (sc) {
+      var stage = sc.querySelector(".stage"), steps = sc.querySelectorAll(".step");
+      if (!stage || !steps.length) return;
+      if (!("IntersectionObserver" in window)) { stage.setAttribute("data-step", "4"); steps.forEach(function (s) { s.classList.add("on"); }); return; }
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (!e.isIntersecting) return; steps.forEach(function (s) { s.classList.toggle("on", s === e.target); }); stage.setAttribute("data-step", e.target.getAttribute("data-step")); });
+      }, { rootMargin: "-45% 0px -45% 0px", threshold: 0 });
+      steps.forEach(function (s) { io.observe(s); }); steps[0].classList.add("on"); obs.push(io);
+    });
+    window.__hvStoryOff = function () { removeEventListener("scroll", bar); removeEventListener("resize", bar); obs.forEach(function (o) { o.disconnect(); }); };
+  })();
   // dashboard showcase: pointing at a highlight enlarges its number on the picture
   document.querySelectorAll(".sc-pts li").forEach(function (li) {
     var mk = document.querySelector('.mk[data-n="' + li.dataset.n + '"]');
@@ -1286,7 +1270,7 @@ window.hvPage = function () {
       var cur = P.getCurrentTime() || 0, dur = P.getDuration() || 0;
       ctl.classList.toggle("live", !(dur > 0));
       if (dur > 0 && document.activeElement !== seek) seek.value = Math.round(cur / dur * 1000);
-      seek.style.setProperty("--p", (seek.value / 10) + "%%");
+      seek.style.setProperty("--p", (seek.value / 10) + "%");
       tCur.textContent = fmt(cur); tDur.textContent = fmt(dur);
     };
     var idle = function () { clearTimeout(idleT); ctl.classList.remove("dim"); idleT = setTimeout(function () { if (P && P.getPlayerState() === 1 && !(matchMedia("(hover:hover)").matches && ctl.matches(":hover")) && !ctl.querySelector(":focus-visible")) ctl.classList.add("dim"); }, 2800); };
@@ -1318,14 +1302,14 @@ window.hvPage = function () {
     var tick = function () {
       var ms = PREM - Date.now();
       if (ms <= 0) { prem.hidden = true; goYT(); return; }
-      var t = Math.floor(ms / 1000), d = Math.floor(t / 86400), h = Math.floor(t %% 86400 / 3600), m = Math.floor(t %% 3600 / 60), x = t %% 60;
+      var t = Math.floor(ms / 1000), d = Math.floor(t / 86400), h = Math.floor(t % 86400 / 3600), m = Math.floor(t % 3600 / 60), x = t % 60;
       cnt.textContent = (d ? d + "d " : "") + (d || h ? pad(h) + "h " : "") + pad(m) + "m " + pad(x) + "s";
-      setTimeout(tick, 1000 - Date.now() %% 1000 + 5);
+      setTimeout(tick, 1000 - Date.now() % 1000 + 5);
     };
     cover.addEventListener("click", function () { cover.hidden = true; ytPlay(); });
     bPlay.addEventListener("click", function () { if (P.getPlayerState() === 1) P.pauseVideo(); else ytPlay(); });
     bMute.addEventListener("click", function () { if (P.isMuted()) P.unMute(); else P.mute(); ctl.classList.toggle("muted"); setTimeout(syncMute, 60); });
-    seek.addEventListener("input", function () { var dur = P.getDuration() || 0; seek.style.setProperty("--p", (seek.value / 10) + "%%"); if (dur > 0) { P.seekTo(seek.value / 1000 * dur, true); tCur.textContent = fmt(seek.value / 1000 * dur); } });
+    seek.addEventListener("input", function () { var dur = P.getDuration() || 0; seek.style.setProperty("--p", (seek.value / 10) + "%"); if (dur > 0) { P.seekTo(seek.value / 1000 * dur, true); tCur.textContent = fmt(seek.value / 1000 * dur); } });
     seek.addEventListener("change", function () { seek.blur(); });
     var fsIn = box.requestFullscreen || box.webkitRequestFullscreen;
     if (!fsIn) bFull.hidden = true;
@@ -1389,7 +1373,7 @@ window.hvPage = function () {
     var confetti = function () {
       if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
       var box = ldlg.querySelector(".lconf"), cols = ["#2E43A6", "#8E9BF0", "#C9A7F5", "#F2B84B", "#1FA463", "#fff"];
-      for (var i = 0; i < 42; i++) { var c = document.createElement("i"); c.style.left = (Math.random() * 100) + "%%"; c.style.background = cols[i %% cols.length]; c.style.animationDelay = (Math.random() * .7) + "s"; c.style.transform = "rotate(" + (Math.random() * 180) + "deg)"; box.appendChild(c); }
+      for (var i = 0; i < 42; i++) { var c = document.createElement("i"); c.style.left = (Math.random() * 100) + "%"; c.style.background = cols[i % cols.length]; c.style.animationDelay = (Math.random() * .7) + "s"; c.style.transform = "rotate(" + (Math.random() * 180) + "deg)"; box.appendChild(c); }
       setTimeout(function () { box.innerHTML = ""; }, 3600);
     };
     var welcome = function () { if (Date.now() >= Date.parse("2026-10-02T00:00:00+05:30")) ldlg.querySelector(".lpill.live").lastChild.textContent = "Just launched · 1 Oct"; lpre.hidden = true; lpost.hidden = false; mark(localStorage, "hvwelcome"); confetti(); };
@@ -1406,9 +1390,9 @@ window.hvPage = function () {
     var ltick = function () {
       var ms = PREM - Date.now();
       if (ms <= 0) { if (Date.now() < OPEN) { liveCard(); setTimeout(afterEvent, OPEN - Date.now() + 200); } else afterEvent(); return; }
-      var t = Math.floor(ms / 1000), d = Math.floor(t / 86400), h = Math.floor(t %% 86400 / 3600), m = Math.floor(t %% 3600 / 60), x = t %% 60;
+      var t = Math.floor(ms / 1000), d = Math.floor(t / 86400), h = Math.floor(t % 86400 / 3600), m = Math.floor(t % 3600 / 60), x = t % 60;
       lcnt.textContent = (d ? d + "d " : "") + (d || h ? (h < 10 ? "0" : "") + h + "h " : "") + (m < 10 ? "0" : "") + m + "m " + (x < 10 ? "0" : "") + x + "s";
-      setTimeout(ltick, 1000 - Date.now() %% 1000 + 5);
+      setTimeout(ltick, 1000 - Date.now() % 1000 + 5);
     };
     var lopen = function (then) { afterStatus(function () { if (HS().welcome === false || document.documentElement.classList.contains("hvmaint")) return; try { ldlg.showModal(); } catch (e) { return; } if (then) then(); }); };
     ldlg.addEventListener("click", function (e) { if (e.target === ldlg || e.target.closest("[data-close]") || e.target.id === "launchX") ldlg.close(); });
@@ -1428,7 +1412,7 @@ window.hvPage = function () {
       var slides = [].slice.call(car.querySelectorAll(".hs")), dots = [].slice.call(car.querySelectorAll(".hc-dots button")), cur = 0, autoT = 0, hold = false;
       var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
       var show = function (i) {
-        var prev = cur; cur = (i + slides.length) %% slides.length;
+        var prev = cur; cur = (i + slides.length) % slides.length;
         slides.forEach(function (sl, k) { sl.classList.toggle("cur", k === cur); sl.classList.toggle("prev", k === prev && k !== cur); sl.setAttribute("aria-hidden", k === cur ? "false" : "true"); if ("inert" in sl) sl.inert = k !== cur; });
         dots.forEach(function (d, k) { d.setAttribute("aria-current", k === cur ? "true" : "false"); });
         if (cur === 1) slides[1].querySelectorAll(".rv").forEach(function (e) { e.classList.add("in"); });
@@ -1465,11 +1449,11 @@ window.hvPage = function () {
       var htick = function () {
         var ms = PREM - Date.now();
         if (ms <= 0) { if (Date.now() < OPEN) { onair(); setTimeout(function () { if (GEN === window.__hvGen) golive(); }, OPEN - Date.now() + 200); } else golive(); return; }
-        var t = Math.floor(ms / 1000), v = [Math.floor(t / 86400), Math.floor(t %% 86400 / 3600), Math.floor(t %% 3600 / 60), t %% 60];
+        var t = Math.floor(ms / 1000), v = [Math.floor(t / 86400), Math.floor(t % 86400 / 3600), Math.floor(t % 3600 / 60), t % 60];
         cells.forEach(function (c, k) { c.textContent = (v[k] < 10 ? "0" : "") + v[k]; });
         cells[0].parentNode.hidden = v[0] === 0;
         document.getElementById("hlCount").classList.add("ready");
-        setTimeout(htick, 1000 - Date.now() %% 1000 + 5);
+        setTimeout(htick, 1000 - Date.now() % 1000 + 5);
       };
       htick();
     }
@@ -1500,9 +1484,9 @@ window.hvPage = function () {
     var btick = function () {
       var ms = PREM - Date.now();
       if (ms <= 0) { goLoop(); return; }
-      var t = Math.floor(ms / 1000), d = Math.floor(t / 86400), h = Math.floor(t %% 86400 / 3600), m = Math.floor(t %% 3600 / 60), x = t %% 60;
+      var t = Math.floor(ms / 1000), d = Math.floor(t / 86400), h = Math.floor(t % 86400 / 3600), m = Math.floor(t % 3600 / 60), x = t % 60;
       bcnt.textContent = (d ? d + "d " : "") + (d || h ? p2(h) + "h " : "") + p2(m) + "m " + p2(x) + "s";
-      setTimeout(btick, 1000 - Date.now() %% 1000 + 5);
+      setTimeout(btick, 1000 - Date.now() % 1000 + 5);
     };
     if (Date.now() < PREM) { fo.classList.add("pre-prem"); bprem.hidden = false; btick(); } else goLoop();
     fo.addEventListener("click", function () {
@@ -1517,14 +1501,53 @@ window.hvPage = function () {
   }
   var els = document.querySelectorAll(".rv");
   if (!("IntersectionObserver" in window)) { els.forEach(function (e) { e.classList.add("in"); }); return; }
-  var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }); }, { rootMargin: "0px 0px -8%% 0px" });
+  var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }); }, { rootMargin: "0px 0px -8% 0px" });
   els.forEach(function (e) { if (e.getBoundingClientRect().top < innerHeight) { e.classList.add("now", "in"); } else io.observe(e); });
 };
 hvPage();
-</script>
+</script>"""
+
+def shell(path, title, desc, og, body, active):
+    nav = [("overview", "/", "Home", "opt"), ("test", "/test/", '<span class="d">HV </span>Test', ""),
+           ("reset", "/reset/", '<span class="d">HV </span>Reset', ""), ("vault", "/vault/", '<span class="d">HV </span>Vault', ""), ("watch", "/watch/", '<svg class="ni" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 8.3v7.4l6-3.7z" fill="currentColor"/></svg><span class="nt">Watch</span>', "ic")]
+    links = "".join('<a class="%s"%s%s href="%s">%s</a>' % (c, ' aria-current="page"' if k == active else "", ' aria-label="Watch"' if k == "watch" else "", h, t) for k, h, t, c in nav)
+    url = "https://harshvittori.github.io" + path
+    return '''<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script src="/status.js?v=2"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>%s</title>
+<meta name="description" content="%s">
+<meta name="theme-color" content="#F9F9FB">
+<link rel="canonical" href="%s">
+<link rel="preload" href="/media/fonts/Sora-SemiBold.ttf" as="font" type="font/ttf" crossorigin><link rel="preload" href="/media/fonts/Sora-Regular.ttf" as="font" type="font/ttf" crossorigin><link rel="icon" href="/icons/hv-world.svg" type="image/svg+xml"><link rel="icon" href="/icons/hv-world-32.png" type="image/png" sizes="32x32"><link rel="apple-touch-icon" href="/icons/hv-world-180.png" sizes="180x180"><link rel="manifest" href="/site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HV World">
+<meta property="og:title" content="%s">
+<meta property="og:description" content="%s">
+<meta property="og:url" content="%s">
+<meta property="og:image" content="%s">
+<meta property="og:image:type" content="image/jpeg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="%s">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="%s">
+<meta name="twitter:description" content="%s">
+<meta name="twitter:image" content="%s">
+<style>%s</style>
+</head>
+<body data-spa="hv">
+<a class="skip" href="#main">Skip to content</a>
+<header><div class="wrap nav"><a class="brand" href="/">%sHV World</a>
+<nav aria-label="Main">%s<a class="ic" aria-label="Riya's story" href="/story/"><svg class="ni" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5C10 5 7 4.5 3.5 5v13c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5z"/><path d="M12 6.5v13"/></svg><span class="nt"><span class="d">Riya's </span>Story</span></a></nav></div></header>
+%s
+<footer><div class="wrap row"><span>© <span id="yr">2026</span> HV World · Built by Harsh Goyal</span>
+<nav aria-label="Footer"><a href="/">Home</a><a href="/watch/">Watch</a><a href="/story/">Riya's story</a><a href="/test/">HV Test</a><a href="/reset/">HV Reset</a><a href="/vault/">HV Vault</a><a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/harshvittori" target="_blank" rel="noopener">GitHub</a><a href="/terms/">Terms</a><a href="/privacy/">Privacy</a></nav></div></footer>
+%s
 </body>
 </html>
-''' % (title, desc, url, title, desc, url, og, title, title, desc, og, CSS, logo("world"), links, body)
+''' % (title, desc, url, title, desc, url, og, title, title, desc, og, CSS, logo("world"), links, body, PAGE_SCRIPTS)
 
 def fill(page):
     page = page.replace("__PRODUCTS__", "\n".join(product(*p, flip=(i == 1)) for i, p in enumerate(PRODUCTS)))

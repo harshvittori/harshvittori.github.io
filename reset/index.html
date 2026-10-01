@@ -532,7 +532,7 @@ main>:first-child .rv,main>.rv:first-child,.hcar .rv,.rv.now{opacity:1!important
 @media (max-width:360px){.nav nav a.mn,.nav nav a.opt.mn{width:38px}.nav nav a.mn .mi svg{width:28px;height:28px}}
 </style>
 <meta name="google-site-verification" content="WtGtopvZbrat3GShsNNNpzE-VJOm1a9s4dlH3la4MPE" /><meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"><meta property="og:locale" content="en_IN"><meta name="author" content="Harsh Goyal"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://harshvittori.github.io/#org","name":"HV World","alternateName":"HVWorld","url":"https://harshvittori.github.io/","description":"HV World makes three free AI-powered apps for personal and career growth: HV Test (self-assessment), HV Reset (daily planner) and HV Vault (job search tracker), with HV AI built in.","foundingDate":"2026-10-01","logo":"https://harshvittori.github.io/icons/hv-world-512.png","founder":{"@type":"Person","name":"Harsh Goyal","url":"https://www.linkedin.com/in/harshvittori"},"sameAs":["https://www.linkedin.com/in/harshvittori","https://www.youtube.com/watch?v=SaSfRrtvrTg"]},{"@type":"WebApplication","@id":"https://harshvittori.github.io/hv-reset/#app","name":"HV Reset","url":"https://harshvittori.github.io/hv-reset/","description":"Free daily planner: one task at a time, a day that adjusts when you're late, and a personal dashboard for time, focus and streaks.","applicationCategory":"LifestyleApplication","operatingSystem":"Any (web browser)","inLanguage":["en","hi"],"offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"publisher":{"@id":"https://harshvittori.github.io/#org"},"mainEntityOfPage":"https://harshvittori.github.io/reset/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"HV World","item":"https://harshvittori.github.io/"},{"@type":"ListItem","position":2,"name":"HV Reset","item":"https://harshvittori.github.io/reset/"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Do I have to plan every task myself?","acceptedAnswer":{"@type":"Answer","text":"No. Pick a ready plan and change it, or tell HV AI your day in one sentence and it builds the plan."}},{"@type":"Question","name":"What happens if I fall behind?","acceptedAnswer":{"@type":"Answer","text":"Tap to shift the rest of the day, pause the task, move it to tomorrow, or do a shorter version."}},{"@type":"Question","name":"What does the dashboard show?","acceptedAnswer":{"@type":"Answer","text":"Your time, focus, punctuality, streaks, a productivity score, trends, a calendar heatmap, goals and habits, and daily, weekly and monthly reports. Every number comes from what you really did, and nothing is made up."}},{"@type":"Question","name":"Do I need an account?","acceptedAnswer":{"@type":"Answer","text":"No. Try it freely. Sign in with Google to save your plan, keep your dashboard history, and use it on phone and laptop."}},{"@type":"Question","name":"Does it work with HV Vault?","acceptedAnswer":{"@type":"Answer","text":"Yes, if you use both. HV Reset works fully on its own. If you also use HV Vault with the same Google account, HV Reset shows your follow-ups due and this week's numbers from it, and HV AI knows about them."}},{"@type":"Question","name":"Who can use it?","acceptedAnswer":{"@type":"Answer","text":"Everyone. It's free for everyone, HV AI included, and runs right in your browser."}}]}]}</script>
-<script type="speculationrules">{"prerender":[{"urls":["/story/"],"eagerness":"moderate"}]}</script><!-- ["/", "/test/", "/reset/", "/vault/", "/watch/", "/story/"]: the other pages open in place, see site.py -->
+<!-- ["/", "/test/", "/reset/", "/vault/", "/watch/", "/story/"]: pages open in place, see site.py -->
 <script>
 // reload keeps the reader exactly where they were: the browser's own restore can land a little lower each time
 // (smooth scrolling plus content settling above), so the page saves its position and puts it back instantly
@@ -637,10 +637,10 @@ main>:first-child .rv,main>.rv:first-child,.hcar .rv,.rv.now{opacity:1!important
 <script>
 // In-page navigation between the HV World pages that share this layout: a click fetches the next page, swaps only
 // <main> (plus title, meta tags and page styles) and updates the URL, so the header stays put and nothing reloads.
-// Pages outside this layout (Riya's story, the apps) and anything unusual fall back to a normal page load.
+// Pages outside this layout (the apps) and anything unusual fall back to a normal page load.
 (function () {
   if (!window.fetch || !window.DOMParser || !history.pushState) return;
-  var ROUTES = ["/", "/test/", "/reset/", "/vault/", "/watch/", "/terms/", "/privacy/"], ORDER = ["/", "/test/", "/reset/", "/vault/", "/watch/", "/story/"];
+  var ROUTES = ["/", "/test/", "/reset/", "/vault/", "/watch/", "/story/", "/terms/", "/privacy/"], ORDER = ["/", "/test/", "/reset/", "/vault/", "/watch/", "/story/"];
   var cache = {}, busy = 0, cur = location.pathname.replace(/index\.html$/, "");
   var path = function (u) { return u.pathname.replace(/index\.html$/, ""); };
   var ok = function (u) { return u.origin === location.origin && ROUTES.indexOf(path(u)) > -1; };
@@ -725,7 +725,27 @@ window.hvPage = function () {
   document.querySelectorAll(".grtoast").forEach(function (t) { t.remove(); });
   var setTimeout = function (f, t) { return window.setTimeout(function () { if (GEN === window.__hvGen) f(); }, t); };
   var setInterval = function (f, t) { var id = window.setInterval(function () { if (GEN === window.__hvGen) f(); else clearInterval(id); }, t); return id; };
-  document.getElementById("yr").textContent = new Date().getFullYear();
+  var yr = document.getElementById("yr"); if (yr) yr.textContent = new Date().getFullYear();
+  // Riya's story: the header stays hidden until the first chapter, and each chapter's scene follows the step in the
+  // middle of the screen. Listeners from a previous visit to the story are removed first.
+  (function () {
+    if (window.__hvStoryOff) { window.__hvStoryOff(); window.__hvStoryOff = null; }
+    var hd = document.querySelector("header"), sm = document.querySelector('#main[data-page="story"]');
+    if (!sm) { if (hd) hd.classList.remove("hid"); return; }
+    var first = document.getElementById("test"), obs = [];
+    var bar = function () { if (hd && first) hd.classList.toggle("hid", first.getBoundingClientRect().top > innerHeight * .55); };
+    addEventListener("scroll", bar, { passive: true }); addEventListener("resize", bar); bar();
+    sm.querySelectorAll(".scrolly").forEach(function (sc) {
+      var stage = sc.querySelector(".stage"), steps = sc.querySelectorAll(".step");
+      if (!stage || !steps.length) return;
+      if (!("IntersectionObserver" in window)) { stage.setAttribute("data-step", "4"); steps.forEach(function (s) { s.classList.add("on"); }); return; }
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (!e.isIntersecting) return; steps.forEach(function (s) { s.classList.toggle("on", s === e.target); }); stage.setAttribute("data-step", e.target.getAttribute("data-step")); });
+      }, { rootMargin: "-45% 0px -45% 0px", threshold: 0 });
+      steps.forEach(function (s) { io.observe(s); }); steps[0].classList.add("on"); obs.push(io);
+    });
+    window.__hvStoryOff = function () { removeEventListener("scroll", bar); removeEventListener("resize", bar); obs.forEach(function (o) { o.disconnect(); }); };
+  })();
   // dashboard showcase: pointing at a highlight enlarges its number on the picture
   document.querySelectorAll(".sc-pts li").forEach(function (li) {
     var mk = document.querySelector('.mk[data-n="' + li.dataset.n + '"]');
