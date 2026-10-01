@@ -737,6 +737,24 @@ main>:first-child .rv,main>.rv:first-child,.hcar .rv,.rv.now{opacity:1!important
 <footer><div class="wrap row"><span>© <span id="yr">2026</span> HV World · Built by Harsh Goyal</span>
 <nav aria-label="Footer"><a href="/">Home</a><a href="/watch/">Watch</a><a href="/story/">Riya's story</a><a href="/test/">HV Test</a><a href="/reset/">HV Reset</a><a href="/vault/">HV Vault</a><a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/harshvittori" target="_blank" rel="noopener">GitHub</a><a href="/terms/">Terms</a><a href="/privacy/">Privacy</a></nav></div></footer>
 <script>
+// back to top: a small glass button that appears after scrolling down and glides back to the top.
+// Lives outside <main>, so it stays put across in-page navigation; styles are inline so page style swaps don't touch it.
+(function () {
+  var b = document.createElement("button"), on = false, still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  b.type = "button"; b.className = "hvtop"; b.setAttribute("aria-label", "Back to top"); b.title = "Back to top";
+  b.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"/></svg>';
+  b.style.cssText = "position:fixed;right:16px;bottom:calc(18px + env(safe-area-inset-bottom));z-index:2147483000;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;padding:0;cursor:pointer;color:#2E43A6;" +
+    "background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(18px) saturate(1.6);backdrop-filter:blur(18px) saturate(1.6);border:1px solid rgba(255,255,255,.9);" +
+    "box-shadow:inset 0 1px 0 #fff,0 10px 26px -10px rgba(25,35,80,.45);opacity:0;transform:translateY(10px) scale(.9);pointer-events:none;transition:opacity .25s ease,transform .25s ease";
+  var show = function (v) { if (v === on) return; on = v; b.style.opacity = v ? "1" : "0"; b.style.transform = v ? "none" : "translateY(10px) scale(.9)"; b.style.pointerEvents = v ? "auto" : "none"; b.tabIndex = v ? 0 : -1; };
+  var check = function () { show(scrollY > Math.max(600, innerHeight * 1.2)); };
+  b.addEventListener("click", function () { scrollTo({ top: 0, left: 0, behavior: still ? "instant" : "smooth" }); b.blur(); });
+  var add = function () { document.body.appendChild(b); check(); };
+  if (document.body) add(); else document.addEventListener("DOMContentLoaded", add);
+  addEventListener("scroll", check, { passive: true }); addEventListener("resize", check);
+})();
+</script>
+<script>
 // In-page navigation between the HV World pages that share this layout: a click fetches the next page, swaps only
 // <main> (plus title, meta tags and page styles) and updates the URL, so the header stays put and nothing reloads.
 // Pages outside this layout (the apps) and anything unusual fall back to a normal page load.
