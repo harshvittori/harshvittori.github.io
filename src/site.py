@@ -1147,7 +1147,8 @@ PAGE_SCRIPTS = """<script>
   var swap = function (doc, u, y) {
     document.title = doc.title;
     HEAD.forEach(function (sel) { var a = document.head.querySelector(sel), b = doc.head.querySelector(sel); if (!a || !b) return; var at = a.hasAttribute("content") ? "content" : "href"; a.setAttribute(at, b.getAttribute(at)); });
-    var sa = document.head.querySelector("style"), sb = doc.head.querySelector("style");
+    // the page's own stylesheet (other <style> tags, e.g. from /status.js, are left alone)
+    var sa = document.getElementById("hvcss"), sb = doc.getElementById("hvcss");
     if (sa && sb && sa.textContent !== sb.textContent) sa.textContent = sb.textContent;
     var m = document.getElementById("main"), n = doc.getElementById("main");
     m.replaceWith(document.adoptNode(n));
@@ -1553,7 +1554,7 @@ def shell(path, title, desc, og, body, active):
 <meta name="twitter:title" content="%s">
 <meta name="twitter:description" content="%s">
 <meta name="twitter:image" content="%s">
-<style>%s</style>
+<style id="hvcss">%s</style>
 </head>
 <body data-spa="hv">
 <a class="skip" href="#main">Skip to content</a>
