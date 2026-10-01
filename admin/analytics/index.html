@@ -192,7 +192,7 @@ details summary{cursor:pointer;font-size:13px;color:var(--accent);margin-top:8px
     var tot = 0; Object.keys(obj).forEach(function (k) { tot += obj[k]; }); var mx = obj[ks[0]];
     return ks.map(function (k) { return '<div class="bl" title="' + esc(k) + ': ' + obj[k] + '"><span>' + esc((opts.label || String)(k)) + '</span><div class="t" style="width:' + Math.max(1, obj[k] / mx * 100) + '%"></div><em>' + fmt(obj[k]) + ' · ' + pct(obj[k], tot) + '</em></div>'; }).join("");
   }
-  var CH = { direct: "Direct", search: "Search engines", linkedin: "LinkedIn", instagram: "Instagram", youtube: "YouTube", whatsapp: "WhatsApp", facebook: "Facebook", x: "X / Twitter", email: "Email", community: "Communities", referral: "Other websites", paid: "Paid ads", shared: "Shared by users", campaign_other: "Other campaigns", ai_assistant: "AI assistants", github: "GitHub", from_world: "From HV World", from_test: "From HV Test", from_reset: "From HV Reset", from_vault: "From HV Vault", internal: "Within the product" };
+  var CH = { direct: "Direct", search: "Search engines", linkedin: "LinkedIn", instagram: "Instagram", youtube: "YouTube", whatsapp: "WhatsApp", facebook: "Facebook", x: "X / Twitter", email: "Email", community: "Communities", referral: "Other websites", paid: "Paid ads", shared: "Shared by users", qr: "QR code / offline", campaign_other: "Other campaigns", ai_assistant: "AI assistants", github: "GitHub", from_world: "From HV World", from_test: "From HV Test", from_reset: "From HV Reset", from_vault: "From HV Vault", internal: "Within the product" };
   var chName = function (k) { return CH[k] || k; };
   function lineChart(series, labels, opts) {
     opts = opts || {}; var W = 860, H = 240, L = 40, R = 12, T = 12, B = 26, n = labels.length;
@@ -285,7 +285,11 @@ details summary{cursor:pointer;font-size:13px;color:var(--accent);margin-top:8px
   function linksView() {
     var month = new Date().toISOString().slice(0, 7).replace("-", "");
     var opts = function (arr) { return arr.map(function (a, i) { return '<option value="' + i + '">' + esc(a[0]) + '</option>'; }).join(""); };
-    var html = '<div class="card glass"><h3>Link maker</h3><p class="sub">Pick what you are sharing and where. Copy the link and share it as is. Every visit is then counted under that channel and campaign.</p>' +
+    var SH = [["WhatsApp", "wa"], ["Instagram", "ig"], ["LinkedIn", "li"], ["YouTube", "yt"], ["X / Twitter", "x"], ["Facebook", "fb"], ["Email", "em"], ["QR code / poster", "qr"]];
+    var SP = [["Home", ""], ["HV Test", "test"], ["HV Reset", "reset"], ["HV Vault", "vault"], ["Riya's story", "story"], ["Film", "watch"]];
+    var html = '<div class="card glass"><h3>Short links (easiest)</h3><p class="sub">Share these as they are. They look like normal links and are counted by where you shared them. Click to copy.</p><table class="tb"><tr><th>Where</th>' + SP.map(function (x) { return '<th>' + esc(x[0]) + '</th>'; }).join("") + '</tr>' +
+      SH.map(function (c) { return '<tr><td>' + esc(c[0]) + '</td>' + SP.map(function (x) { var u = "https://harshvittori.github.io/" + c[1] + (x[1] ? "/" + x[1] : ""); return '<td><a href="#" data-copy="' + esc(u) + '" title="' + esc(u) + '">/' + c[1] + (x[1] ? "/" + x[1] : "") + '</a></td>'; }).join("") + '</tr>'; }).join("") + '</table></div>';
+    html += '<div class="card glass"><h3>Link maker</h3><p class="sub">Pick what you are sharing and where. Copy the link and share it as is. Every visit is then counted under that channel and campaign.</p>' +
       '<div class="fbar" style="flex-wrap:wrap"><label>Page <select id="lkPage">' + opts(PAGES) + '</select></label><label>Where <select id="lkCh">' + opts(CHANNELS) + '</select></label>' +
       '<label>Campaign <input id="lkCmp" value="' + month + '_launch" style="border:1px solid var(--line);border-radius:10px;padding:6px 10px;width:170px"></label>' +
       '<label>Post / version <input id="lkCnt" placeholder="optional, e.g. reel1" style="border:1px solid var(--line);border-radius:10px;padding:6px 10px;width:150px"></label></div>' +
