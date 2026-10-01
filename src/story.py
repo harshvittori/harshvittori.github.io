@@ -779,7 +779,7 @@ PAGE = """<!DOCTYPE html>
 <meta name="twitter:image" content="https://harshvittori.github.io/story/og.jpg?v=4">
 <link rel="icon" href="/icons/hv-world.svg" type="image/svg+xml"><link rel="icon" href="/icons/hv-world-32.png" type="image/png" sizes="32x32"><link rel="apple-touch-icon" href="/icons/hv-world-180.png" sizes="180x180"><link rel="manifest" href="/site.webmanifest">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"HV World","url":"https://harshvittori.github.io/"}</script>
-<style>__CSS__</style>
+<style id="hvcss">__CSS__</style>
 </head>
 <body data-spa="hv">
 <a class="skip" href="#main">Skip to content</a>

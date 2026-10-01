@@ -21,7 +21,7 @@
 <meta name="twitter:title" content="Privacy Policy | HV World">
 <meta name="twitter:description" content="What data HV World, HV Test, HV Reset, HV Vault and HV AI collect, why, and your rights.">
 <meta name="twitter:image" content="https://harshvittori.github.io/og.jpg">
-<style>
+<style id="hvcss">
 :root{--ink:#1D1D1F;--soft:#6E6E73;--faint:#86868B;--line:#E4E5EA;--gray:#F2F3F6;--bg:#F9F9FB;--accent:#2E43A6;--accent-hover:#1D2B72;
   --test:#127A4F;--reset:#4A72C8;--vault:#A87A22;--font:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;color-scheme:light}
 *{box-sizing:border-box}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
@@ -784,7 +784,8 @@ main>:first-child .rv,main>.rv:first-child,.hcar .rv,.rv.now{opacity:1!important
   var swap = function (doc, u, y) {
     document.title = doc.title;
     HEAD.forEach(function (sel) { var a = document.head.querySelector(sel), b = doc.head.querySelector(sel); if (!a || !b) return; var at = a.hasAttribute("content") ? "content" : "href"; a.setAttribute(at, b.getAttribute(at)); });
-    var sa = document.head.querySelector("style"), sb = doc.head.querySelector("style");
+    // the page's own stylesheet (other <style> tags, e.g. from /status.js, are left alone)
+    var sa = document.getElementById("hvcss"), sb = doc.getElementById("hvcss");
     if (sa && sb && sa.textContent !== sb.textContent) sa.textContent = sb.textContent;
     var m = document.getElementById("main"), n = doc.getElementById("main");
     m.replaceWith(document.adoptNode(n));
