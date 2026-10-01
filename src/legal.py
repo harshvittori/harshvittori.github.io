@@ -2,7 +2,7 @@
 # Keep these in step with what the apps really do. When a feature changes how data is handled,
 # update the matching section here and the "Last updated" date.
 
-UPDATED = "29 September 2026"
+UPDATED = "1 October 2026"
 CONTACT = ('<a href="https://www.linkedin.com/in/harshvittori" target="_blank" rel="noopener">LinkedIn (Harsh Goyal)</a> '
            'or <a href="https://github.com/harshvittori" target="_blank" rel="noopener">GitHub (harshvittori)</a>')
 
@@ -156,6 +156,7 @@ PRIVACY = [
 ("short", "2. The short version", """
 <ul>
 <li><b>No ads, no trackers, no analytics.</b> We do not use advertising, analytics or tracking tools, and we do not sell or rent your data.</li>
+<li><b>We don't look at your data.</b> Your account data is private to you. We do not look at what you save in it.</li>
 <li><b>HV Test</b> needs no account. Your answers, age and profession stay in your browser. We save data only if you choose to save a scorecard, plus an anonymous count of finished tests.</li>
 <li><b>HV Reset</b> works without an account, saving on your device. If you sign in, your plan and history sync to your private account.</li>
 <li><b>HV Vault</b> uses Google sign-in and stores your job search in your private account. Only you can read it.</li>
@@ -216,7 +217,7 @@ PRIVACY = [
 <li>To respond to your requests and complaints, and to meet legal obligations.</li>
 </ul>
 <p>Our legal basis is your <b>consent</b>, given when you choose to use a feature (for example signing in, saving a scorecard or asking HV AI), and certain legitimate uses allowed by the DPDP Act, such as complying with law. You can withdraw consent at any time by stopping use of the feature and deleting the related data. Withdrawing consent does not affect processing already done.</p>
-<p>We do <b>not</b> use your data for advertising, we do not sell or rent it, and we do not use your content to train our own AI models.</p>
+<p>We do <b>not</b> look at the contents of your account, we do not use your data for advertising, we do not sell or rent it, and we do not use your content to train our own AI models.</p>
 """),
 ("share", "6. Who we share data with", """
 <p>We share data only with service providers that run parts of the Services for us, and only as needed:</p>
