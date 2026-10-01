@@ -155,7 +155,7 @@ PRIVACY = [
 """),
 ("short", "2. The short version", """
 <ul>
-<li><b>No ads, no trackers, no analytics.</b> We do not use advertising, analytics or tracking tools, and we do not sell or rent your data.</li>
+<li><b>No ads, no third-party trackers.</b> We do not use advertising or third-party tracking tools, and we do not sell or rent your data. We count visits and feature use anonymously with our own simple tool (no cookies, no names, no IDs) to see what helps people. <a href="/privacy/#analytics">How it works and how to opt out</a>.</li>
 <li><b>We don't look at your data.</b> Your account data is private to you. We do not look at what you save in it.</li>
 <li><b>HV Test</b> needs no account. Your answers, age and profession stay in your browser. We save data only if you choose to save a scorecard, plus an anonymous count of finished tests.</li>
 <li><b>HV Reset</b> works without an account, saving on your device. If you sign in, your plan and history sync to your private account.</li>
@@ -274,10 +274,20 @@ PRIVACY = [
 <li>You can clear this data from your browser settings at any time. Clearing it removes data that is saved only on that device.</li>
 </ul>
 """),
-("changes", "13. Changes to this policy", """
+("analytics", "13. Anonymous usage counts", """
+<p>To learn which pages and features help people, the Services count visits and actions with our own simple tool. It does not use cookies or third-party analytics services.</p>
+<ul>
+<li><b>What is counted:</b> numbers only, per day, such as visits, page views, how a visit arrived (for example "LinkedIn", "search" or a campaign name in the link), device type, browser, operating system, a broad region guessed from your browser's time zone, and actions such as "test started", "task completed" or "job added".</li>
+<li><b>What is never sent:</b> your name, email, account ID, IP-based location, answers, scores, task or job details, notes, files or anything you type. Counts cannot be linked back to you.</li>
+<li><b>On your device:</b> to tell new visits from returning ones, your browser keeps a small note in local storage (for example the day of your first visit). It stays on your device.</li>
+<li><b>Who can see it:</b> only the HV World admin, as totals.</li>
+<li><b>Your choice:</b> browsers that send "Do Not Track" or "Global Privacy Control" are never counted. You can also <a href="/privacy/?hvoptout=1">turn counting off on this device</a> (or <a href="/privacy/?hvoptin=1">turn it back on</a>).</li>
+</ul>
+"""),
+("changes", "14. Changes to this policy", """
 <p>We may update this policy as the Services change. The "Last updated" date at the top shows the latest version. If we make a significant change to how we use personal data, we will point it out on the website or in the apps, and ask for your consent again where the law requires.</p>
 """),
-("contact", "14. Contact and grievance officer", """
+("contact", "15. Contact and grievance officer", """
 <p>For privacy questions, requests to access, correct or delete your data, to remove a scorecard, or to raise a grievance, contact <b>Harsh Goyal</b>, Grievance Officer and Data Fiduciary for the Services, through """ + CONTACT + """.</p>
 <p>We will acknowledge your message within <b>24 hours</b> and aim to resolve it within <b>15 days</b>, or sooner where the law requires. If you are not satisfied with our response, you may complain to the Data Protection Board of India.</p>
 """),

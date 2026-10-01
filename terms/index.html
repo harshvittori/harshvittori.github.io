@@ -868,6 +868,8 @@ window.hvPage = function () {
     var syncMute = function () { var m = P.isMuted(); ctl.classList.toggle("muted", m); bMute.setAttribute("aria-label", m ? "Unmute" : "Mute"); };
     var onState = function (e) {
       var st = e.data;
+      if (st === 1 && !played && window.hva) hva("event", "video_play");
+      if (st === 0 && window.hva) hva("event", "video_complete");
       if (st === 1) { played = true; clearTimeout(ytTimer); cover.hidden = true; ctl.hidden = false; box.classList.remove("ytend"); again.hidden = true; ctl.classList.remove("paused"); bPlay.setAttribute("aria-label", "Pause"); syncMute(); paint(); idle(); }
       else if (st === 2) { ctl.classList.add("paused"); bPlay.setAttribute("aria-label", "Play"); clearTimeout(idleT); ctl.classList.remove("dim"); paint(); }
       else if (st === 0) { ctl.hidden = true; box.classList.add("ytend"); again.hidden = false; }
