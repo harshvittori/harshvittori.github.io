@@ -362,9 +362,15 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{color:var(--soft)}
 @view-transition{navigation:auto}
 header{view-transition-name:site-header}
 main{view-transition-name:page}
-::view-transition-group(site-header){animation:none}
-::view-transition-old(site-header){display:none}
-::view-transition-new(site-header){animation:none}
+/* the menu crossfades (plus-lighter keeps it from dimming halfway), so going dark on /watch/ and back to light is smooth;
+   on pages where the menu looks the same the two pictures match and nothing visibly moves */
+::view-transition-group(site-header){animation-duration:.42s}
+::view-transition-old(site-header),::view-transition-new(site-header){height:100%;mix-blend-mode:plus-lighter}
+::view-transition-old(site-header){animation:vt-fade-out .42s ease both}
+::view-transition-new(site-header){animation:vt-fade-in .42s ease both}
+/* browsers without view transitions: the colours themselves ease */
+header{transition:background-color .42s ease,border-color .42s ease}.brand{transition:color .42s ease}
+footer{transition:background-color .42s ease,color .42s ease,border-color .42s ease}
 /* page switch: a quick, quiet crossfade, no sliding (the content should feel like it simply changes) */
 ::view-transition-group(page){animation-duration:.14s}
 ::view-transition-old(page){animation:vt-fade-out .09s linear both}
@@ -660,6 +666,37 @@ window.hvPage = function () {
       if (window.hva) hva("event", "security_video_play");
     });
   })();
+  // Watch page: the chip of the video in view lights up; tapping a chip scrolls to its video
+  (function () {
+    var vn = document.querySelector(".vnav"); if (!vn) return;
+    var links = [].slice.call(vn.querySelectorAll("a")), secs = links.map(function (a) { return document.querySelector(a.getAttribute("href")); });
+    links.forEach(function (a, i) { if (!secs[i] || secs[i].hidden) a.hidden = true;
+      a.addEventListener("click", function (e) { e.preventDefault(); secs[i].scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" }); }); });
+    var mark = function () { if (GEN !== window.__hvGen) return removeEventListener("scroll", mark);   // left the page
+      var y = innerHeight * .45, cur = 0; secs.forEach(function (s, i) { if (s && !s.hidden && s.getBoundingClientRect().top < y) cur = i; });
+      links.forEach(function (a, i) { a.classList.toggle("on", i === cur); }); };
+    addEventListener("scroll", mark, { passive: true }); mark();
+  })();
+  document.querySelectorAll(".vplay").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var box = document.createElement("div"); box.className = "filmbox";
+      var f = document.createElement("iframe");
+      f.src = "https://www.youtube-nocookie.com/embed/" + b.dataset.yt + "?autoplay=1&rel=0&playsinline=1&modestbranding=1";
+      f.title = b.dataset.t; f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen"; f.allowFullscreen = true;
+      box.appendChild(f); b.replaceWith(box);
+      if (window.hva && b.dataset.ev) hva("event", b.dataset.ev, b._thumb ? { thumb: b._thumb } : undefined);
+    });
+    // rotating thumbnails: a new one every 5 s while the card is on screen (not with reduced motion)
+    var tt = b.querySelectorAll(".tt"); if (tt.length < 2) return;
+    var i = 0; tt.forEach(function (im, j) { if (im.classList.contains("on")) i = j; }); b._thumb = tt[i].dataset.k;
+    if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var seen = false; if ("IntersectionObserver" in window) new IntersectionObserver(function (es) { seen = es[0].isIntersecting; }).observe(b); else seen = true;
+    setInterval(function () {
+      if (!seen || document.hidden || !b.isConnected) return;
+      b.classList.remove("t-" + tt[i].dataset.k); tt[i].classList.remove("on");
+      i = (i + 1) % tt.length; tt[i].classList.add("on"); b.classList.add("t-" + tt[i].dataset.k); b._thumb = tt[i].dataset.k;
+    }, 5000);
+  });
   // Riya's story: the header stays hidden until the first chapter, and each chapter's scene follows the step in the
   // middle of the screen. Listeners from a previous visit to the story are removed first.
   (function () {
