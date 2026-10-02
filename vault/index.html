@@ -776,6 +776,17 @@ window.hvPage = function () {
       if (window.hva) hva("event", "security_video_play");
     });
   })();
+  // Watch page: the chip of the video in view lights up; tapping a chip scrolls to its video
+  (function () {
+    var vn = document.querySelector(".vnav"); if (!vn) return;
+    var links = [].slice.call(vn.querySelectorAll("a")), secs = links.map(function (a) { return document.querySelector(a.getAttribute("href")); });
+    links.forEach(function (a, i) { if (!secs[i] || secs[i].hidden) a.hidden = true;
+      a.addEventListener("click", function (e) { e.preventDefault(); secs[i].scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" }); }); });
+    var mark = function () { if (GEN !== window.__hvGen) return removeEventListener("scroll", mark);   // left the page
+      var y = innerHeight * .45, cur = 0; secs.forEach(function (s, i) { if (s && !s.hidden && s.getBoundingClientRect().top < y) cur = i; });
+      links.forEach(function (a, i) { a.classList.toggle("on", i === cur); }); };
+    addEventListener("scroll", mark, { passive: true }); mark();
+  })();
   document.querySelectorAll(".vplay").forEach(function (b) {
     b.addEventListener("click", function () {
       var box = document.createElement("div"); box.className = "filmbox";
