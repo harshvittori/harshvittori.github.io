@@ -386,8 +386,12 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
 .filmbox video{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
 .filmbox img,.filmbox iframe{width:100%;height:100%;object-fit:cover;display:block;border:0}
 .secv{margin-bottom:56px}.secv[hidden]{display:none}
-.tutsec{margin-bottom:56px}.tutv .play{top:80%}.tutk .play{left:24.6%;top:46.5%}
-@media (max-width:560px){.tutv .play{width:54px;height:54px;top:82%}.tutk .play{top:46.5%}.tutv .play svg{width:20px;height:20px}}
+.tutsec{margin-bottom:56px}
+.tutv .tt{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease}.tutv .tt.on{opacity:1}
+.tutv .play{transition:left .9s cubic-bezier(.4,0,.2,1),top .9s cubic-bezier(.4,0,.2,1),transform .25s}
+.tutv.t-j .play{left:50%;top:80%}.tutv.t-k .play{left:24.6%;top:46.5%}.tutv.t-l .play{left:86%;top:60%}
+@media (max-width:560px){.tutv .play{width:54px;height:54px}.tutv .play svg{width:20px;height:20px}}
+@media (prefers-reduced-motion:reduce){.tutv .tt,.tutv .play{transition:none}}
 .secv .play{left:84.4%;top:63%}
 @media (max-width:560px){.secv .play{width:50px;height:50px;top:70%;box-shadow:0 0 0 6px rgba(255,255,255,.25),0 12px 26px -10px rgba(0,0,0,.5)}.secv .play svg{width:19px;height:19px;margin-left:3px}}
 @media (max-width:880px){.secv{margin-bottom:40px}}
@@ -1043,8 +1047,12 @@ def app_page(key):
 
 
 TUTORIAL_YT = "LS57TvSbOwM"
-TUTORIAL_BTN = ('<button type="button" class="filmbox vplay tutv" data-yt="%s" data-t="How to use HV Reset: full tutorial" data-ev="reset_tutorial_play" '
-                'aria-label="Play the video: How to use HV Reset, full tutorial"><img src="/media/__TUTIMG__" alt="" width="1280" height="720" loading="lazy" decoding="async"><span class="play"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg></i></span></button>') % TUTORIAL_YT
+# the tutorial card cycles through three thumbnails (each place starts on a different one); the play button moves to an empty spot on each
+TUT_THUMBS = [("j", "hv-reset-tutorial-thumb.jpg"), ("k", "hv-reset-tutorial-thumb-k.jpg"), ("l", "hv-reset-tutorial-thumb-l.jpg")]
+def tutorial_btn(start):
+    imgs = "".join('<img class="tt%s" data-k="%s" src="/media/%s" alt="" width="1280" height="720" loading="lazy" decoding="async">' % (" on" if k == start else "", k, f) for k, f in TUT_THUMBS)
+    return ('<button type="button" class="filmbox vplay tutv t-%s" data-yt="%s" data-t="How to use HV Reset: full tutorial" data-ev="reset_tutorial_play" '
+            'aria-label="Play the video: How to use HV Reset, full tutorial">%s%s</button>') % (start, TUTORIAL_YT, imgs, '<span class="play"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg></i></span>')
 FILM_MAIN = """<main id="main" class="filmpage">
   <section class="wrap fp">
     <p class="label">HV World in action</p>
@@ -1266,8 +1274,18 @@ window.hvPage = function () {
       f.src = "https://www.youtube-nocookie.com/embed/" + b.dataset.yt + "?autoplay=1&rel=0&playsinline=1&modestbranding=1";
       f.title = b.dataset.t; f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen"; f.allowFullscreen = true;
       box.appendChild(f); b.replaceWith(box);
-      if (window.hva && b.dataset.ev) hva("event", b.dataset.ev);
+      if (window.hva && b.dataset.ev) hva("event", b.dataset.ev, b._thumb ? { thumb: b._thumb } : undefined);
     });
+    // rotating thumbnails: a new one every 5 s while the card is on screen (not with reduced motion)
+    var tt = b.querySelectorAll(".tt"); if (tt.length < 2) return;
+    var i = 0; tt.forEach(function (im, j) { if (im.classList.contains("on")) i = j; }); b._thumb = tt[i].dataset.k;
+    if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var seen = false; if ("IntersectionObserver" in window) new IntersectionObserver(function (es) { seen = es[0].isIntersecting; }).observe(b); else seen = true;
+    setInterval(function () {
+      if (!seen || document.hidden || !b.isConnected) return;
+      b.classList.remove("t-" + tt[i].dataset.k); tt[i].classList.remove("on");
+      i = (i + 1) % tt.length; tt[i].classList.add("on"); b.classList.add("t-" + tt[i].dataset.k); b._thumb = tt[i].dataset.k;
+    }, 5000);
   });
   // Riya's story: the header stays hidden until the first chapter, and each chapter's scene follows the step in the
   // middle of the screen. Listeners from a previous visit to the story are removed first.
@@ -1636,7 +1654,7 @@ def fill(page):
     for k in ("TEST", "RESET", "VAULT"):
         page = page.replace("__U_%s__" % k, URL[k.lower()])
     page = re.sub(r"__LOGO_(AI|WORLD|TEST|RESET|VAULT)(_P)?__", lambda m: logo(m.group(1).lower()), page)
-    page = page.replace("__PLAYER__", PLAYER_HTML).replace("__TUTORIAL__", TUTORIAL_BTN.replace("__TUTIMG__", "hv-reset-tutorial-thumb.jpg")).replace("__TUTORIAL_K__", TUTORIAL_BTN.replace("__TUTIMG__", "hv-reset-tutorial-thumb-k.jpg").replace("vplay tutv", "vplay tutv tutk"))
+    page = page.replace("__PLAYER__", PLAYER_HTML).replace("__TUTORIAL__", tutorial_btn("j")).replace("__TUTORIAL_K__", tutorial_btn("k"))
     left = re.findall(r"__[A-Z_]+__", page)
     assert not left, left
     return page
