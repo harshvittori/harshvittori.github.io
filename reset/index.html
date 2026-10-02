@@ -271,6 +271,8 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
 .filmbox video{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
 .filmbox img,.filmbox iframe{width:100%;height:100%;object-fit:cover;display:block;border:0}
 .secv{margin-bottom:56px}.secv[hidden]{display:none}
+.tutsec{margin-bottom:56px}.tutv .play{top:80%}
+@media (max-width:560px){.tutv .play{width:54px;height:54px;top:82%}.tutv .play svg{width:20px;height:20px}}
 .secv .play{left:84.4%;top:63%}
 @media (max-width:560px){.secv .play{width:50px;height:50px;top:70%;box-shadow:0 0 0 6px rgba(255,255,255,.25),0 12px 26px -10px rgba(0,0,0,.5)}.secv .play svg{width:19px;height:19px;margin-left:3px}}
 @media (max-width:880px){.secv{margin-bottom:40px}}
@@ -588,7 +590,7 @@ main>:first-child .rv,main>.rv:first-child,.hcar .rv,.rv.now{opacity:1!important
       <p class="crumb"><a href="/">HV World</a> <span>/</span> HV Reset</p>
       <div class="pname"><svg aria-hidden="true" focusable="false" viewBox="0 0 1024 1024"><defs><linearGradient id="hvrbg-42" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5B86D6"/><stop offset=".55" stop-color="#9C8BDA"/><stop offset="1" stop-color="#F2A77E"/></linearGradient><radialGradient id="hvrsun-42" cx=".5" cy=".42" r=".6"><stop offset="0" stop-color="#FFF6DA"/><stop offset=".6" stop-color="#FFD58F"/><stop offset="1" stop-color="#FFB066"/></radialGradient><radialGradient id="hvrglow-42" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFE9B8" stop-opacity=".75"/><stop offset="1" stop-color="#FFE9B8" stop-opacity="0"/></radialGradient></defs><rect width="1024" height="1024" rx="232" fill="url(#hvrbg-42)"/><circle cx="512" cy="530" r="300" fill="url(#hvrglow-42)"/><circle cx="512" cy="530" r="138" fill="url(#hvrsun-42)"/><path d="M704 318A292 292 0 1 1 452 244" fill="none" stroke="#fff" stroke-width="62" stroke-linecap="round"/><path d="M548 225L454 318L424 176Z" fill="#fff" stroke="#fff" stroke-width="30" stroke-linejoin="round"/></svg><div><h1>HV Reset</h1><p class="verb">Plan your day. See your progress.</p></div></div>
       <p class="lead">Plan your day, do one task at a time, and see what you really did. Your own dashboard shows where your time goes and whether you're getting better.</p>
-      <div class="ctas"><a class="btn" href="https://harshvittori.github.io/hv-reset/" target="_blank" rel="noopener">Open HV Reset <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn ghost" href="#features">See every feature</a></div>
+      <div class="ctas"><a class="btn" href="https://harshvittori.github.io/hv-reset/" target="_blank" rel="noopener">Open HV Reset <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn ghost" href="#tutorial">Watch the 12-min guide</a></div>
     </div>
     <div class="pmock rv"><div class="stage"><div class="mock day">
   <p class="meta">Now · until 12:30 PM</p>
@@ -612,7 +614,7 @@ main>:first-child .rv,main>.rv:first-child,.hcar .rv,.rv.now{opacity:1!important
     <div class="head rv"><p class="label">How it works</p><h2>Three steps. That's it.</h2></div>
     <div class="steps3"><div class="st rv"><span class="n">1</span><h3>Make your plan</h3><p>Add tasks with a time, pick a ready plan, or just tell HV AI how your day looks.</p></div><div class="st rv"><span class="n">2</span><h3>Press Start</h3><p>The clock shows what's on now. Pause when you step away. Running late? One tap moves the rest of the day.</p></div><div class="st rv"><span class="n">3</span><h3>See your progress</h3><p>Your dashboard shows your time, focus, streaks and score, with tips from your own patterns.</p></div></div>
   </div></section>
-
+<section class="pp-sec" id="tutorial"><div class="wrap"><div class="head rv"><p class="label pc">Full tutorial</p><h2>Learn HV Reset in 12 minutes.</h2><p>A step-by-step guide: plan your day, focus on one task at a time, and read your dashboard. Watch it once and you'll know everything.</p></div><div class="rv"><button type="button" class="filmbox vplay tutv" data-yt="LS57TvSbOwM" data-t="How to use HV Reset: full tutorial" data-ev="reset_tutorial_play" aria-label="Play the video: How to use HV Reset, full tutorial"><img src="/media/hv-reset-tutorial-thumb.jpg" alt="" width="1280" height="720" loading="lazy" decoding="async"><span class="play"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg></i></span></button></div></div></section>
 
   <section class="pp-sec" id="features"><div class="wrap">
     <div class="head rv"><p class="label">Every feature</p><h2>Everything HV Reset does.</h2></div>
@@ -768,6 +770,16 @@ window.hvPage = function () {
       if (window.hva) hva("event", "security_video_play");
     });
   })();
+  document.querySelectorAll(".vplay").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var box = document.createElement("div"); box.className = "filmbox";
+      var f = document.createElement("iframe");
+      f.src = "https://www.youtube-nocookie.com/embed/" + b.dataset.yt + "?autoplay=1&rel=0&playsinline=1&modestbranding=1";
+      f.title = b.dataset.t; f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen"; f.allowFullscreen = true;
+      box.appendChild(f); b.replaceWith(box);
+      if (window.hva && b.dataset.ev) hva("event", b.dataset.ev);
+    });
+  });
   // Riya's story: the header stays hidden until the first chapter, and each chapter's scene follows the step in the
   // middle of the screen. Listeners from a previous visit to the story are removed first.
   (function () {
