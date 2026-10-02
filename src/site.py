@@ -386,6 +386,8 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a{text-decoration:non
 .filmbox video{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
 .filmbox img,.filmbox iframe{width:100%;height:100%;object-fit:cover;display:block;border:0}
 .secv{margin-bottom:56px}.secv[hidden]{display:none}
+.tutsec{margin-bottom:56px}.tutv .play{top:80%}
+@media (max-width:560px){.tutv .play{width:54px;height:54px;top:82%}.tutv .play svg{width:20px;height:20px}}
 .secv .play{left:84.4%;top:63%}
 @media (max-width:560px){.secv .play{width:50px;height:50px;top:70%;box-shadow:0 0 0 6px rgba(255,255,255,.25),0 12px 26px -10px rgba(0,0,0,.5)}.secv .play svg{width:19px;height:19px;margin-left:3px}}
 @media (max-width:880px){.secv{margin-bottom:40px}}
@@ -875,7 +877,7 @@ APPS = {
         ("Do I need an account?", "No. There's no login, and your answers never leave your browser. If you save a scorecard, only its short summary is stored."),
         ("Can I take it again?", "Yes. Questions and options are shuffled, and a retake avoids the questions you saw last time."),
         ("Who can take it?", "Anyone. The Maturity Assessment is free for everyone, both PDFs included.")]),
- "reset": dict(name="HV Reset", verb="Plan your day. See your progress.", color="#4A72C8", tint="#EEF2FB", pline="#D6E0F4", mock=MOCK_RESET, cta="Open HV Reset", story="/#reset",
+ "reset": dict(name="HV Reset", verb="Plan your day. See your progress.", tutorial=True, color="#4A72C8", tint="#EEF2FB", pline="#D6E0F4", mock=MOCK_RESET, cta="Open HV Reset", story="/#reset",
    showcase=dict(img="/reset/dashboard.jpg", w=1440, h=1002, id="dashboard", label="The dashboard", bar="harshvittori.github.io/hv-reset",
      alt="The HV Reset dashboard: today at a glance, three questions answered, key numbers, productivity score, a 14-day trend and tips",
      title="Your personal dashboard", lead="See what you planned, what you really did, and whether you're getting better. Every number comes from what you actually do. Nothing is made up.",
@@ -985,6 +987,9 @@ def app_page(key):
                 '<div class="sc-img"><img src="%s" width="%d" height="%d" loading="lazy" decoding="async" alt="%s">%s</div></figure>'
                 '<ol class="sc-pts">%s</ol></div>%s</div></section>') % (" tall" if sc.get("tall") else "", sc["id"], sc["label"], sc["title"], sc["lead"], bar, sc["img"], sc["w"], sc["h"], sc["alt"], marks, pts,
                 ('<div class="sc-more rv"><b>Also inside</b>%s</div>' % chips) if chips else "")
+    tut = ('<section class="pp-sec" id="tutorial"><div class="wrap"><div class="head rv"><p class="label pc">Full tutorial</p><h2>Learn %s in 12 minutes.</h2>'
+           '<p>A step-by-step guide: plan your day, focus on one task at a time, and read your dashboard. Watch it once and you\'ll know everything.</p></div>'
+           '<div class="rv">__TUTORIAL__</div></div></section>' % a["name"]) if a.get("tutorial") else ""
     nxt = "".join('<a class="nx rv" href="/%s/" style="--pc:%s;--tint:%s;--pline:%s">%s<span><b>%s</b><small>%s</small></span>%s</a>' % (
         k, APPS[k]["color"], APPS[k]["tint"], APPS[k]["pline"], logo(k), APPS[k]["name"], APPS[k]["verb"], ARROW) for k in ORDER if k != key)
     return '''<main id="main" class="pp" style="--pc:%(color)s;--tint:%(tint)s;--pline:%(pline)s">
@@ -993,7 +998,7 @@ def app_page(key):
       <p class="crumb"><a href="/">HV World</a> <span>/</span> %(name)s</p>
       <div class="pname">%(logo)s<div><h1>%(name)s</h1><p class="verb">%(verb)s</p></div></div>
       <p class="lead">%(lead)s</p>
-      <div class="ctas"><a class="btn" href="%(url)s">%(cta)s %(arrow)s</a><a class="btn ghost" href="#features">See every feature</a></div>
+      <div class="ctas"><a class="btn" href="%(url)s">%(cta)s %(arrow)s</a>%(ghost)s</div>
     </div>
     <div class="pmock rv">%(stagehtml)s</div>
   </div></section>
@@ -1009,7 +1014,7 @@ def app_page(key):
     <div class="head rv"><p class="label">How it works</p><h2>Three steps. That's it.</h2></div>
     <div class="steps3">%(steps)s</div>
   </div></section>
-
+%(tut)s
 %(lib)s
   <section class="pp-sec" id="features"><div class="wrap">
     <div class="head rv"><p class="label">Every feature</p><h2>Everything %(name)s does.</h2></div>
@@ -1033,10 +1038,13 @@ def app_page(key):
     <div class="nxs">%(nxt)s</div>
     <p class="back"><a href="/">See all three apps together %(arrow)s</a></p>
   </div></section>
-</main>''' % dict(a, show=show, after_show=a.get("after_show", "").replace("__ARROW__", ARROW).replace("__SHARE__", "".join('<span>%s%s</span>' % (I(d), t) for t, d in SHARE)), before_faq=a.get("before_faq", "").replace("__PARTNERS__", "".join('<div class="pt-c"><div class="pt-top"><span class="pt-ic">%s</span><span class="pt-tag">Upcoming</span></div><h3>%s</h3><p>%s</p></div>' % (I(d), t, x) for t, x, d in PARTNERS)), stagehtml=stage(key, a["mock"]), logo=logo(key), url=URL[key], arrow=ARROW, facts=facts, steps=steps, feats=feats, lib=lib, who=who, faq=faq, nxt=nxt,
+</main>''' % dict(a, show=show, after_show=a.get("after_show", "").replace("__ARROW__", ARROW).replace("__SHARE__", "".join('<span>%s%s</span>' % (I(d), t) for t, d in SHARE)), before_faq=a.get("before_faq", "").replace("__PARTNERS__", "".join('<div class="pt-c"><div class="pt-top"><span class="pt-ic">%s</span><span class="pt-tag">Upcoming</span></div><h3>%s</h3><p>%s</p></div>' % (I(d), t, x) for t, x, d in PARTNERS)), stagehtml=stage(key, a["mock"]), logo=logo(key), tut=tut, ghost=('<a class="btn ghost" href="#tutorial">Watch the 12-min guide</a>' if a.get("tutorial") else '<a class="btn ghost" href="#features">See every feature</a>'), url=URL[key], arrow=ARROW, facts=facts, steps=steps, feats=feats, lib=lib, who=who, faq=faq, nxt=nxt,
                   p1=a["problem"][0], p2=a["problem"][1], f1=a["fix"][0], f2=a["fix"][1])
 
 
+TUTORIAL_YT = "LS57TvSbOwM"
+TUTORIAL_BTN = ('<button type="button" class="filmbox vplay tutv" data-yt="%s" data-t="How to use HV Reset: full tutorial" data-ev="reset_tutorial_play" '
+                'aria-label="Play the video: How to use HV Reset, full tutorial"><img src="/media/hv-reset-tutorial-thumb.jpg" alt="" width="1280" height="720" loading="lazy" decoding="async"><span class="play"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg></i></span></button>') % TUTORIAL_YT
 FILM_MAIN = """<main id="main" class="filmpage">
   <section class="wrap fp">
     <p class="label">HV World in action</p>
@@ -1051,6 +1059,12 @@ FILM_MAIN = """<main id="main" class="filmpage">
     <h2>How we secure your logins and data.</h2>
     <p class="fpsub">Follow your data step by step, from sign-in to safe storage. 2 minutes.</p>
     <button type="button" class="filmbox" id="secPlay" aria-label="Play the video: How we secure your logins and data"><img src="/media/hv-security-thumb.jpg" alt="" width="1280" height="720" loading="lazy" decoding="async"><span class="play"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg></i></span></button>
+  </section>
+  <section class="wrap fp fpsec tutsec" id="resetTutorial">
+    <p class="label">HV Reset · Full tutorial</p>
+    <h2>Learn HV Reset in 12 minutes.</h2>
+    <p class="fpsub">Plan your day, do one task at a time, and see your real progress. Step by step.</p>
+    __TUTORIAL__
   </section>
 </main>"""
 PLAYER_HTML = '<div class="fpv" data-yt="SaSfRrtvrTg"><button type="button" class="again" hidden aria-label="Watch again"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg><span>Watch again</span></button><button type="button" class="unmute" hidden>🔊&nbsp; Tap for sound</button><div class="prem" hidden><div class="pin"><p class="pk">Premieres in</p><p class="pc" role="timer" aria-live="off"></p><p class="pd">1 October 2026 · 12:00 PM IST</p></div></div><div class="yt" hidden><div class="ytp"></div></div><button type="button" class="ytgo" hidden aria-label="Play the video"><span>Watch the reveal</span></button><div class="ytc" hidden><button type="button" class="yp" aria-label="Pause"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/><path class="i-play" d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg></button><span class="tm yc">0:00</span><input type="range" min="0" max="1000" value="0" step="1" aria-label="Seek"><span class="tm yd">0:00</span><button type="button" class="ym" aria-label="Mute"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path class="i-on" d="M15 8.5a5 5 0 0 1 0 7M17.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path class="i-off" d="M15.5 9.5l5 5M20.5 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button><button type="button" class="yf" aria-label="Full screen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><video playsinline preload="none" poster="/watch/premiere.jpg" data-src="/media/hv-world-launch.mp4"></video></div>'
@@ -1245,6 +1259,16 @@ window.hvPage = function () {
       if (window.hva) hva("event", "security_video_play");
     });
   })();
+  document.querySelectorAll(".vplay").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var box = document.createElement("div"); box.className = "filmbox";
+      var f = document.createElement("iframe");
+      f.src = "https://www.youtube-nocookie.com/embed/" + b.dataset.yt + "?autoplay=1&rel=0&playsinline=1&modestbranding=1";
+      f.title = b.dataset.t; f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen"; f.allowFullscreen = true;
+      box.appendChild(f); b.replaceWith(box);
+      if (window.hva && b.dataset.ev) hva("event", b.dataset.ev);
+    });
+  });
   // Riya's story: the header stays hidden until the first chapter, and each chapter's scene follows the step in the
   // middle of the screen. Listeners from a previous visit to the story are removed first.
   (function () {
@@ -1612,7 +1636,7 @@ def fill(page):
     for k in ("TEST", "RESET", "VAULT"):
         page = page.replace("__U_%s__" % k, URL[k.lower()])
     page = re.sub(r"__LOGO_(AI|WORLD|TEST|RESET|VAULT)(_P)?__", lambda m: logo(m.group(1).lower()), page)
-    page = page.replace("__PLAYER__", PLAYER_HTML)
+    page = page.replace("__PLAYER__", PLAYER_HTML).replace("__TUTORIAL__", TUTORIAL_BTN)
     left = re.findall(r"__[A-Z_]+__", page)
     assert not left, left
     return page
