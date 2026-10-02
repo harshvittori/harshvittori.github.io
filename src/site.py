@@ -1054,7 +1054,8 @@ def tutorial_btn(start):
     return ('<button type="button" class="filmbox vplay tutv t-%s" data-yt="%s" data-t="How to use HV Reset: full tutorial" data-ev="reset_tutorial_play" '
             'aria-label="Play the video: How to use HV Reset, full tutorial">%s%s</button>') % (start, TUTORIAL_YT, imgs, '<span class="play"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg></i></span>')
 FILM_MAIN = """<main id="main" class="filmpage">
-  <section class="wrap fp">
+  <nav class="vnav" aria-label="Videos"><div class="vnav-in"><a href="#launch" class="on">HV World film</a><a href="#secVid">Security</a><a href="#resetTutorial">HV Reset tutorial</a></div></nav>
+  <section class="wrap fp" id="launch">
     <p class="label">HV World in action</p>
     <h1>See all 3 apps in action.</h1>
     __PLAYER__
@@ -1126,6 +1127,24 @@ PLAYER_CSS = """
 """
 FILM_CSS = """
 .filmpage{background:#070B18;color:#fff;border-bottom:1px solid #1B2138}
+/* Watch page: header and footer go dark with the page (works with the in-page router, no script) */
+body:has(main.filmpage) header{background:rgba(7,11,24,.82);border-bottom-color:rgba(255,255,255,.08)}
+body:has(main.filmpage) .brand{color:#fff}
+body:has(main.filmpage) .nav nav a{color:#A9B0CC}
+body:has(main.filmpage) .nav nav a:hover{color:#fff;background:rgba(255,255,255,.08)}
+body:has(main.filmpage) .nav nav a[aria-current]{color:#D6DBFF;background:rgba(124,140,255,.18);box-shadow:inset 0 0 0 1px rgba(160,172,255,.28)}
+body:has(main.filmpage) footer{background:#070B18;border-top-color:#1B2138;color:#7D849F}
+body:has(main.filmpage) footer a:hover{color:#fff}
+/* video switcher: sticky chips under the header, and each video gently snaps into place while scrolling */
+html:has(main.filmpage){scroll-snap-type:y proximity;scroll-padding-top:116px}
+body:has(main.filmpage){overflow-x:clip}   /* clip, not hidden, so the sticky header and video chips stay pinned on this page */
+.filmpage .fp{scroll-snap-align:start}
+.vnav{position:sticky;top:52px;z-index:40;padding:12px 0;background:linear-gradient(#070B18 70%,rgba(7,11,24,0))}
+.vnav-in{display:flex;justify-content:center;gap:8px;overflow-x:auto;scrollbar-width:none;padding:0 16px}.vnav-in::-webkit-scrollbar{display:none}
+.vnav a{flex:none;padding:8px 16px;border-radius:999px;font-size:14px;font-weight:500;color:#A9B0CC;text-decoration:none;background:rgba(255,255,255,.06);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1);transition:color .25s,background .25s,box-shadow .25s}
+.vnav a:hover{color:#fff}
+.vnav a.on{color:#fff;background:linear-gradient(135deg,#4F66E0,#7C5CE0);box-shadow:0 8px 20px -8px rgba(79,102,224,.7)}
+@media (prefers-reduced-motion:reduce){html:has(main.filmpage){scroll-snap-type:none}}
 .fp{padding:56px 0 72px;text-align:center}
 .fp .label{color:#9AA7FF}
 .fp h1{font-size:clamp(34px,5vw,60px);font-weight:700;letter-spacing:-.045em;line-height:1.05;margin:6px 0 30px}
@@ -1266,6 +1285,17 @@ window.hvPage = function () {
       box.appendChild(f); b.replaceWith(box);
       if (window.hva) hva("event", "security_video_play");
     });
+  })();
+  // Watch page: the chip of the video in view lights up; tapping a chip scrolls to its video
+  (function () {
+    var vn = document.querySelector(".vnav"); if (!vn) return;
+    var links = [].slice.call(vn.querySelectorAll("a")), secs = links.map(function (a) { return document.querySelector(a.getAttribute("href")); });
+    links.forEach(function (a, i) { if (!secs[i] || secs[i].hidden) a.hidden = true;
+      a.addEventListener("click", function (e) { e.preventDefault(); secs[i].scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" }); }); });
+    var mark = function () { if (GEN !== window.__hvGen) return removeEventListener("scroll", mark);   // left the page
+      var y = innerHeight * .45, cur = 0; secs.forEach(function (s, i) { if (s && !s.hidden && s.getBoundingClientRect().top < y) cur = i; });
+      links.forEach(function (a, i) { a.classList.toggle("on", i === cur); }); };
+    addEventListener("scroll", mark, { passive: true }); mark();
   })();
   document.querySelectorAll(".vplay").forEach(function (b) {
     b.addEventListener("click", function () {
