@@ -10,9 +10,15 @@ CSS = r"""
 @view-transition{navigation:auto}
 header{view-transition-name:site-header}
 main{view-transition-name:page}
-::view-transition-group(site-header){animation:none}
-::view-transition-old(site-header){display:none}
-::view-transition-new(site-header){animation:none}
+/* the menu crossfades (plus-lighter keeps it from dimming halfway), so going dark on /watch/ and back to light is smooth;
+   on pages where the menu looks the same the two pictures match and nothing visibly moves */
+::view-transition-group(site-header){animation-duration:.42s}
+::view-transition-old(site-header),::view-transition-new(site-header){height:100%;mix-blend-mode:plus-lighter}
+::view-transition-old(site-header){animation:vt-fade-out .42s ease both}
+::view-transition-new(site-header){animation:vt-fade-in .42s ease both}
+/* browsers without view transitions: the colours themselves ease */
+header{transition:background-color .42s ease,border-color .42s ease}.brand{transition:color .42s ease}
+footer{transition:background-color .42s ease,color .42s ease,border-color .42s ease}
 /* page switch: a quick, quiet crossfade, no sliding (the content should feel like it simply changes) */
 ::view-transition-group(page){animation-duration:.14s}
 ::view-transition-old(page){animation:vt-fade-out .09s linear both}
