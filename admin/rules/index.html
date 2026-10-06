@@ -1,0 +1,268 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex, nofollow"><title>Firestore rules | HV World</title> <style>body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#f4f5fa;color:#1d1d1f}.w{max-width:900px;margin:0 auto;padding:28px 16px 80px}h1{font-size:26px;margin:0 0 6px}p{color:#5e6273;margin:0 0 14px;line-height:1.5}ol{color:#3a3d4a;line-height:1.8;padding-left:20px}.btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;background:#2e43a6;color:#fff;font-weight:700;font-size:16px;padding:14px 26px;cursor:pointer}.btn.ok{background:#16794c}pre{background:#0f1424;color:#dfe4ff;border-radius:16px;padding:16px;font-size:12px;line-height:1.5;overflow:auto;max-height:420px;margin-top:16px}.n{font-size:13px;color:#5e6273;margin-left:12px}</style></head><body><div class="w"> <h1>Firestore rules</h1><p>The full rules (268 lines). Press the button to copy all of them at once.</p> <ol><li>Press <b>Copy all rules</b>.</li><li>Open <a href="https://console.firebase.google.com/project/harsh-reset/firestore/rules" target="_blank" rel="noopener">Firebase → Firestore → Rules</a>.</li><li>Click in the editor, press <b>Ctrl+A</b> (select all), then <b>Ctrl+V</b> (paste).</li><li>Press <b>Publish</b>.</li></ol> <button class="btn" id="cp">Copy all rules</button><span class="n" id="msg"></span> <pre id="r">rules_version = &#x27;2&#x27;;
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // The HV Test admin: the Firebase account ID shown on hv-tests/admin after signing in
+    function isAdmin() {
+      return request.auth != null &amp;&amp; request.auth.uid == &#x27;vbqJe9D5IAYSBytSzM850motekm2&#x27;;
+    }
+    // ---------- Team: people the owner gave admin access to, by Google email (/admin/team) ----------
+    // team/{email}.p holds a level per area: 0 no access, 1 view, 2 edit. The owner (isAdmin) can do everything.
+    function myEmail() { return request.auth.token.email.lower(); }
+    function isMember() {
+      return request.auth != null &amp;&amp; request.auth.token.email_verified == true
+        &amp;&amp; exists(/databases/$(database)/documents/team/$(myEmail()));
+    }
+    function lvl(k) { return get(/databases/$(database)/documents/team/$(myEmail())).data.p.get(k, 0); }
+    function canView(k) { return isAdmin() || (isMember() &amp;&amp; lvl(k) &gt;= 1); }
+    function canEdit(k) { return isAdmin() || (isMember() &amp;&amp; lvl(k) &gt;= 2); }
+    match /team/{email} {
+      allow get: if canEdit(&#x27;team&#x27;) || (request.auth != null &amp;&amp; request.auth.token.email_verified == true &amp;&amp; myEmail() == email);
+      allow list: if canEdit(&#x27;team&#x27;);
+      allow create, update: if canEdit(&#x27;team&#x27;) &amp;&amp; email == email.lower() &amp;&amp; email.matches(&#x27;[^@ ]+@[^@ ]+&#x27;)
+        &amp;&amp; request.resource.data.keys().hasOnly([&#x27;name&#x27;,&#x27;role&#x27;,&#x27;p&#x27;,&#x27;by&#x27;,&#x27;at&#x27;])
+        &amp;&amp; request.resource.data.p is map &amp;&amp; request.resource.data.p.size() &lt;= 30
+        &amp;&amp; request.resource.data.role in [&#x27;cofounder&#x27;,&#x27;manager&#x27;,&#x27;viewer&#x27;,&#x27;custom&#x27;]
+        &amp;&amp; (!(&#x27;name&#x27; in request.resource.data) || (request.resource.data.name is string &amp;&amp; request.resource.data.name.size() &lt;= 60));
+      allow delete: if canEdit(&#x27;team&#x27;);
+    }
+    // What changed in the team, newest first on the page. Never edited.
+    match /teamLog/{id} {
+      allow read: if canEdit(&#x27;team&#x27;);
+      allow create: if canEdit(&#x27;team&#x27;) &amp;&amp; request.resource.data.keys().hasOnly([&#x27;t&#x27;,&#x27;by&#x27;,&#x27;at&#x27;])
+        &amp;&amp; request.resource.data.t is string &amp;&amp; request.resource.data.t.size() &lt;= 300 &amp;&amp; request.resource.data.at == request.time;
+      allow update, delete: if false;
+    }
+    // Team switches. teamCfg/beta.stats: every Beta tester may view HV Reset analytics (read below).
+    match /teamCfg/{doc} {
+      allow get: if request.auth != null;
+      allow list: if false;
+      allow write: if canEdit(&#x27;team&#x27;) &amp;&amp; doc == &#x27;beta&#x27; &amp;&amp; request.resource.data.keys().hasOnly([&#x27;stats&#x27;,&#x27;at&#x27;,&#x27;by&#x27;])
+        &amp;&amp; request.resource.data.stats is bool;
+    }
+    function betaStats() {
+      return request.auth != null
+        &amp;&amp; exists(/databases/$(database)/documents/teamCfg/beta)
+        &amp;&amp; get(/databases/$(database)/documents/teamCfg/beta).data.get(&#x27;stats&#x27;, false) == true
+        &amp;&amp; exists(/databases/$(database)/documents/beta/$(request.auth.uid))
+        &amp;&amp; get(/databases/$(database)/documents/beta/$(request.auth.uid)).data.get(&#x27;on&#x27;, false) == true;
+    }
+    // HV Vault: a signed-in user can read/write only their own data under users/{uid}/
+    match /users/{uid}/{document=**} {
+      allow read, write: if request.auth != null &amp;&amp; request.auth.uid == uid;
+    }
+    // Old Harsh Reset sync (before Google accounts). Nothing writes here any more: plans now live
+    // under users/{uid}/reset. Kept read-only so old data can still be copied into an account.
+    // A doc can only be opened by its long private ID (no listing), and the owner&#x27;s old shared
+    // plan, whose ID is in the public page code, can only be opened by the admin.
+    match /reset/{syncId} {
+      allow get: if syncId.size() &gt;= 32
+        &amp;&amp; (syncId != &#x27;ffe5a55d2c34804c295003af2d6f0a7974d5fcee&#x27; || isAdmin());
+      allow list, write: if false;
+    }
+    // HV Test scorecards: anyone can check one by its ID; created once, never changed. Only the admin can list or delete.
+    match /scorecards/{id} {
+      allow get: if true;
+      allow list: if canView(&#x27;t_scores&#x27;);
+      allow delete: if canEdit(&#x27;t_scores&#x27;);
+      allow update: if false;
+      allow create: if id.matches(&#x27;HVT-[A-Z]{2}-[2-9A-HJ-NP-Z]{4}-[2-9A-HJ-NP-Z]{4}&#x27;)
+        &amp;&amp; request.resource.data.keys().hasOnly([&#x27;v&#x27;,&#x27;id&#x27;,&#x27;name&#x27;,&#x27;test&#x27;,&#x27;testTitle&#x27;,&#x27;category&#x27;,&#x27;completedAt&#x27;,&#x27;score&#x27;,&#x27;level&#x27;,&#x27;answered&#x27;,&#x27;total&#x27;,&#x27;skills&#x27;,&#x27;strengths&#x27;,&#x27;focus&#x27;])
+        &amp;&amp; request.resource.data.v == 1
+        &amp;&amp; request.resource.data.id == id
+        &amp;&amp; request.resource.data.name is string &amp;&amp; request.resource.data.name.size() &gt; 0 &amp;&amp; request.resource.data.name.size() &lt;= 60
+        &amp;&amp; request.resource.data.test is string &amp;&amp; request.resource.data.test.size() &lt;= 60
+        &amp;&amp; request.resource.data.testTitle is string &amp;&amp; request.resource.data.testTitle.size() &lt;= 80
+        &amp;&amp; request.resource.data.category is string &amp;&amp; request.resource.data.category.size() &lt;= 60
+        &amp;&amp; request.resource.data.level is string &amp;&amp; request.resource.data.level.size() &lt;= 40
+        &amp;&amp; request.resource.data.completedAt is timestamp
+        &amp;&amp; request.resource.data.completedAt &gt; request.time - duration.value(2, &#x27;d&#x27;)
+        &amp;&amp; request.resource.data.completedAt &lt; request.time + duration.value(10, &#x27;m&#x27;)
+        &amp;&amp; request.resource.data.score is int &amp;&amp; request.resource.data.score &gt;= 0 &amp;&amp; request.resource.data.score &lt;= 100
+        &amp;&amp; request.resource.data.answered is int &amp;&amp; request.resource.data.total is int
+        &amp;&amp; request.resource.data.answered &gt;= 0 &amp;&amp; request.resource.data.answered &lt;= request.resource.data.total &amp;&amp; request.resource.data.total &lt;= 200
+        &amp;&amp; request.resource.data.skills is list &amp;&amp; request.resource.data.skills.size() &lt;= 20
+        &amp;&amp; request.resource.data.strengths is list &amp;&amp; request.resource.data.strengths.size() &lt;= 5
+        &amp;&amp; request.resource.data.focus is list &amp;&amp; request.resource.data.focus.size() &lt;= 5
+        &amp;&amp; maturityCard(request.resource.data);
+    }
+    // Consistency checks for the Maturity Assessment (the only test that issues scorecards). A record
+    // must look like one the test really produces: 28-30 questions, all answered; the level matching the
+    // score band; the 10 dimensions in order, each 0-10; an overall score in line with them (the test may
+    // take up to 5 points off for answer timing); 3 strengths and 3 focus areas from those dimensions.
+    // A new test that issues scorecards needs its own check here.
+    function skillOk(s, name) {
+      return s is map &amp;&amp; s.keys().hasOnly([&#x27;name&#x27;,&#x27;score&#x27;]) &amp;&amp; s.name == name &amp;&amp; s.score is int &amp;&amp; s.score &gt;= 0 &amp;&amp; s.score &lt;= 10;
+    }
+    function levelOk(score, level) {
+      return (score &lt;= 40 &amp;&amp; level == &#x27;Developing&#x27;) || (score &gt; 40 &amp;&amp; score &lt;= 65 &amp;&amp; level == &#x27;Emerging&#x27;)
+        || (score &gt; 65 &amp;&amp; score &lt;= 85 &amp;&amp; level == &#x27;Grounded&#x27;) || (score &gt; 85 &amp;&amp; level == &#x27;Highly Consistent&#x27;);
+    }
+    function maturitySkills(k, dims) {
+      return k.size() == 10
+        &amp;&amp; skillOk(k[0], dims[0]) &amp;&amp; skillOk(k[1], dims[1]) &amp;&amp; skillOk(k[2], dims[2]) &amp;&amp; skillOk(k[3], dims[3]) &amp;&amp; skillOk(k[4], dims[4])
+        &amp;&amp; skillOk(k[5], dims[5]) &amp;&amp; skillOk(k[6], dims[6]) &amp;&amp; skillOk(k[7], dims[7]) &amp;&amp; skillOk(k[8], dims[8]) &amp;&amp; skillOk(k[9], dims[9]);
+    }
+    function maturityCard(d) {
+      let dims = [&#x27;Emotional Control&#x27;,&#x27;Accountability&#x27;,&#x27;Self-Awareness&#x27;,&#x27;Handling Conflict&#x27;,&#x27;Relationships&#x27;,
+                  &#x27;Decision-Making&#x27;,&#x27;Patience&#x27;,&#x27;Empathy&#x27;,&#x27;Responsibility&#x27;,&#x27;Long-Term Thinking&#x27;];
+      let k = d.skills;
+      return d.id.matches(&#x27;HVT-MA-.*&#x27;) &amp;&amp; d.test == &#x27;maturity-assessment&#x27; &amp;&amp; d.testTitle == &#x27;Maturity Assessment&#x27; &amp;&amp; d.category == &#x27;Personal Growth&#x27;
+        &amp;&amp; d.total &gt;= 28 &amp;&amp; d.total &lt;= 30 &amp;&amp; d.answered == d.total
+        &amp;&amp; levelOk(d.score, d.level)
+        &amp;&amp; maturitySkills(k, dims)
+        &amp;&amp; sumOk(d.score, k[0].score + k[1].score + k[2].score + k[3].score + k[4].score + k[5].score + k[6].score + k[7].score + k[8].score + k[9].score)
+        &amp;&amp; d.strengths.size() == 3 &amp;&amp; d.focus.size() == 3
+        &amp;&amp; d.strengths.hasOnly(dims) &amp;&amp; d.focus.hasOnly(dims) &amp;&amp; !d.strengths.hasAny(d.focus);
+    }
+    function sumOk(score, sum) { return score &gt;= sum - 11 &amp;&amp; score &lt;= sum + 6; }
+    // HV World live settings (maintenance, banner, home page switches): anyone can read, only the admin can change
+    match /config/{doc} {
+      allow get: if doc == &#x27;site&#x27;;
+      allow list: if false;
+      allow write: if canEdit(&#x27;site&#x27;) &amp;&amp; doc == &#x27;site&#x27;
+        &amp;&amp; request.resource.data.keys().hasOnly([&#x27;json&#x27;, &#x27;updatedAt&#x27;, &#x27;by&#x27;])
+        &amp;&amp; request.resource.data.json is string &amp;&amp; request.resource.data.json.size() &lt; 100000;
+    }
+    // Anonymous usage counts (HV analytics, /a.js). Only +1 counters per product per day, week, month or first-visit
+    // cohort; no IDs or personal data. Anyone can add to them, only the admin can read them. Nothing can be deleted.
+    match /analytics/{doc} {
+      allow read: if canView(&#x27;an_&#x27; + doc.split(&#x27;_&#x27;)[0]) || (doc.matches(&#x27;reset_.*&#x27;) &amp;&amp; betaStats());
+      allow create: if analyticsId(doc) &amp;&amp; request.resource.data.size() &lt;= 60;
+      allow update: if analyticsId(doc) &amp;&amp; request.resource.data.size() &lt;= 900
+        &amp;&amp; request.resource.data.diff(resource.data).affectedKeys().size() &lt;= 40;
+    }
+    function analyticsId(doc) {
+      return doc.matches(&#x27;(world|test|reset|vault)_(d|c)_20[0-9]{2}-[01][0-9]-[0-3][0-9]&#x27;)
+        || doc.matches(&#x27;(world|test|reset|vault)_w_20[0-9]{2}-W[0-5][0-9]&#x27;)
+        || doc.matches(&#x27;(world|test|reset|vault)_m_20[0-9]{2}-[01][0-9]&#x27;);
+    }
+    // HV Test anonymous counter: one number per test per day (+1 when someone finishes a test). Only the admin can read it.
+    match /stats/{key} {
+      allow read: if canView(&#x27;an_test&#x27;);
+      allow create: if key.matches(&#x27;[a-z0-9-]{1,60}_20[0-9]{2}-[01][0-9]-[0-3][0-9]&#x27;)
+        &amp;&amp; request.resource.data.keys().hasOnly([&#x27;completed&#x27;]) &amp;&amp; request.resource.data.completed == 1;
+      allow update: if request.resource.data.keys().hasOnly([&#x27;completed&#x27;])
+        &amp;&amp; request.resource.data.completed == resource.data.completed + 1;
+    }
+    // ---------- HV Reset Beta (Beta Hub in the app, /admin/beta for the admin) ----------
+    function signedIn() { return request.auth != null; }
+    function strMax(v, n) { return v is string &amp;&amp; v.size() &lt;= n; }
+    // Pass numbers are handed out in order: joining writes beta/{uid} and moves betaMeta/count up by one
+    // in the same batch. Each side checks the other, so two people can never get the same number.
+    function joining(n) {
+      return !exists(/databases/$(database)/documents/beta/$(request.auth.uid))
+        &amp;&amp; existsAfter(/databases/$(database)/documents/beta/$(request.auth.uid))
+        &amp;&amp; getAfter(/databases/$(database)/documents/beta/$(request.auth.uid)).data.no == n;
+    }
+    match /betaMeta/{doc} {
+      allow get: if signedIn() &amp;&amp; doc == &#x27;count&#x27;;
+      allow list, delete: if false;
+      allow create: if signedIn() &amp;&amp; doc == &#x27;count&#x27; &amp;&amp; request.resource.data.keys().hasOnly([&#x27;n&#x27;]) &amp;&amp; request.resource.data.n == 1 &amp;&amp; joining(1);
+      allow update: if signedIn() &amp;&amp; doc == &#x27;count&#x27; &amp;&amp; request.resource.data.keys().hasOnly([&#x27;n&#x27;])
+        &amp;&amp; request.resource.data.n == resource.data.n + 1 &amp;&amp; joining(request.resource.data.n);
+    }
+    // One record per tester: pass number, every join and leave (hist), what they used. The tester writes their own
+    // (never their pass number or the admin&#x27;s bonus points); only the admin can see everyone&#x27;s.
+    function testerOk(d) {
+      return d.keys().hasOnly([&#x27;no&#x27;,&#x27;email&#x27;,&#x27;name&#x27;,&#x27;since&#x27;,&#x27;last&#x27;,&#x27;ver&#x27;,&#x27;dev&#x27;,&#x27;used&#x27;,&#x27;flags&#x27;,&#x27;pts&#x27;,&#x27;on&#x27;,&#x27;bonus&#x27;,&#x27;hist&#x27;])
+        &amp;&amp; (!(&#x27;hist&#x27; in d) || (d.hist is list &amp;&amp; d.hist.size() &lt;= 300))
+        &amp;&amp; d.no is int &amp;&amp; strMax(d.email, 120) &amp;&amp; strMax(d.name, 60) &amp;&amp; d.since is int &amp;&amp; d.last is int
+        &amp;&amp; strMax(d.ver, 20) &amp;&amp; strMax(d.dev, 80) &amp;&amp; d.used is map &amp;&amp; d.used.size() &lt;= 60
+        &amp;&amp; d.flags is map &amp;&amp; d.flags.size() &lt;= 30 &amp;&amp; d.pts is int &amp;&amp; d.on is bool;
+    }
+    match /beta/{uid} {
+      allow get: if (signedIn() &amp;&amp; request.auth.uid == uid) || canView(&#x27;b_testers&#x27;);
+      allow list: if canView(&#x27;b_testers&#x27;);
+      allow create: if signedIn() &amp;&amp; request.auth.uid == uid &amp;&amp; testerOk(request.resource.data)
+        &amp;&amp; !(&#x27;bonus&#x27; in request.resource.data)
+        &amp;&amp; getAfter(/databases/$(database)/documents/betaMeta/count).data.n == request.resource.data.no
+        &amp;&amp; (exists(/databases/$(database)/documents/betaMeta/count)
+            ? get(/databases/$(database)/documents/betaMeta/count).data.n + 1 == request.resource.data.no
+            : request.resource.data.no == 1);
+      allow update: if (signedIn() &amp;&amp; request.auth.uid == uid &amp;&amp; testerOk(request.resource.data)
+          &amp;&amp; !request.resource.data.diff(resource.data).affectedKeys().hasAny([&#x27;no&#x27;,&#x27;bonus&#x27;]))
+        || (canEdit(&#x27;b_testers&#x27;) &amp;&amp; request.resource.data.diff(resource.data).affectedKeys().hasOnly([&#x27;bonus&#x27;])
+          &amp;&amp; request.resource.data.bonus is int);
+      allow delete: if canEdit(&#x27;b_testers&#x27;);
+    }
+    // Leaderboard: a short name and points, readable by signed-in testers (no emails here).
+    match /betaBoard/{uid} {
+      allow read: if signedIn();
+      allow create, update: if signedIn() &amp;&amp; request.auth.uid == uid
+        &amp;&amp; request.resource.data.keys().hasOnly([&#x27;n&#x27;,&#x27;pts&#x27;,&#x27;no&#x27;])
+        &amp;&amp; strMax(request.resource.data.n, 30) &amp;&amp; request.resource.data.pts is int
+        &amp;&amp; request.resource.data.pts &gt;= 0 &amp;&amp; request.resource.data.pts &lt;= 1000000 &amp;&amp; request.resource.data.no is int;
+      allow delete: if (signedIn() &amp;&amp; request.auth.uid == uid) || canEdit(&#x27;b_testers&#x27;);
+    }
+    // Bug reports: a tester sends one (with an optional screenshot) and can see only their own.
+    // Only the admin sees all, groups them and changes their status.
+    match /betaReports/{id} {
+      allow get, list: if canView(&#x27;b_reports&#x27;) || (signedIn() &amp;&amp; resource.data.uid == request.auth.uid);
+      allow create: if signedIn() &amp;&amp; request.resource.data.uid == request.auth.uid
+        &amp;&amp; request.resource.data.keys().hasOnly([&#x27;uid&#x27;,&#x27;kind&#x27;,&#x27;title&#x27;,&#x27;note&#x27;,&#x27;shot&#x27;,&#x27;scr&#x27;,&#x27;dev&#x27;,&#x27;ver&#x27;,&#x27;ctx&#x27;,&#x27;at&#x27;,&#x27;status&#x27;,&#x27;name&#x27;,&#x27;email&#x27;,&#x27;no&#x27;])
+        &amp;&amp; request.resource.data.kind == &#x27;bug&#x27; &amp;&amp; request.resource.data.status == &#x27;new&#x27;
+        &amp;&amp; strMax(request.resource.data.title, 120) &amp;&amp; request.resource.data.title.size() &gt; 0
+        &amp;&amp; strMax(request.resource.data.note, 2000) &amp;&amp; strMax(request.resource.data.shot, 450000)
+        &amp;&amp; strMax(request.resource.data.scr, 40) &amp;&amp; strMax(request.resource.data.dev, 80) &amp;&amp; strMax(request.resource.data.ver, 20)
+        &amp;&amp; strMax(request.resource.data.ctx, 3000) &amp;&amp; strMax(request.resource.data.name, 60) &amp;&amp; strMax(request.resource.data.email, 120)
+        &amp;&amp; request.resource.data.no is int &amp;&amp; request.resource.data.at == request.time;
+      allow update: if canEdit(&#x27;b_reports&#x27;)
+        &amp;&amp; request.resource.data.diff(resource.data).affectedKeys().hasOnly([&#x27;status&#x27;,&#x27;group&#x27;,&#x27;sev&#x27;,&#x27;fixVer&#x27;,&#x27;fixedAt&#x27;,&#x27;reply&#x27;]);
+      allow delete: if canEdit(&#x27;b_reports&#x27;);
+    }
+    // Ideas: every signed-in tester can read them and vote once (a vote doc under the idea, plus the
+    // count moving by exactly one in the same write). The admin moves them along the roadmap.
+    function voteDoc(id) { return /databases/$(database)/documents/betaIdeas/$(id)/v/$(request.auth.uid); }
+    match /betaIdeas/{id} {
+      allow read: if signedIn();
+      allow create: if signedIn() &amp;&amp; request.resource.data.uid == request.auth.uid
+        &amp;&amp; request.resource.data.keys().hasOnly([&#x27;uid&#x27;,&#x27;name&#x27;,&#x27;t&#x27;,&#x27;note&#x27;,&#x27;at&#x27;,&#x27;votes&#x27;,&#x27;stage&#x27;,&#x27;group&#x27;])
+        &amp;&amp; strMax(request.resource.data.t, 120) &amp;&amp; request.resource.data.t.size() &gt; 0 &amp;&amp; strMax(request.resource.data.note, 1000)
+        &amp;&amp; strMax(request.resource.data.name, 60) &amp;&amp; request.resource.data.at == request.time
+        &amp;&amp; request.resource.data.votes == 0 &amp;&amp; request.resource.data.stage == &#x27;new&#x27; &amp;&amp; request.resource.data.group == &#x27;&#x27;;
+      allow update: if canEdit(&#x27;b_ideas&#x27;)
+        || (signedIn() &amp;&amp; request.resource.data.diff(resource.data).affectedKeys().hasOnly([&#x27;votes&#x27;])
+          &amp;&amp; ((request.resource.data.votes == resource.data.votes + 1 &amp;&amp; !exists(voteDoc(id)) &amp;&amp; existsAfter(voteDoc(id)))
+           || (request.resource.data.votes == resource.data.votes - 1 &amp;&amp; exists(voteDoc(id)) &amp;&amp; !existsAfter(voteDoc(id)))));
+      allow delete: if canEdit(&#x27;b_ideas&#x27;);
+      match /v/{uid} {
+        allow get: if signedIn() &amp;&amp; request.auth.uid == uid;
+        allow list: if false;
+        allow create: if signedIn() &amp;&amp; request.auth.uid == uid &amp;&amp; request.resource.data.keys().hasOnly([&#x27;at&#x27;])
+          &amp;&amp; getAfter(/databases/$(database)/documents/betaIdeas/$(id)).data.votes == get(/databases/$(database)/documents/betaIdeas/$(id)).data.votes + 1;
+        allow delete: if signedIn() &amp;&amp; request.auth.uid == uid
+          &amp;&amp; getAfter(/databases/$(database)/documents/betaIdeas/$(id)).data.votes == get(/databases/$(database)/documents/betaIdeas/$(id)).data.votes - 1;
+      }
+    }
+    // Weekly survey and quick poll answers: one per person per survey/poll, never changed afterwards.
+    match /betaAnswers/{id} {
+      allow get: if canView(&#x27;b_survey&#x27;) || (signedIn() &amp;&amp; resource.data.uid == request.auth.uid);
+      allow list: if canView(&#x27;b_survey&#x27;);
+      allow create: if signedIn() &amp;&amp; request.resource.data.uid == request.auth.uid
+        &amp;&amp; request.resource.data.keys().hasOnly([&#x27;uid&#x27;,&#x27;kind&#x27;,&#x27;key&#x27;,&#x27;a&#x27;,&#x27;at&#x27;])
+        &amp;&amp; request.resource.data.kind in [&#x27;survey&#x27;,&#x27;poll&#x27;] &amp;&amp; request.resource.data.key is string
+        &amp;&amp; request.resource.data.key.matches(&#x27;[A-Za-z0-9-]{1,40}&#x27;) &amp;&amp; id == request.auth.uid + &#x27;_&#x27; + request.resource.data.key
+        &amp;&amp; request.resource.data.a is map &amp;&amp; request.resource.data.a.size() &lt;= 12 &amp;&amp; request.resource.data.at == request.time;
+      allow update: if false;
+      allow delete: if canEdit(&#x27;b_survey&#x27;);
+    }
+    // Private data link: a tester&#x27;s own export, opened only by its long random key (no listing).
+    match /betaShare/{key} {
+      allow get: if key.size() &gt;= 32;
+      allow list: if false;
+      allow create: if signedIn() &amp;&amp; key.size() &gt;= 32 &amp;&amp; request.resource.data.uid == request.auth.uid
+        &amp;&amp; request.resource.data.keys().hasOnly([&#x27;uid&#x27;,&#x27;json&#x27;,&#x27;csv&#x27;,&#x27;at&#x27;]) &amp;&amp; request.resource.data.json is string &amp;&amp; request.resource.data.csv is string
+        &amp;&amp; request.resource.data.at is int;
+      allow update: if signedIn() &amp;&amp; resource.data.uid == request.auth.uid &amp;&amp; request.resource.data.uid == request.auth.uid
+        &amp;&amp; request.resource.data.keys().hasOnly([&#x27;uid&#x27;,&#x27;json&#x27;,&#x27;csv&#x27;,&#x27;at&#x27;]) &amp;&amp; request.resource.data.json is string &amp;&amp; request.resource.data.csv is string;
+      allow delete: if signedIn() &amp;&amp; resource.data.uid == request.auth.uid;
+    }
+    // Beta Hub content the admin posts: what&#x27;s new, known issues, roadmap notes, challenge, polls.
+    match /betaConfig/{doc} {
+      allow get: if signedIn() &amp;&amp; doc == &#x27;hub&#x27;;
+      allow list: if false;
+      allow write: if canEdit(&#x27;b_hub&#x27;) &amp;&amp; doc == &#x27;hub&#x27;
+        &amp;&amp; request.resource.data.keys().hasOnly([&#x27;json&#x27;,&#x27;updatedAt&#x27;]) &amp;&amp; request.resource.data.json is string &amp;&amp; request.resource.data.json.size() &lt; 200000;
+    }
+  }
+}</pre></div> <script>var R="rules_version = '2';\nservice cloud.firestore {\n  match /databases/{database}/documents {\n    // The HV Test admin: the Firebase account ID shown on hv-tests/admin after signing in\n    function isAdmin() {\n      return request.auth != null && request.auth.uid == 'vbqJe9D5IAYSBytSzM850motekm2';\n    }\n    // ---------- Team: people the owner gave admin access to, by Google email (/admin/team) ----------\n    // team/{email}.p holds a level per area: 0 no access, 1 view, 2 edit. The owner (isAdmin) can do everything.\n    function myEmail() { return request.auth.token.email.lower(); }\n    function isMember() {\n      return request.auth != null && request.auth.token.email_verified == true\n        && exists(/databases/$(database)/documents/team/$(myEmail()));\n    }\n    function lvl(k) { return get(/databases/$(database)/documents/team/$(myEmail())).data.p.get(k, 0); }\n    function canView(k) { return isAdmin() || (isMember() && lvl(k) >= 1); }\n    function canEdit(k) { return isAdmin() || (isMember() && lvl(k) >= 2); }\n    match /team/{email} {\n      allow get: if canEdit('team') || (request.auth != null && request.auth.token.email_verified == true && myEmail() == email);\n      allow list: if canEdit('team');\n      allow create, update: if canEdit('team') && email == email.lower() && email.matches('[^@ ]+@[^@ ]+')\n        && request.resource.data.keys().hasOnly(['name','role','p','by','at'])\n        && request.resource.data.p is map && request.resource.data.p.size() <= 30\n        && request.resource.data.role in ['cofounder','manager','viewer','custom']\n        && (!('name' in request.resource.data) || (request.resource.data.name is string && request.resource.data.name.size() <= 60));\n      allow delete: if canEdit('team');\n    }\n    // What changed in the team, newest first on the page. Never edited.\n    match /teamLog/{id} {\n      allow read: if canEdit('team');\n      allow create: if canEdit('team') && request.resource.data.keys().hasOnly(['t','by','at'])\n        && request.resource.data.t is string && request.resource.data.t.size() <= 300 && request.resource.data.at == request.time;\n      allow update, delete: if false;\n    }\n    // Team switches. teamCfg/beta.stats: every Beta tester may view HV Reset analytics (read below).\n    match /teamCfg/{doc} {\n      allow get: if request.auth != null;\n      allow list: if false;\n      allow write: if canEdit('team') && doc == 'beta' && request.resource.data.keys().hasOnly(['stats','at','by'])\n        && request.resource.data.stats is bool;\n    }\n    function betaStats() {\n      return request.auth != null\n        && exists(/databases/$(database)/documents/teamCfg/beta)\n        && get(/databases/$(database)/documents/teamCfg/beta).data.get('stats', false) == true\n        && exists(/databases/$(database)/documents/beta/$(request.auth.uid))\n        && get(/databases/$(database)/documents/beta/$(request.auth.uid)).data.get('on', false) == true;\n    }\n    // HV Vault: a signed-in user can read/write only their own data under users/{uid}/\n    match /users/{uid}/{document=**} {\n      allow read, write: if request.auth != null && request.auth.uid == uid;\n    }\n    // Old Harsh Reset sync (before Google accounts). Nothing writes here any more: plans now live\n    // under users/{uid}/reset. Kept read-only so old data can still be copied into an account.\n    // A doc can only be opened by its long private ID (no listing), and the owner's old shared\n    // plan, whose ID is in the public page code, can only be opened by the admin.\n    match /reset/{syncId} {\n      allow get: if syncId.size() >= 32\n        && (syncId != 'ffe5a55d2c34804c295003af2d6f0a7974d5fcee' || isAdmin());\n      allow list, write: if false;\n    }\n    // HV Test scorecards: anyone can check one by its ID; created once, never changed. Only the admin can list or delete.\n    match /scorecards/{id} {\n      allow get: if true;\n      allow list: if canView('t_scores');\n      allow delete: if canEdit('t_scores');\n      allow update: if false;\n      allow create: if id.matches('HVT-[A-Z]{2}-[2-9A-HJ-NP-Z]{4}-[2-9A-HJ-NP-Z]{4}')\n        && request.resource.data.keys().hasOnly(['v','id','name','test','testTitle','category','completedAt','score','level','answered','total','skills','strengths','focus'])\n        && request.resource.data.v == 1\n        && request.resource.data.id == id\n        && request.resource.data.name is string && request.resource.data.name.size() > 0 && request.resource.data.name.size() <= 60\n        && request.resource.data.test is string && request.resource.data.test.size() <= 60\n        && request.resource.data.testTitle is string && request.resource.data.testTitle.size() <= 80\n        && request.resource.data.category is string && request.resource.data.category.size() <= 60\n        && request.resource.data.level is string && request.resource.data.level.size() <= 40\n        && request.resource.data.completedAt is timestamp\n        && request.resource.data.completedAt > request.time - duration.value(2, 'd')\n        && request.resource.data.completedAt < request.time + duration.value(10, 'm')\n        && request.resource.data.score is int && request.resource.data.score >= 0 && request.resource.data.score <= 100\n        && request.resource.data.answered is int && request.resource.data.total is int\n        && request.resource.data.answered >= 0 && request.resource.data.answered <= request.resource.data.total && request.resource.data.total <= 200\n        && request.resource.data.skills is list && request.resource.data.skills.size() <= 20\n        && request.resource.data.strengths is list && request.resource.data.strengths.size() <= 5\n        && request.resource.data.focus is list && request.resource.data.focus.size() <= 5\n        && maturityCard(request.resource.data);\n    }\n    // Consistency checks for the Maturity Assessment (the only test that issues scorecards). A record\n    // must look like one the test really produces: 28-30 questions, all answered; the level matching the\n    // score band; the 10 dimensions in order, each 0-10; an overall score in line with them (the test may\n    // take up to 5 points off for answer timing); 3 strengths and 3 focus areas from those dimensions.\n    // A new test that issues scorecards needs its own check here.\n    function skillOk(s, name) {\n      return s is map && s.keys().hasOnly(['name','score']) && s.name == name && s.score is int && s.score >= 0 && s.score <= 10;\n    }\n    function levelOk(score, level) {\n      return (score <= 40 && level == 'Developing') || (score > 40 && score <= 65 && level == 'Emerging')\n        || (score > 65 && score <= 85 && level == 'Grounded') || (score > 85 && level == 'Highly Consistent');\n    }\n    function maturitySkills(k, dims) {\n      return k.size() == 10\n        && skillOk(k[0], dims[0]) && skillOk(k[1], dims[1]) && skillOk(k[2], dims[2]) && skillOk(k[3], dims[3]) && skillOk(k[4], dims[4])\n        && skillOk(k[5], dims[5]) && skillOk(k[6], dims[6]) && skillOk(k[7], dims[7]) && skillOk(k[8], dims[8]) && skillOk(k[9], dims[9]);\n    }\n    function maturityCard(d) {\n      let dims = ['Emotional Control','Accountability','Self-Awareness','Handling Conflict','Relationships',\n                  'Decision-Making','Patience','Empathy','Responsibility','Long-Term Thinking'];\n      let k = d.skills;\n      return d.id.matches('HVT-MA-.*') && d.test == 'maturity-assessment' && d.testTitle == 'Maturity Assessment' && d.category == 'Personal Growth'\n        && d.total >= 28 && d.total <= 30 && d.answered == d.total\n        && levelOk(d.score, d.level)\n        && maturitySkills(k, dims)\n        && sumOk(d.score, k[0].score + k[1].score + k[2].score + k[3].score + k[4].score + k[5].score + k[6].score + k[7].score + k[8].score + k[9].score)\n        && d.strengths.size() == 3 && d.focus.size() == 3\n        && d.strengths.hasOnly(dims) && d.focus.hasOnly(dims) && !d.strengths.hasAny(d.focus);\n    }\n    function sumOk(score, sum) { return score >= sum - 11 && score <= sum + 6; }\n    // HV World live settings (maintenance, banner, home page switches): anyone can read, only the admin can change\n    match /config/{doc} {\n      allow get: if doc == 'site';\n      allow list: if false;\n      allow write: if canEdit('site') && doc == 'site'\n        && request.resource.data.keys().hasOnly(['json', 'updatedAt', 'by'])\n        && request.resource.data.json is string && request.resource.data.json.size() < 100000;\n    }\n    // Anonymous usage counts (HV analytics, /a.js). Only +1 counters per product per day, week, month or first-visit\n    // cohort; no IDs or personal data. Anyone can add to them, only the admin can read them. Nothing can be deleted.\n    match /analytics/{doc} {\n      allow read: if canView('an_' + doc.split('_')[0]) || (doc.matches('reset_.*') && betaStats());\n      allow create: if analyticsId(doc) && request.resource.data.size() <= 60;\n      allow update: if analyticsId(doc) && request.resource.data.size() <= 900\n        && request.resource.data.diff(resource.data).affectedKeys().size() <= 40;\n    }\n    function analyticsId(doc) {\n      return doc.matches('(world|test|reset|vault)_(d|c)_20[0-9]{2}-[01][0-9]-[0-3][0-9]')\n        || doc.matches('(world|test|reset|vault)_w_20[0-9]{2}-W[0-5][0-9]')\n        || doc.matches('(world|test|reset|vault)_m_20[0-9]{2}-[01][0-9]');\n    }\n    // HV Test anonymous counter: one number per test per day (+1 when someone finishes a test). Only the admin can read it.\n    match /stats/{key} {\n      allow read: if canView('an_test');\n      allow create: if key.matches('[a-z0-9-]{1,60}_20[0-9]{2}-[01][0-9]-[0-3][0-9]')\n        && request.resource.data.keys().hasOnly(['completed']) && request.resource.data.completed == 1;\n      allow update: if request.resource.data.keys().hasOnly(['completed'])\n        && request.resource.data.completed == resource.data.completed + 1;\n    }\n    // ---------- HV Reset Beta (Beta Hub in the app, /admin/beta for the admin) ----------\n    function signedIn() { return request.auth != null; }\n    function strMax(v, n) { return v is string && v.size() <= n; }\n    // Pass numbers are handed out in order: joining writes beta/{uid} and moves betaMeta/count up by one\n    // in the same batch. Each side checks the other, so two people can never get the same number.\n    function joining(n) {\n      return !exists(/databases/$(database)/documents/beta/$(request.auth.uid))\n        && existsAfter(/databases/$(database)/documents/beta/$(request.auth.uid))\n        && getAfter(/databases/$(database)/documents/beta/$(request.auth.uid)).data.no == n;\n    }\n    match /betaMeta/{doc} {\n      allow get: if signedIn() && doc == 'count';\n      allow list, delete: if false;\n      allow create: if signedIn() && doc == 'count' && request.resource.data.keys().hasOnly(['n']) && request.resource.data.n == 1 && joining(1);\n      allow update: if signedIn() && doc == 'count' && request.resource.data.keys().hasOnly(['n'])\n        && request.resource.data.n == resource.data.n + 1 && joining(request.resource.data.n);\n    }\n    // One record per tester: pass number, every join and leave (hist), what they used. The tester writes their own\n    // (never their pass number or the admin's bonus points); only the admin can see everyone's.\n    function testerOk(d) {\n      return d.keys().hasOnly(['no','email','name','since','last','ver','dev','used','flags','pts','on','bonus','hist'])\n        && (!('hist' in d) || (d.hist is list && d.hist.size() <= 300))\n        && d.no is int && strMax(d.email, 120) && strMax(d.name, 60) && d.since is int && d.last is int\n        && strMax(d.ver, 20) && strMax(d.dev, 80) && d.used is map && d.used.size() <= 60\n        && d.flags is map && d.flags.size() <= 30 && d.pts is int && d.on is bool;\n    }\n    match /beta/{uid} {\n      allow get: if (signedIn() && request.auth.uid == uid) || canView('b_testers');\n      allow list: if canView('b_testers');\n      allow create: if signedIn() && request.auth.uid == uid && testerOk(request.resource.data)\n        && !('bonus' in request.resource.data)\n        && getAfter(/databases/$(database)/documents/betaMeta/count).data.n == request.resource.data.no\n        && (exists(/databases/$(database)/documents/betaMeta/count)\n            ? get(/databases/$(database)/documents/betaMeta/count).data.n + 1 == request.resource.data.no\n            : request.resource.data.no == 1);\n      allow update: if (signedIn() && request.auth.uid == uid && testerOk(request.resource.data)\n          && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['no','bonus']))\n        || (canEdit('b_testers') && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['bonus'])\n          && request.resource.data.bonus is int);\n      allow delete: if canEdit('b_testers');\n    }\n    // Leaderboard: a short name and points, readable by signed-in testers (no emails here).\n    match /betaBoard/{uid} {\n      allow read: if signedIn();\n      allow create, update: if signedIn() && request.auth.uid == uid\n        && request.resource.data.keys().hasOnly(['n','pts','no'])\n        && strMax(request.resource.data.n, 30) && request.resource.data.pts is int\n        && request.resource.data.pts >= 0 && request.resource.data.pts <= 1000000 && request.resource.data.no is int;\n      allow delete: if (signedIn() && request.auth.uid == uid) || canEdit('b_testers');\n    }\n    // Bug reports: a tester sends one (with an optional screenshot) and can see only their own.\n    // Only the admin sees all, groups them and changes their status.\n    match /betaReports/{id} {\n      allow get, list: if canView('b_reports') || (signedIn() && resource.data.uid == request.auth.uid);\n      allow create: if signedIn() && request.resource.data.uid == request.auth.uid\n        && request.resource.data.keys().hasOnly(['uid','kind','title','note','shot','scr','dev','ver','ctx','at','status','name','email','no'])\n        && request.resource.data.kind == 'bug' && request.resource.data.status == 'new'\n        && strMax(request.resource.data.title, 120) && request.resource.data.title.size() > 0\n        && strMax(request.resource.data.note, 2000) && strMax(request.resource.data.shot, 450000)\n        && strMax(request.resource.data.scr, 40) && strMax(request.resource.data.dev, 80) && strMax(request.resource.data.ver, 20)\n        && strMax(request.resource.data.ctx, 3000) && strMax(request.resource.data.name, 60) && strMax(request.resource.data.email, 120)\n        && request.resource.data.no is int && request.resource.data.at == request.time;\n      allow update: if canEdit('b_reports')\n        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status','group','sev','fixVer','fixedAt','reply']);\n      allow delete: if canEdit('b_reports');\n    }\n    // Ideas: every signed-in tester can read them and vote once (a vote doc under the idea, plus the\n    // count moving by exactly one in the same write). The admin moves them along the roadmap.\n    function voteDoc(id) { return /databases/$(database)/documents/betaIdeas/$(id)/v/$(request.auth.uid); }\n    match /betaIdeas/{id} {\n      allow read: if signedIn();\n      allow create: if signedIn() && request.resource.data.uid == request.auth.uid\n        && request.resource.data.keys().hasOnly(['uid','name','t','note','at','votes','stage','group'])\n        && strMax(request.resource.data.t, 120) && request.resource.data.t.size() > 0 && strMax(request.resource.data.note, 1000)\n        && strMax(request.resource.data.name, 60) && request.resource.data.at == request.time\n        && request.resource.data.votes == 0 && request.resource.data.stage == 'new' && request.resource.data.group == '';\n      allow update: if canEdit('b_ideas')\n        || (signedIn() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['votes'])\n          && ((request.resource.data.votes == resource.data.votes + 1 && !exists(voteDoc(id)) && existsAfter(voteDoc(id)))\n           || (request.resource.data.votes == resource.data.votes - 1 && exists(voteDoc(id)) && !existsAfter(voteDoc(id)))));\n      allow delete: if canEdit('b_ideas');\n      match /v/{uid} {\n        allow get: if signedIn() && request.auth.uid == uid;\n        allow list: if false;\n        allow create: if signedIn() && request.auth.uid == uid && request.resource.data.keys().hasOnly(['at'])\n          && getAfter(/databases/$(database)/documents/betaIdeas/$(id)).data.votes == get(/databases/$(database)/documents/betaIdeas/$(id)).data.votes + 1;\n        allow delete: if signedIn() && request.auth.uid == uid\n          && getAfter(/databases/$(database)/documents/betaIdeas/$(id)).data.votes == get(/databases/$(database)/documents/betaIdeas/$(id)).data.votes - 1;\n      }\n    }\n    // Weekly survey and quick poll answers: one per person per survey/poll, never changed afterwards.\n    match /betaAnswers/{id} {\n      allow get: if canView('b_survey') || (signedIn() && resource.data.uid == request.auth.uid);\n      allow list: if canView('b_survey');\n      allow create: if signedIn() && request.resource.data.uid == request.auth.uid\n        && request.resource.data.keys().hasOnly(['uid','kind','key','a','at'])\n        && request.resource.data.kind in ['survey','poll'] && request.resource.data.key is string\n        && request.resource.data.key.matches('[A-Za-z0-9-]{1,40}') && id == request.auth.uid + '_' + request.resource.data.key\n        && request.resource.data.a is map && request.resource.data.a.size() <= 12 && request.resource.data.at == request.time;\n      allow update: if false;\n      allow delete: if canEdit('b_survey');\n    }\n    // Private data link: a tester's own export, opened only by its long random key (no listing).\n    match /betaShare/{key} {\n      allow get: if key.size() >= 32;\n      allow list: if false;\n      allow create: if signedIn() && key.size() >= 32 && request.resource.data.uid == request.auth.uid\n        && request.resource.data.keys().hasOnly(['uid','json','csv','at']) && request.resource.data.json is string && request.resource.data.csv is string\n        && request.resource.data.at is int;\n      allow update: if signedIn() && resource.data.uid == request.auth.uid && request.resource.data.uid == request.auth.uid\n        && request.resource.data.keys().hasOnly(['uid','json','csv','at']) && request.resource.data.json is string && request.resource.data.csv is string;\n      allow delete: if signedIn() && resource.data.uid == request.auth.uid;\n    }\n    // Beta Hub content the admin posts: what's new, known issues, roadmap notes, challenge, polls.\n    match /betaConfig/{doc} {\n      allow get: if signedIn() && doc == 'hub';\n      allow list: if false;\n      allow write: if canEdit('b_hub') && doc == 'hub'\n        && request.resource.data.keys().hasOnly(['json','updatedAt']) && request.resource.data.json is string && request.resource.data.json.size() < 200000;\n    }\n  }\n}";document.getElementById("cp").onclick=function(){var e=this,t=document.getElementById("msg"),s=function(){e.textContent="Copied all 268 lines",e.classList.add("ok"),t.textContent="Now paste it in Firebase."};function a(){var e=document.createElement("textarea");e.value=R,document.body.appendChild(e),e.select(),document.execCommand("copy"),e.remove(),s()}navigator.clipboard?navigator.clipboard.writeText(R).then(s,a):a()}</script></body></html>
