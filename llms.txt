@@ -2,22 +2,22 @@
 
 > HV World is a set of three free, AI-powered web apps for personal and career growth, made by Harsh Goyal (India) and launched on 1 October 2026. The apps run in any browser on phone or laptop, with nothing to install. HV AI, the built-in assistant, understands English, Hindi and Hinglish, typed or spoken, and always asks before it changes anything.
 
-- Website: https://harshvittori.github.io/
+- Website: https://hvworld.haritt.com/
 - Price: free for everyone, HV AI included
 - Made by: Harsh Goyal (https://www.linkedin.com/in/harshvittori)
 
 ## The three apps
 
-- [HV Test](https://harshvittori.github.io/test/): self-assessment tests. Start with the free Maturity Assessment (28 to 30 real-life situations): a score out of 100, a level, a checkable scorecard with a unique ID, a full report PDF and a 30-day plan. No login. Open the app: https://harshvittori.github.io/hv-tests/
-- [HV Reset](https://harshvittori.github.io/reset/): a daily planner that shows one task at a time, shifts the whole day when you run late, and gives you a personal dashboard for time, focus, streaks and progress. Open the app: https://harshvittori.github.io/hv-reset/
-- [HV Vault](https://harshvittori.github.io/vault/): a job-search tracker for every job, company, recruiter, follow-up and interview, with a pipeline board, resume vault and analytics. Tell HV AI what happened and it updates the board. Google sign-in keeps your data private. Open the app: https://harshvittori.github.io/hv-vault-web/
+- [HV Test](https://hvworld.haritt.com/test/): self-assessment tests. Start with the free Maturity Assessment (28 to 30 real-life situations): a score out of 100, a level, a checkable scorecard with a unique ID, a full report PDF and a 30-day plan. No login. Open the app: https://hvworld.haritt.com/hv-tests/
+- [HV Reset](https://hvworld.haritt.com/reset/): a daily planner that shows one task at a time, shifts the whole day when you run late, and gives you a personal dashboard for time, focus, streaks and progress. Open the app: https://hvworld.haritt.com/hv-reset/
+- [HV Vault](https://hvworld.haritt.com/vault/): a job-search tracker for every job, company, recruiter, follow-up and interview, with a pipeline board, resume vault and analytics. Tell HV AI what happened and it updates the board. Google sign-in keeps your data private. Open the app: https://hvworld.haritt.com/hv-vault-web/
 
 ## Learn more
 
-- [Watch the launch video](https://harshvittori.github.io/watch/): "Say hello to HV World", also on YouTube: https://www.youtube.com/watch?v=SaSfRrtvrTg
-- [Riya's story](https://harshvittori.github.io/story/): how the three apps work together, from stuck to hired in 11 weeks
-- [Privacy policy](https://harshvittori.github.io/privacy/) and [Terms](https://harshvittori.github.io/terms/)
-- Check an HV Test scorecard: https://harshvittori.github.io/hv-tests/verify/
+- [Watch the launch video](https://hvworld.haritt.com/watch/): "Say hello to HV World", also on YouTube: https://www.youtube.com/watch?v=SaSfRrtvrTg
+- [Riya's story](https://hvworld.haritt.com/story/): how the three apps work together, from stuck to hired in 11 weeks
+- [Privacy policy](https://hvworld.haritt.com/privacy/) and [Terms](https://hvworld.haritt.com/terms/)
+- Check an HV Test scorecard: https://hvworld.haritt.com/hv-tests/verify/
 
 ## Facts
 
