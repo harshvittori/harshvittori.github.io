@@ -182,7 +182,7 @@ pre.ctx{max-height:220px;font-size:11.5px}
 .pw{font:500 14px ui-monospace,Menlo,Consolas,monospace;overflow-wrap:anywhere}
 .bt{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
 .mini{border:0;background:#EEF0F7;color:var(--accent);font-weight:600;font-size:12.5px;padding:6px 11px;border-radius:999px;cursor:pointer;white-space:nowrap}.mini:hover{background:#E3E7F5}.mini:disabled{opacity:.45;cursor:default}.mini.bad{color:var(--bad)}
-.frm{padding:20px;margin-top:14px}.frm h3{margin:0 0 12px;font-size:17px}.frm label{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:var(--soft)}
+.frm[hidden]{display:none!important}form.frm.glass{max-width:none;text-align:left;padding:22px;background:#fff;border-radius:20px;position:fixed;z-index:60;left:50%;top:50%;transform:translate(-50%,-50%);width:min(680px,calc(100vw - 24px));max-height:calc(100vh - 32px);overflow:auto;box-shadow:0 0 0 100vmax rgba(15,20,40,.45),0 24px 60px rgba(0,0,0,.3);}.frm h3{margin:0 0 12px;font-size:17px}.frm label{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:var(--soft)}
 .fg{display:grid;grid-template-columns:1fr 1fr;gap:14px}.fg .wide{grid-column:1/-1}.fsec{grid-column:1/-1;font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--accent);border-top:1px solid var(--line);padding-top:12px}
 .frm .pwf{display:flex;gap:8px}.frm .pwf input{flex:1}.frm input[type=color]{padding:2px;height:42px;width:100%}
 .nw{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr 110px;gap:12px;padding:12px;border-radius:14px;background:#F7F8FC;border:1px solid var(--line)}
@@ -310,6 +310,7 @@ pre.ctx{max-height:220px;font-size:11.5px}
   function newId() { return b64(crypto.getRandomValues(new Uint8Array(15))).replace(/\+/g, "-").replace(/\//g, "_"); }
   function lock(msg) { V.key = null; V.dec = {}; V.shown = {}; clearTimeout(V.idle); $("frm").hidden = true; paintVault(); paint(); if (msg) toast(msg); }
   function bump() { if (!V.key) return; clearTimeout(V.idle); V.idle = setTimeout(function () { lock("Locked after 10 minutes without use."); }, 600000); }
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") { $("frm").hidden = true; $("bfrm").hidden = true; V.edit = null; } });
   ["pointerdown", "keydown"].forEach(function (ev) { document.addEventListener(ev, bump, true); });
   async function copy(text, label, clear) {
     try { await navigator.clipboard.writeText(text); } catch (e) { toast("Couldn't copy. Select it and copy by hand.", true); return; }
@@ -416,13 +417,13 @@ pre.ctx{max-height:220px;font-size:11.5px}
       '<label>Recovery phone<input type="text" id="fRp" maxlength="60" value="' + esc(d.rp || "") + '"></label>' +
       '<label class="wide">Extra notes (optional)<textarea id="fNote" maxlength="1500" placeholder="Backup codes location, who owns it…">' + esc(d.n || "") + '</textarea></label></div>' +
       '<div class="row" style="margin-top:14px"><button class="btn" type="submit" id="fSave">Save</button><button class="btn ghost" type="button" id="fCancel">Cancel</button></div>';
-    $("frm").hidden = false; $("bfrm").hidden = true; V.edit = x ? x._id : null; $("fId").focus(); $("frm").scrollIntoView({ behavior: "smooth", block: "center" });
+    $("frm").hidden = false; $("bfrm").hidden = true; V.edit = x ? x._id : null; $("fId").focus(); $("frm").scrollTop=0;
   }
   function bform(b) {
     $("bfrm").innerHTML = '<h3>' + (b ? "Edit brand" : "Add brand") + '</h3><div class="fg"><label>Brand name<input type="text" id="bN" maxlength="40" required value="' + esc(b ? b.name : "") + '"></label>' +
       '<label>Colour<input type="color" id="bC" value="' + esc(b ? b.color : "#2E43A6") + '"></label><label class="wide">Logo address (optional, https://… or /path)<input type="text" id="bL" maxlength="300" value="' + esc(b ? b.logo || "" : "") + '"></label></div>' +
       '<div class="row" style="margin-top:14px"><button class="btn" type="submit">Save brand</button><button class="btn ghost" type="button" id="bCancel">Cancel</button>' + (b ? '<button class="btn ghost" type="button" id="bDel" style="color:var(--bad)">Delete brand</button>' : "") + '</div>';
-    $("bfrm").dataset.id = b ? b.id : ""; $("bfrm").hidden = false; $("frm").hidden = true; $("bN").focus(); $("bfrm").scrollIntoView({ behavior: "smooth", block: "center" });
+    $("bfrm").dataset.id = b ? b.id : ""; $("bfrm").hidden = false; $("frm").hidden = true; $("bN").focus(); $("bfrm").scrollTop=0;
   }
   var slug = function (n) { return (n.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 30) || "brand") + "-" + newId().slice(0, 4).toLowerCase().replace(/[^a-z0-9]/g, "x"); };
   document.addEventListener("change", function (e) {
