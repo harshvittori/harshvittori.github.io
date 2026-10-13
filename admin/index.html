@@ -272,7 +272,7 @@ body.ro #bar{display:none!important}
     $("sites").innerHTML = SITES.map(function (s) {
       var m = cfg.sites[s.k].maintenance, st = state(m), changed = JSON.stringify(m) !== JSON.stringify(saved.sites[s.k].maintenance);
       if (changed) st.t += " · not published yet";
-      return '<div class="glass site' + (m.on ? " on" : "") + '" data-k="' + s.k + '"><div class="hd">' + s.logo + '<div><h3>' + s.n + '</h3><div class="url">' + (/^https?:/.test(s.u) ? s.u.replace(/^https?:\/\//, "").replace(/\/$/, "") : "harshvittori.github.io" + s.u) + '</div></div></div>' +
+      return '<div class="glass site' + (m.on ? " on" : "") + '" data-k="' + s.k + '"><div class="hd">' + s.logo + '<div><h3>' + s.n + '</h3><div class="url">' + (/^https?:/.test(s.u) ? s.u.replace(/^https?:\/\//, "").replace(/\/$/, "") : "hvworld.haritt.com" + s.u) + '</div></div></div>' +
         '<span class="pill ' + st.k + '"><i></i>' + esc(st.t) + '</span>' +
         '<div class="sw"><span>Maintenance mode</span><label class="tg"><input type="checkbox" data-a="on"' + (m.on ? " checked" : "") + ' aria-label="Maintenance mode for ' + s.n + '"><span></span></label></div>' +
         '<div class="opts"><span class="lbl">How long</span><div class="chips">' + DURS.map(function (d) { return '<button type="button" class="chip" data-a="dur" data-v="' + d[1] + '" aria-pressed="' + (m.dur === d[1]) + '">' + d[0] + '</button>'; }).join("") + '</div>' +
