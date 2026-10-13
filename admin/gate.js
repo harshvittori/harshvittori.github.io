@@ -20,7 +20,7 @@
   function start() {
     card("Checking access…", "One moment.", []);
     var G = "https://www.gstatic.com/firebasejs/10.12.2/";
-    load(G + "firebase-app-compat.js").then(function () { return Promise.all([load(G + "firebase-auth-compat.js"), load(G + "firebase-app-check-compat.js"), load("/admin/access.js")]); }).then(function () {
+    load(G + "firebase-app-compat.js").then(function () { return Promise.all([load(G + "firebase-auth-compat.js"), load(G + "firebase-app-check-compat.js"), load("/admin/access.js")]); }).then(async function () {
       firebase.initializeApp(CFG); var ap = null;
       if (/^(harshvittori\.github\.io|hvworld\.haritt\.com)$/.test(location.hostname)) { try { ap = firebase.appCheck(); ap.activate(new firebase.appCheck.ReCaptchaEnterpriseProvider("6LdZltEtAAAAANC5e-PJFqs2YrM1ubR3CKv0sOhl"), true); } catch (e) { ap = null; } }
       var auth = firebase.auth();
@@ -31,6 +31,14 @@
         if (!r.ok) { var e = new Error("HTTP " + r.status); e.status = r.status; throw e; }
         return r.json();
       }
+      async function isPublic() {
+        try {
+          var h = {}; if (ap) { try { var t = await ap.getToken(false); if (t && t.token) h["X-Firebase-AppCheck"] = t.token; } catch (e) {} }
+          var r = await fetch(DOCS + "/pagePublic/main?key=" + CFG.apiKey, { headers: h, cache: "no-store" }); if (!r.ok) return false;
+          var d = await r.json(), j = JSON.parse((d.fields && d.fields.json && d.fields.json.stringValue) || "[]"); return j.indexOf(AREA) >= 0;
+        } catch (e) { return false; }
+      }
+      if (await isPublic()) { root.classList.remove("hvg-wait"); if (box) { box.remove(); box = null; } return; }
       auth.onAuthStateChanged(async function (u) {
         if (!u) { card("Sign in to open this page", "Use your Google account. Access is given by the founder on the Team page.", [["Sign in with Google", async function () { try { await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()); } catch (e) {} }]]); return; }
         var acc = null, err = false;
