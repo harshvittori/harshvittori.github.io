@@ -353,7 +353,7 @@ pre.ctx{max-height:220px;font-size:11.5px}
         : '<h3>Not set up yet</h3><p>The owner needs to create the team passphrase on this page first.</p>';
       return;
     }
-    if (V.key) { v.innerHTML = '<div class="vtop"><div><span class="state open"><i></i>Unlocked</span> <span class="hint">Locks itself after 10 idle minutes.</span></div><button class="btn ghost sm" id="lockBtn">Lock now</button></div>'; return; }
+    if (V.key) { v.innerHTML = '<div class="vtop"><div><span class="state open"><i></i>Unlocked</span> <span class="hint">Locks itself after 10 idle minutes.</span></div><span class="row">' + (me ? '<button class="btn ghost sm" id="chBtn">Change passphrase</button>' : "") + '<button class="btn ghost sm" id="lockBtn">Lock now</button></span></div><form id="chpw" class="row" style="margin-top:12px" autocomplete="off" hidden><input type="password" id="n1" placeholder="New passphrase (14+ characters)" autocomplete="new-password" required><input type="password" id="n2" placeholder="Type it again" autocomplete="new-password" required><button class="btn" type="submit">Re-encrypt all</button><button class="btn ghost" type="button" id="chX">Cancel</button></form><p class="hint" id="vMsg" style="margin-top:8px"></p>'; return; }
     v.innerHTML = '<div class="vtop"><div><h3>Locked</h3><p style="margin:0">Enter the team passphrase to see passwords, codes and recovery details.</p></div><span class="state lock"><i></i>Locked</span></div>' +
       '<form id="unlock" class="row" style="margin-top:12px" autocomplete="off"><input type="password" id="pp" placeholder="Team passphrase" autocomplete="off" required><button class="btn" type="submit">Unlock</button></form><p class="hint" id="vMsg" style="margin-top:8px"></p>';
   }
@@ -393,7 +393,7 @@ pre.ctx{max-height:220px;font-size:11.5px}
         var b = brandOf(x.brand);
         return '<div class="rw">' + picon(x.platform) + '<div class="nm"><b>' + esc(x.platform) + (V.sel === "all" && b ? ' <span class="hint" style="font-weight:500">· ' + esc(b.name) + '</span>' : "") + '</b><code>' + esc(x.handle) + '</code>' + lines + '</div>' +
           '<span class="pw">' + (sh && d ? esc(d.p) : "••••••••••") + '</span><span class="bt"><button class="mini" data-cu="' + esc(x._id) + '">Copy user</button><button class="mini" data-sh="' + esc(x._id) + '"' + (open && d ? "" : ' disabled title="Unlock first"') + '>' + (sh ? "Hide" : "Show") + '</button><button class="mini" data-cp="' + esc(x._id) + '"' + (open && d ? "" : ' disabled title="Unlock first"') + '>Copy</button>' +
-          (ed ? '<button class="mini" data-ed="' + esc(x._id) + '"' + (open && d ? "" : ' disabled title="Unlock first"') + '>Edit</button><button class="mini bad" data-rm="' + esc(x._id) + '">Delete</button>' : "") + '</span></div>';
+          (ed ? '<button class="mini" data-ed="' + esc(x._id) + '"' + (open && d ? "" : ' disabled title="Unlock first"') + '>Edit</button><button class="mini bad" data-rm="' + esc(x._id) + '"' + (open ? "" : ' disabled title="Unlock first"') + '>Delete</button>' : "") + '</span></div>';
       }).join("");
     });
     $("main").innerHTML = out; restoreQ();
@@ -442,6 +442,24 @@ pre.ctx{max-height:220px;font-size:11.5px}
         await setDoc("socialVault/meta", { salt: b64(salt), iv: c.iv, ct: c.ct, at: Date.now() });
         V.meta = { salt: b64(salt), iv: c.iv, ct: c.ct }; V.key = key; bump(); await decryptAll(); paintVault(); paint(); toast("Passphrase set. Tell the team in person."); return;
       }
+      if (f === "chpw") {
+        var n1 = $("n1").value, n2 = $("n2").value, mm = $("vMsg");
+        if (n1.length < 14) { mm.textContent = "Use at least 14 characters."; return; } if (n1 !== n2) { mm.textContent = "The two don't match."; return; }
+        if (V.list.some(function (y) { return !V.dec[y._id]; })) { mm.textContent = "Some saved accounts can't be read with the current passphrase, so nothing was changed."; return; }
+        if (!confirm("Re-encrypt " + V.list.length + " account(s) with the new passphrase? Everyone must use the new one afterwards.")) return;
+        b.disabled = true; mm.textContent = "Re-encrypting…";
+        var ns = crypto.getRandomValues(new Uint8Array(16)), nk = await derive(n1, ns), ws = [], nl = [];
+        for (var i = 0; i < V.list.length; i++) {
+          var o = V.list[i], c1 = await seal(nk, JSON.stringify(V.dec[o._id]), "login:" + o._id), r2 = {};
+          Object.keys(o).forEach(function (k) { if (k !== "_id" && k !== "iv" && k !== "ct") r2[k] = o[k]; }); r2.iv = c1.iv; r2.ct = c1.ct;
+          var f2 = {}; Object.keys(r2).forEach(function (k) { f2[k] = enc(r2[k]); });
+          ws.push({ update: { name: DOCS + "/socialLogins/" + o._id, fields: f2 } }); nl.push(Object.assign({ _id: o._id }, r2));
+        }
+        var cm = await seal(nk, CHECK, "vault-meta"), mf = { salt: enc(b64(ns)), iv: enc(cm.iv), ct: enc(cm.ct), at: enc(Date.now()) };
+        ws.push({ update: { name: DOCS + "/socialVault/meta", fields: mf } });
+        await call(":commit", { writes: ws });
+        V.meta = { salt: b64(ns), iv: cm.iv, ct: cm.ct }; V.key = nk; V.list = nl; bump(); paintVault(); paint(); toast("Passphrase changed. Share the new one with the team in person."); return;
+      }
       if (f === "unlock") {
         var m2 = $("vMsg"); b.disabled = true; m2.textContent = "Unlocking…";
         var k = await derive($("pp").value, unb64(V.meta.salt));
@@ -479,6 +497,8 @@ pre.ctx{max-height:220px;font-size:11.5px}
     var t = e.target.closest("button"); if (!t) return; bump();
     var d = t.dataset, x = function (id) { return V.list.find(function (y) { return y._id === id; }); };
     if (t.id === "lockBtn") { lock(); return; }
+    if (t.id === "chBtn") { $("chpw").hidden = false; $("n1").focus(); return; }
+    if (t.id === "chX") { $("chpw").hidden = true; return; }
     if (t.id === "addBtn") { form(null); return; }
     if (t.id === "addBrand") { bform(null); return; }
     if (t.id === "fCancel") { $("frm").hidden = true; V.edit = null; return; }
@@ -495,7 +515,7 @@ pre.ctx{max-height:220px;font-size:11.5px}
     if (d.sh) { if (V.shown[d.sh]) delete V.shown[d.sh]; else { V.shown[d.sh] = true; setTimeout(function () { delete V.shown[d.sh]; paint(); }, 15000); } paint(); return; }
     if (d.cp) { if (V.dec[d.cp]) copy(V.dec[d.cp].p, "Password", true); return; }
     if (d.ed) { if (V.dec[d.ed]) form(x(d.ed)); return; }
-    if (d.rm) { var a = x(d.rm); if (!confirm("Delete the " + a.platform + " login for " + a.handle + "? This can't be undone.")) return;
+    if (d.rm) { if (!V.key) { toast("Unlock first.", true); return; } var a = x(d.rm); if (!confirm("Delete the " + a.platform + " login for " + a.handle + "? This can't be undone.")) return;
       try { await delDoc("socialLogins/" + d.rm); V.list = V.list.filter(function (y) { return y._id !== d.rm; }); delete V.dec[d.rm]; paint(); toast("Deleted."); } catch (er) { if (!er.ro) toast("Couldn't delete.", true); } return; }
     if (t.id === "reload") { load().catch(fail); }
   });
