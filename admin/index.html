@@ -177,7 +177,7 @@ body.ro #bar{display:none!important}
   firebase.initializeApp(CFG);
   // App Check (reCAPTCHA Enterprise; the key only works on the live site) so Firestore still answers once it requires App Check
   var appCheck = null;
-  if (/^(harshvittori\.github\.io|hvworld\.haritt\.com)$/.test(location.hostname)) {
+  if (/^(harshvittori\.github\.io|hvworld\.haritt\.com|haritt\.com)$/.test(location.hostname)) {
     try { appCheck = firebase.appCheck(); appCheck.activate(new firebase.appCheck.ReCaptchaEnterpriseProvider("6LdZltEtAAAAANC5e-PJFqs2YrM1ubR3CKv0sOhl"), true); } catch (e) { appCheck = null; }
   }
   async function withAppCheck(h) {

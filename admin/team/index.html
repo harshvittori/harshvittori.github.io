@@ -149,7 +149,7 @@ ol.steps{text-align:left;color:var(--soft);line-height:1.6;padding-left:20px}
   <section id="gate" class="card glass" hidden style="margin-top:40px;text-align:center;padding:26px"><h2>Team &amp; access</h2><p class="sub" id="gateMsg">Sign in with your Google account.</p><button class="btn" id="signIn">Sign in with Google</button></section>
   <section id="nope" class="card glass" hidden style="margin-top:40px;text-align:center;padding:26px"><h2>Only the owner can manage the team</h2><p class="sub">This account can't add or remove people.</p><p style="margin-top:14px"><a class="btn ghost" href="/admin/">Go to the control centre</a></p></section>
   <div id="dash" hidden>
-    <div class="hello"><div><h1>Team &amp; access</h1><p>Give people access to admin pages by their Google email. They sign in at hvworld.haritt.com/admin and see only what you allow.</p></div><button class="btn" id="addBtn">+ Add a person</button></div>
+    <div class="hello"><div><h1>Team &amp; access</h1><p>Give people access to admin pages by their Google email. They sign in at haritt.com/admin and see only what you allow.</p></div><button class="btn" id="addBtn">+ Add a person</button></div>
     <div class="glass tm-owner" id="owner"></div>
     <section class="sec"><h2>People</h2><p class="sub" id="pplSub"></p><div class="glass" style="padding:4px 0" id="ppl"></div></section>
     <section class="sec"><h2>Beta testers</h2><p class="sub">Access for everyone in the Beta at once. No need to add them one by one.</p>
@@ -186,7 +186,7 @@ ol.steps{text-align:left;color:var(--soft);line-height:1.6;padding-left:20px}
   var auth = null, appCheck = null;
   if (!window.__HV_TEST_ADMIN) {
     firebase.initializeApp(CFG);
-    if (/^(harshvittori\.github\.io|hvworld\.haritt\.com)$/.test(location.hostname)) { try { appCheck = firebase.appCheck(); appCheck.activate(new firebase.appCheck.ReCaptchaEnterpriseProvider("6LdZltEtAAAAANC5e-PJFqs2YrM1ubR3CKv0sOhl"), true); } catch (e) { appCheck = null; } }
+    if (/^(harshvittori\.github\.io|hvworld\.haritt\.com|haritt\.com)$/.test(location.hostname)) { try { appCheck = firebase.appCheck(); appCheck.activate(new firebase.appCheck.ReCaptchaEnterpriseProvider("6LdZltEtAAAAANC5e-PJFqs2YrM1ubR3CKv0sOhl"), true); } catch (e) { appCheck = null; } }
     auth = firebase.auth();
   }
   function toast(m, bad) { var t = $("toast"); t.textContent = m; t.className = "toast show" + (bad ? " err" : ""); clearTimeout(toast._t); toast._t = setTimeout(function () { t.className = "toast"; }, 2600); }
@@ -250,7 +250,7 @@ ol.steps{text-align:left;color:var(--soft);line-height:1.6;padding-left:20px}
       var opts = team ? [[0, "No"], [2, "Yes"]] : a[2] >= 2 ? [[0, "No access"], [1, "View"], [2, "Edit"]] : [[0, "No access"], [1, "View"]];
       return '<div class="mr"><b>' + esc(a[1]) + '</b><div class="seg3">' + opts.map(function (o) { return '<button class="' + (v === o[0] ? "on" + (o[0] === 2 ? " e" : o[0] === 1 ? " r" : "") : "") + '" data-lv="' + a[0] + "|" + o[0] + '">' + o[1] + "</button>"; }).join("") + "</div></div>"; }).join(""); }).join("");
     var em = $("fEmail").value.trim() || "they";
-    $("shNote").innerHTML = esc(em === "they" ? "They" : em) + " sign" + (em === "they" ? "" : "s") + " in at <b>hvworld.haritt.com/admin</b> with this Google email and see only these pages. You can change or remove access any time; it updates at once.";
+    $("shNote").innerHTML = esc(em === "they" ? "They" : em) + " sign" + (em === "they" ? "" : "s") + " in at <b>haritt.com/admin</b> with this Google email and see only these pages. You can change or remove access any time; it updates at once.";
   }
   async function save() {
     var em = $("fEmail").value.trim().toLowerCase(), nm = $("fName").value.trim().slice(0, 60), err = function (t) { $("fErr").textContent = t; $("fErr").hidden = false; };

@@ -22,7 +22,7 @@
     var G = "https://www.gstatic.com/firebasejs/10.12.2/";
     load(G + "firebase-app-compat.js").then(function () { return Promise.all([load(G + "firebase-auth-compat.js"), load(G + "firebase-app-check-compat.js"), load("/admin/access.js")]); }).then(async function () {
       firebase.initializeApp(CFG); var ap = null;
-      if (/^(harshvittori\.github\.io|hvworld\.haritt\.com)$/.test(location.hostname)) { try { ap = firebase.appCheck(); ap.activate(new firebase.appCheck.ReCaptchaEnterpriseProvider("6LdZltEtAAAAANC5e-PJFqs2YrM1ubR3CKv0sOhl"), true); } catch (e) { ap = null; } }
+      if (/^(harshvittori\.github\.io|hvworld\.haritt\.com|haritt\.com)$/.test(location.hostname)) { try { ap = firebase.appCheck(); ap.activate(new firebase.appCheck.ReCaptchaEnterpriseProvider("6LdZltEtAAAAANC5e-PJFqs2YrM1ubR3CKv0sOhl"), true); } catch (e) { ap = null; } }
       var auth = firebase.auth();
       async function get(path) {
         var h = { Authorization: "Bearer " + (await auth.currentUser.getIdToken()) };
