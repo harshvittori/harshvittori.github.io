@@ -167,21 +167,27 @@ pre.ctx{max-height:220px;font-size:11.5px}
 .vault .row input{flex:1;min-width:200px}.vault .state{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;padding:6px 11px;border-radius:999px}
 .vault .state i{width:7px;height:7px;border-radius:50%;background:currentColor}.state.lock{color:var(--warn);background:var(--warnbg)}.state.open{color:var(--ok);background:var(--okbg)}
 .vtop{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.tools{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 10px;align-items:center}.tools input{flex:1;min-width:200px;max-width:360px}
-.lg{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}
-.ac{padding:16px 18px;display:flex;flex-direction:column;gap:10px}
-.ac .hd{display:flex;align-items:center;gap:12px}.ac .ic{width:38px;height:38px;border-radius:11px;flex:none;display:grid;place-items:center;color:#fff;font:700 16px HVSora,var(--font)}
-.ac h3{font-size:16px;margin:0}.ac .hd small{display:block;color:var(--faint);font-size:12px}
-.kv{display:grid;grid-template-columns:78px 1fr auto;gap:8px;align-items:center;font-size:14px}.kv dt{color:var(--soft);font-size:12.5px}
-.kv code{font:500 14px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;overflow-wrap:anywhere;word-break:break-all}
-.kv .btns{display:flex;gap:6px}.ac .note{white-space:pre-wrap;background:#F7F8FC;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:13.5px;line-height:1.5;overflow-wrap:anywhere}
-.ac .foot{display:flex;gap:8px;flex-wrap:wrap;align-items:center;border-top:1px solid var(--line);padding-top:10px;color:var(--faint);font-size:12px}.ac .foot .sp{flex:1}
-.mini{border:0;background:#EEF0F7;color:var(--accent);font-weight:600;font-size:12.5px;padding:6px 11px;border-radius:999px;cursor:pointer;white-space:nowrap}.mini:hover{background:#E3E7F5}.mini:disabled{opacity:.45;cursor:default}
-.mini.bad{color:var(--bad)}
-.frm{padding:20px;margin-top:18px}.frm h3{margin:0 0 12px;font-size:17px}.frm label{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:var(--soft)}
-.fg{display:grid;grid-template-columns:1fr 1fr;gap:14px}.fg .wide{grid-column:1/-1}
-.frm .pw{display:flex;gap:8px}.frm .pw input{flex:1}
-@media(max-width:640px){.fg{grid-template-columns:1fr}.lg{grid-template-columns:1fr}.kv{grid-template-columns:70px 1fr}.kv .btns{grid-column:1/-1}}
+.lay{display:grid;grid-template-columns:250px minmax(0,1fr);gap:14px;margin-top:14px;align-items:start}
+.side{padding:14px;position:sticky;top:76px}.sl{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--faint);margin:4px 8px 8px}
+.si{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:12px;font-weight:600;font-size:14.5px;color:var(--soft);margin-bottom:4px;cursor:pointer;border:0;background:none;width:100%;text-align:left}
+.si:hover{background:#F3F4F9}.si.on{background:#F7E8EA;color:#A70D22}.si .nm2{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.si b{font-size:12px;background:#EEF0F7;border-radius:99px;padding:2px 8px;color:var(--soft)}
+.bi{position:relative;width:26px;height:26px;border-radius:50%;flex:none;display:grid;place-items:center;color:#fff;font:700 12px HVSora,var(--font);overflow:hidden}.bi img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.bi.ld{font-size:0}
+.sidebtn{width:100%;margin-top:6px}
+.main{padding:18px 20px;min-width:0}.mh{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:6px}.mh h2{margin:0;font-size:21px}.mh .sp{flex:1}.mh input{width:230px}
+.gh{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--faint);margin:16px 0 4px}
+.rw{display:grid;grid-template-columns:38px minmax(0,1fr) minmax(110px,180px) auto;gap:14px;align-items:center;padding:12px 0;border-top:1px solid #EDEEF4}
+.pi{display:grid;place-items:center;border-radius:11px;flex:none;color:#fff;width:38px;height:38px;font:700 16px HVSora,var(--font)}.pi svg{width:21px;height:21px}
+.nm{display:flex;flex-direction:column;min-width:0}.nm b{font-size:15px}.nm code{font:500 13.5px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--soft);overflow-wrap:anywhere}
+.nm small{font-size:12px;color:var(--faint);margin-top:3px;line-height:1.4;overflow-wrap:anywhere}.nm .nt{white-space:pre-wrap;background:#F7F8FC;border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin-top:6px;font-size:13px;color:#3a3d4a}
+.pw{font:500 14px ui-monospace,Menlo,Consolas,monospace;overflow-wrap:anywhere}
+.bt{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.mini{border:0;background:#EEF0F7;color:var(--accent);font-weight:600;font-size:12.5px;padding:6px 11px;border-radius:999px;cursor:pointer;white-space:nowrap}.mini:hover{background:#E3E7F5}.mini:disabled{opacity:.45;cursor:default}.mini.bad{color:var(--bad)}
+.frm{padding:20px;margin-top:14px}.frm h3{margin:0 0 12px;font-size:17px}.frm label{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:var(--soft)}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:14px}.fg .wide{grid-column:1/-1}.fsec{grid-column:1/-1;font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--accent);border-top:1px solid var(--line);padding-top:12px}
+.frm .pwf{display:flex;gap:8px}.frm .pwf input{flex:1}.frm input[type=color]{padding:2px;height:42px;width:100%}
+.nw{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr 110px;gap:12px;padding:12px;border-radius:14px;background:#F7F8FC;border:1px solid var(--line)}
+@media(max-width:860px){.lay{grid-template-columns:1fr}.side{position:static;display:flex;gap:8px;overflow-x:auto;padding:10px}.side .sl{display:none}.si{width:auto;flex:none;margin:0;white-space:nowrap}.sidebtn{width:auto;margin:0;flex:none}}
+@media(max-width:640px){.fg,.nw{grid-template-columns:1fr}.rw{grid-template-columns:38px minmax(0,1fr)}.rw .pw,.rw .bt{grid-column:2}.rw .bt{justify-content:flex-start}.mh input{width:100%}}
 </style><style id="admDark">html.adm-dark{background:#fff;filter:invert(.92) hue-rotate(180deg)}html.adm-dark img,html.adm-dark video,html.adm-dark canvas,html.adm-dark iframe,html.adm-dark svg:has(linearGradient),html.adm-dark svg:has(radialGradient),html.adm-dark svg:has(image),html.adm-dark [style*="background-image"],html.adm-dark [style*="url("]{filter:invert(1) hue-rotate(180deg)!important}</style><script>try{var t=localStorage.getItem("hv-adm-theme");if(t==="dark"||(!t&&matchMedia("(prefers-color-scheme: dark)").matches))document.documentElement.classList.add("adm-dark")}catch(e){}</script><script src="/admin/nav.js?v=9" defer></script></head>
 <body>
 <div class="top"><div class="wrap"><div class="brand"><span>HV World</span><small>Accounts</small></div><a href="/admin/" style="font-size:14px;margin-left:14px">← Control centre</a><div class="me" id="me" hidden><span id="meName"></span><button class="btn ghost" id="signOut" style="min-height:32px;padding:5px 12px">Sign out</button></div></div></div>
@@ -189,11 +195,11 @@ pre.ctx{max-height:220px;font-size:11.5px}
   <section id="gate" class="card glass" hidden style="margin-top:40px;text-align:center"><h2>Social Media Accounts</h2><p class="sub" id="gateMsg">Sign in with the admin Google account.</p><button class="btn" id="signIn">Sign in with Google</button></section>
   <section id="nope" class="card glass" hidden style="margin-top:40px;text-align:center"><h2>No access to Social Media Accounts</h2><p class="sub">This account hasn't been given access. Ask the owner to add it in <b>Team &amp; access</b> (Social Media Accounts).</p><p style="margin-top:14px"><a class="btn ghost" href="/admin/">Go to the control centre</a></p></section>
   <section id="dash" hidden>
-    <div class="hello" style="margin:22px 0 0"><div><h1>Social Media Accounts</h1><p id="hdSub">Logins for our social profiles. Passwords are encrypted before they are saved.</p></div></div>
+    <div class="hello" style="margin:22px 0 0"><div><h1>Social Media Accounts</h1><p id="hdSub">Logins for our profiles. Everything secret is encrypted before it is saved.</p></div></div>
     <div class="vault glass" id="vault"></div>
-    <div class="tools"><input type="text" id="q" placeholder="Search platform or username" autocomplete="off"><button class="btn sm" id="addBtn" hidden>+ Add account</button></div>
     <form class="frm glass" id="frm" hidden autocomplete="off"></form>
-    <div id="view"></div>
+    <form class="frm glass" id="bfrm" hidden autocomplete="off"></form>
+    <div class="lay"><nav class="side glass" id="side" aria-label="Brands"></nav><div class="main glass" id="main"></div></div>
   </section>
 </main>
 <div class="toast" id="toast"></div>
@@ -202,10 +208,14 @@ pre.ctx{max-height:220px;font-size:11.5px}
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-check-compat.js"></script>
 <script src="../access.js"></script>
 <script>
-/* Social Media Accounts. Firestore `socialLogins/{id}` = { platform, handle, iv, ct, by, at, upd? }.
-   `ct` is AES-GCM(JSON {p: password, n: notes}) under a key derived (PBKDF2, 600k rounds) from the team passphrase.
-   `socialVault/meta` = { salt, iv, ct, at }: the salt and an encrypted check word, so a wrong passphrase is caught.
-   The passphrase and the key live in this tab's memory only and are dropped after 10 idle minutes or on sign-out. */
+/* Social Media Accounts.
+   socialLogins/{id}  = { platform, handle, brand, iv, ct, by, at, upd? }
+     ct = AES-GCM( JSON {p: password, n: notes, c: where the code goes, cd: detail, re: recovery email, rp: recovery phone} )
+     key = PBKDF2(600k rounds) of the team passphrase. Brand, platform and username stay readable so the list shows while locked.
+   socialVault/meta   = { salt, iv, ct, at }: the salt and an encrypted check word, so a wrong passphrase is caught.
+   socialConfig/main  = { json: {brands:[{id,name,color,logo}], platforms:[{name,type,color}]} }: the brands and extra platforms
+     the team adds on this page (no secrets). The passphrase and the key live in this tab's memory only and are dropped after
+     10 idle minutes or on sign-out. */
 (function () {
   "use strict";
   var CFG = window.__HV_TEST_ADMIN || { apiKey: "AIzaSyDggasAVdqpvamkn1xeex2NmPUqG9JiZJ4", authDomain: "harsh-reset.firebaseapp.com", projectId: "harsh-reset", appId: "1:592094409539:web:57d3aa494464b867bbf5f6" };
@@ -277,9 +287,12 @@ pre.ctx{max-height:220px;font-size:11.5px}
   async function setDoc(path, data) { if (!canWrite(path)) { var ee = new Error("view only"); ee.ro = 1; throw ee; } var f = {}; Object.keys(data).forEach(function (k) { f[k] = enc(data[k]); }); return call(":commit", { writes: [{ update: { name: DOCS + "/" + path, fields: f } }] }); }
   async function delDoc(path) { if (!canWrite(path)) { var ee = new Error("view only"); ee.ro = 1; throw ee; } return call(":commit", { writes: [{ delete: DOCS + "/" + path }] }); }
   function areaOf() { return "social_logins"; }
-  var PL = ["Instagram", "Facebook", "X (Twitter)", "LinkedIn", "YouTube", "Threads", "TikTok", "Pinterest", "Reddit", "WhatsApp", "Telegram", "GitHub", "Other"];
-  var COL = { Instagram: "#C13584", Facebook: "#1877F2", "X (Twitter)": "#14171A", LinkedIn: "#0A66C2", YouTube: "#E02424", Threads: "#101010", TikTok: "#111827", Pinterest: "#E60023", Reddit: "#FF4500", WhatsApp: "#1FA855", Telegram: "#229ED9", GitHub: "#24292F" };
-  var V = { meta: null, key: null, list: [], shown: {}, edit: null, adding: false, idle: null };
+  var ICONS = {"Website":"<g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z\"/></g>","Email":"<g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"5\" width=\"18\" height=\"14\" rx=\"2.5\"/><path d=\"M3.5 6.5l8.5 6.5 8.5-6.5\"/></g>","YouTube":"<path fill=\"currentColor\" d=\"M23 7.2a3 3 0 00-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 001 7.2 31 31 0 00.5 12a31 31 0 00.5 4.8 3 3 0 002.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 002.1-2.1c.4-1.6.5-4.8.5-4.8s0-3.2-.5-4.8zM9.75 15.02V8.98L15.5 12z\"/>","Instagram":"<rect x=\"2.5\" y=\"2.5\" width=\"19\" height=\"19\" rx=\"5.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><circle cx=\"12\" cy=\"12\" r=\"4.3\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><circle cx=\"17.6\" cy=\"6.4\" r=\"1.3\" fill=\"currentColor\"/>","Facebook":"<path fill=\"currentColor\" d=\"M14 8h3V4h-3c-2.8 0-5 2.2-5 5v2H7v4h2v7h4v-7h3l1-4h-4V9c0-.6.4-1 1-1z\"/>","X":"<path fill=\"currentColor\" d=\"M18.9 2H22l-7.6 8.7L23 22h-6.8l-5.3-6.9L4.8 22H1.7l8.1-9.3L1 2h7l4.8 6.3zm-1.2 18h1.7L7.4 3.9H5.6z\"/>","LinkedIn":"<path fill=\"currentColor\" d=\"M4.98 3.5a2.5 2.5 0 11-.01 5 2.5 2.5 0 01.01-5zM3 9h4v12H3zM9 9h3.8v1.7h.1c.5-1 1.8-2 3.8-2 4 0 4.8 2.6 4.8 6V21h-4v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9V21H9z\"/>","Threads":"<path fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" d=\"M19.2 7C17.8 4.4 15.3 3 12 3 6.9 3 4 6.5 4 12s2.9 9 8 9c3.9 0 6.8-2 6.8-5.2 0-3-2.6-4.4-6-4.1-2.5.2-3.7 1.4-3.6 2.8.1 1.5 1.6 2.4 3.4 2.2 2.5-.3 3.5-2.4 3.5-5.4 0-2.6-1.5-4.2-4-4.2-1.7 0-2.9.7-3.5 1.8\"/>","Pinterest":"<path fill=\"currentColor\" d=\"M12 2a10 10 0 00-3.6 19.3c-.1-.8-.2-2.1 0-3l1.2-5s-.3-.6-.3-1.5c0-1.4.8-2.5 1.8-2.5.9 0 1.3.7 1.3 1.5 0 .9-.6 2.2-.9 3.4-.2 1 .5 1.9 1.6 1.9 1.9 0 3.3-2 3.3-4.9 0-2.6-1.8-4.4-4.5-4.4-3 0-4.8 2.3-4.8 4.6 0 .9.4 1.9.8 2.4.1.1.1.2.1.3l-.3 1.2c0 .2-.2.3-.4.2-1.4-.6-2.2-2.6-2.2-4.2 0-3.4 2.5-6.6 7.2-6.6 3.8 0 6.7 2.7 6.7 6.3 0 3.7-2.4 6.8-5.7 6.8-1.1 0-2.2-.6-2.5-1.3l-.7 2.6c-.2 1-.9 2.2-1.4 2.9A10 10 0 1012 2z\"/>","GitHub":"<path fill=\"currentColor\" d=\"M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.17 1.18a11 11 0 015.77 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.58.23 2.75.11 3.04.74.81 1.18 1.83 1.18 3.09 0 4.42-2.69 5.39-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0023.5 12C23.5 5.65 18.35.5 12 .5z\"/>","Reddit":"<circle cx=\"12\" cy=\"13.5\" r=\"7\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"/><circle cx=\"9.3\" cy=\"13\" r=\"1.1\" fill=\"currentColor\"/><circle cx=\"14.7\" cy=\"13\" r=\"1.1\" fill=\"currentColor\"/><path d=\"M9.5 16.3c1.5 1 3.5 1 5 0M12 6.5l1-3.5 3.5.8\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\"/><circle cx=\"17.3\" cy=\"3.6\" r=\"1.3\" fill=\"currentColor\"/>","Other":"<g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"><path d=\"M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1\"/><path d=\"M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1\"/></g>","WhatsApp":"<g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 20l1.3-4A8 8 0 1 1 8.2 18.8z\"/><path d=\"M9 9c0 3 3 6 6 6l1-1.5-2-1-1 .7c-.8-.4-1.6-1.2-2-2l.7-1-1-2z\"/></g>","Telegram":"<g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21 4L3 11l6 2 2 6 3-4 5 3z\"/><path d=\"M9 13l12-9\"/></g>","TikTok":"<g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M14 4v10.5a3.5 3.5 0 1 1-3.5-3.5\"/><path d=\"M14 4c.5 2.5 2 3.8 4.5 4\"/></g>","Gmail":"<g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"5\" width=\"18\" height=\"14\" rx=\"2.5\"/><path d=\"M3.5 6.5l8.5 6.5 8.5-6.5\"/></g>"};
+  var PRE = [["Instagram", "Social", "#C13584", "Instagram"], ["Facebook", "Social", "#1877F2", "Facebook"], ["X (Twitter)", "Social", "#14171A", "X"], ["LinkedIn", "Social", "#0A66C2", "LinkedIn"], ["YouTube", "Social", "#E02424", "YouTube"], ["Threads", "Social", "#101010", "Threads"], ["TikTok", "Social", "#111827", "TikTok"], ["Pinterest", "Social", "#E60023", "Pinterest"], ["Reddit", "Social", "#FF4500", "Reddit"], ["WhatsApp", "Social", "#1FA855", "WhatsApp"], ["Telegram", "Social", "#229ED9", "Telegram"], ["GitHub", "Other", "#24292F", "GitHub"], ["Gmail", "Email", "#EA4335", "Gmail"], ["Website", "Other", "#2E43A6", "Website"]];
+  var DEF = { brands: [{ id: "haritt", name: "Haritt Group", color: "#A70D22", logo: "/admin/haritt-icon.png" }, { id: "haritt-dev", name: "Haritt Developers", color: "#2E43A6", logo: "https://developers.haritt.com/assets/logo-180.png" }, { id: "hv-world", name: "HV World", color: "#4A46C9", logo: "/icons/hv-world-180.png" }], platforms: [] };
+  var CODES = ["SMS to a phone", "Email", "Authenticator app", "Backup codes", "Other", "No code (2FA off)"];
+  var TYPES = ["Social", "Email", "Other"];
+  var V = { meta: null, key: null, list: [], dec: {}, shown: {}, edit: null, idle: null, cfg: null, sel: (location.hash || "#all").slice(1) || "all", type: "", q: "", cfgNew: false };
   var TE = new TextEncoder(), TD = new TextDecoder(), ITER = 600000, CHECK = "hv-social-vault-v1";
   var canEdit = function () { return lv("social_logins") >= 2; };
   function b64(buf) { var a = new Uint8Array(buf), s = ""; for (var i = 0; i < a.length; i++) s += String.fromCharCode(a[i]); return btoa(s); }
@@ -295,18 +308,39 @@ pre.ctx{max-height:220px;font-size:11.5px}
   }
   async function unseal(key, iv, ct, aad) { return TD.decode(await crypto.subtle.decrypt({ name: "AES-GCM", iv: unb64(iv), additionalData: TE.encode(aad) }, key, unb64(ct))); }
   function newId() { return b64(crypto.getRandomValues(new Uint8Array(15))).replace(/\+/g, "-").replace(/\//g, "_"); }
-  function lock(msg) { V.key = null; V.shown = {}; clearTimeout(V.idle); paintVault(); paint(); if (msg) toast(msg); }
+  function lock(msg) { V.key = null; V.dec = {}; V.shown = {}; clearTimeout(V.idle); $("frm").hidden = true; paintVault(); paint(); if (msg) toast(msg); }
   function bump() { if (!V.key) return; clearTimeout(V.idle); V.idle = setTimeout(function () { lock("Locked after 10 minutes without use."); }, 600000); }
   ["pointerdown", "keydown"].forEach(function (ev) { document.addEventListener(ev, bump, true); });
-  function when(t) { if (!t) return ""; var d = new Date(t); return d.getDate() + " " + MON[d.getMonth()] + " " + d.getFullYear(); }
   async function copy(text, label, clear) {
     try { await navigator.clipboard.writeText(text); } catch (e) { toast("Couldn't copy. Select it and copy by hand.", true); return; }
     toast(label + " copied" + (clear ? ". The clipboard clears in 30 seconds." : "."));
     if (clear) setTimeout(function () { try { navigator.clipboard.writeText(" "); } catch (e) {} }, 30000);
   }
+  /* ---------- brands and platforms ---------- */
+  var cfg = function () { return V.cfg || DEF; };
+  var brandOf = function (id) { return cfg().brands.find(function (b) { return b.id === id; }); };
+  var okLogo = function (u) { return /^(\/[^\/]|https:\/\/)/.test(u || ""); };
+  function badge(b, sz) {
+    var ini = esc((b ? b.name : "?").trim().charAt(0).toUpperCase()), st = 'style="background:' + esc(b ? b.color : "#8A8FA3") + (sz ? ";width:" + sz + "px;height:" + sz + "px" : "") + '"';
+    return '<span class="bi" ' + st + '>' + ini + (b && okLogo(b.logo) ? '<img src="' + esc(b.logo) + '" alt="" onerror="this.remove()" onload="this.parentNode.classList.add(\'ld\')">' : "") + '</span>';
+  }
+  function platInfo(name) {
+    var p = PRE.find(function (x) { return x[0] === name; });
+    if (p) return { name: name, type: p[1], color: p[2], icon: ICONS[p[3]] };
+    var c = cfg().platforms.find(function (x) { return x.name === name; });
+    return c ? { name: name, type: c.type, color: c.color } : { name: name, type: "Other", color: "#5B5F78" };
+  }
+  var allPlatforms = function () { return PRE.map(function (p) { return p[0]; }).concat(cfg().platforms.map(function (p) { return p.name; })); };
+  function picon(name) {
+    var p = platInfo(name);
+    return '<span class="pi" style="background:' + esc(p.color) + '">' + (p.icon ? '<svg viewBox="0 0 24 24" aria-hidden="true">' + p.icon + '</svg>' : esc(name.charAt(0).toUpperCase())) + '</span>';
+  }
+  async function saveCfg() { var c = cfg(); await setDoc("socialConfig/main", { json: JSON.stringify({ brands: c.brands, platforms: c.platforms }), at: Date.now(), by: (S.user && S.user.email) || "admin" }); }
+  /* ---------- load ---------- */
   async function load() {
-    $("view").innerHTML = '<div class="empty glass">Loading…</div>';
+    $("main").innerHTML = '<div class="empty">Loading…</div>';
     try { var m = await getOne("/socialVault/meta"); V.meta = decF(m.fields); } catch (e) { if (e.status === 404) V.meta = null; else throw e; }
+    try { var c = await getOne("/socialConfig/main"); var j = JSON.parse(decF(c.fields).json); V.cfg = { brands: j.brands || [], platforms: j.platforms || [] }; } catch (e) { if (e.status === 404) V.cfg = null; else throw e; }
     V.list = await list("socialLogins", "at");
     paintVault(); paint();
   }
@@ -319,42 +353,83 @@ pre.ctx{max-height:220px;font-size:11.5px}
       return;
     }
     if (V.key) { v.innerHTML = '<div class="vtop"><div><span class="state open"><i></i>Unlocked</span> <span class="hint">Locks itself after 10 idle minutes.</span></div><button class="btn ghost sm" id="lockBtn">Lock now</button></div>'; return; }
-    v.innerHTML = '<div class="vtop"><div><h3>Locked</h3><p style="margin:0">Enter the team passphrase to show or copy passwords.</p></div><span class="state lock"><i></i>Locked</span></div>' +
+    v.innerHTML = '<div class="vtop"><div><h3>Locked</h3><p style="margin:0">Enter the team passphrase to see passwords, codes and recovery details.</p></div><span class="state lock"><i></i>Locked</span></div>' +
       '<form id="unlock" class="row" style="margin-top:12px" autocomplete="off"><input type="password" id="pp" placeholder="Team passphrase" autocomplete="off" required><button class="btn" type="submit">Unlock</button></form><p class="hint" id="vMsg" style="margin-top:8px"></p>';
   }
+  async function decryptAll() {
+    V.dec = {};
+    for (var i = 0; i < V.list.length; i++) { var x = V.list[i]; try { V.dec[x._id] = JSON.parse(await unseal(V.key, x.iv, x.ct, "login:" + x._id)); } catch (e) { V.dec[x._id] = null; } }
+  }
+  var cnt = function (id) { return V.list.filter(function (x) { return id === "all" ? true : id === "none" ? !brandOf(x.brand) : x.brand === id; }).length; };
   function paint() {
-    $("addBtn").hidden = !(canEdit() && V.meta && V.key);
-    var q = ($("q").value || "").toLowerCase().trim();
-    var xs = V.list.filter(function (x) { return !q || (x.platform + " " + x.handle).toLowerCase().indexOf(q) >= 0; });
-    $("hdSub").textContent = V.list.length + " account" + (V.list.length === 1 ? "" : "s") + ". Passwords are encrypted before they are saved.";
-    if (!xs.length) { $("view").innerHTML = '<div class="empty glass">' + (V.list.length ? "No match." : "No accounts yet." + (canEdit() ? " Unlock and press Add account." : "")) + '</div>'; return; }
-    var open = !!V.key;
-    $("view").innerHTML = '<div class="lg">' + xs.map(function (x) {
-      var s = V.shown[x._id], col = COL[x.platform] || "#5B5F78";
-      return '<article class="ac glass"><div class="hd"><span class="ic" style="background:' + col + '">' + esc(x.platform.charAt(0).toUpperCase()) + '</span><div><h3>' + esc(x.platform) + '</h3><small>Added ' + when(x.at) + (x.by ? " by " + esc(x.by) : "") + '</small></div></div>' +
-        '<dl class="kv" style="margin:0"><dt>Username</dt><dd style="margin:0"><code>' + esc(x.handle) + '</code></dd><dd class="btns" style="margin:0"><button class="mini" data-cu="' + esc(x._id) + '">Copy</button></dd>' +
-        '<dt>Password</dt><dd style="margin:0"><code>' + (s ? esc(s.p) : "••••••••••") + '</code></dd><dd class="btns" style="margin:0"><button class="mini" data-sh="' + esc(x._id) + '"' + (open ? "" : " disabled title=\"Unlock first\"") + '>' + (s ? "Hide" : "Show") + '</button><button class="mini" data-cp="' + esc(x._id) + '"' + (open ? "" : " disabled title=\"Unlock first\"") + '>Copy</button></dd></dl>' +
-        (s && s.n ? '<div class="note">' + esc(s.n) + '</div>' : "") +
-        (canEdit() ? '<div class="foot"><span class="sp"></span><button class="mini" data-ed="' + esc(x._id) + '"' + (open ? "" : " disabled title=\"Unlock first\"") + '>Edit</button><button class="mini bad" data-rm="' + esc(x._id) + '">Delete</button></div>' : "") + '</article>';
-    }).join("") + '</div>';
+    var br = cfg().brands, ed = canEdit(), unk = cnt("none");
+    if (V.sel !== "all" && V.sel !== "none" && !brandOf(V.sel)) V.sel = "all";
+    var side = '<div class="sl">BRANDS</div><button class="si' + (V.sel === "all" ? " on" : "") + '" data-br="all"><span class="nm2">All accounts</span><b>' + cnt("all") + '</b></button>' +
+      br.map(function (b) { return '<button class="si' + (V.sel === b.id ? " on" : "") + '" data-br="' + esc(b.id) + '">' + badge(b) + '<span class="nm2">' + esc(b.name) + '</span><b>' + cnt(b.id) + '</b></button>'; }).join("") +
+      (unk ? '<button class="si' + (V.sel === "none" ? " on" : "") + '" data-br="none"><span class="nm2">No brand yet</span><b>' + unk + '</b></button>' : "") +
+      '<div class="sl" style="margin-top:16px">TYPE</div>' + TYPES.map(function (t) { return '<button class="si' + (V.type === t ? " on" : "") + '" data-ty="' + t + '"><span class="nm2">' + t + '</span><b>' + V.list.filter(function (x) { return platInfo(x.platform).type === t; }).length + '</b></button>'; }).join("") +
+      (ed ? '<button class="btn ghost sm sidebtn" id="addBrand">+ Add brand</button>' : "");
+    $("side").innerHTML = side;
+    var xs = V.list.filter(function (x) {
+      if (V.sel === "none" ? brandOf(x.brand) : (V.sel !== "all" && x.brand !== V.sel)) return false;
+      if (V.type && platInfo(x.platform).type !== V.type) return false;
+      return !V.q || (x.platform + " " + x.handle).toLowerCase().indexOf(V.q.toLowerCase()) >= 0;
+    });
+    var cur = V.sel === "all" ? null : brandOf(V.sel), title = V.sel === "all" ? "All accounts" : V.sel === "none" ? "No brand yet" : cur ? cur.name : "";
+    var head = '<div class="mh">' + (cur ? badge(cur, 34) : "") + '<h2>' + esc(title) + '</h2>' + (cur && ed ? '<button class="mini" data-bed="' + esc(cur.id) + '">Edit brand</button>' : "") + '<span class="sp"></span><input type="text" id="q" placeholder="Search platform or username" value="' + esc(V.q) + '" autocomplete="off">' + (ed && V.meta ? '<button class="btn sm" id="addBtn"' + (V.key ? "" : ' disabled title="Unlock first"') + '>+ Add account</button>' : "") + '</div>';
+    $("hdSub").textContent = V.list.length + " account" + (V.list.length === 1 ? "" : "s") + ". Passwords, codes and recovery details are encrypted before they are saved.";
+    if (!xs.length) { $("main").innerHTML = head + '<div class="empty">' + (V.list.length ? "Nothing here." : "No accounts yet." + (ed ? " Unlock and press Add account." : "")) + '</div>'; restoreQ(); return; }
+    var open = !!V.key, out = head;
+    TYPES.forEach(function (t) {
+      var g = xs.filter(function (x) { return platInfo(x.platform).type === t; }); if (!g.length) return;
+      out += '<div class="gh">' + t.toUpperCase() + '</div>' + g.map(function (x) {
+        var d = V.dec[x._id], sh = V.shown[x._id], lines = "";
+        if (open && d) {
+          var c = [d.c, d.cd].filter(Boolean).join(", "), r = [d.re, d.rp].filter(Boolean).join("  ·  ");
+          if (c) lines += '<small>Code goes to: ' + esc(c) + '</small>'; if (r) lines += '<small>Recovery: ' + esc(r) + '</small>';
+          if (sh && d.n) lines += '<div class="nt">' + esc(d.n) + '</div>';
+        } else if (open && d === null) lines = '<small style="color:var(--bad)">Couldn\'t decrypt this one. It may have been changed outside this page.</small>';
+        var b = brandOf(x.brand);
+        return '<div class="rw">' + picon(x.platform) + '<div class="nm"><b>' + esc(x.platform) + (V.sel === "all" && b ? ' <span class="hint" style="font-weight:500">· ' + esc(b.name) + '</span>' : "") + '</b><code>' + esc(x.handle) + '</code>' + lines + '</div>' +
+          '<span class="pw">' + (sh && d ? esc(d.p) : "••••••••••") + '</span><span class="bt"><button class="mini" data-cu="' + esc(x._id) + '">Copy user</button><button class="mini" data-sh="' + esc(x._id) + '"' + (open && d ? "" : ' disabled title="Unlock first"') + '>' + (sh ? "Hide" : "Show") + '</button><button class="mini" data-cp="' + esc(x._id) + '"' + (open && d ? "" : ' disabled title="Unlock first"') + '>Copy</button>' +
+          (ed ? '<button class="mini" data-ed="' + esc(x._id) + '"' + (open && d ? "" : ' disabled title="Unlock first"') + '>Edit</button><button class="mini bad" data-rm="' + esc(x._id) + '">Delete</button>' : "") + '</span></div>';
+      }).join("");
+    });
+    $("main").innerHTML = out; restoreQ();
   }
-  async function reveal(id) {
-    var x = V.list.find(function (y) { return y._id === id; });
-    try { return JSON.parse(await unseal(V.key, x.iv, x.ct, "login:" + id)); } catch (e) { toast("Couldn't decrypt this one. It may have been changed outside this page.", true); return null; }
-  }
-  function form(x, d) {
-    var pl = x ? x.platform : "Instagram", custom = x && PL.indexOf(pl) < 0;
+  function restoreQ() { var q = $("q"); if (q && V.qf) { q.focus(); q.setSelectionRange(q.value.length, q.value.length); } }
+  /* ---------- forms ---------- */
+  var opt = function (list, sel) { return list.map(function (p) { return '<option' + (p === sel ? " selected" : "") + '>' + esc(p) + '</option>'; }).join(""); };
+  function form(x) {
+    var d = x ? V.dec[x._id] || {} : {}, brs = cfg().brands, bsel = x ? x.brand : (V.sel !== "all" && V.sel !== "none" ? V.sel : (brs[0] && brs[0].id));
     $("frm").innerHTML = '<h3>' + (x ? "Edit account" : "Add account") + '</h3><div class="fg">' +
-      '<label>Platform<select id="fPl">' + PL.map(function (p) { return '<option' + ((custom ? "Other" : pl) === p ? " selected" : "") + '>' + esc(p) + '</option>'; }).join("") + '</select></label>' +
-      '<label id="fOtherW" ' + (custom || pl === "Other" ? "" : "hidden") + '>Platform name<input type="text" id="fOther" maxlength="40" value="' + esc(custom ? pl : "") + '"></label>' +
+      '<label>Brand<select id="fBr">' + brs.map(function (b) { return '<option value="' + esc(b.id) + '"' + (b.id === bsel ? " selected" : "") + '>' + esc(b.name) + '</option>'; }).join("") + '<option value="__new">+ New brand…</option></select></label>' +
+      '<label>Platform<select id="fPl">' + opt(allPlatforms(), x ? x.platform : "Instagram") + '<option value="__new">+ Other platform (type its name)…</option></select></label>' +
+      '<div class="nw" id="nwB" hidden><label>Brand name<input type="text" id="nbN" maxlength="40"></label><label>Logo address (optional, https://…)<input type="text" id="nbL" maxlength="300" placeholder="https://"></label><label>Colour<input type="color" id="nbC" value="#2E43A6"></label></div>' +
+      '<div class="nw" id="nwP" hidden><label>Platform name<input type="text" id="npN" maxlength="40"></label><label>Type<select id="npT">' + opt(TYPES, "Social") + '</select></label><label>Colour<input type="color" id="npC" value="#5B5F78"></label></div>' +
       '<label>Account ID / Username / Email<input type="text" id="fId" maxlength="200" required value="' + esc(x ? x.handle : "") + '"></label>' +
-      '<label>Password<span class="pw"><input type="password" id="fPw" maxlength="200" required autocomplete="new-password" value="' + esc(d ? d.p : "") + '"><button class="mini" type="button" id="fEye">Show</button></span></label>' +
-      '<label class="wide">Extra notes (optional)<textarea id="fNote" maxlength="1500" placeholder="Recovery email, phone, 2FA, who owns it…">' + esc(d ? d.n : "") + '</textarea></label></div>' +
+      '<label>Password<span class="pwf"><input type="password" id="fPw" maxlength="200" required autocomplete="new-password" value="' + esc(d.p || "") + '"><button class="mini" type="button" id="fEye">Show</button></span></label>' +
+      '<div class="fsec">LOGIN HELP (also encrypted)</div>' +
+      '<label>Verification code goes to<select id="fC">' + opt(CODES, d.c || CODES[0]) + '</select></label>' +
+      '<label>Phone, email or app that gets the code<input type="text" id="fCd" maxlength="120" value="' + esc(d.cd || "") + '" placeholder="e.g. +91 98… or Harsh\'s phone"></label>' +
+      '<label>Recovery email<input type="text" id="fRe" maxlength="160" value="' + esc(d.re || "") + '"></label>' +
+      '<label>Recovery phone<input type="text" id="fRp" maxlength="60" value="' + esc(d.rp || "") + '"></label>' +
+      '<label class="wide">Extra notes (optional)<textarea id="fNote" maxlength="1500" placeholder="Backup codes location, who owns it…">' + esc(d.n || "") + '</textarea></label></div>' +
       '<div class="row" style="margin-top:14px"><button class="btn" type="submit" id="fSave">Save</button><button class="btn ghost" type="button" id="fCancel">Cancel</button></div>';
-    $("frm").hidden = false; V.edit = x ? x._id : null; $("fId").focus();
+    $("frm").hidden = false; $("bfrm").hidden = true; V.edit = x ? x._id : null; $("fId").focus(); $("frm").scrollIntoView({ behavior: "smooth", block: "center" });
   }
-  document.addEventListener("change", function (e) { if (e.target.id === "fPl") $("fOtherW").hidden = e.target.value !== "Other"; });
-  document.addEventListener("input", function (e) { if (e.target.id === "q") paint(); });
+  function bform(b) {
+    $("bfrm").innerHTML = '<h3>' + (b ? "Edit brand" : "Add brand") + '</h3><div class="fg"><label>Brand name<input type="text" id="bN" maxlength="40" required value="' + esc(b ? b.name : "") + '"></label>' +
+      '<label>Colour<input type="color" id="bC" value="' + esc(b ? b.color : "#2E43A6") + '"></label><label class="wide">Logo address (optional, https://… or /path)<input type="text" id="bL" maxlength="300" value="' + esc(b ? b.logo || "" : "") + '"></label></div>' +
+      '<div class="row" style="margin-top:14px"><button class="btn" type="submit">Save brand</button><button class="btn ghost" type="button" id="bCancel">Cancel</button>' + (b ? '<button class="btn ghost" type="button" id="bDel" style="color:var(--bad)">Delete brand</button>' : "") + '</div>';
+    $("bfrm").dataset.id = b ? b.id : ""; $("bfrm").hidden = false; $("frm").hidden = true; $("bN").focus(); $("bfrm").scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+  var slug = function (n) { return (n.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 30) || "brand") + "-" + newId().slice(0, 4).toLowerCase().replace(/[^a-z0-9]/g, "x"); };
+  document.addEventListener("change", function (e) {
+    if (e.target.id === "fBr") $("nwB").hidden = e.target.value !== "__new";
+    if (e.target.id === "fPl") $("nwP").hidden = e.target.value !== "__new";
+  });
+  document.addEventListener("input", function (e) { if (e.target.id === "q") { V.q = e.target.value; V.qf = true; paint(); V.qf = false; } });
   document.addEventListener("submit", async function (e) {
     e.preventDefault(); var f = e.target.id, b = e.target.querySelector("button[type=submit]");
     try {
@@ -364,24 +439,38 @@ pre.ctx{max-height:220px;font-size:11.5px}
         b.disabled = true; m.textContent = "Creating…";
         var salt = crypto.getRandomValues(new Uint8Array(16)), key = await derive(p1, salt), c = await seal(key, CHECK, "vault-meta");
         await setDoc("socialVault/meta", { salt: b64(salt), iv: c.iv, ct: c.ct, at: Date.now() });
-        V.meta = { salt: b64(salt), iv: c.iv, ct: c.ct }; V.key = key; bump(); paintVault(); paint(); toast("Passphrase set. Tell the team in person."); return;
+        V.meta = { salt: b64(salt), iv: c.iv, ct: c.ct }; V.key = key; bump(); await decryptAll(); paintVault(); paint(); toast("Passphrase set. Tell the team in person."); return;
       }
       if (f === "unlock") {
         var m2 = $("vMsg"); b.disabled = true; m2.textContent = "Unlocking…";
         var k = await derive($("pp").value, unb64(V.meta.salt));
         try { if ((await unseal(k, V.meta.iv, V.meta.ct, "vault-meta")) !== CHECK) throw 0; } catch (er) { m2.textContent = "That passphrase is wrong."; b.disabled = false; return; }
-        V.key = k; bump(); paintVault(); paint(); return;
+        V.key = k; bump(); await decryptAll(); paintVault(); paint(); return;
+      }
+      if (f === "bfrm") {
+        var name = $("bN").value.trim(); if (!name) return; b.disabled = true;
+        var id = $("bfrm").dataset.id, c0 = JSON.parse(JSON.stringify(cfg())), one = id ? c0.brands.find(function (y) { return y.id === id; }) : null;
+        if (one) { one.name = name; one.color = $("bC").value; one.logo = $("bL").value.trim(); } else { id = slug(name); c0.brands.push({ id: id, name: name, color: $("bC").value, logo: $("bL").value.trim() }); }
+        var old = V.cfg; V.cfg = c0; try { await saveCfg(); } catch (er) { V.cfg = old; throw er; }
+        V.sel = id; $("bfrm").hidden = true; paint(); toast("Brand saved."); return;
       }
       if (f === "frm") {
-        var pl = $("fPl").value === "Other" ? $("fOther").value.trim() : $("fPl").value, id = $("fId").value.trim(), pw = $("fPw").value;
-        if (!pl || !id || !pw) { toast("Platform, username and password are needed.", true); return; }
-        b.disabled = true; var did = V.edit || newId(), old = V.list.find(function (y) { return y._id === did; });
-        var c2 = await seal(V.key, JSON.stringify({ p: pw, n: $("fNote").value.trim() }), "login:" + did);
-        var rec = { platform: pl, handle: id, iv: c2.iv, ct: c2.ct, by: (S.user && S.user.email) || "admin", at: old ? old.at : Date.now() };
-        if (old) rec.upd = Date.now();
+        var brv = $("fBr").value, plv = $("fPl").value, id2 = $("fId").value.trim(), pw = $("fPw").value, c1 = JSON.parse(JSON.stringify(cfg())), dirty = false;
+        if (brv === "__new") { var bn = $("nbN").value.trim(); if (!bn) { toast("Type the new brand's name.", true); return; } brv = slug(bn); c1.brands.push({ id: brv, name: bn, color: $("nbC").value, logo: $("nbL").value.trim() }); dirty = true; }
+        if (plv === "__new") { var pn = $("npN").value.trim(); if (!pn) { toast("Type the new platform's name.", true); return; }
+          if (!allPlatforms().some(function (y) { return y.toLowerCase() === pn.toLowerCase(); })) { c1.platforms.push({ name: pn, type: $("npT").value, color: $("npC").value }); dirty = true; }
+          else pn = allPlatforms().find(function (y) { return y.toLowerCase() === pn.toLowerCase(); }); plv = pn; }
+        if (!id2 || !pw) { toast("Username and password are needed.", true); return; }
+        b.disabled = true;
+        if (dirty) { var old2 = V.cfg; V.cfg = c1; try { await saveCfg(); } catch (er) { V.cfg = old2; throw er; } }
+        var did = V.edit || newId(), oldr = V.list.find(function (y) { return y._id === did; });
+        var plain = { p: pw, n: $("fNote").value.trim(), c: $("fC").value, cd: $("fCd").value.trim(), re: $("fRe").value.trim(), rp: $("fRp").value.trim() };
+        var c2 = await seal(V.key, JSON.stringify(plain), "login:" + did);
+        var rec = { platform: plv, handle: id2, brand: brv, iv: c2.iv, ct: c2.ct, by: (S.user && S.user.email) || "admin", at: oldr ? oldr.at : Date.now() };
+        if (oldr) rec.upd = Date.now();
         await setDoc("socialLogins/" + did, rec);
-        rec._id = did; if (old) V.list[V.list.indexOf(old)] = rec; else V.list.unshift(rec);
-        delete V.shown[did]; $("frm").hidden = true; V.edit = null; paint(); toast("Saved."); return;
+        rec._id = did; if (oldr) V.list[V.list.indexOf(oldr)] = rec; else V.list.unshift(rec);
+        V.dec[did] = plain; delete V.shown[did]; V.sel = brv; $("frm").hidden = true; V.edit = null; paint(); toast("Saved."); return;
       }
     } catch (er) { if (b) b.disabled = false; if (er && er.ro) return; toast(er && er.status === 403 ? "You don't have permission to do that." : "Couldn't save. Check your connection and try again.", true); }
   });
@@ -389,18 +478,27 @@ pre.ctx{max-height:220px;font-size:11.5px}
     var t = e.target.closest("button"); if (!t) return; bump();
     var d = t.dataset, x = function (id) { return V.list.find(function (y) { return y._id === id; }); };
     if (t.id === "lockBtn") { lock(); return; }
-    if (t.id === "addBtn") { form(null, null); return; }
+    if (t.id === "addBtn") { form(null); return; }
+    if (t.id === "addBrand") { bform(null); return; }
     if (t.id === "fCancel") { $("frm").hidden = true; V.edit = null; return; }
+    if (t.id === "bCancel") { $("bfrm").hidden = true; return; }
     if (t.id === "fEye") { var i = $("fPw"); i.type = i.type === "password" ? "text" : "password"; t.textContent = i.type === "password" ? "Show" : "Hide"; return; }
+    if (d.br) { V.sel = d.br; history.replaceState(null, "", "#" + d.br); paint(); return; }
+    if (d.ty) { V.type = V.type === d.ty ? "" : d.ty; paint(); return; }
+    if (d.bed) { bform(brandOf(d.bed)); return; }
+    if (t.id === "bDel") { var id = $("bfrm").dataset.id, n = V.list.filter(function (y) { return y.brand === id; }).length;
+      if (n) { toast("Move or delete its " + n + " account" + (n > 1 ? "s" : "") + " first.", true); return; }
+      if (!confirm("Delete this brand?")) return; var c3 = JSON.parse(JSON.stringify(cfg())); c3.brands = c3.brands.filter(function (y) { return y.id !== id; }); var old3 = V.cfg; V.cfg = c3;
+      try { await saveCfg(); V.sel = "all"; $("bfrm").hidden = true; paint(); toast("Brand deleted."); } catch (er) { V.cfg = old3; if (!er.ro) toast("Couldn't delete the brand.", true); } return; }
     if (d.cu) { copy(x(d.cu).handle, "Username"); return; }
-    if (d.sh) { if (V.shown[d.sh]) { delete V.shown[d.sh]; } else { var r = await reveal(d.sh); if (!r) return; V.shown[d.sh] = r; setTimeout(function () { delete V.shown[d.sh]; paint(); }, 15000); } paint(); return; }
-    if (d.cp) { var r2 = V.shown[d.cp] || await reveal(d.cp); if (r2) copy(r2.p, "Password", true); return; }
-    if (d.ed) { var r3 = await reveal(d.ed); if (r3) { form(x(d.ed), r3); $("frm").scrollIntoView({ behavior: "smooth", block: "center" }); } return; }
+    if (d.sh) { if (V.shown[d.sh]) delete V.shown[d.sh]; else { V.shown[d.sh] = true; setTimeout(function () { delete V.shown[d.sh]; paint(); }, 15000); } paint(); return; }
+    if (d.cp) { if (V.dec[d.cp]) copy(V.dec[d.cp].p, "Password", true); return; }
+    if (d.ed) { if (V.dec[d.ed]) form(x(d.ed)); return; }
     if (d.rm) { var a = x(d.rm); if (!confirm("Delete the " + a.platform + " login for " + a.handle + "? This can't be undone.")) return;
-      try { await delDoc("socialLogins/" + d.rm); V.list = V.list.filter(function (y) { return y._id !== d.rm; }); paint(); toast("Deleted."); } catch (er) { if (!er.ro) toast("Couldn't delete.", true); } return; }
+      try { await delDoc("socialLogins/" + d.rm); V.list = V.list.filter(function (y) { return y._id !== d.rm; }); delete V.dec[d.rm]; paint(); toast("Deleted."); } catch (er) { if (!er.ro) toast("Couldn't delete.", true); } return; }
     if (t.id === "reload") { load().catch(fail); }
   });
-  function fail(e) { if (e && e.status === 403) { show("nope"); return; } $("view").innerHTML = '<div class="empty glass">Couldn\'t load (' + esc(e && e.message) + '). <button class="btn sm" id="reload">Try again</button></div>'; }
+  function fail(e) { if (e && e.status === 403) { show("nope"); return; } $("main").innerHTML = '<div class="empty">Couldn\'t load (' + esc(e && e.message) + '). <button class="btn sm" id="reload">Try again</button></div>'; }
   if (window.__HV_TEST_ADMIN) { S.user = { email: "admin@test" }; HVAccess.load({}, getOne).then(function (a) { S.acc = a; $("me").hidden = false; $("meName").textContent = "admin (test)"; show("dash"); load().catch(fail); }); return; }
   $("signIn").onclick = async function () { try { await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()); } catch (e) { $("gateMsg").textContent = "Couldn't sign in. Please try again."; } };
   $("signOut").onclick = function () { lock(); auth.signOut(); };
